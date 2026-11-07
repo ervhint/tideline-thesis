@@ -6,13 +6,18 @@ Built and committed locally. Readings as of the 6 Nov chain day: Q1 Neutral, Q2 
 
 Checked locally on 7 Nov: `npm test` 244/244, `verify` ALL OK, `npm run build`, gitleaks over the full history, the wording scan, the API-data scan, Chrome at 1440 and 375 for every page and state (also with `EXPLORER_PANEL=off` on a production build, and the live panel from a real 30-day run, whose file was then deleted). `attest:check` MATCH on 2026-10-04, 2026-10-20 and 2026-11-03.
 
+## Stage 2 (7 Nov 2026)
+
+Public on GitHub. Passed in Actions on 7 Nov: `test` (tests, verify, build), gitleaks over the full history, `contract`, `refresh` (committed), `chain-day` (6 Nov already frozen, stopped), and `panel` (artifact kept one day; the log shows only progress lines). Treasury days 4 Oct to 6 Nov added; `npm run rebuild` left the readings as they were, and THESIS.md now gives the confidential share. This repo is now the only one that freezes, anchors and refreshes.
+
+Gitleaks fails on the first push of a new repo (the action asks git for the root commit's parent); a hand-started run scans the full history and passed.
+
 ## Next
 
-1. **Treasury days.** Add the remaining `data/treasury/` and `data/chain/` days, then `npm run rebuild`, `npm run verify`, and put the confidential share figure into THESIS.md (the one figure left out).
-2. **Secrets.** `INTENTS_EXPLORER_JWT` (set without printing it). The human sets `NEAR_ATTEST_PRIVATE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`; `NEAR_ATTEST_ACCOUNT` is `tideline-thesis.testnet` if the human confirms. Site: `GITHUB_DATA_TOKEN` with Actions read.
-3. **Actions.** `test` and `contract` green. A real run of `panel.yml` (one key user at a time) and of `chain-day.yml`, then `attest-days.yml` so one new day is anchored, with its treasury hash in the record.
-4. **Schedules.** Turn on this repo's schedules and point the cron-job.org jobs here, with the panel job added (docs/CRON.md, human). Only one writer each day.
-5. **Full test** again in Chrome at 1440 and 375, then the final report.
+1. **Secrets (human).** `NEAR_ATTEST_ACCOUNT` (`tideline-thesis.testnet`), `NEAR_ATTEST_PRIVATE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Site and localhost: `GITHUB_DATA_TOKEN` (Contents read, Actions read).
+2. **cron-job.org** points here, with the panel job added (docs/CRON.md), before 03:17 UTC 8 Nov. Otherwise start `chain-day` for 7 Nov by hand.
+3. **First new day.** `chain-day` freezes 7 Nov, then `attest-days` anchors it with its treasury hash in the record.
+4. **Full test** again in Chrome at 1440 and 375, then the final report.
 
 Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
