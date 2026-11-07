@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-07T06:23:24.881Z",
+ "asOf": "2026-11-07T10:54:40.690Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-06",
  "readings": [
@@ -410,19 +410,19 @@
  },
  "vstar": {
   "todayUsd": 4024044605,
-  "priceUsd": 3.74,
+  "priceUsd": 3.69,
   "at16": {
-   "low": 11445788720.087751,
-   "mid": 12730094158.187912,
-   "high": 48587676078.087715
+   "low": 11291267075.879005,
+   "mid": 12558233998.232046,
+   "high": 47931727608.35128
   },
   "at25": {
-   "low": 18040118785.612286,
-   "mid": 20064358724.59284,
-   "high": 76580781753.13678
+   "low": 17797563908.341442,
+   "mid": 19794587326.422043,
+   "high": 75551129878.87906
   },
-  "multiple16": 3.1635072191720677,
-  "multiple25": 4.986117375454102
+  "multiple16": 3.1207989053173146,
+  "multiple25": 4.919077512666399
  },
  "notes": {
   "llamaLastDay": "2026-11-06",
@@ -446,7 +446,7 @@
    "Not measured because flow went private: Solver Competition (treasury 74% of USD). On the public swaps left, as side figures that set no reading: spread 10.5 bps and top 3 solvers hold 59%. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "The Confidential Intents treasury, where funds move to a private chain and the swap settles out of public view, carried 74% of the USD counted over the last 7 frozen days and 22% over the last 30.",
    "A fall in these public numbers is not a fall in demand: swaps moving to the private chain leave the public record whether or not anyone stopped using them. What cannot be seen: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "Monthly volume would need to reach about 3.2x today's level under the 1.6% issuance plan, which passed its vote but is not in force yet, or 5.0x if issuance stays at 2.5%, with all revenue spent on buybacks."
+   "Monthly volume would need to reach about 3.1x today's level under the 1.6% issuance plan, which passed its vote but is not in force yet, or 4.9x if issuance stays at 2.5%, with all revenue spent on buybacks."
   ]
  }
 }
