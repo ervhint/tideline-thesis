@@ -33,7 +33,8 @@ export function elasticityView(doc: ElasticityDoc | null) {
       ? `No fee change passes the pre-registered rules in the ${span}. A frontend has to hold one fee for 7 days, then another fee at least 5 bps away for 7 days.`
       : `Only ${m.usable} of the ${doc.frozenEvents} fee changes found are usable, which is under 3.`;
     const checks = [
-      ...doc.census.nearMisses.map((x) => ({ name: 'Closest Miss', text: `${x.frontend} went from ${x.from} to ${x.to} bps between ${short(x.lastDayBefore)} and ${short(x.firstDayAfter)}, with ${x.missed}. Not used.` })),
+      // A year of data holds many near misses; the three latest stand for them.
+      ...[...doc.census.nearMisses].sort((a, b) => (a.firstDayAfter < b.firstDayAfter ? 1 : -1)).slice(0, 3).map((x) => ({ name: `Closest Miss, ${short(x.firstDayAfter)}`, text: `${x.frontend} went from ${x.from} to ${x.to} bps between ${short(x.lastDayBefore)} and ${short(x.firstDayAfter)}, with ${x.missed}. Not used.` })),
       { name: 'What Was Searched', text: `${doc.census.frontends} frontends on token_diff swaps; ${doc.census.withStableRun} held one fee for 7 days or more, and ${doc.census.changes} fee steps were seen in all.` },
       { name: 'Re-Run Each Day', text: 'Every newly frozen day re-runs the same rules, so a fee change that has not lasted 7 days yet can still count later.' },
     ];

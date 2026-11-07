@@ -46,8 +46,8 @@ export default async function Elasticity({ searchParams }: { searchParams: Promi
       </div>
         <div className="e-checks">
           <p className="s-title">Checks</p>
-          {elasticity.checks.map((c) => (
-            <div key={c.name}>
+          {elasticity.checks.map((c, i) => (
+            <div key={i}>
               <p className="s-name">{c.name}</p>
               <p className="s-text">{c.text}</p>
             </div>
@@ -72,7 +72,7 @@ export default async function Elasticity({ searchParams }: { searchParams: Promi
         <div className="mde">{elasticity.mde}</div>
       </figure>
 
-      <a className="s-query" href="/reproduce/#elasticity">Open the Query</a>
+      <a className="s-query q-own" href="/reproduce/#elasticity">Open the Query</a>
       <Button href="/model/" variant="secondary">Use the Full Range in the Model</Button>
         </>}
       />

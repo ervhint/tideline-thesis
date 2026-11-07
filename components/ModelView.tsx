@@ -12,7 +12,7 @@ const PATHS = ['Flat', '+50%', '2×'] as const;
 const FACTOR: Record<(typeof PATHS)[number], number> = { Flat: 1, '+50%': 1.5, '2×': 2 };
 const ISSUANCE: Record<string, number> = { '1.6% (passed)': 1.6, '2.5% (today)': 2.5 };
 const minus = (n: number) => (n < 0 ? `−${Math.abs(n).toFixed(2)}` : `+${n.toFixed(2)}`);
-const E_MIN = -2, E_MAX = 0.5; // the U5 interval reaches +0.39, so the slider goes past 0
+const E_MIN = -2, E_MAX = 2; // wide enough for the whole E1 interval, which runs past 0
 
 export function ModelView({ market, asOf, elasticity, split }: { market: Market; asOf: string; elasticity: { estimate: number; lo: number; hi: number } | null; split: RevenueSplit }) {
   const TODAY = market.todayVolume;
@@ -97,8 +97,8 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
           <Segmented label="Volume Growth Path" options={PATHS} value={path} onChange={setPath} />
           <Slider label="Issuance (Custom)" display={`${issuance.toFixed(1)}% a year`} min={0} max={4} step={0.1} value={issuance} onChange={setIssuance} ticks={['0%', '1.33%', '2.67%', '4%']} />
           <Slider label="NEAR Price" display={`$${price.toFixed(2)}`} min={2} max={8} step={0.01} value={price} onChange={setPrice} ticks={['$2', '$4', '$6', '$8']} />
-          <Slider label="Elasticity (Assumed Range)" display={`${minus(elast[0])} to ${minus(elast[1])}`} min={E_MIN} max={E_MAX} step={0.01} range={elast} onRange={setElast} ticks={['−2.0', '−1.2', '−0.3', '+0.5']} />
-          <p className="s-text">{elasticity ? `Starts at the measured 95% interval, ${minus(elasticity.lo)} to ${minus(elasticity.hi)} (1Click only). It moves the revenue-maximizing fee, not V* at today's fee.` : 'The elasticity estimate did not load, so this starts at an assumed range.'}</p>
+          <Slider label="Elasticity (Assumed Range)" display={`${minus(elast[0])} to ${minus(elast[1])}`} min={E_MIN} max={E_MAX} step={0.01} range={elast} onRange={setElast} ticks={['−2.0', '−0.7', '+0.7', '+2.0']} />
+          <p className="s-text">{elasticity ? `Starts at the measured 95% interval, ${minus(elasticity.lo)} to ${minus(elasticity.hi)}. It moves the revenue-maximizing fee, not V* at today's fee.` : 'The elasticity estimate did not load, so this starts at an assumed range.'}</p>
           <Slider label="Share of Revenue Spent on Buybacks" display={`${buyback}%`} min={0} max={100} step={1} value={buyback} onChange={(x) => setBuyback(Math.max(1, x))} ticks={['0%', '33%', '67%', '100%']} />
         </div>
 

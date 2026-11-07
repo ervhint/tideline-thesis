@@ -13,7 +13,7 @@ export default async function Model() {
       {market && asOf
         ? <ModelView market={market} asOf={asOf} elasticity={elasticity} split={split} />
         : <Banner tone="error" title="Model Inputs Did Not Load">The published model inputs did not load, so no threshold is shown rather than a guess.</Banner>}
-      <a className="s-query" href="/reproduce/#model">Open the Query</a>
+      <a className="s-query q-own" href="/reproduce/#model">Open the Query</a>
       <Button href="/reproduce/" variant="secondary">Check It Yourself</Button>
     </Page>
   );

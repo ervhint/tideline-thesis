@@ -26,7 +26,9 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
   if (fee.state === 'empty') {
     return (
       <Page title="What a $10,000 Swap Costs" lead={fee.lead}>
-        <Banner tone="neutral" title="No Public Swaps to Split">{fee.body}</Banner>
+        <div className="split-foot">
+          <Banner tone="neutral" title="No Public Swaps to Split">{fee.body}</Banner>
+        </div>
         <div className="split-foot">
           <PanelNote pick={['swapsText', 'quoteText']} />
         </div>

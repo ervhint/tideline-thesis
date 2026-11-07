@@ -171,6 +171,7 @@ header.wrap{padding:0 54px}
 .p-body{font-size:16px;line-height:23px;letter-spacing:-.01em;color:var(--text-muted)}
 .q-entry{scroll-margin-top:96px;padding:8px;margin:-8px;border-radius:12px}
 .q-entry:target{background:var(--track,rgba(127,127,127,.14))}
+.q-own{display:block;margin:24px 0}
 .q-file{text-decoration:underline;overflow-wrap:anywhere}
 .src-name{font-weight:500;font-size:15px;line-height:19px;letter-spacing:-.02em}
 .src-text{font-size:14px;line-height:19px;letter-spacing:-.01em;color:var(--text-muted);margin-top:2px!important}

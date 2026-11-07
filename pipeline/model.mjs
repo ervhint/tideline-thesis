@@ -32,7 +32,7 @@ for (const [name, passes] of [['vote passes (HSP-029 schedule)', true], ['vote f
 // FR-10: across the E1 interval. Elasticity leaves V* at today's fee alone; it sets the fee that maximizes revenue.
 const el = JSON.parse(readFileSync(process.env.ELASTICITY ?? 'data/published/elasticity.json', 'utf8')).main?.e1;
 if (el) {
-  console.log(`  Elasticity ${el.estimate.toFixed(2)}, interval ${el.lo.toFixed(2)} to ${el.hi.toFixed(2)} (1Click only). Today's all-in fee ${m.feeBps} bps.`);
+  console.log(`  Elasticity ${el.estimate.toFixed(2)}, interval ${el.lo.toFixed(2)} to ${el.hi.toFixed(2)}. Today's all-in fee ${m.feeBps} bps.`);
   for (const [name, e] of [['low end', el.lo], ['estimate', el.estimate], ['high end', el.hi]]) {
     const f = revenueMaxFeeBps(e);
     if (f === null) { console.log(`    ${name} ${e.toFixed(2)}: no revenue-maximizing fee, revenue keeps rising with the fee up to ${MAX_SEEN_FEE_BPS} bps (the largest fee in the events)`); continue; }
