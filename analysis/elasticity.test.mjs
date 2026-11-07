@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { census, panelOf, changeRanges, estimate, estimateAll } from './elasticity.mjs';
+import { census, panelOf, changeRanges, estimate, estimateAll, historyDays, LEFT_OUT_DAYS, JOIN_DAY } from './elasticity.mjs';
 
 const dayAt = (start, i) => new Date(Date.parse(`${start}T00:00:00Z`) + i * 864e5).toISOString().slice(0, 10);
 function lcg(seed) { let s = seed; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
@@ -92,11 +92,11 @@ test('census rules: the fee is rounded, needs 10 swaps and a 70% share, and 1cli
   assert.equal(census(flat('x', [[{ ...row('x', 10, 1, 0), fee: null }]])).frontends[0].feeDays, 0, 'a null fee is left out');
 });
 
-test('PREREG 3: 4 Oct 2026 and gap days are left out of the windows', () => {
+test('A4: the 1 to 4 Oct pause and gap days are left out of the windows', () => {
   const days = flat('x', Array(20).fill(10), '2026-10-01').filter((d) => d.head.day !== '2026-10-08');
   const p = panelOf(days);
   assert.equal(p.days.length, 20, 'the calendar keeps the gap day');
-  assert.deepEqual([...p.out].map((i) => p.days[i]).sort(), ['2026-10-04', '2026-10-08']);
+  assert.deepEqual([...p.out].map((i) => p.days[i]).sort(), ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04', '2026-10-08']);
 });
 
 test('AC-5.2 checks: drop the largest, fee shifts, the hub-shift days and an outside control each run on their own', () => {
@@ -116,4 +116,39 @@ test('an outside control missing a day makes the windows around it unusable', ()
   series[panel.at.get('2027-01-24')] = 0;
   const r = estimate(panel, ranges, cen.events, { reps: 100, control: series });
   assert.ok(r.dropped.some((d) => d.frontend === 'app0'), 'app0 windows include 24 Jan');
+});
+
+test('A4: a history row gives the census its daily fee and a stablecoin cost group, and _rest is never a frontend', () => {
+  const doc = { columns: ['day', 'ref', 'n', 'unpriced', 'vol', 'fee', 'np', 'inUsd', 'outUsd', 'grossUsd'], rows: [
+    ['2026-01-01', '1click-a', 40, 1, 5000, 20, 4, 1000, 985, 1002],
+    ['2026-01-01', '_rest', 7, 0, 900, null, 0, 0, 0, 0],
+    ['2026-01-02', '1click-a', 12, 0, 800, null, 0, 0, 0, 0],
+  ] };
+  const days = historyDays(doc);
+  assert.deepEqual(days.map((d) => d.head.day), ['2026-01-01', '2026-01-02']);
+  const cost = days[0].swaps.find((r) => r.np > 0);
+  assert.deepEqual([cost.n, cost.vol, cost.in, cost.out], [0, 0, 1000, 985]);
+  assert.ok(Math.abs(cost.fee - (2 / 1002) * 1e4) < 1e-9);
+  const c = census(days);
+  assert.deepEqual(c.frontends.map((f) => f.frontend), ['1click-a']); // _rest gives no frontend
+  assert.deepEqual(c.frontends[0].runs.map((r) => [r.fee, r.days]), [[20, 1]]); // the cost group does not move the daily fee, and a day with no fee stays one
+  const p = panelOf(days);
+  assert.equal(p.total[0], 5900); // _rest counts in the control
+});
+
+test('A4: a window may not cross from the history to the frozen days, and 1 to 4 Oct are left out', () => {
+  const day = (i) => new Date(Date.parse('2026-09-01T00:00:00Z') + i * 864e5).toISOString().slice(0, 10);
+  const days = Array.from({ length: 70 }, (_, i) => ({ head: { day: day(i) }, swaps: [{ k: 'd', ref: '1click-a', fee: i < 25 ? 10 : 30, b: 'history', n: 20, np: 0, vol: 100000, in: 0, out: 0 }, { k: 'd', ref: '1click-b', fee: 5, b: 'history', n: 20, np: 0, vol: 100000, in: 0, out: 0 }] }));
+  const p = panelOf(days);
+  assert.equal(p.days[p.join], JOIN_DAY);
+  for (const d of LEFT_OUT_DAYS) assert.ok(p.out.has(p.at.get(d)), d);
+  const cen = census(days);
+  const ranges = changeRanges(p, cen);
+  const r = estimate(p, ranges, cen.events, { reps: 10 });
+  const placeboCrossing = r.events.flatMap((e) => e.placeboDates);
+  assert.equal(cen.events.length, 1);
+  assert.equal(r.usable, 1); // the event itself is well before the join
+  assert.ok(placeboCrossing[0] < 70 - 21); // every placebo date whose windows cross the join is gone
+  const early = estimate({ ...p, join: undefined }, ranges, cen.events, { reps: 10 });
+  assert.ok(early.events[0].placeboDates > r.events[0].placeboDates);
 });

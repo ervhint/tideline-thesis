@@ -17,15 +17,35 @@ export const WINDOW_DAYS = 7;
 export const MIN_WINDOW_DAYS = 4;
 export const MIN_BEFORE_USD = 50000;
 export const MIN_EVENTS = 3;
-export const LEFT_OUT_DAYS = ['2026-10-04']; // the last day of the 1 to 4 Oct exploit pause
+export const LEFT_OUT_DAYS = ['2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04']; // the 1 to 4 Oct exploit pause (A4 rule 5)
+export const JOIN_DAY = '2026-10-04'; // the first frozen chain day; a window may not cross from the history to it (A4 rule 5)
 export const HUB_SHIFT_DAYS = ['2026-10-28', '2026-10-29', '2026-10-30']; // flow moved from token_diff swaps to the Confidential Intents treasury
-export const NOT_FRONTENDS = new Set(['', '1click-unknown']);
+export const REST = '_rest'; // frontend-days under 10 swaps: they count in the control and are never a frontend (A4 rule 8)
+export const NOT_FRONTENDS = new Set(['', '1click-unknown', REST]);
 const E2_BUCKET = '1k-10k';
 
 const DAY_MS = 86_400_000;
 const dayAdd = (d, k) => new Date(Date.parse(`${d}T00:00:00Z`) + k * DAY_MS).toISOString().slice(0, 10);
 const daysBetween = (a, b) => (Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / DAY_MS;
 const isFrontend = (ref) => !NOT_FRONTENDS.has(ref ?? '');
+
+// ---- History: one row per frontend per day from BigQuery, in the shape of a parsed day file (PREREG A4) ----
+
+// Two groups a row: one for the census (the daily fee and the USD), one for cost (exact stablecoin-to-stablecoin swaps, with the fee as an effective rate).
+export function historyDays(doc) {
+  const col = Object.fromEntries(doc.columns.map((c, i) => [c, i]));
+  const days = new Map();
+  for (const r of doc.rows) {
+    const day = r[col.day];
+    if (!days.has(day)) days.set(day, { head: { day }, swaps: [] });
+    const g = { k: 'd', ref: r[col.ref], b: 'history' };
+    const { swaps } = days.get(day);
+    swaps.push({ ...g, fee: r[col.fee], n: r[col.n], np: 0, vol: r[col.vol] ?? 0, in: 0, out: 0 });
+    const gross = r[col.grossUsd], inUsd = r[col.inUsd];
+    if (r[col.np] > 0 && gross > 0) swaps.push({ ...g, fee: ((gross - inUsd) / gross) * 1e4, n: 0, np: r[col.np], vol: 0, in: inUsd, out: r[col.outUsd] });
+  }
+  return [...days.values()].sort((a, b) => (a.head.day < b.head.day ? -1 : 1));
+}
 
 // ---- Census: fee rates and swap counts only, no USD (PREREG 3, "Events") ----
 
@@ -95,7 +115,7 @@ export function panelOf(days) {
       s.vol[i] += r.vol; total[i] += r.vol;
     }
   }
-  return { days: cal, at, out, f, total };
+  return { days: cal, at, out, f, total, join: first < JOIN_DAY ? at.get(JOIN_DAY) : undefined };
 }
 
 function mulberry32(a) {
@@ -131,6 +151,7 @@ function compare(panel, ranges, f, li, fi, ownEvent, control) {
   const b = before.filter((i) => !panel.out.has(i)), a = after.filter((i) => !panel.out.has(i));
   if (b.length < MIN_WINDOW_DAYS || a.length < MIN_WINDOW_DAYS) return null;
   const lo = before[0], hi = after.at(-1);
+  if (panel.join !== undefined && lo < panel.join && hi >= panel.join) return null; // A4 rule 5: the two sources differ
   for (const rg of ranges.get(f) ?? []) if (!(ownEvent && rg[0] === li && rg[1] === fi) && overlaps(rg, lo, hi)) return null;
   const s = panel.f.get(f);
   if (!s) return null;

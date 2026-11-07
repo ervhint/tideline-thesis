@@ -6,8 +6,8 @@
   {
    "id": "Q1",
    "name": "Pricing Power",
-   "side": "Not Measured",
-   "detail": "0 usable fee changes, 3 needed",
+   "side": "Neutral",
+   "detail": "Elasticity -0.06 (-1.66 to 1.54), token_diff swaps only",
    "plain": "Whether raising a fee brings in more revenue. It is Bullish only if the whole interval is above -1.",
    "source": "intents.near token_diff swaps, frozen chain days",
    "query": "analysis/elasticity.mjs → data/published/elasticity.json"
@@ -59,7 +59,7 @@
  "verdict": {
   "verdict": "Undecided",
   "score": 3,
-  "missing": 2,
+  "missing": 1,
   "held": [
    "Q3"
   ]
@@ -443,7 +443,7 @@
   "live": [
    "As of 7 Nov, the verdict is held at Undecided because flow went private. The score is +3 of 7, but data lost to private flow may not move the verdict, so it stays Undecided until the treasury share falls back to 50% or less.",
    "Pointing Bullish: NEAR's share of fees is 34% over the last 30 days and revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 75% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free.",
-   "Not measured yet: Pricing Power (0 usable fee changes, 3 needed). Not measured because flow went private: Solver Competition (treasury 74% of USD). On the public swaps left, as side figures that set no reading: spread 10.5 bps and top 3 solvers hold 59%.",
+   "Not measured because flow went private: Solver Competition (treasury 74% of USD). On the public swaps left, as side figures that set no reading: spread 10.5 bps and top 3 solvers hold 59%. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "The Confidential Intents treasury, where funds move to a private chain and the swap settles out of public view, carried 74% of the USD counted over the last 7 frozen days and 22% over the last 30.",
    "A fall in these public numbers is not a fall in demand: swaps moving to the private chain leave the public record whether or not anyone stopped using them. What cannot be seen: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
    "Monthly volume would need to reach about 3.2x today's level under the 1.6% issuance plan, which passed its vote but is not in force yet, or 5.0x if issuance stays at 2.5%, with all revenue spent on buybacks."

@@ -26,7 +26,7 @@ export function elasticityView(doc: ElasticityDoc | null) {
   if (!doc) return { live: false as const, head: 'Fee-Change List Did Not Load', empty: 'The fee-change list did not load. No result is shown, and no earlier result is reused.', checks: [] as { name: string; text: string }[], days: null as string[] | null, caption: null as string | null, mde: null as string | null, plot: null, axis: null as ReturnType<typeof axis> | null };
   const m = doc.main;
   const days = doc.census.events.map((e) => e.firstDayAfter);
-  const span = `${doc.daysRead} frozen chain days, ${short(doc.from)} to ${short(doc.to)}`;
+  const span = `${doc.daysRead} days of chain data, ${short(doc.from)} to ${short(doc.to)}`;
   const ax = axis(doc.from, doc.to);
   if (m.usable < 3 || !m.e1) {
     const count = doc.frozenEvents === 0
@@ -40,7 +40,7 @@ export function elasticityView(doc: ElasticityDoc | null) {
     return {
       live: true as const, head: 'Not Enough Fee Changes to Say Yet',
       empty: [count, 'So Pricing Power reads Not Measured. The fee trace and the threshold stay the lead until there are more.'].join(String.fromCharCode(10)),
-      checks, days, caption: `Each tick is one fee change that passes the rules in PREREG.md (frozen 5 Nov 2026). ${days.length ? '' : 'None does yet.'}`.trim(),
+      checks, days, caption: `Each tick is one fee change that passes the rules in PREREG.md (sections 3 and A4). ${days.length ? '' : 'None does yet.'}`.trim(),
       mde: 'Smallest effect it could see: none yet, with under 3 usable fee changes to test', plot: null, axis: ax,
     };
   }

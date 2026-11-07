@@ -1,10 +1,10 @@
-// E1 elasticity and E2 pass-through on the frozen chain days (T5, PREREG.md sections 3 and 4) -> data/published/elasticity.json.
-// No network: reads data/chain/*.jsonl and the DefiLlama control venues in data/snapshot. CHAIN_DIR / OUT / REPS override.
-import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
+// E1 elasticity and E2 pass-through (PREREG.md sections 3 and 4, amendment A4) -> data/published/elasticity.json.
+// No network and no key: reads the stored BigQuery history, data/chain/*.jsonl and the DefiLlama control venues in data/snapshot. CHAIN_DIR / HISTORY / OUT / REPS override.
+import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { parseDayFile } from '../analysis/chain_day.mjs';
 import {
-  census, panelOf, changeRanges, estimateAll, REPS, SEED, MIN_EVENTS, MIN_RUN_DAYS, MIN_CHANGE_BPS, MAX_GAP_DAYS, LEFT_OUT_DAYS,
+  census, panelOf, changeRanges, estimateAll, historyDays, REPS, SEED, MIN_EVENTS, MIN_RUN_DAYS, MIN_CHANGE_BPS, MAX_GAP_DAYS, LEFT_OUT_DAYS,
 } from '../analysis/elasticity.mjs';
 
 const dir = process.env.CHAIN_DIR ?? 'data/chain';
@@ -13,11 +13,14 @@ const reps = Number(process.env.REPS ?? REPS);
 
 const files = readdirSync(dir).filter((f) => /^\d{4}-\d{2}-\d{2}\.jsonl$/.test(f)).sort();
 if (!files.length) throw new Error(`no frozen chain days in ${dir}`);
-const days = files.map((f) => {
+const frozen = files.map((f) => {
   const p = parseDayFile(readFileSync(`${dir}/${f}`, 'utf8'), f.slice(0, 10));
   if (p.problems.length) throw new Error(`${f}: ${p.problems.join('; ')}`);
   return p;
 });
+const historyFile = process.env.HISTORY ?? 'data/bigquery/elasticity_days.json';
+const history = existsSync(historyFile) ? historyDays(JSON.parse(readFileSync(historyFile, 'utf8'))).filter((d) => d.head.day < frozen[0].head.day) : [];
+const days = [...history, ...frozen];
 
 const cen = census(days);
 const panel = panelOf(days);
@@ -44,13 +47,14 @@ const pack = (r) => r && { ...r, events: r.events };
 const main = result ? pack(result.main) : { usable: 0, events: [], dropped: [], e1: null, e2: null, e2Bucket: null, e2Events: 0, e2BucketEvents: 0 };
 const usable = main.usable;
 const notMeasured = usable >= MIN_EVENTS ? null : cen.events.length === 0
-  ? `No fee change passes the PREREG.md section 3 rules in the ${days.length} frozen days: a frontend must hold one rate for ${MIN_RUN_DAYS} days, then another rate at least ${MIN_CHANGE_BPS} bps away for ${MIN_RUN_DAYS} days.`
+  ? `No fee change passes the PREREG.md section 3 rules in the ${days.length} days read: a frontend must hold one rate for ${MIN_RUN_DAYS} days, then another rate at least ${MIN_CHANGE_BPS} bps away for ${MIN_RUN_DAYS} days.`
   : `Only ${usable} of the ${cen.events.length} fee changes found are usable, under the ${MIN_EVENTS} needed.`;
 
 const doc = {
   asOf: `${days.at(-1).head.day}T23:59:59Z`,
-  source: 'intents.near token_diff swaps on frozen chain days (data/chain)',
-  prereg: 'PREREG.md sections 3 and 4, committed 5 Nov 2026 (bfda0f2)',
+  source: history.length ? 'intents.near token_diff swaps: BigQuery history (data/bigquery/elasticity_days.json) then frozen chain days (data/chain)' : 'intents.near token_diff swaps on frozen chain days (data/chain)',
+  prereg: 'PREREG.md sections 3 and 4 and amendment A4',
+  historyDays: history.length, frozenDays: frozen.length,
   seed: SEED, reps,
   from: days[0].head.day, to: days.at(-1).head.day, daysRead: days.length, leftOutDays: LEFT_OUT_DAYS,
   census: {
@@ -65,7 +69,7 @@ const doc = {
   checks: result ? Object.fromEntries(Object.entries(result.checks).map(([k, v]) => [k, pack(v)])) : {},
   notMeasured,
   notRun: notMeasured ? ['E1, E2 and their checks: no estimate without at least 3 usable fee changes (PREREG.md section 3)'] : [],
-  query: 'census and estimateAll in analysis/elasticity.mjs over data/chain/*.jsonl, by pipeline/build_elasticity.mjs; npm run elasticity',
+  query: 'queries/elasticity_read.sql and queries/elasticity_days.sql, then census and estimateAll in analysis/elasticity.mjs, by pipeline/build_elasticity.mjs; npm run elasticity',
 };
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, JSON.stringify(doc, null, 1) + '\n');
