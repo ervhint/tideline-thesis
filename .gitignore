@@ -1,0 +1,19 @@
+.env*
+!.env.example
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.vercel
+
+# Private working notes
+THESIS_DRAFT.md
+HACKATHON.md
+HACKATHON-WORKFLOW*.md
+DESIGN-REFERENCE*.md
+*BRIEF*.md
+.private/
+
+# The rolling panel lives only in the runner's temp folder and a one-day artifact
+.panel/

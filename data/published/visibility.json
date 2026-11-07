@@ -1,0 +1,97 @@
+{
+ "prereg": "PREREG.md amendment A3",
+ "source": "DefiLlama dexs/near-intents daily volume ÷ USD counted in the frozen chain days, 7-day sums",
+ "query": "analysis/visibility.mjs visibility → data/snapshot/defillama_daily.json, data/chain/*.jsonl",
+ "rule": "Shown as a ratio with no line and no state: too little chain history before 27 Oct 2026 to set one",
+ "line": null,
+ "state": null,
+ "history": {
+  "wantedDays": 90,
+  "chainDaysBefore": 23,
+  "ratiosBefore": 17
+ },
+ "lastDay": "2026-11-06",
+ "ratio": 3.8536482258626554,
+ "llama7dUsd": 865118072,
+ "chain7dUsd": 224493264.89999998,
+ "rangeBefore": {
+  "low": 3.6457966578128156,
+  "high": 4.378366252975466
+ },
+ "revenueSplit": {
+  "before": {
+   "from": "2026-09-27",
+   "to": "2026-10-26",
+   "days": 30,
+   "volumeUsd": 4000245264,
+   "revenueUsd": 2129466,
+   "revenueRate": 0.000532333859417076
+  },
+  "since": {
+   "from": "2026-10-27",
+   "to": "2026-11-06",
+   "days": 11,
+   "volumeUsd": 1452396559,
+   "revenueUsd": 655344,
+   "revenueRate": 0.0004512156104605588
+  }
+ },
+ "recent": [
+  {
+   "day": "2026-10-24",
+   "ratio": 3.7261681721396744
+  },
+  {
+   "day": "2026-10-25",
+   "ratio": 3.7804123499201974
+  },
+  {
+   "day": "2026-10-26",
+   "ratio": 3.7692026699037657
+  },
+  {
+   "day": "2026-10-27",
+   "ratio": 3.818106521691073
+  },
+  {
+   "day": "2026-10-28",
+   "ratio": 3.9301018969483934
+  },
+  {
+   "day": "2026-10-29",
+   "ratio": 4.128691494506199
+  },
+  {
+   "day": "2026-10-30",
+   "ratio": 4.115712690155574
+  },
+  {
+   "day": "2026-10-31",
+   "ratio": 4.093541020861542
+  },
+  {
+   "day": "2026-11-01",
+   "ratio": 4.022156907947171
+  },
+  {
+   "day": "2026-11-02",
+   "ratio": 3.984103012720111
+  },
+  {
+   "day": "2026-11-03",
+   "ratio": 3.9605955642221464
+  },
+  {
+   "day": "2026-11-04",
+   "ratio": 3.9464143866131796
+  },
+  {
+   "day": "2026-11-05",
+   "ratio": 3.756217485000349
+  },
+  {
+   "day": "2026-11-06",
+   "ratio": 3.8536482258626554
+  }
+ ]
+}

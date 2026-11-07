@@ -1,0 +1,25 @@
+{
+  "name": "tideline-thesis",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "test": "node --test",
+    "verify": "node pipeline/verify.mjs",
+    "model": "node pipeline/model.mjs",
+    "attest:check": "node pipeline/attest_check.mjs",
+    "attest:send": "node pipeline/attest_send.mjs",
+    "elasticity": "node pipeline/build_elasticity.mjs",
+    "refresh": "node pipeline/refresh.mjs",
+    "rebuild": "node pipeline/build_chain_days.mjs && node pipeline/build_visibility.mjs && node pipeline/build_fee_trace.mjs && node pipeline/build_elasticity.mjs && node pipeline/build_confidential.mjs && node pipeline/build_thesis.mjs && node pipeline/build_reconciliation.mjs && node pipeline/build_token_board.mjs"
+  },
+  "dependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "next": "^16.4.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^7.0.2"
+  }
+}
