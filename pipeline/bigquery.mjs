@@ -40,11 +40,12 @@ export function client({ project, token, fetchFn = fetch }) {
   };
 }
 
-export async function rerun({ read = false, maxGb = DEFAULT_MAX_GB, env = process.env, fetchFn = fetch, log = console.log } = {}) {
+// only: run just these SQL files (the weekly activity job runs the two activity queries).
+export async function rerun({ read = false, maxGb = DEFAULT_MAX_GB, only = null, env = process.env, fetchFn = fetch, log = console.log } = {}) {
   const project = env.GOOGLE_PROJECT, token = env.GOOGLE_ACCESS_TOKEN;
   if (!project || !token) throw new Error('Set GOOGLE_PROJECT and GOOGLE_ACCESS_TOKEN (gcloud auth print-access-token). See queries/README.md.');
   const bq = client({ project, token, fetchFn });
-  for (const job of JOBS) {
+  for (const job of JOBS.filter((j) => !only || only.includes(j.sql))) {
     if (job.read && !read) { log(`skipped ${job.sql}: about 818 GB. Add --read --max-gb 900 to run it.`); continue; }
     const query = forProject(readFileSync(job.sql, 'utf8'), project);
     const estimate = await bq.estimate(query);

@@ -2,6 +2,8 @@
 
 A re-runnable investment thesis for NEAR, built on NEAR Intents fee data. Research, not financial advice.
 
+> **Why the Explorer data is only in the rolling panel.** The track asks for swap volume from the NEAR Intents Explorer API. Its terms ([1ClickSwap API Terms of Use](https://partners.near-intents.org/legal/terms-of-service), Section 4.1(e)) do not allow storing API data for more than 24 hours, so Tideline shows it only in a panel that is rebuilt each day and kept for one day. The thesis and the verdict use stored public data (BigQuery, chain reads, DefiLlama) that anyone can re-run.
+
 **Read the argument in [THESIS.md](THESIS.md).** The rules, written down before the results they govern, are in [PREREG.md](PREREG.md).
 
 ## The problem
@@ -30,6 +32,20 @@ What cannot be seen: fees on confidential swaps, solver identity, and any flow t
 | Active accounts, transactions, contract use | BigQuery | Yes, `data/bigquery/` |
 | Frontends and fees since 27 Oct | Intents Explorer API | **No. Rolling panel only** |
 | Current quote breakdown | 1Click dry quotes | **No. Rolling panel only** |
+
+## What updates on its own
+
+Every job runs in GitHub Actions, started by cron-job.org ([docs/CRON.md](docs/CRON.md)), and commits only after `npm run verify` passes.
+
+| Job | When (WIB) | What it updates |
+| --- | --- | --- |
+| `refresh` | every hour | DefiLlama volume, fees and revenue, NEAR price and supply, the intents.near protocol fee, token names, then every published file |
+| `chain-day` | daily, 10:17 | Freezes yesterday's chain day and treasury file |
+| `attest-days` | daily, 12:41 | Records each frozen day's hash on NEAR testnet |
+| `panel` | daily, 09:07 | The rolling panel (a one-day artifact, never committed) |
+| `activity` | weekly, Saturday 11:41 | Re-runs the two BigQuery activity queries for the last 90 days |
+
+Fixed on purpose: the year of fee-change history before 3 Oct 2026 (one BigQuery read, frozen by PREREG.md amendment A4) and the pre-registered lines.
 
 ## What is kept, what is not, and why
 

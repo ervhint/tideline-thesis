@@ -49,7 +49,7 @@ test('a referral that looks like an account is never shown by name', () => {
 test('the panel holds totals only: no address, deposit address, recipient or row', async () => {
   const text = JSON.stringify(await panel());
   for (const leak of ['canary-deposit-address', 'canary-wallet', 'canary-sender', 'canary-recipient', 'canary-quote-address', 'depositAddress', 'recipient']) assert.ok(!text.includes(leak), leak);
-  assert.deepEqual(Object.keys(JSON.parse(text)).sort(), ['frontends', 'kind', 'leftOut', 'quotes', 'sinceConfidential', 'startedAt', 'swaps', 'window']);
+  assert.deepEqual(Object.keys(JSON.parse(text)).sort(), ['byDay', 'frontends', 'kind', 'leftOut', 'quotes', 'sinceConfidential', 'startedAt', 'swaps', 'window']);
 });
 
 test('a canary pushed through the panel leaves every tracked file as it was', async () => {
@@ -180,4 +180,57 @@ test('with the switch off the Reproduce page has no panel command and no mention
   assert.ok(!commandsFor(true).some((c) => /panel/i.test(c.cmd + c.example)));
   assert.match(reproduceLead(false), /panel/);
   assert.doesNotMatch(reproduceLead(true), /panel/);
+});
+
+// T6e (docs/PLAN.md §6c, A1 to A5): the per-day totals.
+const threeDays = (now3) => buildPanel({ now: now3, quotes: async () => [], log: () => {}, pull: async (day, onRows) => {
+  if (day === '2026-10-26') onRows([row({ amountInUsd: '100' }), row({ amountInUsd: '50' })]);
+  if (day === '2026-10-27') { onRows([row({ amountInUsd: '10' }), row({ destinationAsset: 'nep141:a', amountInUsd: '999' })]); onRows([row({ amountInUsd: null })]); }
+  if (day === '2026-10-28') onRows([row({ amountInUsd: '5' })]);
+} });
+
+test('T-T6e.4 one per-day total for each day read, sorted, summing to the window total; same-token and unpriced left out', async () => {
+  const doc = await threeDays(new Date('2026-11-08T03:00:00Z'));
+  const seen = doc.byDay.filter((d) => d.swaps > 0);
+  assert.deepEqual(seen, [{ day: '2026-10-26', swaps: 2, usd: 150 }, { day: '2026-10-27', swaps: 1, usd: 10 }, { day: '2026-10-28', swaps: 1, usd: 5 }]);
+  assert.deepEqual(doc.byDay.map((d) => d.day), [...doc.byDay.map((d) => d.day)].sort());
+  assert.equal(doc.byDay.reduce((t, d) => t + d.usd, 0), doc.swaps.usd);
+});
+
+test('T-T6e.4 a failed page stops the run, so a half-read day never reaches a panel, as zero or otherwise', async () => {
+  let wrote = false;
+  const run = buildPanel({ now, quotes: async () => [], log: () => {}, pull: async (day, onRows) => {
+    onRows([row()]);
+    if (day === '2026-10-20') throw new Error('explorer: too many failures');
+  } }).then(() => { wrote = true; });
+  await assert.rejects(run, /too many failures/);
+  assert.equal(wrote, false);
+});
+
+test('T-T6e.5 a per-day total holds only day, swaps and usd', async () => {
+  const doc = await panel();
+  assert.equal(doc.byDay.length, 30);
+  for (const d of doc.byDay) assert.deepEqual(Object.keys(d).sort(), ['day', 'swaps', 'usd']);
+  const text = JSON.stringify(doc.byDay);
+  for (const leak of ['canary', 'referral', 'frontend', 'recipient', 'depositAddress', 'sender']) assert.ok(!text.includes(leak), leak);
+});
+
+test('T-T6e.6 the series is live with the panel, absent without byDay, gone when stale or off', async () => {
+  const doc = await threeDays(now);
+  const v = panelView(doc, { now });
+  assert.equal(v.days.length, 30);
+  assert.deepEqual(v.days.find((d) => d.day === '2026-10-26'), { day: '2026-10-26', usd: 150 });
+  const { byDay, ...old } = doc;
+  const o = panelView(old, { now });
+  assert.equal(o.state, 'live');
+  assert.equal(o.days, null);
+  assert.match(o.swapsText, /swaps worth/);
+  const gap = panelView({ ...doc, byDay: doc.byDay.filter((d) => d.day !== '2026-10-27') }, { now });
+  assert.deepEqual(gap.days.find((d) => d.day === '2026-10-27'), { day: '2026-10-27', usd: null });
+  assert.equal(panelView(doc, { now: new Date(now.getTime() + 25 * 3_600_000) }).state, 'unavailable');
+  assert.equal(panelView(doc, { off: true, now }).state, 'off');
+});
+
+test('T-T6e.7 the shared chart code imports nothing from the panel', () => {
+  for (const f of ['components/BarCharts.tsx', 'lib/bar_charts.ts']) for (const g of reach(f)) assert.ok(!API_CODE.includes(g), `${f} reaches ${g}`);
 });

@@ -343,3 +343,21 @@ body[data-state=loading] .reading img{opacity:0}
 .ci-key{font-size:14px;line-height:19px;letter-spacing:-.01em;color:var(--text-muted);margin-top:12px!important;max-width:700px}
 .ci-key b{font-weight:500;color:var(--text)}
 @media (max-width:700px){.e-checks + .chart{margin-top:24px}.e-checks{grid-template-columns:1fr;padding:24px 20px 28px}.ci{padding:24px 20px 28px}.ci-plot{margin:20px 14px 0}}
+/* T6e: small bar charts (components/BarCharts.tsx), in the interval plot's language: thin track, accent bars, muted 13px labels */
+.bars{margin:0}
+.banner .bars{margin-top:16px}
+.banner:has(.bars){max-width:none}.banner>div:has(.bars){flex:1;min-width:0}
+.banner .bars-cap{margin-top:12px}
+.bars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px}
+.bars-one p{margin:0}
+.bars .bars-title{color:var(--text);font-family:var(--font-label);font-weight:500;font-size:15px;line-height:19px;letter-spacing:-.02em}
+.bars .bars-latest{color:var(--text);font-weight:300;font-size:32px;line-height:38px;letter-spacing:-.02em;margin-top:6px!important}
+.bars .bars-when{font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;color:var(--text-muted)}
+.bars-plot{position:relative;height:96px;margin-top:16px;border-bottom:2px solid var(--track)}
+.bars-bar{position:absolute;bottom:0;border-radius:2px 2px 0 0;background:var(--accent);opacity:.55}
+.bars-bar.last{background:var(--text);opacity:1}
+.bars-mark{position:absolute;top:-6px;bottom:-6px;border-left:1px dashed var(--text-muted)}
+.bars-ends{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;color:var(--text-muted)}
+.bars-key{display:flex;align-items:center;gap:8px;margin-top:20px;font-size:14px;line-height:19px;color:var(--text-muted)}
+.bars-swatch{display:inline-block;height:16px;border-left:1px dashed var(--text-muted)}
+@media (max-width:700px){.bars-grid{gap:28px}}

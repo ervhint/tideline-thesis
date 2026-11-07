@@ -16,18 +16,20 @@ const dry = args['dry-run'];
 const HISTORY = 'alarm/history.json';
 const LLAMA = 'data/snapshot/defillama_daily.json';
 const COW = 'data/snapshot/cow_daily.json';
+const PROTOCOL = 'data/snapshot/protocol_fee.json';
 const P = 'data/published';
 const VENUES = 'data/snapshot/control_venues.json';
 const TOKENS = 'data/labels/tokens.json';
 const DERIVED = STEPS;
-const FILES = [LLAMA, COW, VENUES, TOKENS, `${P}/model_inputs.json`, ...DERIVED.map((f) => `${P}/${f}.json`), HISTORY];
+const FILES = [LLAMA, COW, VENUES, TOKENS, PROTOCOL, `${P}/model_inputs.json`, ...DERIVED.map((f) => `${P}/${f}.json`), HISTORY];
 
 const read = (f) => (existsSync(f) ? readFileSync(f, 'utf8') : null);
 const backup = new Map(FILES.map((f) => [f, read(f)]));
 const restore = (f) => { const old = backup.get(f); if (old !== null) writeFileSync(f, old); };
 
-// Same numbers? Timestamps that change on every run are ignored.
-const VOLATILE = ['asOf', 'pulledAt'];
+// Same numbers? Timestamps that change on every run are ignored. readAt is the protocol fee's read: the copy is kept
+// until fee() or its collector changes, so its readAt is the first read of the current value.
+const VOLATILE = ['asOf', 'pulledAt', 'readAt'];
 const core = (text) => { const o = JSON.parse(text); for (const k of VOLATILE) delete o[k]; return JSON.stringify(o); };
 const changed = (f) => backup.get(f) === null || core(backup.get(f)) !== core(readFileSync(f, 'utf8'));
 
@@ -46,12 +48,13 @@ function settle(f) {
 try {
   // Inputs first: the derived files read the settled copies, so verify can recompute them.
   // A flaky outside source must not stop the run: keep the previous copy, say so, and try again next hour.
-  for (const s of ['pipeline/pull_defillama.mjs', 'pipeline/model_inputs.mjs', 'pipeline/token_names.mjs']) {
+  for (const s of ['pipeline/pull_defillama.mjs', 'pipeline/model_inputs.mjs', 'pipeline/token_names.mjs', 'pipeline/protocol_fee.mjs']) {
     try { node(s); } catch (e) { console.log(`WARNING: ${s} failed, the previous copy is kept.\n${String(e.message).split('\n').filter((l) => /^Error: http|: \d{3}$|ECONN|TIMEOUT|terminated/.test(l)).join('\n')}`); }
   }
   settle(LLAMA);
   settle(COW);
   settle(VENUES);
+  settle(PROTOCOL);
   settle(`${P}/model_inputs.json`);
   if (existsSync(TOKENS)) settle(TOKENS);
 

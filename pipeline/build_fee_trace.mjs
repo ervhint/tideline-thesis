@@ -19,6 +19,10 @@ const days = files.map((f) => {
   return p;
 });
 const protocol = JSON.parse(readFileSync('data/snapshot/protocol_fee.json', 'utf8'));
+// The earliest reading in the unbroken run of readings equal to the current one: fee() has read the same since at least then.
+const reads = [...protocol.pastReadings, protocol.readAt].sort((a, b) => a.block - b.block);
+let first = reads.length - 1;
+while (first > 0 && reads[first - 1].feePips === protocol.feePips) first--;
 const inputs = JSON.parse(readFileSync(`${pub}/model_inputs.json`, 'utf8'));
 const span = (Date.parse(`${days.at(-1).head.day}T00:00:00Z`) - Date.parse(`${days[0].head.day}T00:00:00Z`)) / 86_400_000 + 1;
 
@@ -26,7 +30,7 @@ const result = {
   prereg: 'PREREG.md sections 5, 7 and 8, amendment A2',
   from: days[0].head.day, to: days.at(-1).head.day, days: days.length, gapsInWindow: span - days.length,
   priceBand: PRICE_BAND,
-  protocolFee: { bps: protocol.feeBps, collector: protocol.collector, source: protocol.source, readAt: protocol.readAt.at },
+  protocolFee: { bps: protocol.feeBps, pips: protocol.feePips, sameSince: reads[first].at.slice(0, 10), collector: protocol.collector, source: protocol.source, readAt: protocol.readAt.at },
   trace: feeTrace(days, protocol.feeBps),
   q3: q3Spread(days, protocol.feeBps),
   solvers: solverConcentrationChain(days),

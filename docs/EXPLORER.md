@@ -16,7 +16,7 @@ No history of the panel exists anywhere. The job's log carries no figure, becaus
 
 ## What is in it
 
-Totals only: swaps, USD, app fee rate, the same since 27 Oct, the five largest frontends by share, and the quote line per size. No wallet addresses, deposit addresses or per-swap rows. A referral that looks like an account is shown as "Other".
+Totals only: swaps, USD, app fee rate, the same since 27 Oct, the five largest frontends by share, the quote line per size, and a per-day total (`byDay`: day, swaps, USD) for each day of the window, which Follow the Fee draws as a chart. A failed page stops the whole run, so a half-read day never reaches the panel; a day with no total is left blank, never drawn as zero. The per-day totals go back only 30 days, are not thesis evidence, and `npm run rebuild` cannot make them again. No wallet addresses, deposit addresses or per-swap rows. A referral that looks like an account is shown as "Other".
 
 The panel sets no reading and no side. The readings and the verdict use stored public data only, so nothing from these APIs reaches git, `data/`, `thesis.json`, a log or a Telegram message.
 

@@ -9,7 +9,7 @@ type Confidential = { swaps: number; inUsd: number; allInBps: number | null };
 type ByKind = { all: CostParts; tokenDiff: CostParts; transfer: CostParts; confidential?: Confidential };
 export type FeeTrace = {
   from: string; to: string; days: number; gapsInWindow: number;
-  protocolFee?: { bps: number; collector: string };
+  protocolFee?: { bps: number; collector: string; pips?: number; sameSince?: string };
   trace: { days: string[]; bySize: Record<string, ByKind>; allSizes: ByKind };
   nearRevenue?: { bps: number; from: string; to: string };
   query?: string;
@@ -23,6 +23,14 @@ const bps = (v: number) => `${v.toFixed(1)} bps`;
 const int = (n: number) => n.toLocaleString('en-US');
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const dayName = (d: string) => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+
+// fee() as read from the chain each hour (pipeline/protocol_fee.mjs in the refresh job), never typed in.
+export function protocolText(p: FeeTrace['protocolFee']) {
+  if (!p) return 'the fee() rate could not be read.';
+  const pips = p.pips ?? Math.round(p.bps * 100);
+  const since = p.sameSince ? `, and it has read the same at every check since at least ${Number(p.sameSince.slice(8, 10))} ${new Date(`${p.sameSince}T00:00:00Z`).toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })}` : '';
+  return `fee() is ${pips} pip${pips === 1 ? '' : 's'}, which is ${Number(p.bps.toFixed(4))} bps${since}.`;
+}
 
 // S2: what a $10,000 swap costs, from the realised swaps of the last frozen chain days.
 // Three states: `missing` (the file did not load), `empty` (the public bucket holds no measured swaps) and `split`. No sample figure exists to fall back on.
@@ -60,7 +68,7 @@ export function feeView(trace: FeeTrace | null) {
     parts: [
       { key: 'app', value: usd(d(g.appFeeBps)), name: `App Fee, ${bps(g.appFeeBps)}`, share: Math.max(g.appFeeBps, 0), minPx: 0, text: `The fee a frontend takes, read on chain as a separate transfer from the user to a fee account. Only token_diff swaps show it (${td.appFeeBps != null ? bps(td.appFeeBps) : 'none'} on those). Plain transfer swaps, ${pct(plainShare)} of this public USD, show none, so any fee they charge sits in the rest below.` },
       { key: 'withdraw', value: '—', name: 'Withdraw Fee, Not in These Swaps', share: 0, minPx: 0, text: 'Paid when funds leave intents.near for another chain, outside the swap itself, so the chain swaps here do not hold it.' },
-      { key: 'protocol', value: usd(d(g.protocolBps)), name: `Protocol Fee, ${g.protocolBps.toFixed(2)} bps`, share: Math.max(g.protocolBps, 0), minPx: 2, text: `Charged by the intents.near contract on token_diff swaps: fee() is 1 pip, which is 0.01 bps, and it has not moved since January 2026. It goes to the contract's fee collector${trace.protocolFee ? `, account ${trace.protocolFee.collector.slice(0, 8)}…${trace.protocolFee.collector.slice(-4)}` : ''}. Plain transfer swaps pay none.` },
+      { key: 'protocol', value: usd(d(g.protocolBps)), name: `Protocol Fee, ${g.protocolBps.toFixed(2)} bps`, share: Math.max(g.protocolBps, 0), minPx: 2, text: `Charged by the intents.near contract on token_diff swaps: ${protocolText(trace.protocolFee)} It goes to the contract's fee collector${trace.protocolFee ? `, account ${trace.protocolFee.collector.slice(0, 8)}…${trace.protocolFee.collector.slice(-4)}` : ''}. Plain transfer swaps pay none.` },
       { key: 'unexplained', value: usd(d(g.spreadBps)), name: `Solver Spread, Unexplained Rest, ${bps(g.spreadBps)}`, share: Math.max(g.spreadBps, 0), minPx: 2, text: `What is left after the fees above: what the solver kept, any fee charged inside its price, and price movement within the hour (prices are hourly). On token_diff swaps alone it is ${td.spreadBps != null ? bps(td.spreadBps) : 'not measured'}; on plain transfer swaps ${plain.spreadBps != null ? bps(plain.spreadBps) : 'not measured'}. Shown, never hidden.` },
       ...(conf?.allInBps != null
         ? [{ key: 'confidential', value: bps(conf.allInBps), name: 'Confidential Path, Reported Apart', share: 0, minPx: 0, text: `Not in the split above. Funds go to the Confidential Intents treasury, the swap settles on a private chain, and funds come back. From the two public edges, ${int(conf.swaps)} paired confidential flows of ${size} cost ${bps(conf.allInBps)} all-in; they are ${pct(confShare)} of the USD of this size. Any fee on this path is hidden, so none of it is called an app fee or a solver spread, and its app fee is not read as 0.` }]

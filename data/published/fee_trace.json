@@ -10,6 +10,8 @@
  ],
  "protocolFee": {
   "bps": 0.01,
+  "pips": 1,
+  "sameSince": "2026-01-24",
   "collector": "7066024d3f20f94de601c003163367873cca78507eeca4df66d9be645f197f05",
   "source": "intents.near view calls fee() and fee_collector(), FastNEAR archival RPC",
   "readAt": "2026-11-03T08:51:21.885Z"

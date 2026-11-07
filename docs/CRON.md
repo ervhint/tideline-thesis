@@ -17,7 +17,7 @@ What it can do: start, re-run, cancel and delete workflow runs on this one repo.
 
 ## 2. The jobs on cron-job.org
 
-Four cronjobs, time zone **Asia/Jakarta (WIB)**, each with a custom crontab that holds both of its daily times.
+Four cronjobs (a fifth, for activity, is in 2b), time zone **Asia/Jakarta (WIB)**, each with a custom crontab that holds both of its daily times.
 
 | Title | Crontab (WIB) | Times WIB (UTC) | Workflow file | Body |
 | --- | --- | --- | --- | --- |
@@ -40,6 +40,23 @@ For every job, under **Advanced**:
 - Notifications: email on failure. GitHub answers **204** when it started the run; anything else counts as a failure.
 
 Why these times: a chain day freezes at least 2 hours after it ends, and the freeze takes 45 to 95 minutes, so attest-days at 05:41 follows the 03:17 freeze. The 06:17 retry only works if the first run failed (otherwise it stops in seconds), and the 08:41 attest catches a day the retry froze.
+
+## 2b. The weekly activity job (T6f)
+
+A fifth cronjob, set up like the four above:
+
+| Title | Crontab (WIB) | Times WIB (UTC) | Workflow file | Body |
+| --- | --- | --- | --- | --- |
+| tideline activity | `41 11 * * 6` | Saturday 11:41 (04:41) | `activity.yml` | `{"ref":"main"}` |
+
+It needs a Google login, kept as a repo secret. The human makes it; the key never appears in chat, a file or a commit.
+
+1. Google Cloud console, project `tideline-check` → IAM & Admin → Service Accounts → **Create service account**. Name: `tideline-activity`. Role: **BigQuery Job User**. Nothing else: the NEAR dataset is public.
+2. Open the new account → Keys → Add key → Create new key → **JSON**. A file downloads.
+3. GitHub → `ervhint/tideline-thesis` → Settings → Secrets and variables → Actions → New repository secret. Name: `GOOGLE_SA_KEY`. Value: the whole JSON file. Then delete the downloaded file.
+4. Start the job once by hand: Actions → activity → Run workflow. It should commit `data: activity <date>`.
+
+If Google says key creation is disabled for the project, stop and tell the agent: the fallback is GitHub's keyless sign-in to Google (Workload Identity Federation), which takes more steps.
 
 ## 3. Check it works
 

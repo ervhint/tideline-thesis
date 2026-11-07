@@ -1,0 +1,49 @@
+name: activity
+
+# Weekly: re-runs the two activity queries in queries/ for the last 90 finished UTC days on BigQuery, recomputes
+# data/published/activity.json, and commits only after `npm run verify` passes (T6f, docs/CRON.md).
+# Started by cron-job.org through the API; GitHub's own schedule dropped most runs, so it is not used.
+# The Google login is the repo secret GOOGLE_SA_KEY (a service account with BigQuery Job User on the project).
+# About 20 GB a run of the free tier's 1 TB a month. A Sandbox project has no billing, so it can never cost money.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: activity
+  cancel-in-progress: false
+
+jobs:
+  activity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      # A short-lived access token only: no credentials file is written, so nothing from Google can be staged.
+      - id: google
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GOOGLE_SA_KEY }}
+          token_format: access_token
+          create_credentials_file: false
+      - name: Re-run the activity queries
+        env:
+          GOOGLE_PROJECT: ${{ vars.GOOGLE_PROJECT || 'tideline-check' }}
+          GOOGLE_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: node pipeline/activity_refresh.mjs
+      - name: Verify
+        run: npm run verify
+      - name: Commit
+        run: |
+          git config user.name "tideline-activity"
+          git config user.email "tideline-activity@users.noreply.github.com"
+          git add queries/daily_transactions.sql queries/daily_contract_usage.sql data/bigquery/daily_transactions.json data/bigquery/daily_contract_usage.json data/published/activity.json
+          if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
+          git commit -m "data: activity $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase origin main && git push && exit 0; sleep 10; done
+          exit 1

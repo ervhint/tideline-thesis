@@ -91,6 +91,8 @@ Deadline 14 Nov 23:59 UTC.
 | T5b | **Elasticity history, if there is time.** One-day BigQuery test, PREREG amendment, one saved read of `intents.near` logs to 1 Sep 2025, E1 and E2 re-run. Stops if the one-day test fails | 8h | Elasticity page reads from the longer history, or the reason it can't |
 | T5b | **Elasticity history.** Done 7 Nov: one-day test, PREREG A4, one saved read of 818 GB, 21 usable fee changes, Q1 Neutral | | Done |
 | T6d | **Rolling panel.** Done 7 Nov: docs/EXPLORER.md, PREREG A3 | | Local tests pass; a real run needs the repo |
+| T6e | **Track brief charts** (§6c). Activity chart on Method, a per-day chart in the rolling panel, the README note on the terms | 4h | §6c done list |
+| T6f | **Nothing stuck** (§6d). Weekly BigQuery activity job; protocol fee re-read hourly | 2h | §6d done list |
 | T7 | **P7.** Vercel, README, video | per workflow | G6 and G7 |
 
 About 32 hours of work plus Actions runtime, which is tight but fits if T1 passes by 6 Nov.
@@ -152,6 +154,61 @@ PREREG.md amendment A2 is the definition; code that differs is the bug. Why and 
 **Site.** Text in existing slots only, no new layout, so nothing here needs a rule 21 question: the home lead and body lines, an existing `s-row` on Follow the Fee for the confidential path, notes on Concentration, What Would Move and Method. A chart of the shift would be a design change and is asked first.
 
 **Done when:** A2 rules 1 to 8 have tests; `npm test`, `verify`, gitleaks and Chrome at 1440 and 375 for every state pass; code review is clean. The backfill can only run once this is on main, which needs the human's command.
+
+## 6c. T6e plan: Track brief charts (written 7 Nov 2026)
+
+**Why.** Checked against the track brief (`nearai/near-hackathon-prompt-examples`, `tracks/02-thesis.md`) on 7 Nov: all five asks are met. Two are weak:
+1. The brief asks for a pull from the Explorer API for swap volume. The pull exists, but the site shows it only as one sentence, and a judge can't tell why it is not in the thesis.
+2. The brief asks for "each chart, the query behind it, and one plain sentence". The BigQuery activity numbers (active accounts, transactions, contract usage, which the brief names) are a table on Method, with no chart.
+
+The site has very few charts: the gauge on the home page and the interval plot on Elasticity. The rest are tables and text, each with its query link. This unit adds charts only where the brief names the data. It does not turn other tables into charts.
+
+**One unit, one chat** (workflow rule 14). Opus 5.5 · medium (§9, a normal unit; go to high only if stuck). Build order: B, then A, then C. B sets the chart's look, and A reuses it.
+
+**Before any code: show the user the design** (AGENTS.md: design references are exact; rule 21). One sketch per chart at 1440 and 375, in the gauge and interval plot's language (thin track, the site's tokens in `app/globals.css`, Overpass ticks; docs/DESIGN.md). Build only after the user's yes.
+
+### B. Activity chart on Method
+
+- **B1.** In "Public Activity on intents.near", a chart sits above the table: one small chart per measure (Transactions, Signers a Day, Receipts, NEAR Burnt) over every week in `data/published/activity.json` (12 weeks now, while the table keeps the last 8). Each chart has its name, its latest value, and the first and last week. One chart with four lines would flatten the small measures, so it is four small charts. At 375 px they stack or sit 2 × 2, with no sideways scroll.
+- **B2.** A thin marker at the week holding 27 Oct 2026, labelled "Confidential settlement begins". The counts rise after it because of Treasury traffic, which the sentence above already says. Nothing calls a change here a change in demand or in swaps.
+- **B3.** The data is `getActivity()` only. No new query, no new file, no change to `analysis/activity.mjs` or the published file. `npm run rebuild` and `verify` give the same results as before.
+- **B4.** The sentence, the table and "Open the Query" stay as they are. The Reproduce entry `activity` (`lib/reproduce_entries.ts`) says "chart and table" in its sentence.
+- **B5.** States: file missing or no weeks → the existing "Could Not Load Public Activity" banner and no chart. One week only → no chart, table only. A week is never drawn as zero to fill a gap.
+- **B6.** A plain SVG component in `components/` with no new npm package (ponytail), `role="img"` and an `aria-label` that gives each measure's first and last value. It is pure and data-agnostic, so A can use it.
+
+### A. Per-day chart in the rolling panel (Explorer API)
+
+Terms first (AGENTS.md, "Terms rules"; docs/EXPLORER.md). A per-day total is still a total. It lives in the same artifact (`retention-days: 1`), is rebuilt each day, and sets no reading. Nothing in this part may weaken a guard in `pipeline/panel.test.mjs` or `verify`'s API-data scan.
+
+- **A1.** `foldRows` in `analysis/panel.mjs` also keeps a per-day total (`swaps`, `usd`) for each finished UTC day, in memory, from the same rows. Same-token and unpriced rows stay out, as now. No referral, frontend, account or per-swap field goes in the per-day total.
+- **A2.** `panelDoc` adds `byDay: [{ day, swaps, usd }]`, one entry per day pulled in the window and sorted by day. A day the pull did not finish is left out, never written as zero (check how `pipeline/panel.mjs` handles a failed page first). The sum of `byDay` USD equals `swaps.usd`.
+- **A3.** `PanelDoc` and `panelView` in `lib/panel_view.ts` carry the series. A doc without `byDay` (the artifact made before this ships) shows the panel's text with no chart, never an error.
+- **A4.** `PanelNote` shows the chart where the page picks `swapsText` (Follow the Fee), drawn with B's component: daily USD over the window, with a marker at 27 Oct and the caption "From the Intents Explorer API, re-pulled daily, kept 24 hours, stored nowhere. It sets no reading." Concentration (`frontendText` only) gets no chart.
+- **A5.** States, as now: `EXPLORER_PANEL=off` → no panel and no chart; over 24 hours old or unreadable → "Rolling Panel: Not Available" with no chart; live → chart and text.
+- **A6.** Guards: any new file that only the panel uses goes in `API_CODE` in `pipeline/panel.test.mjs`. B's component is shared and imports nothing from the panel, so it stays out of `API_CODE`. `panel.yml` is not changed. The job log prints no figure.
+- **A7.** `docs/EXPLORER.md` "What is in it" adds the per-day totals. No figure from the API goes in any doc, the README, THESIS.md, the pitch or the demo video.
+- **Testing:** with a fixture panel file (`PANEL_FILE`, outside the repo; the PROGRESS "Watch out" note applies). The real panel pull runs only in Actions (AGENTS.md: nothing else runs locally), so the first real chart appears after this is on `main` and the 09:07 WIB `panel` run. That run is the one later check the unit report may name.
+
+### C. README note on the terms
+
+- **C1.** At the top of README.md, under the first line, a short note: why the Explorer data is only in the rolling panel, with a link to the [1ClickSwap API Terms of Use](https://partners.near-intents.org/legal/terms-of-service) and Section 4.1(e) named. The terms page has no section anchors, so the link goes to the page. The same terms are mirrored at docs.near-intents.org (`/near-intents/integration/distribution-channels/1click-terms-of-service`). Both read "Last Updated: October 7, 2026" on 7 Nov.
+- **C2.** Draft: "**Why the Explorer data is only in the rolling panel.** The track asks for swap volume from the NEAR Intents Explorer API. Its terms (Section 4.1(e)) do not allow storing API data for more than 24 hours, so Tideline shows it only in a panel that is rebuilt each day and kept for one day. The thesis and the verdict use stored public data (BigQuery, chain reads, DefiLlama) that anyone can re-run."
+- **C3.** No API figure in the note. Intents Technology is named only as a technology provider, if at all (terms 3.5).
+
+**Done when:** the user approved the design; T-T6e.1 to T-T6e.12 pass (docs/TESTS.md); `npm test`, `verify`, `npm run build`, the API-data scan and gitleaks pass; Chrome at 1440 and 375 for Method and Follow the Fee in every state (normal, error, panel live, panel without `byDay`, Not Available, `EXPLORER_PANEL=off` on a production build); unit report (§11b); the user's review and their yes on the commit.
+
+## 6d. T6f plan: nothing stuck (written 8 Nov 2026)
+
+**Why.** A check of every page on 8 Nov found two inputs no job updates: the BigQuery activity (Method charts and table, stuck at the week to 6 Nov) and the protocol fee (Follow the Fee, read once on 3 Nov, with "not moved since January 2026" typed into the text). The human asked for both to update on their own. The elasticity history before 3 Oct and the pre-registered lines stay fixed on purpose.
+
+- **F1.** `pipeline/activity_refresh.mjs` moves the `block_date` range in the two activity queries to the last 90 finished UTC days, runs only those two (`rerun({ only })`), and checks the newest day: it must be the window's last day and not under a quarter of the week before. Otherwise it stores nothing and the run fails.
+- **F2.** `.github/workflows/activity.yml`, started weekly by cron-job.org (Saturday 11:41 WIB). Google login: repo secret `GOOGLE_SA_KEY`, access token only, no credentials file. Verify before commit; only the two SQL files, their two results and `activity.json` are staged. About 20 GB a run.
+- **F3.** The refresh job runs `pipeline/protocol_fee.mjs` every hour. The copy is kept while fee() and the collector are unchanged (`readAt` is ignored when comparing), so it commits only when the fee changes.
+- **F4.** Follow the Fee's protocol fee sentence comes from the read: pips, bps and the earliest reading in the unbroken run of equal readings (`fee_trace.json` `protocolFee.pips`, `sameSince`).
+- **F5.** Docs: README "What updates on its own", queries/README.md, docs/CRON.md 2b (the Google key and the fifth cronjob), the Reproduce entry and the Method sources line no longer give a fixed date.
+- **The human's part:** the service account and its key as `GOOGLE_SA_KEY`, and the fifth cronjob (docs/CRON.md 2b). Neither can be done by the agent.
+
+**Done when:** T-T6f.1 to T-T6f.8 pass; `npm test`, `verify`, `npm run build`, gitleaks and the wording scan pass; the first `activity` run commits after the key is in place.
 
 ## 7. Decisions for the human
 

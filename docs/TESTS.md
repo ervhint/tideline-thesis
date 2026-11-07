@@ -131,6 +131,36 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-A2.10 | A2 8 | Actions | `treasury-backfill` from 4 Oct | Files in data/treasury, `verify` passes, frozen chain days unchanged | ⏭ not run | Needs this unit on main |
 | T-A2.11 | Rule 11 | Chrome | 8 pages × 4 states plus `?state=few`, `anchored`, `mismatch`, each in a frame 1440 and 375 wide | No sideways scroll, nothing past the edge, no broken text, no crash | ✅ pass | 7 Nov, 70 loads on the `test` working tree (chain days to 4 Nov, published files to 5 Nov). Console: 8 pages reloaded at the pane width, no errors |
 
+## T6e Track brief charts (docs/PLAN.md §6c)
+
+| ID | Covers | Type | Check | Expected | Status | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| T-T6e.1 | B1, B6 | unit | Chart component with four measures over the stored weeks | One small chart per measure, every week drawn, aria-label gives each first and last value | ✅ pass | 7 Nov, `lib/bar_charts.test.mjs` |
+| T-T6e.2 | B5 | unit | Activity with no file, no weeks, one week | Error banner and no chart; no chart; table only. No week drawn as zero | ✅ pass | 7 Nov, `lib/bar_charts.test.mjs`; the missing-file banner is the existing one |
+| T-T6e.3 | B3 | cli | `npm run rebuild`, then `npm run verify` | `data/published/` unchanged by this unit; ALL OK | ✅ pass | 7 Nov, `git status data/` empty after `npm run rebuild`; verify ALL OK |
+| T-T6e.4 | A1, A2 | unit | Fold a fixture of pages across 3 days, with same-token and unpriced rows and a day with a failed page | One `byDay` entry per finished day, sorted; USD sum equals `swaps.usd`; failed day left out, never zero; same-token and unpriced not counted | ✅ pass | 7 Nov, `pipeline/panel.test.mjs`. A failed page stops the whole run, so no partial day exists to leave out |
+| T-T6e.5 | A1 | unit | Keys of every `byDay` entry | Only `day`, `swaps`, `usd`: no referral, frontend, account or swap id | ✅ pass | 7 Nov, `pipeline/panel.test.mjs` |
+| T-T6e.6 | A3, A5 | unit | `panelView` with `byDay`, without `byDay`, over 24 hours, off | Live with series; live with text and no series, no error; Not Available, no series; off | ✅ pass | 7 Nov, `pipeline/panel.test.mjs`; a missing day reads null, drawn blank |
+| T-T6e.7 | A6 | unit | The existing terms guards in `pipeline/panel.test.mjs` and `verify`'s API-data scan, with any new panel-only file in `API_CODE` | All pass; no build, route, feed, alarm or Telegram file reaches panel code | ✅ pass | 7 Nov, all guards pass; no new panel-only file, so `API_CODE` is unchanged; the shared chart code reaches no panel file |
+| T-T6e.8 | C1 to C3 | cli | Read the top of README.md; run the wording scan | Note under the first line, terms link works, Section 4.1(e) named, no API figure; scan passes | ✅ pass | 7 Nov, note under the first line, link opens the terms page, `.private/wording-scan.mjs` clean |
+| T-T6e.9 | B1, B2, B4 | Chrome | `/method/` at 1440 and 375 | Four charts above the table, 27 Oct marker, table, sentence and "Open the Query" intact, no sideways scroll | ✅ pass | 7 Nov, production build; 1366 (the widest the screen allows) and a 375 frame: 4 charts, 48 bars, marker and key, table and query link intact, no overflow |
+| T-T6e.10 | A4, A5 | Chrome | `/follow-the-fee/` at 1440 and 375 with a fixture panel (with `byDay`, without it, over 24 hours) | Chart and caption; text only; "Not Available" and no chart. Concentration shows no chart | ✅ pass | 7 Nov, synthetic fixture via `PANEL_FILE` outside the repo: with `byDay` full-width chart and caption; without it text only; 30 hours old Not Available; Concentration and the empty state checked too. Real artifact (no `byDay` yet) on localhost:3115: text only, no console errors |
+| T-T6e.11 | A5 | Chrome | Production build with `EXPLORER_PANEL=off`, Method and Follow the Fee at 1440 and 375 | No panel and no panel chart; activity chart still there; `npm test` passes with the switch set | ✅ pass | 7 Nov, `EXPLORER_PANEL=off` build: no panel or Explorer mention on Method or Follow the Fee, activity charts kept; `npm test` 254/254 with the switch set |
+| T-T6e.12 | A4 | Actions | The first `panel` run after this is on `main` | Artifact kept one day, holds `byDay`, log has no figure; the site's chart shows | ⏭ not run | Can only run after the commit |
+
+## T6f Nothing stuck (docs/PLAN.md §6d)
+
+| ID | Covers | Type | Check | Expected | Status | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| T-T6f.1 | F1 | unit | The window at 04:41 UTC and at 01:59 UTC | Last 90 finished days; refuses before 02:00 UTC | ✅ pass | 8 Nov, `pipeline/activity_refresh.test.mjs` |
+| T-T6f.2 | F1 | unit | Move the range in both stored SQL files | Only the two dates change; a query without exactly one range is refused | ✅ pass | 8 Nov |
+| T-T6f.3 | F1 | unit | Newest day missing, at 20% and at 30% of the week before | Missing and 20% refused, nothing stored; 30% stored | ✅ pass | 8 Nov |
+| T-T6f.4 | F1 | unit | The whole job with a stand-in BigQuery | Both files updated, only those two run, a day short is refused | ✅ pass | 8 Nov |
+| T-T6f.5 | F2 | unit | Read `activity.yml` | Dispatch only, one run at a time, no credentials file, verify before commit, only activity paths staged, no other secret | ✅ pass | 8 Nov |
+| T-T6f.6 | F3 | unit | Read `pipeline/refresh.mjs` | Protocol fee read every hour, settled, `readAt` ignored when comparing | ✅ pass | 8 Nov |
+| T-T6f.7 | F4 | unit | The protocol fee sentence for 1 pip, 5 pips and no read | Built from the read; no typed "January 2026" left | ✅ pass | 8 Nov |
+| T-T6f.8 | F2 | Actions | First `activity` run after the key is set | Commits `data: activity <date>` with the new window; `verify` passes; the Method chart's last week moves | ⏭ not run | Needs the human's key and this unit on main |
+
 ## Preview states (proposed)
 
 These are not in the SRS. They check the states the screens should show when data is old, loading, failed, anchored or mismatched (SRS 9.4, NFR-6). Expected text comes from the Figma frames and needs the human's confirmation.

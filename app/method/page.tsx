@@ -3,10 +3,12 @@ import { Table } from '@/components/Table';
 import { getActivity, getChainChecks, getReconciliation, getTokenBoard, getVisibility } from '@/lib/data';
 import { reconcileRows, type Row } from '@/lib/reconcile_view';
 import { Banner } from '@/components/Banner';
+import { BarCharts } from '@/components/BarCharts';
+import { activityCharts } from '@/lib/bar_charts';
 
 const sources = [
   ['DefiLlama', 'Volume, fees and revenue for the last 30 days, and hourly token prices. No key.'],
-  ['BigQuery', 'The public NEAR dataset: a year of intents.near logs for fee changes, and 90 days of transactions and contract use. Stored here, so a re-run needs no account.'],
+  ['BigQuery', 'The public NEAR dataset: a year of intents.near logs for fee changes, and 90 days of transactions and contract use, re-run each week. Stored here, so a re-run needs no account.'],
   ['FastNEAR', 'intents.near settlement logs: every transaction that names a known solver or the Confidential Intents treasury, read in full for each day, not sampled. Swaps, frontend, fees and solver come from these. No key.'],
   ['Confidential Intents', 'docs.near-intents.org names account 51e8f94d…7cbe as the treasury of Confidential Intents: funds sent to it move to a private chain, the swap settles there, and funds come back. So it is a bridge, not a solver, and only the transfers in and out are public. Treasury day files sum those transfers by token and direction, keep no wallet addresses, set no reading and are not anchored. An email from NEAR Intents (6 Nov 2026) says this becomes the main path on 9 Nov and public intents wind down later, with no date; the email is the only source for those two points.'],
   ...(process.env.EXPLORER_PANEL === 'off' ? [] : [['Intents Explorer and 1Click', 'The rolling panel only: totals re-pulled once a day, kept 24 hours and stored nowhere. Their terms bar keeping this data, so it sets no reading and none of it is in this repo. Intents Technology is the technology provider of these APIs.']]),
@@ -33,6 +35,7 @@ export default async function Method({ searchParams }: { searchParams: Promise<{
   const board = await getTokenBoard();
   const vis = await getVisibility();
   const activity = await getActivity();
+  const charts = activityCharts(activity);
   const int = (n: number) => n.toLocaleString('en-US');
   return (
     <Page title="How the Numbers Are Made" lead="Where each number comes from, what was decided before looking, and where public figures disagree.">
@@ -100,6 +103,7 @@ export default async function Method({ searchParams }: { searchParams: Promise<{
         {activity?.weeks.length ? (
           <>
             <p className="p-body">Each week of transactions, signing accounts, receipts and NEAR burnt as gas, from the BigQuery public dataset. Treasury traffic is in these counts, so more activity is not more swaps, and signers are mostly relayers and solvers, not users.</p>
+            {charts && <BarCharts {...charts} />}
             <Table
               head={['Week To', 'Transactions', 'Signers a Day', 'Receipts', 'NEAR Burnt']}
               widths={[200, 200, 180, 200, 180]}
