@@ -1,4 +1,4 @@
-{"query":"queries/daily_transactions.sql","ranOn":"2026-11-07","project":"Google BigQuery public dataset crypto_near_mainnet_us, run in a Sandbox project","bytesProcessed":"3.27 GB","bytesBilled":"3.28 GB","note":"activeAccounts counts transaction signers on intents.near. Most are relayers and solvers: a user signs an intent inside the transaction, so this is not a count of users.","columns":["day","transactions","activeAccounts"],"rows":[["2026-08-09",43748,88],
+{"query":"queries/daily_transactions.sql","ranOn":"2026-11-07","bytesProcessed":"3.52 GB","columns":["day","transactions","activeAccounts"],"rows":[["2026-08-09",43748,88],
 ["2026-08-10",52336,82],
 ["2026-08-11",54115,110],
 ["2026-08-12",54281,85],
