@@ -159,7 +159,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6f.5 | F2 | unit | Read `activity.yml` | Dispatch only, one run at a time, token from the key via gcloud and masked, verify before commit, only activity paths staged, no other secret | ✅ pass | 8 Nov |
 | T-T6f.6 | F3 | unit | Read `pipeline/refresh.mjs` | Protocol fee read every hour, settled, `readAt` ignored when comparing | ✅ pass | 8 Nov |
 | T-T6f.7 | F4 | unit | The protocol fee sentence for 1 pip, 5 pips and no read | Built from the read; no typed "January 2026" left | ✅ pass | 8 Nov |
-| T-T6f.8 | F2 | Actions | First `activity` run after the key is set | Commits `data: activity <date>` with the new window; `verify` passes; the Method chart's last week moves | ⏭ not run | Needs the human's key and this unit on main |
+| T-T6f.8 | F2 | Actions | First `activity` run after the key is set | Commits `data: activity <date>` with the new window; `verify` passes; the Method chart's last week moves | ✅ pass (partly) | 8 Nov 01:10 WIB, run 42399907122: signed in, 3.52 + 18.31 GB, 90 rows each to 6 Nov, ALL OK, committed `1abe79f`. Same window as before (still 7 Nov in UTC), so the chart did not move yet; the 14 Nov run shows that |
 
 ## Preview states (proposed)
 
