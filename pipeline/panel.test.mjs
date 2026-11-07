@@ -10,6 +10,7 @@ import { assertOutsideRepo, buildPanel, lastFinishedDays, SWAPS_ONLY } from './p
 import { foldRows, frontendName, isRealSwap, newTotals } from '../analysis/panel.mjs';
 import { isFresh, panelView } from '../lib/panel_view.ts';
 import { readArtifactPanel, unzipOne } from '../lib/panel_source.ts';
+import { commandsFor, reproduceLead } from '../lib/mock.ts';
 
 const CANARY_USD = 987654.321;
 const row = (o = {}) => ({ originAsset: 'nep141:a', destinationAsset: 'nep141:b', amountInUsd: String(CANARY_USD), appFees: [{ fee: 20, recipient: 'canary-recipient.near' }], referral: 'canary-frontend', depositAddress: 'canary-deposit-address', recipient: 'canary-wallet.near', senders: ['canary-sender.near'], ...o });
@@ -172,4 +173,11 @@ test('the BFF takes the newest unexpired artifact, and no artifact means no pane
   assert.equal(calls[1], 'https://x/new');
   assert.equal(await readArtifactPanel({ token: 't', fetchFn: async () => Response.json({ artifacts: [] }) }), null);
   assert.equal(await readArtifactPanel({ token: 't', fetchFn: async () => new Response('', { status: 500 }) }), null);
+});
+
+test('with the switch off the Reproduce page has no panel command and no mention of it', () => {
+  assert.ok(commandsFor(false).some((c) => c.cmd === 'npm run panel'));
+  assert.ok(!commandsFor(true).some((c) => /panel/i.test(c.cmd + c.example)));
+  assert.match(reproduceLead(false), /panel/);
+  assert.doesNotMatch(reproduceLead(true), /panel/);
 });

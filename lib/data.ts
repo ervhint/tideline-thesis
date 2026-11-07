@@ -16,7 +16,7 @@ import { reconcileRows, type Row } from './reconcile_view';
 import { freshness } from './status_view';
 import { tokenBoardView, type TokenBoard } from './token_board_view';
 import { chainChecksView, type ChainDays } from './chain_checks_view';
-import { anchorStates, commands } from './mock';
+import { anchorStates, commandsFor } from './mock';
 
 type FeeTrace = import('./fee_view').FeeTrace;
 
@@ -179,7 +179,7 @@ export async function getAnchorPanel() {
   } catch {
     // Testnet did not answer: the page says so instead of guessing.
   }
-  return { current, anchorStates, commands };
+  return { current, anchorStates, commands: commandsFor(process.env.EXPLORER_PANEL === 'off') };
 }
 
 export async function getAttestation(day: string) {

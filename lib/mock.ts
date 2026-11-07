@@ -10,6 +10,9 @@ export const commands = [
   { cmd: 'npm run rebuild -- --bigquery', example: 'Re-runs the SQL with your own Google project', width: 520 },
   { cmd: 'npm run panel', example: 'Prints the rolling panel with your own key and writes nothing', width: 520 },
 ];
+// With the panel switched off, nothing on the page mentions it.
+export const commandsFor = (off: boolean) => commands.filter((c) => !off || c.cmd !== 'npm run panel');
+export const reproduceLead = (off: boolean) => `The first three commands need no key and no account. BigQuery needs your own Google project${off ? '' : ', and the panel your own key'}.`;
 export const anchorStates: Record<AnchorState, { tag: string; text: string; archive: string; chain: string }> = {
   anchored: {
     tag: 'Anchored: 10 Nov 2026',
