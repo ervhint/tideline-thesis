@@ -2,7 +2,19 @@
 
 ## State (7 Nov 2026)
 
-Built locally, committed locally. Not pushed: the repo does not exist on GitHub yet. Readings as of the 6 Nov chain day: Q1 Neutral, Q2 Bullish, Q3 Not Measured, Q4 Neutral, Q5 Bullish, verdict Undecided on the A2 hold, score +3.
+Built and committed locally. Readings as of the 6 Nov chain day: Q1 Neutral, Q2 Bullish, Q3 Not Measured, Q4 Neutral, Q5 Bullish, verdict Undecided on the A2 hold, score +3.
+
+Checked locally on 7 Nov: `npm test` 244/244, `verify` ALL OK, `npm run build`, gitleaks over the full history, the wording scan, the API-data scan, Chrome at 1440 and 375 for every page and state (also with `EXPLORER_PANEL=off` on a production build, and the live panel from a real 30-day run, whose file was then deleted). `attest:check` MATCH on 2026-10-04, 2026-10-20 and 2026-11-03.
+
+## Next
+
+1. **Treasury days.** Add the remaining `data/treasury/` and `data/chain/` days, then `npm run rebuild`, `npm run verify`, and put the confidential share figure into THESIS.md (the one figure left out).
+2. **Secrets.** `INTENTS_EXPLORER_JWT` (set without printing it). The human sets `NEAR_ATTEST_PRIVATE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`; `NEAR_ATTEST_ACCOUNT` is `tideline-thesis.testnet` if the human confirms. Site: `GITHUB_DATA_TOKEN` with Actions read.
+3. **Actions.** `test` and `contract` green. A real run of `panel.yml` (one key user at a time) and of `chain-day.yml`, then `attest-days.yml` so one new day is anchored, with its treasury hash in the record.
+4. **Schedules.** Turn on this repo's schedules and point the cron-job.org jobs here, with the panel job added (docs/CRON.md, human). Only one writer each day.
+5. **Full test** again in Chrome at 1440 and 375, then the final report.
+
+Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
 ## Decisions made while building
 
