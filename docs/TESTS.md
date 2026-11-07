@@ -156,7 +156,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6f.2 | F1 | unit | Move the range in both stored SQL files | Only the two dates change; a query without exactly one range is refused | ✅ pass | 8 Nov |
 | T-T6f.3 | F1 | unit | Newest day missing, at 20% and at 30% of the week before | Missing and 20% refused, nothing stored; 30% stored | ✅ pass | 8 Nov |
 | T-T6f.4 | F1 | unit | The whole job with a stand-in BigQuery | Both files updated, only those two run, a day short is refused | ✅ pass | 8 Nov |
-| T-T6f.5 | F2 | unit | Read `activity.yml` | Dispatch only, one run at a time, no credentials file, verify before commit, only activity paths staged, no other secret | ✅ pass | 8 Nov |
+| T-T6f.5 | F2 | unit | Read `activity.yml` | Dispatch only, one run at a time, token from the key via gcloud and masked, verify before commit, only activity paths staged, no other secret | ✅ pass | 8 Nov |
 | T-T6f.6 | F3 | unit | Read `pipeline/refresh.mjs` | Protocol fee read every hour, settled, `readAt` ignored when comparing | ✅ pass | 8 Nov |
 | T-T6f.7 | F4 | unit | The protocol fee sentence for 1 pip, 5 pips and no read | Built from the read; no typed "January 2026" left | ✅ pass | 8 Nov |
 | T-T6f.8 | F2 | Actions | First `activity` run after the key is set | Commits `data: activity <date>` with the new window; `verify` passes; the Method chart's last week moves | ⏭ not run | Needs the human's key and this unit on main |

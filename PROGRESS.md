@@ -51,7 +51,7 @@ Spec: docs/PLAN.md §6c. Tests: docs/TESTS.md, T-T6e.1 to T-T6e.12. Opus 5.5 · 
 Spec: docs/PLAN.md §6d. Tests: T-T6f.1 to T-T6f.8. Status: **ready-for-review**, not committed. `npm test` 261/261 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, gitleaks on the changed files, wording scan clean.
 - **What:** a weekly `activity` job re-runs the two BigQuery activity queries for the last 90 days (Saturday 11:41 WIB, about 20 GB); the hourly refresh re-reads the protocol fee and commits only when it changes; Follow the Fee's protocol fee sentence comes from the read.
 - **Fifth cronjob done (8 Nov):** `tideline activity` on cron-job.org, cloned from `tideline refresh` (same headers and token), `41 11 * * 6` Asia/Jakarta, body `{"ref":"main"}`, enabled, no test run. First run Saturday 14 Nov 11:41 WIB, so this unit must be on main before then.
-- **Waiting on the human:** the service account key as repo secret `GOOGLE_SA_KEY` (docs/CRON.md 2b). T-T6f.8 is the first real run after that.
+- **Committed 8 Nov as `e4dcb81`;** `test` passed in Actions. `GOOGLE_SA_KEY` is set. The first `activity` run (by hand) failed at sign-in: `token_format: access_token` needs the IAM Credentials API, which the project does not have. Fix (not committed yet): gcloud on the runner mints the token from the key, masked in the log. T-T6f.8 is the run after that fix.
 - **Not run locally** (AGENTS.md: only tests, verify and gitleaks run here): `protocol_fee.mjs` inside refresh, and the BigQuery job. Both first run in Actions after the commit.
 - **Commit note:** `data/published/fee_trace.json` gains `pips` and `sameSince`. Pull main right before committing and run `node pipeline/build_fee_trace.mjs` and `verify`, because the hourly refresh moves the data.
 

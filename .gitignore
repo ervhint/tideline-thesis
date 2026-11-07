@@ -18,5 +18,5 @@ DESIGN-REFERENCE*.md
 # The rolling panel lives only in the runner's temp folder and a one-day artifact
 .panel/
 
-# google-github-actions/auth credentials (the activity job writes none, but never stage one)
+# google-github-actions/auth writes this in the activity job; never stage it
 gha-creds-*.json

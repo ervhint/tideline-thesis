@@ -47,16 +47,18 @@ test('T-T6f.4 the job rewrites both queries, runs only those two, then checks bo
   await assert.rejects(refreshActivity({ now: new Date('2026-11-15T04:41:00Z'), run, read: (f) => files.get(f), write: (f, s) => files.set(f, s) }), /expected 2026-11-14/);
 });
 
-test('T-T6f.5 the workflow: one run at a time, no credentials file, verify before commit, only activity paths staged', () => {
+test('T-T6f.5 the workflow: one run at a time, token from the key and masked, verify before commit, only activity paths staged', () => {
   const y = readFileSync('.github/workflows/activity.yml', 'utf8');
   assert.match(y, /on:\n {2}workflow_dispatch:\n/);
   assert.match(y, /concurrency:\n {2}group: activity\n {2}cancel-in-progress: false/);
-  assert.match(y, /create_credentials_file: false/);
+  assert.doesNotMatch(y, /token_format/); // that path needs the IAM Credentials API, which the project does not have
+  assert.match(y, /GOOGLE_ACCESS_TOKEN="\$\(gcloud auth print-access-token\)"\n\s+echo "::add-mask::\$GOOGLE_ACCESS_TOKEN"/);
+  assert.match(readFileSync('.gitignore', 'utf8'), /^gha-creds-\*\.json$/m);
   assert.match(y, /credentials_json: \$\{\{ secrets\.GOOGLE_SA_KEY \}\}/);
   assert.ok(y.indexOf('npm run verify') < y.indexOf('git commit'));
   const add = y.match(/git add (.+)/)[1].split(' ');
   assert.deepEqual(add.sort(), [...ACTIVITY.flatMap((a) => [a.sql, a.out]), 'data/published/activity.json'].sort());
-  assert.doesNotMatch(y, /EXPLORER_JWT|NEAR_ATTEST|echo .*TOKEN|cat /);
+  assert.doesNotMatch(y, /EXPLORER_JWT|NEAR_ATTEST|echo (?!"::add-mask::).*TOKEN|cat /);
 });
 
 test('T-T6f.6 the refresh job re-reads the protocol fee every hour and keeps the copy while it is unchanged', () => {

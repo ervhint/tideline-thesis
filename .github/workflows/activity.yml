@@ -24,18 +24,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      # A short-lived access token only: no credentials file is written, so nothing from Google can be staged.
-      - id: google
-        uses: google-github-actions/auth@v2
+      # The key signs in gcloud (preinstalled on the runner), which mints a one-hour token from it. No extra Google API
+      # or role is needed. The credentials file the action writes is gitignored (gha-creds-*.json), removed after the
+      # job, and never staged: the commit step adds named paths only.
+      - uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GOOGLE_SA_KEY }}
-          token_format: access_token
-          create_credentials_file: false
       - name: Re-run the activity queries
         env:
           GOOGLE_PROJECT: ${{ vars.GOOGLE_PROJECT || 'tideline-check' }}
-          GOOGLE_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
-        run: node pipeline/activity_refresh.mjs
+        run: |
+          GOOGLE_ACCESS_TOKEN="$(gcloud auth print-access-token)"
+          echo "::add-mask::$GOOGLE_ACCESS_TOKEN"
+          export GOOGLE_ACCESS_TOKEN
+          node pipeline/activity_refresh.mjs
       - name: Verify
         run: npm run verify
       - name: Commit
