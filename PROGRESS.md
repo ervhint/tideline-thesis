@@ -1,23 +1,34 @@
 # Tideline progress
 
-## State (7 Nov 2026)
+Phase: P7 Test + ship (workflow V12). Next gate: G6 (user acceptance). Waiting for user: yes, on the Telegram question below.
+Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3115 until G6, then Vercel.
 
-Built and committed locally. Readings as of the 6 Nov chain day: Q1 Neutral, Q2 Bullish, Q3 Not Measured, Q4 Neutral, Q5 Bullish, verdict Undecided on the A2 hold, score +3.
+## State (7 Nov 2026, 19:30 WIB)
 
-Checked locally on 7 Nov: `npm test` 244/244, `verify` ALL OK, `npm run build`, gitleaks over the full history, the wording scan, the API-data scan, Chrome at 1440 and 375 for every page and state (also with `EXPLORER_PANEL=off` on a production build, and the live panel from a real 30-day run, whose file was then deleted). `attest:check` MATCH on 2026-10-04, 2026-10-20 and 2026-11-03.
+Readings as of the 6 Nov chain day: Q1 Neutral, Q2 Bullish, Q3 Not Measured, Q4 Neutral, Q5 Bullish, verdict Undecided on the A2 hold, score +3. Treasury carried 74% of counted USD over 31 Oct to 6 Nov.
 
-## Stage 2 (7 Nov 2026)
+Checked locally on 7 Nov: `npm test` 244/244, `verify` ALL OK, `npm run build`, gitleaks over the full history, the wording scan, the API-data scan, Chrome at 1440 and 375 for every page and state (also with `EXPLORER_PANEL=off` on a production build). `attest:check` MATCH on 2026-10-04, 2026-10-20 and 2026-11-03.
 
-Public on GitHub. Passed in Actions on 7 Nov: `test` (tests, verify, build), gitleaks over the full history, `contract`, `refresh` (committed), `chain-day` (6 Nov already frozen, stopped), and `panel` (artifact kept one day; the log shows only progress lines). Treasury days 4 Oct to 6 Nov added; `npm run rebuild` left the readings as they were, and THESIS.md now gives the confidential share. This repo is now the only one that freezes, anchors and refreshes.
+Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over the full history, `contract`, `refresh` (committed), `chain-day` (6 Nov already frozen, stopped), `panel` (artifact kept one day; the log shows only progress lines). Treasury days 4 Oct to 6 Nov are in `data/treasury/`; `npm run rebuild` left the readings as they were.
 
-Gitleaks fails on the first push of a new repo (the action asks git for the root commit's parent); a hand-started run scans the full history and passed.
+**Setup done:**
+- Repo secrets: `INTENTS_EXPLORER_JWT`, `NEAR_ATTEST_ACCOUNT`, `NEAR_ATTEST_PRIVATE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
+- cron-job.org: four jobs start this repo's workflows (docs/CRON.md): chain-day 10:17 and 13:17 WIB, attest-days 12:41 and 15:41, refresh hourly at :23, panel 09:07. The `tideline-cron` token covers this repo; a test run of refresh returned 204 and passed.
+- This repo is the only one that freezes, anchors and refreshes.
+- Localhost: `GITHUB_DATA_TOKEN` (Contents and Actions read) is in `.env`, so pages and the panel read from GitHub. Checked: the panel shows on Follow the Fee and Concentration.
+
+**Watch out:**
+- A terminal that ran a local panel test may still hold `PANEL_FILE`. The site then reads only that file and shows "Rolling Panel: Not Available". Start the dev server from a fresh terminal.
+- Gitleaks in Actions fails on a repo's first push (no parent for the root commit); a hand-started `test` run scans the full history.
+- Telegram alerts only a failed `chain-day`. refresh messages only when a reading changes side; attest-days and panel send nothing. Failures there show as red runs, plus GitHub and cron-job.org emails.
 
 ## Next
 
-1. **Secrets (human).** `NEAR_ATTEST_ACCOUNT` (`tideline-thesis.testnet`), `NEAR_ATTEST_PRIVATE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Site and localhost: `GITHUB_DATA_TOKEN` (Contents read, Actions read).
-2. **cron-job.org** points here, with the panel job added (docs/CRON.md), before 03:17 UTC 8 Nov. Otherwise start `chain-day` for 7 Nov by hand.
-3. **First new day.** `chain-day` freezes 7 Nov, then `attest-days` anchors it with its treasury hash in the record.
-4. **Full test** again in Chrome at 1440 and 375, then the final report.
+1. **Decide (user):** add Telegram failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
+2. **8 Nov, after 12:41 WIB:** check that chain-day froze 7 Nov and attest-days anchored it with its treasury hash in the record (`attest:check` on 2026-11-07). Check the 09:07 panel run.
+3. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
+4. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
+5. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). Then README demo link, pitch outline, demo script, demo video, final report.
 
 Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
