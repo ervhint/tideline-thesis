@@ -1,6 +1,6 @@
 # Daily jobs: started from cron-job.org
 
-GitHub's own `schedule` trigger dropped about 85% of Tideline's scheduled runs and started the rest up to 8 hours late (5 to 6 Nov 2026, our setup checked and correct). So the three daily jobs have no GitHub schedule. cron-job.org (free) starts them through GitHub's "start a workflow" API instead. Decided by the human on 6 Nov 2026.
+GitHub's own `schedule` trigger dropped about 85% of Tideline's scheduled runs and started the rest up to 8 hours late (5 to 6 Nov 2026, our setup checked and correct). So the four daily jobs have no GitHub schedule. cron-job.org (free) starts them through GitHub's "start a workflow" API instead. Decided by the human on 6 Nov 2026.
 
 Nothing else changes: the jobs run in GitHub Actions as before, commit only after `npm run verify` passes, and a re-run is always safe (a frozen day or an anchored day is skipped in seconds; one run per job at a time).
 
@@ -9,7 +9,7 @@ Nothing else changes: the jobs run in GitHub Actions as before, commit only afte
 GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token.
 
 - Name: `tideline-cron`
-- Expiration: 31 Dec 2026 (past judging)
+- Expiration: 31 Dec 2026
 - Repository access: **Only select repositories** → `ervhint/tideline-thesis`
 - Repository permissions: **Actions: Read and write**. Nothing else (Metadata: read is added by GitHub).
 
@@ -17,13 +17,14 @@ What it can do: start, re-run, cancel and delete workflow runs on this one repo.
 
 ## 2. The jobs on cron-job.org
 
-Set up on 6 Nov 2026: three cronjobs, time zone **Asia/Jakarta (WIB)**, each with a custom crontab that holds both of its daily times.
+Four cronjobs, time zone **Asia/Jakarta (WIB)**, each with a custom crontab that holds both of its daily times.
 
 | Title | Crontab (WIB) | Times WIB (UTC) | Workflow file | Body |
 | --- | --- | --- | --- | --- |
 | tideline chain-day | `17 10,13 * * *` | 10:17 (03:17), retry 13:17 (06:17) | `chain-day.yml` | `{"ref":"main","inputs":{"commit":"true"}}` |
 | tideline attest-days | `41 12,15 * * *` | 12:41 (05:41), late 15:41 (08:41) | `attest-days.yml` | `{"ref":"main","inputs":{"dry_run":"false"}}` |
 | tideline refresh | `23 * * * *` | every hour at :23 | `refresh.yml` | `{"ref":"main","inputs":{"dry_run":"false"}}` |
+| tideline panel | `7 9 * * *` | 09:07 (02:07) | `panel.yml` | `{"ref":"main"}` |
 
 For every job, under **Advanced**:
 

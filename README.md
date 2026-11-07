@@ -1,22 +1,110 @@
 # Tideline
 
-Work in progress for NEAR HACKATHON, track Investment Thesis. A re-runnable investment thesis for NEAR built on NEAR Intents fee data.
+A re-runnable investment thesis for NEAR, built on NEAR Intents fee data. Research, not financial advice.
 
-Every number comes from public, keyless sources: `intents.near` logs on chain (FastNEAR and NEAR RPC), DefiLlama and `ft_metadata`. No API key is needed to re-run it.
+**Read the argument in [THESIS.md](THESIS.md).** The rules, written down before the results they govern, are in [PREREG.md](PREREG.md).
 
-## Headline finding: the flow is going private
+## The problem
 
-The account that looked like the largest solver, `51e8f94d…7cbe`, is the Confidential Intents treasury. Funds sent to it move to FAR, a private chain, the swap settles there out of public view, and funds come back. It is a bridge, not a solver.
+NEAR spends its share of Intents fees buying NEAR on the open market. Whether that can ever cover new issuance depends on numbers that are hard to check: public sources disagree, the best per-swap data can't legally be kept, and since 27 Oct 2026 swaps have been moving to a private chain that public indexers cannot see.
 
-In the frozen chain days it carried about 1% of counted USD in mid October, 41% on 29 Oct and 97% on 5 Nov. An email from NEAR Intents (6 Nov 2026, the only source for this) says the private path becomes the main one on 9 Nov and public intents wind down later, with no date.
+So a thesis built on public data is losing the data it reads. Tideline says so instead of reading what is left as if it were the whole market. A fall in public numbers is never described as a fall in demand.
 
-So a thesis built on public chain data is losing the data it reads. Tideline says so instead of reading what is left as if it were the whole market. Under PREREG.md amendment A2:
+## The confidential shift
 
-- Solver Competition and Largest Integrator read Not Measured once the treasury carries over 50% of their window (7 and 30 frozen days). Their public figures stay published as side figures.
-- While either does, the verdict is held at Undecided whatever the score, so a loss of data can't move it. Without this rule, Solver Competition going Not Measured would have lifted the verdict to Bullish.
-- Follow the Fee splits public swaps only. Treasury flow has its own line with the all-in cost, because any fee on it is hidden.
-- A side measure, the confidential share, tracks funds going into the treasury from `data/treasury/`. It sets no reading and is not anchored on chain.
+Account `51e8f94d…7cbe` looks like the largest solver. It is the Confidential Intents treasury: funds sent to it move to `intents.far`, the swap settles there out of public view, and funds come back. It is a bridge, so it is never counted as a solver.
 
-A2 is not blind: it was written after the shift and the published readings were known, and it says so.
+- Solver Competition reads Not Measured while the Treasury holds over 50% of counted USD.
+- While it does, the verdict is held at Undecided whatever the score, so a loss of data can't move it.
+- Follow the Fee splits public swaps only. The confidential path has its own line, with the all-in cost.
 
-Research only, not financial advice.
+What cannot be seen: fees on confidential swaps, solver identity, and any flow that stays shielded.
+
+## Data sources
+
+| Piece | Source | Stored here? |
+| --- | --- | --- |
+| Frontends, fees, solvers: a year of history for elasticity | BigQuery `crypto_near_mainnet_us` and chain data | Yes, `data/bigquery/`, `data/chain/` |
+| Treasury flow and confidential share | `intents.near` dip4 logs (FastNEAR, NEAR RPC) | Yes, `data/treasury/` |
+| V*, revenue, volume, prices | DefiLlama | Yes, `data/snapshot/`, `data/published/` |
+| Active accounts, transactions, contract use | BigQuery | Yes, `data/bigquery/` |
+| Frontends and fees since 27 Oct | Intents Explorer API | **No. Rolling panel only** |
+| Current quote breakdown | 1Click dry quotes | **No. Rolling panel only** |
+
+## What is kept, what is not, and why
+
+A re-runnable thesis has to keep its inputs, so everything stored here is public chain data or a keyless public source that anyone may store.
+
+The Explorer and 1Click APIs are different. Their terms (1ClickSwap API Terms, updated 7 Oct 2026) bar keeping their data past 24 hours, so nothing from them is in git, `data/`, `thesis.json`, a log or a message: not raw, not summed, and not typed into a document. Instead a rolling panel is re-pulled once a day, kept as a one-day artifact, shown beside the readings, and never used to set one. Past 24 hours it reads "Not Available". See [docs/EXPLORER.md](docs/EXPLORER.md). Intents Technology is the technology provider of these APIs; nothing here is endorsed by it.
+
+The panel is optional. `EXPLORER_PANEL=off` removes it and its job, and the site still passes every test.
+
+## Re-run it
+
+You need Node 24. No key, no account, about a minute.
+
+```bash
+npm ci
+```
+
+```bash
+npm run verify
+```
+
+`verify` recomputes every published number from the stored data and diffs it against the committed file. It ends in `ALL OK`.
+
+```bash
+npm run rebuild
+```
+
+This recomputes every chart from stored public data.
+
+```bash
+npm run rebuild -- --bigquery
+```
+
+This re-runs the SQL in [queries/](queries/) with your own Google project: set `GOOGLE_PROJECT` and `GOOGLE_ACCESS_TOKEN`. It dry-runs each query and refuses anything over 30 GB. The log read is about 818 GB of the free tier's 1 TB a month, so it runs only with `--read --max-gb 900`. Read [queries/README.md](queries/README.md) first.
+
+```bash
+npm run panel
+```
+
+This prints the rolling panel with your own `INTENTS_EXPLORER_JWT`, and writes nothing to the repo.
+
+```bash
+npm run attest:check -- 2026-11-03
+```
+
+This compares a frozen day with its hash on NEAR testnet.
+
+```bash
+npx next dev -p 3112
+```
+
+This runs the site.
+
+## The contract
+
+`contract/` is a small NEAR contract, deployed on testnet as `tideline-thesis.testnet`. It records one write-once hash per day. A day's record also carries the hash of that day's treasury file, for records written from 8 Nov 2026; earlier records can't gain it, because a record is never changed. Testnet only: no mainnet, no funds. Details in `contract/deployment.json`.
+
+## For machines
+
+- `GET /api/thesis.json`: the verdict, readings, V* and text, as published.
+- `GET /api/days`: every frozen chain day with its size and SHA-256.
+- `GET /api/days/<YYYY-MM-DD>`: one frozen day, byte for byte.
+- `GET /api/attest/<YYYY-MM-DD>`: that day's hash on testnet against the file.
+- `GET /api/status`: last frozen day, freshness, and the hash of the published numbers.
+
+No route serves the panel. Published files are in `data/published/`, each with its `source` and `query`. Rules for agents are in [AGENTS.md](AGENTS.md).
+
+## Limits
+
+- It is not blind, and `PREREG.md` says what was known when each rule was written.
+- Elasticity is underpowered: the interval is too wide to read a side.
+- DefiLlama's figures come from a dataset nobody can re-run for free, so they are stored as evidence, not recomputed.
+- How DefiLlama counts private volume is not known.
+- A re-run from scratch matches a frozen day's counts, not always its hash, because DefiLlama can serve slightly different hourly prices later.
+- History starts on 1 Oct 2025, set by the free BigQuery tier.
+- "Active accounts" counts transaction signers, mostly relayers and solvers, not users.
+
+MIT licence.

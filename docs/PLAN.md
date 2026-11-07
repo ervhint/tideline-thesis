@@ -89,6 +89,8 @@ Deadline 14 Nov 23:59 UTC.
 | T6b | **Confidential shift** (§6b). PREREG A2 in code, treasury day files, site wording | 8h | §6b done list |
 | T6c | **Thesis and re-run steps.** Public `THESIS.md` (claim, evidence for, evidence against, what would change my mind); README re-run steps; each chart's query and plain sentence checked | 4h | The track page's asks met; Chrome tests pass |
 | T5b | **Elasticity history, if there is time.** One-day BigQuery test, PREREG amendment, one saved read of `intents.near` logs to 1 Sep 2025, E1 and E2 re-run. Stops if the one-day test fails | 8h | Elasticity page reads from the longer history, or the reason it can't |
+| T5b | **Elasticity history.** Done 7 Nov: one-day test, PREREG A4, one saved read of 818 GB, 21 usable fee changes, Q1 Neutral | | Done |
+| T6d | **Rolling panel.** Done 7 Nov: docs/EXPLORER.md, PREREG A3 | | Local tests pass; a real run needs the repo |
 | T7 | **P7.** Vercel, README, video | per workflow | G6 and G7 |
 
 About 32 hours of work plus Actions runtime, which is tight but fits if T1 passes by 6 Nov.
