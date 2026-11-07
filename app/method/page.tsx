@@ -8,6 +8,7 @@ const sources = [
   ['DefiLlama', 'Volume, fees and revenue for the last 30 days, and hourly token prices. No key.'],
   ['FastNEAR', 'intents.near settlement logs: every transaction that names a known solver or the Confidential Intents treasury, read in full for each day, not sampled. Swaps, frontend, fees and solver come from these. No key.'],
   ['Confidential Intents', 'docs.near-intents.org names account 51e8f94d…7cbe as the treasury of Confidential Intents: funds sent to it move to a private chain, the swap settles there, and funds come back. So it is a bridge, not a solver, and only the transfers in and out are public. Treasury day files sum those transfers by token and direction, keep no wallet addresses, set no reading and are not anchored. An email from NEAR Intents (6 Nov 2026) says this becomes the main path on 9 Nov and public intents wind down later, with no date; the email is the only source for those two points.'],
+  ...(process.env.EXPLORER_PANEL === 'off' ? [] : [['Intents Explorer and 1Click', 'The rolling panel only: totals re-pulled once a day, kept 24 hours and stored nowhere. Their terms bar keeping this data, so it sets no reading and none of it is in this repo. Intents Technology is the technology provider of these APIs.']]),
   ['NEAR RPC', 'Token supply, token decimals and names, and the testnet contract that anchors each frozen day. No key.'],
 ];
 // Each row: our figure, then every other source with its value and the date it gave, then why they differ.

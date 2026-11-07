@@ -2,6 +2,7 @@ import { Banner } from '@/components/Banner';
 import { ErrorSwap, RetryButton } from '@/components/ErrorSwap';
 import { NumberSheet } from '@/components/NumberSheet';
 import { Page } from '@/components/Page';
+import { PanelNote } from '@/components/PanelNote';
 import { getNumbers } from '@/lib/data';
 
 // Swatches: App Fee dark, Withdraw Fee blue, Unexplained muted (Figma, version B).
@@ -26,6 +27,9 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
     return (
       <Page title="What a $10,000 Swap Costs" lead={fee.lead}>
         <Banner tone="neutral" title="No Public Swaps to Split">{fee.body}</Banner>
+        <div className="split-foot">
+          <PanelNote pick={['swapsText', 'quoteText']} />
+        </div>
       </Page>
     );
   }
@@ -86,6 +90,9 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
       </div>
       <div className="split-foot">
         <Banner tone="neutral" title="Unexplained Part Is Shown, Never Hidden">{fee.bannerText}</Banner>
+      </div>
+      <div className="split-foot">
+        <PanelNote pick={['swapsText', 'quoteText']} />
       </div>
         </>}
       />

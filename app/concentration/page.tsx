@@ -1,4 +1,5 @@
 import { Page } from '@/components/Page';
+import { PanelNote } from '@/components/PanelNote';
 import { Table } from '@/components/Table';
 import { getConcentration } from '@/lib/data';
 
@@ -19,6 +20,7 @@ export default async function Concentration() {
           <p className="s-text">Largest Integrator is its share of the app fees paid on token_diff swaps, {c.window ?? "window not available"}. {c.solverDays ? `Solver columns: every public swap of the last ${c.solverDays.length} frozen days (${c.solverDays[0]} to ${c.solverDays.at(-1)}), USD per filler account read from each swap's NEAR transaction.` : 'The solver columns appear once solver data is read from the frozen days.'} HHI is the sum of squared shares: 10,000 means one solver has everything.</p>
           {c.integratorNote && <p className="s-text">{c.integratorNote}</p>}
           {c.solverNote && <p className="s-text">{c.solverNote}</p>}
+          <PanelNote pick={['frontendText']} />
           <a className="s-query" href="/reproduce/">Open the Query</a>
         </div>
         <div className="numcard">

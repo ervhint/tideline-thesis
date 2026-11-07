@@ -1,0 +1,47 @@
+name: panel
+
+# The rolling panel (docs/EXPLORER.md). Once a day it re-pulls the last 30 days, works out totals and keeps them as a one-day artifact.
+# Rows stay in memory and the log carries no figure, because logs on a public repo are public (terms 4.1(e)). It commits nothing.
+# Started by cron-job.org through the API (docs/CRON.md). The repo variable EXPLORER_PANEL=off skips the job.
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+# Only one job pulls at a time (terms 2.8).
+concurrency:
+  group: panel
+  cancel-in-progress: false
+
+jobs:
+  panel:
+    if: vars.EXPLORER_PANEL != 'off'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Work out the panel
+        env:
+          INTENTS_EXPLORER_JWT: ${{ secrets.INTENTS_EXPLORER_JWT }}
+        run: node pipeline/panel.mjs --out "$RUNNER_TEMP/panel/panel.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: panel
+          path: ${{ runner.temp }}/panel/panel.json
+          retention-days: 1
+          if-no-files-found: error
+      # No history of the panel exists anywhere: the newest copy replaces the last.
+      - name: Delete older panels
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=panel&per_page=100" --jq '.artifacts | sort_by(.created_at) | reverse | .[1:] | .[].id' |
+            while read -r id; do gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$id"; done
+      - name: Remove the temp folder
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/panel"

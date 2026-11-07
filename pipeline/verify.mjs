@@ -1,7 +1,7 @@
 // npm run verify (U7, FR-14): recomputes each published file from the snapshot and labels in this repo, and diffs it against the committed copy.
 // No network, no key. Set PUBLISHED_DIR to check another copy of data/published (the tests do).
 // Source data that cannot be recomputed here (prices, supply, DefiLlama, chain balances) is listed as "input" and used as given.
-import { readFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { readFileSync, readdirSync, mkdtempSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -39,9 +39,19 @@ export function diff(published, recomputed) {
   return { checked: a.size, bad };
 }
 
+// Terms 4.1(e): field names only the Explorer and 1Click answer with. None of them may appear in stored data.
+export const API_FIELDS = /amountInUsd|amountOutUsd|amountInFormatted|amountOutFormatted|depositAddress|depositMemo|originAsset|destinationAsset|quoteRequest|intentHashes|nearTxHashes|tideline-panel/;
+export function apiDataIn(dirs) {
+  const files = dirs.flatMap((d) => readdirSync(d, { withFileTypes: true, recursive: true }).filter((e) => e.isFile()).map((e) => join(e.parentPath, e.name)));
+  return { files: files.length, found: files.filter((f) => API_FIELDS.test(readFileSync(f, 'utf8'))) };
+}
+
 async function run() {
   const tmp = mkdtempSync(join(tmpdir(), 'verify-'));
   let bad = 0, total = 0;
+  const scan = apiDataIn(['data', 'alarm']);
+  if (scan.found.length) { bad += scan.found.length; console.log(`FAIL API data in stored files: ${scan.found.join(', ')}`); }
+  else console.log(`OK   no Explorer or 1Click response fields in ${scan.files} stored files`);
   try {
     for (const c of checks) {
       const published = JSON.parse(readFileSync(`${pub}/${c.file}`, 'utf8'));

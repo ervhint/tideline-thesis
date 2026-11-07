@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { cpSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { diff } from './verify.mjs';
@@ -34,4 +34,13 @@ test('diff tolerates float noise, flags real changes, missing and extra keys', (
   assert.equal(diff({ a: 1 }, {}).bad.length, 1);
   assert.equal(diff({}, { a: 1 }).bad.length, 1);
   assert.equal(diff({ l: [1, 2] }, { l: [1, 3] }).bad[0].path, '.l[1]');
+});
+
+test('the scan finds API fields in stored data, and the stored data has none', async () => {
+  const { apiDataIn } = await import('./verify.mjs');
+  assert.deepEqual(apiDataIn(['data', 'alarm']).found, []);
+  const dir = mkdtempSync(join(tmpdir(), 'scan-'));
+  writeFileSync(join(dir, 'x.json'), '{"amountInUsd":"1"}');
+  assert.equal(apiDataIn([dir]).found.length, 1);
+  rmSync(dir, { recursive: true, force: true });
 });
