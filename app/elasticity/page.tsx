@@ -72,6 +72,7 @@ export default async function Elasticity({ searchParams }: { searchParams: Promi
         <div className="mde">{elasticity.mde}</div>
       </figure>
 
+      <a className="s-query" href="/reproduce/#elasticity">Open the Query</a>
       <Button href="/model/" variant="secondary">Use the Full Range in the Model</Button>
         </>}
       />

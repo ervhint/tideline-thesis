@@ -33,13 +33,13 @@ export default async function Headline() {
           todayNote="last 30 days"
           gapCaption={figures.gapCaption}
         />
-        <div className="links-row"><a className="link" href="/follow-the-fee/">Open the Query</a></div>
+        <div className="links-row"><a className="link" href="/reproduce/#gauge">Open the Query</a></div>
 
         <div className="readings">
           {readings.map((r) => <ReadingCell key={r.name} {...r} />)}
         </div>
         <div className="links-row links-3">
-          <a className="link" href="/reproduce/">Open the Query for Each Reading</a>
+          <a className="link" href="/reproduce/#q1">Open the Query for Each Reading</a>
           <a className="link" href="/what-would-move/">What Would Move Each Reading</a>
           <a className="link" href="/concentration/">Who Brings the Volume?</a>
         </div>

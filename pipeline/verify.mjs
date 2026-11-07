@@ -21,6 +21,7 @@ const checks = [
   { file: 'chain_days.json', script: 'pipeline/build_chain_days.mjs' },
   { file: 'token_board.json', script: 'pipeline/build_token_board.mjs' },
   { file: 'visibility.json', script: 'pipeline/build_visibility.mjs' },
+  { file: 'activity.json', script: 'pipeline/build_activity.mjs' },
 ];
 const inputs = ['model_inputs.json', 'fee_account.json'];
 

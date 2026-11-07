@@ -21,7 +21,7 @@ export default async function Concentration() {
           {c.integratorNote && <p className="s-text">{c.integratorNote}</p>}
           {c.solverNote && <p className="s-text">{c.solverNote}</p>}
           <PanelNote pick={['frontendText']} />
-          <a className="s-query" href="/reproduce/">Open the Query</a>
+          <a className="s-query" href="/reproduce/#concentration">Open the Query</a>
         </div>
         <div className="numcard">
           <div className="share" role="img" aria-label="77% reported, not confirmed by our data">
@@ -37,7 +37,7 @@ export default async function Concentration() {
             ))}
           </div>
           <p className="n-text">Largest Integrator, All Sizes. A public source reports this figure. {c.ours ? `Our data reads: ${c.ours}. The public figure may measure something else, so the two need not match.` : "Our data is not available."}</p>
-          <a className="n-link" href="/reproduce/">Open the Query</a>
+          <a className="n-link" href="/reproduce/#concentration">Open the Query</a>
         </div>
       </div>
     </Page>

@@ -51,7 +51,7 @@ const confidential = existsSync(`${PUB}/confidential.json`) ? json(`${PUB}/confi
 
 const R = [
   { id: 'Q1', name: 'Pricing Power', ...q1(elasticity?.main.usable >= 3 ? elasticity.main.e1 : null, elasticity ? elasticity.main.usable : null),
-    plain: 'Whether raising a fee brings in more revenue. It is Bullish only if the whole interval is above -1.', source: 'intents.near token_diff swaps, frozen chain days', query: 'analysis/elasticity.mjs → data/published/elasticity.json' },
+    plain: 'Whether raising a fee brings in more revenue. It is Bullish only if the whole interval is above -1.', source: 'intents.near token_diff swaps: BigQuery history to 3 Oct 2026, then frozen chain days (PREREG.md A4)', query: 'analysis/elasticity.mjs → data/published/elasticity.json' },
   { id: 'Q2', name: "NEAR's Share of Fees", ...q2(llama.days),
     plain: 'The part of Intents fees that DefiLlama books as revenue. Bullish above 30%; Bearish only if it was under 20% on each of the last 14 days.', source: 'DefiLlama, all Intents', query: 'analysis/readings.mjs q2 → data/snapshot/defillama_daily.json' },
   { id: 'Q3', name: 'Solver Competition', ...q3({ spreadBps: spread, top3: solvers?.recent.allSizes.top3 ?? null, treasuryShare: treasury7?.share ?? null }),

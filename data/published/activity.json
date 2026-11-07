@@ -1,0 +1,104 @@
+{
+ "source": "BigQuery public dataset crypto_near_mainnet_us, stored in data/bigquery",
+ "query": "queries/daily_transactions.sql, queries/daily_contract_usage.sql, analysis/activity.mjs",
+ "from": "2026-08-15",
+ "to": "2026-11-06",
+ "weeks": [
+  {
+   "from": "2026-08-15",
+   "to": "2026-08-21",
+   "transactions": 396680,
+   "signersPerDay": 83,
+   "receipts": 2141875,
+   "nearBurnt": 573
+  },
+  {
+   "from": "2026-08-22",
+   "to": "2026-08-28",
+   "transactions": 420831,
+   "signersPerDay": 127,
+   "receipts": 2408661,
+   "nearBurnt": 624
+  },
+  {
+   "from": "2026-08-29",
+   "to": "2026-09-04",
+   "transactions": 513057,
+   "signersPerDay": 115,
+   "receipts": 2456105,
+   "nearBurnt": 657
+  },
+  {
+   "from": "2026-09-05",
+   "to": "2026-09-11",
+   "transactions": 494541,
+   "signersPerDay": 138,
+   "receipts": 2125763,
+   "nearBurnt": 576
+  },
+  {
+   "from": "2026-09-12",
+   "to": "2026-09-18",
+   "transactions": 397300,
+   "signersPerDay": 182,
+   "receipts": 1603929,
+   "nearBurnt": 432
+  },
+  {
+   "from": "2026-09-19",
+   "to": "2026-09-25",
+   "transactions": 475855,
+   "signersPerDay": 786,
+   "receipts": 2058559,
+   "nearBurnt": 538
+  },
+  {
+   "from": "2026-09-26",
+   "to": "2026-10-02",
+   "transactions": 478610,
+   "signersPerDay": 537,
+   "receipts": 2107421,
+   "nearBurnt": 558
+  },
+  {
+   "from": "2026-10-03",
+   "to": "2026-10-09",
+   "transactions": 476397,
+   "signersPerDay": 345,
+   "receipts": 1940372,
+   "nearBurnt": 489
+  },
+  {
+   "from": "2026-10-10",
+   "to": "2026-10-16",
+   "transactions": 461892,
+   "signersPerDay": 266,
+   "receipts": 1867448,
+   "nearBurnt": 472
+  },
+  {
+   "from": "2026-10-17",
+   "to": "2026-10-23",
+   "transactions": 399445,
+   "signersPerDay": 185,
+   "receipts": 1562112,
+   "nearBurnt": 397
+  },
+  {
+   "from": "2026-10-24",
+   "to": "2026-10-30",
+   "transactions": 486665,
+   "signersPerDay": 123,
+   "receipts": 1845499,
+   "nearBurnt": 465
+  },
+  {
+   "from": "2026-10-31",
+   "to": "2026-11-06",
+   "transactions": 878046,
+   "signersPerDay": 149,
+   "receipts": 2701678,
+   "nearBurnt": 675
+  }
+ ]
+}

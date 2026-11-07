@@ -104,6 +104,10 @@ export async function getMarket(): Promise<{ market: Market | null; asOf: string
 export type Visibility = { ratio: number | null; lastDay: string | null; llama7dUsd: number | null; chain7dUsd: number | null; rangeBefore: { low: number; high: number } | null; history: { wantedDays: number; chainDaysBefore: number; ratiosBefore: number }; revenueSplit: RevenueSplit };
 export const getVisibility = () => readPublished<Visibility>('visibility.json');
 
+// The weekly public activity table on Method, from the stored BigQuery results.
+export type Activity = { from: string | null; to: string | null; weeks: { from: string; to: string; transactions: number; signersPerDay: number; receipts: number; nearBurnt: number }[] };
+export const getActivity = () => readPublished<Activity>('activity.json');
+
 // S8: our side of the figures that public sources disagree on, from the published file `verify` checks. Missing file: every "Ours" cell says "Not available".
 export async function getReconciliation() {
   const doc = await readPublished<{ rows: Row[] }>('reconciliation.json');

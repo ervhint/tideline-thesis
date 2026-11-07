@@ -79,11 +79,11 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
               </div>
             </div>
           ))}
-          <a className="s-query" href="/reproduce/">Open the Query</a>
+          <a className="s-query" href="/reproduce/#fee-trace">Open the Query</a>
         </div>
         <NumberSheet
           card={fee.card}
-          href="/reproduce/"
+          href="/reproduce/#fee-trace"
           explain={fee.explain}
           query={fee.query}
         />

@@ -9,6 +9,7 @@ import { spawnSync } from 'node:child_process';
 import { dirname } from 'node:path';
 import { parseArgs } from 'node:util';
 import { sideChanges, alarmMessage } from '../analysis/alarm.mjs';
+import { STEPS } from './recompute.mjs';
 
 const { values: args } = parseArgs({ options: { 'dry-run': { type: 'boolean' }, 'message-file': { type: 'string' } } });
 const dry = args['dry-run'];
@@ -18,7 +19,7 @@ const COW = 'data/snapshot/cow_daily.json';
 const P = 'data/published';
 const VENUES = 'data/snapshot/control_venues.json';
 const TOKENS = 'data/labels/tokens.json';
-const DERIVED = ['chain_days', 'visibility', 'fee_trace', 'elasticity', 'confidential', 'thesis', 'reconciliation', 'token_board'];
+const DERIVED = STEPS;
 const FILES = [LLAMA, COW, VENUES, TOKENS, `${P}/model_inputs.json`, ...DERIVED.map((f) => `${P}/${f}.json`), HISTORY];
 
 const read = (f) => (existsSync(f) ? readFileSync(f, 'utf8') : null);

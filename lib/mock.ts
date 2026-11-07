@@ -6,6 +6,9 @@ export type AnchorState = 'anchored' | 'mismatch';
 export const commands = [
   { cmd: 'npm run verify', example: 'Example output: every number prints OK, then ALL OK', width: 520 },
   { cmd: 'npm run attest:check <day>', example: 'Example output: match, mismatch, or not yet anchored', width: 560 },
+  { cmd: 'npm run rebuild', example: 'Recomputes every chart from stored public data, with no key', width: 520 },
+  { cmd: 'npm run rebuild -- --bigquery', example: 'Re-runs the SQL with your own Google project', width: 520 },
+  { cmd: 'npm run panel', example: 'Prints the rolling panel with your own key and writes nothing', width: 520 },
 ];
 export const anchorStates: Record<AnchorState, { tag: string; text: string; archive: string; chain: string }> = {
   anchored: {
