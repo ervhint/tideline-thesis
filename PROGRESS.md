@@ -24,6 +24,7 @@ Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over 
 
 ## Next
 
+0. **Right after the Vercel deploy (the human asked to be reminded):** check the rolling panel on Follow the Fee and Concentration on the first view after a few idle minutes. On localhost the first GitHub connections after idle stall 15 to 20s, so that first view says Not Available (J26). If Vercel does the same, decide on keeping the last good panel in server memory for a short time (a change to the "one request" rule, the human's call).
 1. **Decide (user):** add Telegram failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
 2. **8 Nov, after 12:41 WIB:** check that chain-day froze 7 Nov and attest-days anchored it with its treasury hash in the record (`attest:check` on 2026-11-07). Check the 09:07 panel run.
 3. **T6g and T6h are on main** (`4796d56`, 8 Nov). Left: T-T6h.5, the next hourly refresh in Actions, and a Chrome check at 375 px.

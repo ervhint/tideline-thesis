@@ -27,11 +27,12 @@ export function unzipOne(zip: Buffer, name: string): Buffer | null {
 }
 
 // GitHub serves the artifact zip from separate storage that is sometimes slow (seen: 8.5s against a usual 0.7s), so
-// each call gets 10s and one more try (docs/PLAN.md §6h J26). Only a status code is ever logged, never a body.
+// each call gets 6s and up to three tries, so a stalled connection is dropped and a fresh one tried (docs/PLAN.md §6h J26).
+// The first calls after the server has been idle were seen to stall for about 10s. Only a status code is ever logged, never a body.
 async function getOnce(fetchFn: typeof fetch, url: string, headers: Record<string, string>, what: string): Promise<Response | null> {
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
     try {
-      const r = await fetchFn(url, { headers, cache: 'no-store', signal: AbortSignal.timeout(10_000) });
+      const r = await fetchFn(url, { headers, cache: 'no-store', signal: AbortSignal.timeout(6_000) });
       if (r.ok) return r;
       console.warn(`Rolling panel: GitHub ${what} answered ${r.status} (try ${attempt})`);
     } catch (e) {

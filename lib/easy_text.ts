@@ -107,7 +107,7 @@ export const EASY = {
     move: 'What Would Change Each Answer',
     queries: 'Open the Query for Each Answer',
   },
-  panelNoFigures: 'Another site that tracks these swaps also counts which apps bring them. Its rules don’t let us keep its data, so we show only today’s copy, in Pro. It’s here for context only and doesn’t change any answer on this site.',
+  panelNoFigures: 'Another site that tracks these swaps also counts which apps bring them. Its rules don’t let us keep its data, so we only show today’s list, and only in the detailed view: switch to Pro to see it. It’s here for context only and doesn’t change any answer on this site.',
   concentrationLead: 'If most swaps come through one app, or are filled by a few traders ([[solvers|solver]]), NEAR’s fee income depends on them staying.',
   concentrationKey: 'Biggest App is the biggest app’s share of the app fees. Top 3 Traders is how much of the swapping the three biggest traders ([[solvers|solver]]) filled. [[HHI]] is one score for how bunched up it is: higher means fewer players hold more.',
   moveLead: 'For each of the five questions, the line that would turn the answer [[Bullish]] or [[Bearish]]. The lines were written down before the results, so they cannot be moved to fit.',
