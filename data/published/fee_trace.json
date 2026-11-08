@@ -783,9 +783,9 @@
   "share": 0.7891206583031924
  },
  "nearRevenue": {
-  "bps": 5.008930560798294,
-  "from": "2026-10-08",
-  "to": "2026-11-06",
+  "bps": 4.996157486325541,
+  "from": "2026-10-09",
+  "to": "2026-11-07",
   "source": "DefiLlama revenue ÷ volume, all Intents (data/published/model_inputs.json)",
   "buyback": "Since 2026-02-23 NEAR uses its captured Intents revenue to buy NEAR on the open market; the bought NEAR is not burned (DefiLlama methodology)"
  },
