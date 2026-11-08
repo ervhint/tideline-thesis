@@ -26,15 +26,30 @@ export function unzipOne(zip: Buffer, name: string): Buffer | null {
   return null;
 }
 
+// GitHub serves the artifact zip from separate storage that is sometimes slow (seen: 8.5s against a usual 0.7s), so
+// each call gets 10s and one more try (docs/PLAN.md §6h J26). Only a status code is ever logged, never a body.
+async function getOnce(fetchFn: typeof fetch, url: string, headers: Record<string, string>, what: string): Promise<Response | null> {
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const r = await fetchFn(url, { headers, cache: 'no-store', signal: AbortSignal.timeout(10_000) });
+      if (r.ok) return r;
+      console.warn(`Rolling panel: GitHub ${what} answered ${r.status} (try ${attempt})`);
+    } catch (e) {
+      console.warn(`Rolling panel: GitHub ${what} failed: ${(e as Error).name} (try ${attempt})`);
+    }
+  }
+  return null;
+}
+
 export async function readArtifactPanel({ token, repo = 'ervhint/tideline-thesis', fetchFn = fetch }: { token: string; repo?: string; fetchFn?: typeof fetch }): Promise<PanelDoc | null> {
   const headers = { authorization: `Bearer ${token}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28' };
-  const list = await fetchFn(`${API}/repos/${repo}/actions/artifacts?name=panel&per_page=5`, { headers, cache: 'no-store', signal: AbortSignal.timeout(15_000) });
-  if (!list.ok) return null;
+  const list = await getOnce(fetchFn, `${API}/repos/${repo}/actions/artifacts?name=panel&per_page=5`, headers, 'artifact list');
+  if (!list) return null;
   const { artifacts = [] } = (await list.json()) as { artifacts?: { expired: boolean; created_at: string; archive_download_url: string }[] };
   const newest = artifacts.filter((a) => !a.expired).sort((a, b) => (a.created_at < b.created_at ? 1 : -1))[0];
   if (!newest) return null;
-  const zip = await fetchFn(newest.archive_download_url, { headers, cache: 'no-store', signal: AbortSignal.timeout(15_000) });
-  if (!zip.ok) return null;
+  const zip = await getOnce(fetchFn, newest.archive_download_url, headers, 'artifact download');
+  if (!zip) return null;
   const bytes = unzipOne(Buffer.from(await zip.arrayBuffer()), NAME);
   return bytes ? (JSON.parse(bytes.toString('utf8')) as PanelDoc) : null;
 }
@@ -44,7 +59,9 @@ export async function readPanel(): Promise<PanelDoc | null> {
     if (process.env.PANEL_FILE) return JSON.parse(await readFile(process.env.PANEL_FILE, 'utf8')) as PanelDoc;
     const token = process.env.GITHUB_DATA_TOKEN;
     return token ? await readArtifactPanel({ token }) : null;
-  } catch {
-    return null; // the page says Not Available; the reason is never logged, because a response body is API data
+  } catch (e) {
+    // The page says Not Available. Only the error's type is logged: its message could quote the body, which is API data.
+    console.warn(`Rolling panel: read failed: ${(e as Error).name}`);
+    return null;
   }
 }

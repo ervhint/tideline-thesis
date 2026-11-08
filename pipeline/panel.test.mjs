@@ -178,6 +178,28 @@ test('the BFF takes the newest unexpired artifact, and no artifact means no pane
   assert.equal(await readArtifactPanel({ token: 't', fetchFn: async () => new Response('', { status: 500 }) }), null);
 });
 
+test('T-T6j.35 a slow or failed GitHub call is tried once more, and the log names no body (J26)', async () => {
+  const zip = zipOf('panel.json', Buffer.from('{"kind":"tideline-panel"}'), 8);
+  let downloads = 0;
+  const logged = [];
+  const warn = console.warn;
+  console.warn = (m) => logged.push(String(m));
+  try {
+    const fetchFn = async (url) => {
+      if (String(url).includes('/actions/artifacts')) return Response.json({ artifacts: [{ expired: false, created_at: '2026-11-08T01:00:00Z', archive_download_url: 'https://x/new' }] });
+      downloads += 1;
+      if (downloads === 1) throw Object.assign(new Error('canary-body-text'), { name: 'TimeoutError' });
+      return new Response(zip);
+    };
+    assert.deepEqual(await readArtifactPanel({ token: 't', fetchFn }), { kind: 'tideline-panel' });
+    assert.equal(downloads, 2);
+    assert.deepEqual(logged, ['Rolling panel: GitHub artifact download failed: TimeoutError (try 1)']);
+    assert.ok(!logged.join(' ').includes('canary'));
+  } finally {
+    console.warn = warn;
+  }
+});
+
 test('with the switch off the Reproduce page has no panel command and no mention of it', () => {
   assert.ok(commandsFor(false).some((c) => c.cmd === 'npm run panel'));
   assert.ok(!commandsFor(true).some((c) => /panel/i.test(c.cmd + c.example)));

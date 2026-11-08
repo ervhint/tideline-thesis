@@ -388,6 +388,8 @@ The full text sits under "Read the Full Explanation". The research-not-advice li
 
 **J25. The "77% Reported" card is removed from Concentration** (the human's choice, 8 Nov). Its source could not be named and the figure was typed into the code, so it could not be checked. Our own figure stays in the table and notes; the panel now uses the full width. Changes Figma S6.
 
+**J26. The rolling panel survives a slow GitHub download** (the human's report, 8 Nov: "Not Available" on Follow the Fee while a valid panel existed). The artifact zip comes from GitHub storage that is sometimes slow (seen 8.5s against a usual 0.7s), and one slow or failed call made the box say Not Available, with no reason logged. Each GitHub call now gets 10s and one more try; a failure logs only a status code or an error type, never a message or body (API data stays out of logs).
+
 **Done when (each item):** its tests pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK with `data/` unchanged, gitleaks and the wording scan pass; Chrome in both modes; the human's yes on the commit.
 
 ## 7. Decisions for the human

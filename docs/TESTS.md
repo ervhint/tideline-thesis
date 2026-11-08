@@ -247,6 +247,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6j.32 | J23 | cli + Chrome | Time when the main content arrives on Concentration and Follow the Fee; panel switch off | Content in well under a second, the panel after; with the switch off no panel box at all | ✅ pass | 8 Nov: content 53 to 143ms, panel done 1.2 to 3.1s; EXPLORER_PANEL=off npm test 295/295 |
 | T-T6j.33 | J24 | cli + Chrome + build | /api/anchor/ twice; ?state=error then Try Again; next build | Good check cached (public, s-maxage=300); a failure would be no-store; Try Again refetches in place; /reproduce static, /api/anchor dynamic | ✅ pass | 8 Nov: second call 0.15s with the cache header; Try Again in place; build lists /reproduce static and /api/anchor dynamic |
 | T-T6j.34 | J25 | Chrome + unit | Concentration in Pro | No 77% card; panel 72 to 1279px; typed-figure allow-list without the card's entries | ✅ pass | Chrome 8 Nov; npm test 295/295 |
+| T-T6j.35 | J26 | unit + Chrome | A first failed download, then a good one; Follow the Fee | The panel loads on the second try; the log has only the type and try number, no body text | ✅ pass | pipeline/panel.test.mjs; Chrome 8 Nov: Rolling Panel, 11 hours old |
 
 ## Preview states (proposed)
 
