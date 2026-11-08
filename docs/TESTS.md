@@ -185,6 +185,23 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6h.4 | rules | unit | Scan the made THESIS.md | No Explorer or 1Click figure; the demand sentence present; no advice wording | ✅ pass | 8 Nov, no Explorer, 1Click or panel wording; demand sentence present; no advice wording; script reads 4 published files only |
 | T-T6h.5 | A | Actions | First refresh after the commit | THESIS.md committed only if a figure changed; matches the site | ⏭ not run | |
 
+## T6i Easy and Pro (docs/PLAN.md §6g)
+
+| ID | Covers | Type | Check | Expected | Status | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| T-T6i.1 | E4 | unit | `easy_text` with altered data: treasury share 79% and 40%; verdict held and not held; needed multiple 3.2 and 0.8; Q3 Not Measured and measured | Each sentence follows its data; rounding computed from the value; no claim without a figure | ⏭ not run | |
+| T-T6i.2 | E4 | unit | Guard test (`lib/typed_text.test.mjs`) over the new files, then with a planted typed figure in Easy text | Passes on the real code; the planted figure fails `npm test` | ⏭ not run | |
+| T-T6i.3 | E7 | unit | Scan every Easy string for banned words: demand fall, solver or trader for the Treasury, buy, guaranteed, great investment, moon | None found; a planted one fails | ⏭ not run | |
+| T-T6i.4 | E3, E7 | unit | Each Pro reading, side and figure on a page has the same value in Easy | No reading, side or number exists in only one mode | ⏭ not run | |
+| T-T6i.5 | E6 | unit | Every `Term` used on a page exists in `lib/glossary.ts`; no glossary text holds a figure | All present; none has a figure | ⏭ not run | |
+| T-T6i.6 | E1, E2 | Chrome | First visit with storage cleared, on Home and on one inner page | Pro is selected; no flash of Easy | ⏭ not run | |
+| T-T6i.7 | E2 | Chrome | Pick Easy, move through all eight pages, reload | Easy stays on every page and after reload; no flash | ⏭ not run | |
+| T-T6i.8 | E2 | Chrome | Storage blocked (private window or `localStorage` throwing) | Site loads in Pro and the switch still works for the visit | ⏭ not run | |
+| T-T6i.9 | E1, E6 | Chrome | Keyboard only: reach the switch and a term note; Escape and a tap outside close the note | Focus visible; only the active mode is read by a screen reader | ⏭ not run | |
+| T-T6i.10 | E1, E5, E6 | Chrome | All eight pages at 1440 and 375 in both modes, plus the error and stale states | Switch fits; no horizontal scroll; notes stay on screen; numbers match between modes | ⏭ not run | |
+| T-T6i.11 | E8 | cli | `EXPLORER_PANEL=off npm test`, `verify`, `npm run build`; diff `/api/thesis.json`, THESIS.md and `data/` | All pass; API, THESIS.md and `data/` unchanged | ⏭ not run | |
+| T-T6i.12 | E7 | cli | `.private/wording-scan.mjs` extended to Easy text | Clean | ⏭ not run | |
+
 ## Preview states (proposed)
 
 These are not in the SRS. They check the states the screens should show when data is old, loading, failed, anchored or mismatched (SRS 9.4, NFR-6). Expected text comes from the Figma frames and needs the human's confirmation.

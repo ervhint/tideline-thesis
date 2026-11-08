@@ -95,6 +95,7 @@ Deadline 14 Nov 23:59 UTC.
 | T6f | **Nothing stuck** (§6d). Weekly BigQuery activity job; protocol fee re-read hourly | 2h | §6d done list |
 | T6g | **Words follow the numbers** (§6e). Five sentences built from data, and a guard test against typed figures on every page | 3h | §6e done list |
 | T6h | **THESIS.md follows the data** (§6f). Its figures from `thesis.json`, never typed | 3h | §6f done list |
+| T6i | **Easy and Pro** (§6g). An Easy / Pro switch on every page, Pro by default; Easy words built from the same data; tap-to-explain notes on hard words | 7h | §6g done list |
 | T7 | **P7.** Vercel, README, video | per workflow | G6 and G7 |
 
 About 32 hours of work plus Actions runtime, which is tight but fits if T1 passes by 6 Nov.
@@ -246,6 +247,45 @@ Terms first (AGENTS.md, "Terms rules"; docs/EXPLORER.md). A per-day total is sti
 **Rules either way:** no Explorer or 1Click figure (AGENTS.md 4.1(e)); "a fall in public numbers is not a fall in demand" stays; nothing reads as advice; every sentence written in advance, filled from data.
 
 **Done when (A):** THESIS.md made by the script equals the committed file; `verify` fails on a hand edit; T-T6h.1 to T-T6h.5 pass; the refresh run after the commit leaves THESIS.md consistent with the site.
+
+## 6g. T6i plan: Easy and Pro (written 8 Nov 2026)
+
+**Why.** The human, new to crypto, could not read the site and so could not explain it. Decided with the human on 8 Nov: one site, two ways to read it. **Pro** is today's text and the default. **Easy** says the same thing in everyday words for someone who knows nothing about crypto or statistics. Same pages, same charts, same numbers; only the words change. The aim is a plus for judges and newcomers, and a public good for NEAR: people can understand NEAR's fee model honestly. Easy is never promotion. One unit, one chat, Opus 5.5 · high (the human's choice).
+
+**Decide first (human), at the start of the T6i chat.** Show each as a small mockup or screenshot before building; the layout rule in AGENTS.md applies.
+1. **Where the switch sits and how it looks**, at 1440 and at 375 (in the nav pill, beside it, or in the burger menu on phones). Recommended: a small two-part pill `Easy | Pro` in the site header, inside the burger menu on phones, in the existing glass style.
+2. **A hint under or beside it**, such as "Same numbers, more detail", so Pro does not read as a paid tier. Recommended: yes, as the switch's tooltip and accessible description, not a visible line.
+3. **A share link** `?mode=easy` that opens a page in Easy (handy for the pitch and the demo). Recommended: yes; it sets the choice and is then removed from the address bar.
+4. **Term notes in both modes or Easy only.** Recommended: both, since V\* and Treasury are Tideline's own words.
+5. **`BEGINNER.md`**, the uncommitted draft guide from 8 Nov in the repo root. Recommended: use it as the source for Easy wording, then delete it; don't commit it (its figures are typed by hand and dated).
+
+**E1. The switch.** Two options, Easy and Pro, Pro selected on a first visit. Built as a real control: two buttons with `aria-pressed`, or a radio group, reachable by keyboard, visible focus, labels in Title Case (DESIGN.md copy rule). It is on every page, including the error and stale states.
+
+**E2. Remembering the choice.** `localStorage` key `tideline-mode`, every read and write in try/catch; if storage fails the site is Pro and works. A small pre-paint script (beside `PRE_SCRIPT` in `components/Entrance.tsx`) sets `data-mode` on `<html>` before first paint, so no page flashes the other mode. No cookie, no server state, nothing sent anywhere.
+
+**E3. How the words swap.** A server-safe component, for example `<Say pro={…} easy={…} />`, renders both texts; CSS on `html[data-mode]` hides the other with `display: none`, so screen readers read only the active one and there is no hydration mismatch. Numbers, charts, cards and links are not wrapped: they are the same in both modes.
+
+**E4. Easy text follows the data.** Easy sentences are built by code from the published files, like `analysis/thesis_text.mjs`, never typed with a figure. New pure module, for example `analysis/easy_text.mjs`, with every judgement picked by condition. Easy may round ("about 3 times", "about 8 of every 10 dollars"), but the rounding is computed from the live value. `lib/typed_text.test.mjs` (T6g) scans the new files too, with no new allow-list entry for a live figure.
+
+**E5. What Easy changes on each page.** Headings stay in Title Case; each page gains a one-line "What this page answers" in Easy.
+- **Home:** the claim as the tug of war (new coins in, buybacks out), the verdict and why it is held, the five readings as plain questions: Q1 "If NEAR raises its fee, do people stop swapping?", Q2 "Does NEAR keep a fair share of the fees?", Q3 "Do the traders really compete?", Q4 "Does one app bring most of the business?", Q5 "Is NEAR's fee income growing?". Sides keep their names (Bullish, Bearish, Neutral, Not Measured) with a term note.
+- **Model, Follow the Fee, Concentration, Elasticity, What Would Move:** every explanatory sentence gets an Easy twin. What Would Move's pre-registered lines keep their exact figures; only the words around them change.
+- **Method and Reproduce:** a short Easy intro on top; commands, hashes, SQL and tables stay as they are.
+- **The rolling panel:** its numbers stay as they are. Any Easy words around it are fixed text with no figure, so no Explorer value reaches git or a sentence (AGENTS.md 4.1(e)).
+
+**E6. Tap-to-explain notes.** `components/Term.tsx`: a dotted underline on a hard word; a small glass note opens on tap, hover or keyboard focus and closes on Escape, a tap outside or leaving. Built as a button with `aria-expanded` and `aria-describedby`; it fits at 375 without horizontal scroll. Definitions live in `lib/glossary.ts`, fixed text with no figures. First list: V\*, issuance, buyback, deflation, NEAR Intents, solver, frontend (integrator), Treasury, confidential swaps, volume, bps, elasticity, pass-through, Bullish, Bearish, Neutral, Not Measured, DefiLlama, BigQuery, frozen day, hash, attest, testnet. Each word gets a note once per section, not on every repeat.
+
+**E7. The honesty rules hold in Easy too.** These are tested, not just reviewed:
+- A fall in public numbers is never called a fall in demand. Easy says the swaps moved out of view.
+- The Treasury is never called a solver or trader; Easy calls it the doorway into the private system.
+- Q3 Not Measured and the A2 hold are said plainly, with what cannot be seen.
+- "Research, not financial advice" is visible in both modes. No promotion: no "buy", "great investment", "guaranteed", "moon" or the like.
+- Intents Technology only as a technology provider; no implied endorsement (3.5).
+- Easy never adds a reading, a side or a number that Pro does not have.
+
+**E8. Unchanged.** `/api/*`, `thesis.json`, THESIS.md, the README, `data/` and the verdict. `EXPLORER_PANEL=off` still passes every test.
+
+**Done when:** the human's answers to the five questions above are recorded here; T-T6i.1 to T-T6i.12 pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK with `data/` unchanged, `npm run build`, gitleaks and `.private/wording-scan.mjs` (extended to Easy text) pass; Chrome at 1440 and 375 on all eight pages in both modes; unit report; the human's yes on the commit.
 
 ## 7. Decisions for the human
 

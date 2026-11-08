@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). Next gate: G6 (user acceptance). Waiting for user: yes, on the Telegram question below.
+Phase: P7 Test + ship (workflow V12). Next unit: T6i Easy and Pro (§6g). Next gate: G6 (user acceptance). Waiting for user: yes, on the Telegram question below.
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (7 Nov 2026, 19:30 WIB)
@@ -28,9 +28,10 @@ Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over 
 2. **8 Nov, after 12:41 WIB:** check that chain-day froze 7 Nov and attest-days anchored it with its treasury hash in the record (`attest:check` on 2026-11-07). Check the 09:07 panel run.
 3. **T6g and T6h are on main** (`4796d56`, 8 Nov). Left: T-T6h.5, the next hourly refresh in Actions, and a Chrome check at 375 px.
 4. (T6h done in the same chat as T6g, at the human's request.)
-5. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
-6. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
-7. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). Then README demo link, pitch outline, demo script, demo video, final report.
+5. **T6i Easy and Pro, next unit** (own chat, Opus 5.5 · high). Spec: docs/PLAN.md §6g. Tests: docs/TESTS.md T-T6i.1 to .12. Agreed with the human 8 Nov: an Easy / Pro switch on every page, Pro the default, Easy words built from the data, tap-to-explain notes. Start by asking the five §6g questions with mockups; build nothing before the answers. `BEGINNER.md` (repo root, uncommitted, written 8 Nov) is a draft for the Easy wording, and its fate is question 5. Do it before P7a, so the full test covers both modes.
+6. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
+7. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
+8. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). Then README demo link, pitch outline, demo script, demo video, final report.
 
 Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
