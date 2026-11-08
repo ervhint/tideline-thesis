@@ -1,7 +1,7 @@
 # Tideline progress
 
 Phase: P7 Test + ship (workflow V12). Next gate: G6 (user acceptance). Waiting for user: yes, on the Telegram question below.
-Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3115 until G6, then Vercel.
+Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (7 Nov 2026, 19:30 WIB)
 
@@ -39,7 +39,7 @@ Both built in one chat on 7 and 8 Nov, at the user's request (an exception to on
 
 ### T6e
 
-Spec: docs/PLAN.md §6c. Tests: docs/TESTS.md, T-T6e.1 to T-T6e.12. Opus 5.5 · medium. Status: **ready-for-review**, not committed. Design approved 7 Nov with the panel chart full width. `npm test` 254/254 (also with `EXPLORER_PANEL=off`), `npm run rebuild` then `verify` ALL OK with `data/` unchanged, `next build`, gitleaks on the changed files, wording scan clean, Chrome T-T6e.9 to .11 pass (1366 and 375). T-T6e.12 waits for the first `panel` run after this is on main. This repo's dev server is on 3115; 3112 serves another project.
+Spec: docs/PLAN.md §6c. Tests: docs/TESTS.md, T-T6e.1 to T-T6e.12. Opus 5.5 · medium. Status: **on main** (`e4dcb81`); T-T6e.12 passed 8 Nov. Design approved 7 Nov with the panel chart full width. `npm test` 254/254 (also with `EXPLORER_PANEL=off`), `npm run rebuild` then `verify` ALL OK with `data/` unchanged, `next build`, gitleaks on the changed files, wording scan clean, Chrome T-T6e.9 to .11 pass (1366 and 375). T-T6e.12 waits for the first `panel` run after this is on main.
 
 - **What:** B, an activity chart on Method (four small charts over the stored BigQuery weeks); A, a per-day chart in the rolling panel on Follow the Fee (Explorer API, last 30 days); C, a note at the top of the README on why the Explorer data is only in the panel, linking the terms.
 - **First step:** show the user the chart design at 1440 and 375, and build only after their yes.
