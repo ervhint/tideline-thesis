@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). Next gate: G6 (user acceptance). Waiting for user: yes, on the T6g and T6h review and commit, and the Telegram question below.
+Phase: P7 Test + ship (workflow V12). Next gate: G6 (user acceptance). Waiting for user: yes, on the Telegram question below.
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (7 Nov 2026, 19:30 WIB)
@@ -26,7 +26,7 @@ Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over 
 
 1. **Decide (user):** add Telegram failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
 2. **8 Nov, after 12:41 WIB:** check that chain-day froze 7 Nov and attest-days anchored it with its treasury hash in the record (`attest:check` on 2026-11-07). Check the 09:07 panel run.
-3. **T6g and T6h: ready for review, not committed** (below). After the human's yes: pull main, `npm run rebuild`, `verify`, commit, then check the next refresh (T-T6h.5) and the site's Cumulative Volume and Buyback lines (T-T6g.9).
+3. **T6g and T6h are on main** (`4796d56`, 8 Nov). Left: T-T6h.5, the next hourly refresh in Actions, and a Chrome check at 375 px.
 4. (T6h done in the same chat as T6g, at the human's request.)
 5. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
 6. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
@@ -36,7 +36,7 @@ Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
 ## Units ready for review: T6g Words follow the numbers, T6h THESIS.md follows the data
 
-Built in one chat on 8 Nov at the human's request (an exception to one unit per chat). Status: **ready-for-review, not committed.** `npm test` 276/276 (also with `EXPLORER_PANEL=off`), `npm run rebuild` then `verify` ALL OK, `next build`, gitleaks on every changed file, wording scan clean.
+Built in one chat on 8 Nov at the human's request (an exception to one unit per chat). Status: **on main** (`4796d56`, 8 Nov); `test` passed in Actions (tests, verify, build, gitleaks). After the push, localhost shows Method's Cumulative Volume ($29.5B, "matches the public part, within 1%") and the Buyback line from the data. `npm test` 276/276 (also with `EXPLORER_PANEL=off`), `npm run rebuild` then `verify` ALL OK, `next build`, gitleaks on every changed file, wording scan clean.
 
 ### T6g (§6e, T-T6g.1 to .9)
 
