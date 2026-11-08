@@ -37,7 +37,8 @@ export function AnchorCard({ anchorStates }: { anchorStates: Record<AnchorState,
   }, [load]);
 
   if (!current && !previewFailed && !preview) return <AnchorLoading />;
-  if (previewFailed || current?.state === 'failed') {
+  // A ?state=anchored or ?state=mismatch preview shows its designed state whatever testnet answers.
+  if (previewFailed || (!preview && current?.state === 'failed')) {
     // Try Again asks /api/anchor again; the rest of the page stays as it is (J17, J24).
     const retry = () => {
       setPreviewFailed(false);

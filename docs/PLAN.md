@@ -1,6 +1,6 @@
 # Tideline: build plan
 
-Status: T0 to T6j done (T6j J1 to J26 on main, 8 Nov); next is P7a test, then G6 and P7b. Current state is in PROGRESS.md.
+Status: T0 to T6j done (T6j J1 to J26 on main, 8 Nov); P7a test done 8 Nov (review fixes not committed yet); next is G6, then P7b. Current state is in PROGRESS.md.
 
 ## 1. Why the stored record is public chain data only
 

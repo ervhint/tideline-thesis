@@ -34,7 +34,10 @@ async function getOnce(fetchFn: typeof fetch, url: string, headers: Record<strin
     try {
       const r = await fetchFn(url, { headers, cache: 'no-store', signal: AbortSignal.timeout(6_000) });
       if (r.ok) return r;
+      await r.body?.cancel().catch(() => {});
       console.warn(`Rolling panel: GitHub ${what} answered ${r.status} (try ${attempt})`);
+      // A refused token or a gone artifact will not change on a retry; only a server error or a rate limit might.
+      if (r.status < 500 && r.status !== 429) return null;
     } catch (e) {
       console.warn(`Rolling panel: GitHub ${what} failed: ${(e as Error).name} (try ${attempt})`);
     }

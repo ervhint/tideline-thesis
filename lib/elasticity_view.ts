@@ -48,7 +48,16 @@ export function elasticityView(doc: ElasticityDoc | null) {
       { name: 'Re-Run Each Day', text: 'Every newly frozen day re-runs the same rules, so a fee change that has not lasted 7 days yet can still count later.' },
     ];
     return {
-      live: true as const, easy: null, head: 'Not Enough Fee Changes to Say Yet',
+      live: true as const,
+      // J5 in the few-changes state too: Easy's own head, title, caption and smallest-effect line; the near-miss rows stay open.
+      easy: {
+        head: 'Not Enough Data Yet',
+        checks: null as string | null,
+        title: `${days.length} Fee Changes We Studied`,
+        caption: days.length ? `Each line is one time an app changed its fee in a way our rules accept (${m.usable} had enough data to use).` : 'No fee change meets our rules yet.',
+        mde: 'With fewer than 3 usable fee changes, we can’t yet say how big a reaction the data could spot.',
+      },
+      head: 'Not Enough Fee Changes to Say Yet',
       empty: [count, 'So Pricing Power reads Not Measured. The fee trace and the threshold stay the lead until there are more.'].join(String.fromCharCode(10)),
       checks, days, caption: `Each tick is one fee change that passes the rules in PREREG.md (sections 3 and A4). ${days.length ? '' : 'None does yet.'}`.trim(),
       mde: 'Smallest effect it could see: none yet, with under 3 usable fee changes to test', plot: null, axis: ax,

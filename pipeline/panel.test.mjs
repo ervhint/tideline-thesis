@@ -195,6 +195,14 @@ test('T-T6j.35 a slow or failed GitHub call is tried once more, and the log name
     assert.equal(downloads, 2);
     assert.deepEqual(logged, ['Rolling panel: GitHub artifact download failed: TimeoutError (try 1)']);
     assert.ok(!logged.join(' ').includes('canary'));
+    // A refused token is not retried; a server error is, up to three tries (P7a code review).
+    let calls = 0;
+    assert.equal(await readArtifactPanel({ token: 't', fetchFn: async () => { calls += 1; return new Response('canary', { status: 401 }); } }), null);
+    assert.equal(calls, 1);
+    calls = 0;
+    assert.equal(await readArtifactPanel({ token: 't', fetchFn: async () => { calls += 1; return new Response('canary', { status: 502 }); } }), null);
+    assert.equal(calls, 3);
+    assert.ok(!logged.join(' ').includes('canary'));
   } finally {
     console.warn = warn;
   }

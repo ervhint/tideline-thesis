@@ -24,6 +24,7 @@ type FeeTrace = import('./fee_view').FeeTrace;
 const token = () => process.env.GITHUB_DATA_TOKEN || null;
 
 // Bytes of a file under the repo root: GitHub first when there is a token, disk otherwise. null = the file does not exist.
+// turbopackIgnore keeps the build from tracing the whole project; next.config.mjs names the files the disk copy needs.
 async function readData(rel: string): Promise<Uint8Array | null> {
   const t = token();
   if (t) {
@@ -33,7 +34,7 @@ async function readData(rel: string): Promise<Uint8Array | null> {
       console.warn(`GitHub read failed for ${rel}, using the disk copy: ${(e as Error).message}`);
     }
   }
-  return readFile(path.join(process.cwd(), rel)).catch(() => null);
+  return readFile(path.join(/* turbopackIgnore: true */ process.cwd(), rel)).catch(() => null);
 }
 
 async function readPublished<T>(name: string): Promise<T | null> {
@@ -166,10 +167,10 @@ export async function getStatus() {
 }
 
 // S5 and /api/attest read the real contract; the hash comes from the same day file attest:check uses.
-const chainDir = () => path.join(process.cwd(), 'data', 'chain');
+const chainDir = () => path.join(/* turbopackIgnore: true */ process.cwd(), 'data', 'chain');
 
 async function readDeployment() {
-  const d = JSON.parse(await readFile(path.join(process.cwd(), 'contract', 'deployment.json'), 'utf8'));
+  const d = JSON.parse(await readFile(path.join(/* turbopackIgnore: true */ process.cwd(), 'contract', 'deployment.json'), 'utf8'));
   return { rpcUrl: d.rpcUrl as string, contractId: d.contractId as string };
 }
 

@@ -123,6 +123,18 @@ export const EASY = {
   elasticityChecks: 'Extra tests that try to break the result: random dates with no fee change, and other ways of counting.',
 } as const;
 
+// Q3 figures for Easy: the side figures while held; otherwise read from the published detail ("Spread 7.2 bps, top 3 hold 71%"),
+// because a measured Q3 stores only that line. Easy never shows the Pro detail itself.
+function q3Figures(r: Reading): { spreadBps: number | null; top3: number | null } | null {
+  if (r.sideFigures) return { spreadBps: r.sideFigures.spreadBps ?? null, top3: r.sideFigures.top3 ?? null };
+  const m = /Spread ([−-]?[\d.]+) bps, top 3 (?:hold|solvers) ([\d.]+)%/.exec(r.detail ?? '');
+  return m ? { spreadBps: Number(m[1].replace('−', '-')), top3: Number(m[2]) / 100 } : null;
+}
+function q3Plain(r: Reading) {
+  const f = q3Figures(r);
+  const parts = [f?.spreadBps != null ? `they keep ${f.spreadBps.toFixed(1)} [[bps]]` : null, f?.top3 != null ? `the three biggest fill ${pct(f.top3)}` : null].filter(Boolean);
+  return parts.length ? ` (${parts.join(' and ')})` : '';
+}
 // The line under each Home question (docs/PLAN.md §6h J6): the answer in plain words, built from the same files as Pro's line.
 // Q1 reads the elasticity result, Q4 the largest app; every judgement is picked from the numbers. No figure here is typed.
 export type ReadingContext = { elasticity?: { estimate: number; lo: number; hi: number } | null; largest?: { name: string; share: number } | null };
@@ -141,7 +153,7 @@ export function easyReadingLine(r: Reading & { capture?: number; treasuryShare?:
       return r.capture != null ? `NEAR keeps ${pct(r.capture)} of the swap fees (last 30 days)` : 'NEAR’s share could not be read';
     case 'Q3': {
       if (gone) return gone.replace('this', 'the traders');
-      const f = r.sideFigures;
+      const f = q3Figures(r);
       if (f?.top3 == null && f?.spreadBps == null) return 'Not enough data yet';
       return [f?.top3 != null ? `The 3 biggest traders fill ${pct(f.top3)} of public swaps` : null, f?.spreadBps != null ? `they keep ${f.spreadBps.toFixed(1)} bps` : null].filter(Boolean).join(', and ');
     }
@@ -214,7 +226,7 @@ export function easyHome(doc: EasyThesisDoc | null) {
   const MEANS: Record<string, (r: Reading) => [string, string, string]> = {
     Q1: () => ['a higher fee seems to bring in more money', 'a higher fee seems to bring in less money', 'whether a higher fee brings in more money or less is not settled yet'],
     Q2: () => ['NEAR keeps a fair share of the fees', 'NEAR’s share of the fees has stayed under 20% for two weeks', 'NEAR’s share of the fees sits between the lines'],
-    Q3: (r) => ['the traders keep little and no small group of them dominates', 'the traders keep a lot, or a small group of them dominates', `the traders sit between the lines (${r.detail})`],
+    Q3: (r) => ['the traders keep little and no small group of them dominates', 'the traders keep a lot, or a small group of them dominates', `the traders sit between the lines${q3Plain(r)}`],
     Q4: () => ['no single app brings most of the business', 'one app brings most of the business', 'the biggest app brings much of the fees, but under the 80% line'],
     Q5: () => ['NEAR’s fee income is growing', 'NEAR’s fee income is shrinking', 'NEAR’s fee income is neither clearly growing nor shrinking'],
   };

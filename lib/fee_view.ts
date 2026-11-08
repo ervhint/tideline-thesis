@@ -20,7 +20,9 @@ const bucketOf = (usd: number) => (usd < 1000 ? '0-1k' : usd < 10000 ? '1k-10k' 
 const BUCKET_NAME: Record<string, string> = { '0-1k': '$0 to $1k', '1k-10k': '$1k to $10k', '10k-100k': '$10k to $100k', '100k+': 'over $100k' };
 
 const usd = (v: number) => (Math.abs(v) < 0.005 ? '< $0.01' : `${v < 0 ? '−' : ''}$${Math.abs(v).toFixed(2)}`);
-const bps = (v: number) => `${v.toFixed(1).replace('-', '−')} bps`;
+// One decimal with a real minus; a value that rounds to zero shows as 0.0, never −0.0.
+const one = (v: number) => { const s = v.toFixed(1); return s === '-0.0' ? '0.0' : s.replace('-', '−'); };
+const bps = (v: number) => `${one(v)} bps`;
 const int = (n: number) => n.toLocaleString('en-US');
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const dayName = (d: string) => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
@@ -103,7 +105,7 @@ export function feeView(trace: FeeTrace | null) {
     state: 'split' as const,
     total: usd(d(g.allInBps)),
     lead: `${usd(d(g.allInBps))} in total, ${bps(g.allInBps)} of what goes in, from ${int(g.swaps)} real public swaps of ${size} on chain, ${span}.`,
-    easyLead: `Swap $10,000 and you get about ${usd(d(g.allInBps))} less back (${g.allInBps.toFixed(1)} [[bps]]). We worked that out from ${int(g.swaps)} real public swaps of ${size}, ${span}.`,
+    easyLead: `Swap $10,000 and you get about ${usd(d(g.allInBps))} less back (${one(g.allInBps)} [[bps]]). We worked that out from ${int(g.swaps)} real public swaps of ${size}, ${span}.`,
     easyTitle: `Where the ${usd(d(g.allInBps))} Goes`,
     easyBelow: `${bps(g.allInBps)} less than the market price`,
     spreadNote: `${usd(d(g.protocolBps) + d(g.spreadBps))} Outside the App Fee`,

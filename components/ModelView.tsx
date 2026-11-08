@@ -72,13 +72,15 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
   const splitText = splitSentence(split, atRate);
   const easySplitText = easySplitSentence(split, atRate);
   const easyWhen =
-    v <= TODAY || hit?.index === 0
+    v <= TODAY
       ? 'Already reached.'
       : path === 'Flat'
         ? 'Not reached if swapping stays flat. Pick a growth path to see a date.'
         : hit === null
           ? 'Not reached within ten years on this path.'
-          : `About ${hit.index} months, around ${new Date(Date.UTC(Number(hit.month.slice(0, 4)), Number(hit.month.slice(5, 7)) - 1, 1)).toLocaleString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })}. ${path} means swapping changes by that much over 12 months, growing a little each month.${schedule.startsWith('1.6') ? ' New coins follow the planned HSP-029 steps.' : ''}`;
+          : hit.index === 0
+            ? 'Already reached.'
+            : `About ${hit.index} months, around ${new Date(Date.UTC(Number(hit.month.slice(0, 4)), Number(hit.month.slice(5, 7)) - 1, 1)).toLocaleString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })}. ${path} means swapping changes by that much over 12 months, growing a little each month.${schedule.startsWith('1.6') ? ' New coins follow the planned HSP-029 steps.' : ''}`;
   const when =
     v <= TODAY
       ? 'Already reached.'

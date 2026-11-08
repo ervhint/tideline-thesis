@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). All build units and T6j (the look and wording pass) are on main; last commit `756ba40` (8 Nov, 20:32 WIB), GitHub `test` green. **Next chat starts P7a.** Waiting for user: the Codespaces run (T-T6j.29), the Telegram question, ticket 79934.
+Phase: P7 Test + ship (workflow V12). **P7a done on 8 Nov (22:45 WIB), not committed yet:** the review fixes and the ticked TESTS.md wait for the human's yes. Next: G6 (the human clicks through on localhost:3112 and settles the points under "P7a: for the human at G6"), then P7b. Waiting for user: the commit, the Codespaces run (T-T6j.29), the Telegram question, ticket 79934.
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (8 Nov 2026, 20:40 WIB)
@@ -27,15 +27,33 @@ Checked on 8 Nov before the last push: `npm test` 296/296 (also with `EXPLORER_P
 - Gitleaks in Actions fails on a repo's first push (no parent for the root commit); a hand-started `test` run scans the full history.
 - Telegram alerts only a failed `chain-day`. refresh messages only when a reading changes side; attest-days and panel send nothing.
 
+## P7a: test (8 Nov, done, not committed)
+
+- **Checks:** `npm test` 296/296 (also `EXPLORER_PANEL=off`), `verify` ALL OK (8863 values), `tsc` clean, `next build` with no warning, gitleaks over all 57 commits clean and on each changed file clean, wording scan clean.
+- **Chrome sweep (Claude in Chrome, same-origin frames):** 8 pages + 28 state links × 1440 and 375 × Pro and Easy = 144 dev loads, plus 40 production loads with `EXPLORER_PANEL=off`. All clean: the right mode, no horizontal scroll, no broken text, no text from the other mode, every designed state shows (loading, stale, error, few, empty, anchored, mismatch). With the switch off, no page has any panel box, command or source line. Contrast lowest 4.94:1. Model slider updates V* in 5 to 8 ms.
+- **TESTS.md:** 59 rows ticked with evidence. Still open: T-0.1 (Vercel), T-0.2 and T-T6j.29 (the human's Codespaces run), T-T6i.8 (blocked storage before load), N-1 (4G on Vercel), T-3.4 and T-5.6 (partial, said why), T-5.1 (the repo starts at one commit, so git can't show PREREG came first), T-6.3 (see below). Six old rows are marked "↷ replaced" (quote archive and Explorer pulls).
+- **Fixed from `/code-review` and spec-review** (T-P7a.1 to .6): Easy's Q3 line and What This Means once Q3 is measured again (would have said "Not enough data yet" and pasted the Pro detail); Easy words in Elasticity's few-changes state (J5); the build traced the whole project into every server function (now only data/ and the deployment file, `next.config.mjs`); Reproduce's anchored/mismatch previews no longer give way to a live testnet failure; Model's Flat-path answer the same in both modes; "−0.0 bps" and a hyphen minus in Easy's Follow the Fee lead; panel fetch no longer retries a 401 or 404. No layout, figure, data/, thesis.json or THESIS.md changed.
+- **Left as is (judgement calls):** the standards review found no breach of AGENTS.md, only duplication between Easy and Pro twin strings (ModelView, fee_view, thesis_view, easy_text); not refactored before ship. Two "Reading Mode" groups exist when the floating switch shows.
+- **Files changed:** components/ModelView.tsx, components/ReproduceView.tsx, lib/data.ts, lib/easy_text.ts, lib/elasticity_view.ts, lib/fee_view.ts, lib/panel_source.ts, next.config.mjs, the three test files, docs/TESTS.md, this file.
+
+### P7a: for the human at G6
+
+Spec points where the code and docs/PLAN.md disagree. Each touches wording or layout you chose, so nothing was changed:
+1. **T-6.3:** at 1440×900 Home shows the hero and the "4 of 5 Answered" card, but the gauge and the five readings need a scroll (gauge ends at 1528 px). The SRS asked for no scrolling; the approved layout scrolls. Keep the layout and close T-6.3 as "design changed"?
+2. **E9 vs E10:** E9 says Easy's What This Means opens with "the overall answer is on hold"; E10 (your later request) put the answers first, so the hold comes third. Pro opens with the verdict. Fine as is?
+3. **E10:** Easy still quotes questions in three places ("“Do the traders really compete?” cannot be answered").
+4. **J7:** Easy says "Two signs look good" and "Good signs (Bullish)" (E9's wording), though J7 says "answers", not "signs". When the verdict is not on hold, the Glance card label "Verdict" is not swapped in Easy.
+5. **E6:** term notes repeat on every reading row (Home, What Would Move) instead of once per section.
+6. **J20:** "running free on your own GitHub account" is true only within GitHub's free Codespaces hours.
+7. **756ba40:** Easy's Concentration panel line ("switch to Pro to see it") has no J item in PLAN.md.
+
+**Watch out (found in P7a):** a stopped `next dev` or `next start` started from the Bash tool keeps running as an orphan node process. An old `next start -p 3113` from 14:42 today is still running; it serves an old build. After a `next build`, check that the HTML's CSS chunk exists in `.next/static/chunks` (once it did not, and the page showed unstyled); `rm -rf .next/static .next/server` and a fresh `next build` fix it.
+
 ## Next
 
-1. **P7a test (next chat):**
-   - Full Chrome sweep of every page and state at 1440 and 375, **in both Easy and Pro**: normal, `?state=loading`, `?state=stale`, `?state=error` (Follow the Fee, Elasticity, Model, Method, Reproduce), `?state=few` (Elasticity), `?state=empty` (Follow the Fee), `?state=anchored|mismatch|error` (Reproduce); also once with `EXPLORER_PANEL=off` on a production build. Claude in Chrome only (AGENTS.md). 375 is checked in a same-origin iframe, because this Chrome window ignores resizing.
-   - Tick or fix the open rows in docs/TESTS.md: many earlier rows still read "⏭ not run" or "⚠ partial", some only because they were never ticked (T-T6g.9, T-T6h.5, T-T6i.8, T-T6i.10, the P-1 to P-7 previews, N-1 to N-3).
-   - `/code-review` and `spec-review` over the T6i and T6j changes (about 60 files on 8 Nov), then fix what fails.
-2. **G6:** the human clicks through on localhost and gives an explicit yes on the look. Layout changes need their yes (design references are exact; J14, J16 and J25 already changed Figma S5 and S6).
-3. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). **Right after the deploy (the human asked to be reminded):** open Follow the Fee and Concentration after a few idle minutes and see whether the rolling panel's first view says "Not Available" there too (J26). If it does, the human decides whether the server may keep the last good panel in memory for a short time (a change to the "one request" rule). Then README demo link, pitch outline, demo script, demo video, final report.
-4. **Waiting on the human:**
+1. **G6:** the human clicks through on localhost and gives an explicit yes on the look. Layout changes need their yes (design references are exact; J14, J16 and J25 already changed Figma S5 and S6).
+2. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). **Right after the deploy (the human asked to be reminded):** open Follow the Fee and Concentration after a few idle minutes and see whether the rolling panel's first view says "Not Available" there too (J26). If it does, the human decides whether the server may keep the last good panel in memory for a short time (a change to the "one request" rule). Then README demo link, pitch outline, demo script, demo video, final report.
+3. **Waiting on the human:**
    - **Codespaces run (T-T6j.29):** click "Open in Codespaces" on Reproduce, then `npm run verify` (expect ALL OK) and `npm run attest:check 2026-11-07` (expect match). Report what it prints.
    - **Telegram:** add failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
    - **Ticket 79934:** no answer recorded. If no, set `EXPLORER_PANEL=off` on Vercel and in the panel job's repo variable.

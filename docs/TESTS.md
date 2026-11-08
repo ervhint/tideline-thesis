@@ -17,101 +17,101 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-0.1 | AC-0.1 | e2e | Open each planned route on the Preview after a push to `main` | Every route loads as a static page, no 404 | ⏭ not run | |
-| T-0.2 | AC-0.2 | cli | Fresh clone, `npm i && npm run verify` | Exits 0 and prints its number count | ⏭ not run | |
+| T-0.1 | AC-0.1 | e2e | Open each planned route on the Preview after a push to `main` | Every route loads as a static page, no 404 | ⏭ not run | P7b: needs the Vercel Preview. 8 Nov, `next build` lists every route; all 8 pages answer 200 on localhost |
+| T-0.2 | AC-0.2 | cli | Fresh clone, `npm i && npm run verify` | Exits 0 and prints its number count | ⏭ not run | Waits for the human's Codespaces run (T-T6j.29), which is a fresh clone with `npm ci` and `npm run verify` |
 
 ## U1: Quote archive and attest contract
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-1.1 | AC-1.1 | cli | Run `node pipeline/quotes_sampler.mjs` once; then force one quote to fail | Raw signed quotes are written to `data/quotes/`; the failed quote is recorded as failed | ⏭ not run | |
-| T-1.2 | AC-1.2 | integration | Run the daily job on a finished day against testnet | The day's SHA-256 is stored on the contract once | ⏭ not run | |
-| T-1.3 | AC-1.3 | cli | `npm run attest:check <day>`; then change one byte in the file and run again | First run prints a match; second prints a mismatch | ⏭ not run | |
-| T-1.4 | AC-1.4 | contract | Call `attest` for an already anchored day; call it from a non-owner | Both calls fail and state is unchanged | ⏭ not run | |
-| INV-1 | INV-1 | contract | Try to overwrite a stored day's record | Rejected; record unchanged | ⏭ not run | |
-| INV-2 | INV-2 | contract | Write from a non-owner account | Rejected | ⏭ not run | |
-| INV-3 | INV-3 | contract | Call `attest` with an attached deposit | Fails | ⏭ not run | |
+| T-1.1 | AC-1.1 | cli | Run `node pipeline/quotes_sampler.mjs` once; then force one quote to fail | Raw signed quotes are written to `data/quotes/`; the failed quote is recorded as failed | ↷ replaced | The quote archive was dropped (docs/PLAN.md §4); chain-day tests T-T2.1 to T-T2.7 replace it |
+| T-1.2 | AC-1.2 | integration | Run the daily job on a finished day against testnet | The day's SHA-256 is stored on the contract once | ✅ pass | 8 Nov, P7a: `attest-days` anchors each finished chain day on testnet; Reproduce shows 35 days matching, newest 7 Nov (see T-T2.5) |
+| T-1.3 | AC-1.3 | cli | `npm run attest:check <day>`; then change one byte in the file and run again | First run prints a match; second prints a mismatch | ✅ pass | 8 Nov, P7a: pipeline/attest_check.test.mjs (same file matches, one changed byte does not) |
+| T-1.4 | AC-1.4 | contract | Call `attest` for an already anchored day; call it from a non-owner | Both calls fail and state is unchanged | ✅ pass | contract/tests/sandbox.rs (INV-1, INV-2), `contract` workflow run 42365721454 passed 7 Nov |
+| INV-1 | INV-1 | contract | Try to overwrite a stored day's record | Rejected; record unchanged | ✅ pass | contract/tests/sandbox.rs rewrite rejected, record unchanged; run 42365721454 |
+| INV-2 | INV-2 | contract | Write from a non-owner account | Rejected | ✅ pass | contract/tests/sandbox.rs non-owner write rejected; run 42365721454 |
+| INV-3 | INV-3 | contract | Call `attest` with an attached deposit | Fails | ✅ pass | contract/tests/sandbox.rs attached deposit fails; run 42365721454 |
 
 ## U2: History snapshot and coverage
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-2.1 | AC-2.1 | integration | Pull a date range, then pull it again | Every swap in range is present; second run adds no duplicates | ⏭ not run | |
-| T-2.2 | AC-2.2 | unit | Compare a fixture snapshot with DefiLlama daily volume | Daily coverage is output, including days that disagree | ⏭ not run | |
-| T-2.3 | AC-2.3 | integration | Compare three sampled days with chain data | Differences appear in the reconciliation table | ⏭ not run | |
-| T-2.4 | AC-2.4 | unit | Read every label in the label file | Each label has an evidence link | ⏭ not run | |
+| T-2.1 | AC-2.1 | integration | Pull a date range, then pull it again | Every swap in range is present; second run adds no duplicates | ↷ replaced | Explorer pull replaced by frozen chain days; same-bytes re-freeze is T-T2.2 |
+| T-2.2 | AC-2.2 | unit | Compare a fixture snapshot with DefiLlama daily volume | Daily coverage is output, including days that disagree | ✅ pass | 8 Nov, P7a: analysis/visibility.test.mjs (7 days of DefiLlama over 7 days of chain USD, every day output) and analysis/token_coverage.test.mjs |
+| T-2.3 | AC-2.3 | integration | Compare three sampled days with chain data | Differences appear in the reconciliation table | ✅ pass | 8 Nov, P7a: lib/chain_checks_view.test.mjs AC-2.3 (newest days first, extra reads named, summary over every day) |
+| T-2.4 | AC-2.4 | unit | Read every label in the label file | Each label has an evidence link | ✅ pass | 8 Nov, P7a: analysis/labels.test.mjs, every frontend and account label has an https evidence link |
 
 ## U3: Follow the fee
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-3.1 | AC-3.1 | e2e golden | Open /follow-the-fee/, pick a route and size | Cost parts sum to the all-in cost within 0.5 bps; any remainder is labelled "unexplained" | ⏭ not run | |
-| T-3.2 | AC-3.2 | e2e | Open a number on the page | Its query and plain-language line are visible | ⏭ not run | |
-| T-3.3 | AC-3.3 | unit | Check the day-1 fee account `5880ad2b…47dd` result | It states whether this is a revenue account, with an evidence link | ⏭ not run | |
-| INV-4 (proposed) | INV-4 | unit | Run the cost split across a grid of routes and sizes | Parts plus shown remainder always equal the all-in cost | ⏭ not run | |
+| T-3.1 | AC-3.1 | e2e golden | Open /follow-the-fee/, pick a route and size | Cost parts sum to the all-in cost within 0.5 bps; any remainder is labelled "unexplained" | ✅ pass | 8 Nov, P7a: lib/fee_view.test.mjs (parts sum to the all-in cost, remainder labelled); Chrome sweep below |
+| T-3.2 | AC-3.2 | e2e | Open a number on the page | Its query and plain-language line are visible | ✅ pass | lib/fee_view.test.mjs; Chrome 8 Nov (T-T6j.19): number sheet shows its query and plain line in both modes |
+| T-3.3 | AC-3.3 | unit | Check the day-1 fee account `5880ad2b…47dd` result | It states whether this is a revenue account, with an evidence link | ✅ pass | 8 Nov, P7a: analysis/labels.test.mjs T-3.3 |
+| INV-4 (proposed) | INV-4 | unit | Run the cost split across a grid of routes and sizes | Parts plus shown remainder always equal the all-in cost | ✅ pass | 8 Nov, P7a: analysis/realised_cost.test.mjs and lib/fee_view.test.mjs, parts plus remainder equal the all-in cost |
 
 ## U4: Threshold model
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-4.1 | AC-4.1 | unit | Solve V* from the hand-worked fixture inputs | V* equals the fixture value | ⏭ not run | |
-| T-4.2 | AC-4.2 | unit | Solve with the HSP-029 schedule and with the failed-vote path | V* is a dated path; the failed-vote path is returned beside it | ⏭ not run | |
-| T-4.3 | AC-4.3 | e2e golden | On the Model page (`/model`, dev server), move a slider and release; time the update with a MutationObserver | V* and its date update within 100ms | ⏭ not run | |
-| T-4.4 | AC-4.4 | cli | `npm run model -- --issuance 1.6` | V* prints with its interval | ⏭ not run | |
-| INV-5 (proposed) | INV-5 | unit | Raise revenue per dollar of volume; then raise price; then raise issuance | V* falls, rises, rises | ⏭ not run | |
+| T-4.1 | AC-4.1 | unit | Solve V* from the hand-worked fixture inputs | V* equals the fixture value | ✅ pass | 8 Nov, P7a: lib/model.test.mjs T-4.1 |
+| T-4.2 | AC-4.2 | unit | Solve with the HSP-029 schedule and with the failed-vote path | V* is a dated path; the failed-vote path is returned beside it | ✅ pass | 8 Nov, P7a: lib/model.test.mjs T-4.2 (HSP-029 ramp and the failed-vote path) |
+| T-4.3 | AC-4.3 | e2e golden | On the Model page (`/model`, dev server), move a slider and release; time the update with a MutationObserver | V* and its date update within 100ms | ✅ pass | 8 Nov, P7a, Chrome on /model/ (dev server): three slider moves (issuance 5.5 and 3.0, price 2.0), MutationObserver on the V* figure: 8.3, 6.0 and 5.3 ms |
+| T-4.4 | AC-4.4 | cli | `npm run model -- --issuance 1.6` | V* prints with its interval | ✅ pass | 8 Nov, P7a: lib/model.test.mjs T-4.4 |
+| INV-5 (proposed) | INV-5 | unit | Raise revenue per dollar of volume; then raise price; then raise issuance | V* falls, rises, rises | ✅ pass | 8 Nov, P7a: lib/model.test.mjs INV-5 |
 
 ## U5: Elasticity and pass-through
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-5.1 | AC-5.1 | cli | Read git history for `PREREG.md` and the estimation code | Event list and estimands were committed before the estimation code | ⏭ not run | |
-| T-5.2 | AC-5.2 | unit | Estimate on synthetic data with a known effect | Interval covers the true effect; placebo distribution, MDE and drop-the-largest result are all output | ⏭ not run | |
-| T-5.3 | AC-5.3 | e2e golden | Open /elasticity/ with an interval spanning zero (or MDE above the estimate) | First line says "underpowered" | ⏭ not run | |
-| T-5.4 | AC-5.4 | e2e | Open /elasticity/ with fewer than 3 usable events | Page states the event count; fee trace and threshold stay the lead | ⏭ not run | |
+| T-5.1 | AC-5.1 | cli | Read git history for `PREREG.md` and the estimation code | Event list and estimands were committed before the estimation code | ⚠ cannot show | 8 Nov, P7a: this public repo starts at one commit (fbd0075, 7 Nov) holding both PREREG.md and the estimation code, so git cannot show the order. PREREG.md states that the analysis is not blind; A4 (d8d574d) was committed before the saved read |
+| T-5.2 | AC-5.2 | unit | Estimate on synthetic data with a known effect | Interval covers the true effect; placebo distribution, MDE and drop-the-largest result are all output | ✅ pass | 8 Nov, P7a: analysis/elasticity.test.mjs T-5.2 |
+| T-5.3 | AC-5.3 | e2e golden | Open /elasticity/ with an interval spanning zero (or MDE above the estimate) | First line says "underpowered" | ✅ pass | 8 Nov, P7a: lib/elasticity_view.test.mjs T-5.3 (two cases); live page reads Underpowered in Easy and Pro |
+| T-5.4 | AC-5.4 | e2e | Open /elasticity/ with fewer than 3 usable events | Page states the event count; fee trace and threshold stay the lead | ✅ pass | 8 Nov, P7a: lib/elasticity_view.test.mjs T-5.4, now also Easy's own words in this state; Chrome ?state=few below |
 
 ## U6: Readings and Headline
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-6.1 | AC-6.1 | unit | Feed each reading a value just below, at and just above its threshold | Side matches `PREREG.md` on every boundary | ⏭ not run | |
-| T-6.2 | AC-6.2 | unit | Compute HHI and top-3 on the fixture buckets | Both equal the hand-worked values | ⏭ not run | |
-| T-6.3 | AC-6.3 | e2e golden | Open the Headline page at 1440px | V* band, five readings and verdict are visible with no scrolling | ⏭ not run | |
+| T-6.1 | AC-6.1 | unit | Feed each reading a value just below, at and just above its threshold | Side matches `PREREG.md` on every boundary | ✅ pass | 8 Nov, P7a: analysis/readings.test.mjs T-6.1 |
+| T-6.2 | AC-6.2 | unit | Compute HHI and top-3 on the fixture buckets | Both equal the hand-worked values | ✅ pass | 8 Nov, P7a: analysis/readings.test.mjs T-6.2 |
+| T-6.3 | AC-6.3 | e2e golden | Open the Headline page at 1440px | V* band, five readings and verdict are visible with no scrolling | ⚠ differs | 8 Nov, P7a, 1440×900 frame, production: the hero (V* multiple, 4 of 5 Answered card) is above the fold, but the gauge ends at 1528 px and the readings sit below it, so the page scrolls. This is the approved layout (DESIGN-REFERENCE-3, E9); the human decides at G6 |
 
 ## U7: Verify
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-7.1 | AC-7.1 | cli golden | Fresh clone, no `.env`, `npm run verify` | Every number prints `OK`, ends in `ALL OK`, under 10 minutes | ⏭ not run | |
-| T-7.2 | AC-7.2 | cli | Edit one published number, run `npm run verify` | That number's diff is printed and exit code is non-zero | ⏭ not run | |
-| T-7.3 | FR-14, NFR-2 | cli | `npm run verify -- --full` with only the free Explorer JWT | Re-pulls 3 snapshot days, DefiLlama and the model inputs and compares them | ⏭ not run | |
-| INV-6 (proposed) | INV-6 | cli | Scan the site's numbers against `data/published/` | Every number exists there with a query id | ⏭ not run | |
+| T-7.1 | AC-7.1 | cli golden | Fresh clone, no `.env`, `npm run verify` | Every number prints `OK`, ends in `ALL OK`, under 10 minutes | ✅ pass | 8 Nov, P7a: pipeline/verify.test.mjs T-7.1 and `npm run verify` ALL OK, 8863 values |
+| T-7.2 | AC-7.2 | cli | Edit one published number, run `npm run verify` | That number's diff is printed and exit code is non-zero | ✅ pass | 8 Nov, P7a: pipeline/verify.test.mjs T-7.2 |
+| T-7.3 | FR-14, NFR-2 | cli | `npm run verify -- --full` with only the free Explorer JWT | Re-pulls 3 snapshot days, DefiLlama and the model inputs and compares them | ↷ replaced | No Explorer re-pull (terms 4.1(e)); verify recomputes from the frozen chain days instead |
+| INV-6 (proposed) | INV-6 | cli | Scan the site's numbers against `data/published/` | Every number exists there with a query id | ✅ pass | 8 Nov, P7a: lib/typed_text.test.mjs (T-T6g.6 to .8): every figure in page code comes from data/published or is on the allow-list with a reason |
 
 ## U8: Daily job and alarm (Should)
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-8.1 | AC-8.1 | unit | Run the job with a reading that changes side | One entry added to `alarm/history.json`; one Telegram message sent (stubbed) | ⏭ not run | |
-| T-8.2 | AC-8.2 | unit | Run the job with no change | Nothing added, nothing sent | ⏭ not run | |
+| T-8.1 | AC-8.1 | unit | Run the job with a reading that changes side | One entry added to `alarm/history.json`; one Telegram message sent (stubbed) | ✅ pass | 8 Nov, P7a: analysis/alarm.test.mjs T-8.1 |
+| T-8.2 | AC-8.2 | unit | Run the job with no change | Nothing added, nothing sent | ✅ pass | 8 Nov, P7a: analysis/alarm.test.mjs T-8.2 |
 
 ## U9: Remaining pages, feeds and reconciliation (Should)
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-9.1 | AC-9.1 | e2e | Open the reconciliation table | Each conflicting figure shows source, value, date and our computed value | ⏭ not run | |
-| T-9.2 | AC-9.2 | e2e | Fetch `/api/thesis.json` and open the Headline page | The feed matches the Headline page | ⏭ not run | |
+| T-9.1 | AC-9.1 | e2e | Open the reconciliation table | Each conflicting figure shows source, value, date and our computed value | ✅ pass | 8 Nov, P7a: lib/reconcile_view.test.mjs; Method shows source, value, date and ours |
+| T-9.2 | AC-9.2 | e2e | Fetch `/api/thesis.json` and open the Headline page | The feed matches the Headline page | ✅ pass | 8 Nov, P7a: /api/thesis.json and Home agree on localhost: Undecided, +3 of 7, 3.3×, Q1 Neutral, Q2 Bullish, Q3 Not Measured, Q4 Neutral, Q5 Bullish |
 
 ## Added 3 Nov 2026 (finishing U2 to U7)
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-3.4 | FR-05 | unit | Trace a quote with the on-chain protocol fee; sum NEAR's share of app fees per size | App + withdraw + protocol + rest = all-in; NEAR share per bucket over 30 days | ⏭ not run | |
-| T-4.5 | FR-10, FR-11 | unit + cli | Revenue-maximizing fee and V* at another fee across the elasticity interval | f* = 5/(−1−e) below −1, none above; `npm run model` prints it | ⏭ not run | |
-| T-5.5 | PREREG §3 check | unit | Elasticity with CoW Swap as the control; fee switch descriptive | Recovers a known effect; a missing control day drops the windows around it | ⏭ not run | |
-| T-5.6 | FR-08 | unit | Pass-through priced against Binance on the event windows | Slope and resampled interval; the Explorer slope on the same swaps beside it | ⏭ not run | |
-| T-6.4 | FR-09, E3 | unit | Solver of a swap from intents.near logs; HHI and top 3 per size and all sizes | token_diff counterparty or transfer counterparty; pooled shares weighted by USD | ⏭ not run | |
-| T-21.1 | FR-21 | unit + cli | Routes per day from the raw pull; board of quoted, same-token and other routes over 30 days | Shares add to 100%; the quoted routes equal the archive's; verify recomputes the board | ⏭ not run | |
-| T-21.2 | FR-21, D14 | unit | Elasticity with each extra control venue; fee switch against each | Each venue is its own check; a venue with no history gives no estimate | ⏭ not run | |
-| T-7.4 | FR-14 | cli | `verify --full` also compares the NEAR fee files and the CoW file | Within the drift limit | ⏭ not run | |
+| T-3.4 | FR-05 | unit | Trace a quote with the on-chain protocol fee; sum NEAR's share of app fees per size | App + withdraw + protocol + rest = all-in; NEAR share per bucket over 30 days | ⚠ partial | Protocol fee read on chain each hour and used in the split (lib/fee_view.test.mjs, T-T6f.6, .7); NEAR's share per bucket is not traced, because the chain does not show which fee account is NEAR's (the page says so) |
+| T-4.5 | FR-10, FR-11 | unit + cli | Revenue-maximizing fee and V* at another fee across the elasticity interval | f* = 5/(−1−e) below −1, none above; `npm run model` prints it | ✅ pass | 8 Nov, P7a: lib/model.test.mjs FR-11 (shift / (−1 − e) below −1, none at −1 or above) |
+| T-5.5 | PREREG §3 check | unit | Elasticity with CoW Swap as the control; fee switch descriptive | Recovers a known effect; a missing control day drops the windows around it | ✅ pass | 8 Nov, P7a: analysis/elasticity.test.mjs (outside control run on its own; a missing control day drops its windows) |
+| T-5.6 | FR-08 | unit | Pass-through priced against Binance on the event windows | Slope and resampled interval; the Explorer slope on the same swaps beside it | ⚠ partial | E2 pass-through is estimated (analysis/elasticity.test.mjs T-5.2) against our hourly prices; no Binance pricing and no Explorer slope beside it (terms 4.1(e)) |
+| T-6.4 | FR-09, E3 | unit | Solver of a swap from intents.near logs; HHI and top 3 per size and all sizes | token_diff counterparty or transfer counterparty; pooled shares weighted by USD | ✅ pass | 8 Nov, P7a: analysis/solvers.test.mjs E3 (token_diff counterparty, per-size and pooled HHI and top 3); the treasury is never a solver |
+| T-21.1 | FR-21 | unit + cli | Routes per day from the raw pull; board of quoted, same-token and other routes over 30 days | Shares add to 100%; the quoted routes equal the archive's; verify recomputes the board | ✅ pass | 8 Nov, P7a: analysis/token_coverage.test.mjs and lib/token_board_view.test.mjs FR-21 board over the chain days (no quote archive) |
+| T-21.2 | FR-21, D14 | unit | Elasticity with each extra control venue; fee switch against each | Each venue is its own check; a venue with no history gives no estimate | ✅ pass | 8 Nov, P7a: analysis/elasticity.test.mjs AC-5.2 (each outside control its own check) |
+| T-7.4 | FR-14 | cli | `verify --full` also compares the NEAR fee files and the CoW file | Within the drift limit | ↷ replaced | No `verify --full` Explorer pull; the CoW and NEAR fee files are verified as inputs |
 
 ## T6b Confidential shift (PREREG.md amendment A2)
 
@@ -128,7 +128,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-A2.9 | A2 8 | unit | chain_day with a failing treasury file | The chain day still freezes, same bytes | ✅ pass | pipeline/treasury_day.test.mjs |
 | T-T2.6 | PLAN T2 | unit | Day read in 2, 4 and 7 block ranges; a missing part; a capped discovery listing | Same bytes as one read; no freeze from some parts; discovery carries on | ✅ pass | pipeline/chain_day.test.mjs |
 | T-T2.7 | PLAN T2 | Actions | `chain-day` with 4 read jobs on `test`, 5 Nov re-read, `commit=false` | Same transactions and swaps as the frozen file, `verify` passes, 429s recover | ✅ pass | Run 42262780228: digest and swap counts equal, USD −0.03% from revised prices, 1,279 429s, all recovered |
-| T-A2.10 | A2 8 | Actions | `treasury-backfill` from 4 Oct | Files in data/treasury, `verify` passes, frozen chain days unchanged | ⏭ not run | Needs this unit on main |
+| T-A2.10 | A2 8 | Actions | `treasury-backfill` from 4 Oct | Files in data/treasury, `verify` passes, frozen chain days unchanged | ✅ pass | 8 Nov, P7a: data/treasury holds 35 days, 4 Oct to 7 Nov (4c3ff63, then chain-day), `verify` ALL OK, frozen chain days unchanged. The backfill run itself predates this repo's Actions history |
 | T-A2.11 | Rule 11 | Chrome | 8 pages × 4 states plus `?state=few`, `anchored`, `mismatch`, each in a frame 1440 and 375 wide | No sideways scroll, nothing past the edge, no broken text, no crash | ✅ pass | 7 Nov, 70 loads on the `test` working tree (chain days to 4 Nov, published files to 5 Nov). Console: 8 pages reloaded at the pane width, no errors |
 
 ## T6e Track brief charts (docs/PLAN.md §6c)
@@ -173,7 +173,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6g.6 | G6 | unit | Guard test on the current code | Passes with the allow-list; each allowed entry has a reason | ✅ pass | 8 Nov, lib/typed_text.test.mjs: every figure on ALLOW with kind and reason, no unused entry, no label or solver name in page code |
 | T-T6g.7 | G6 | unit | Guard test with a planted typed figure and a planted frontend name | Both fail `npm test` | ✅ pass | 8 Nov, planted 74%, $12.6B, 3.1×, 5.0 bps, 4 Nov 2026 and SwapKit all caught; comments and URLs ignored |
 | T-T6g.8 | G6 | unit | Allow-list against published values | No allowed figure equals a live value in `thesis.json`, `model_inputs.json` or `fee_trace.json` | ✅ pass | 8 Nov, no claim figure equals a measured (non-whole) value in the three files. Catches exact copies; a rounded copy is not on ALLOW, so T-T6g.6 fails it |
-| T-T6g.9 | all | Chrome | All eight pages at 1440 and 375; Method, Follow the Fee and Model line by line against their files | Every sentence agrees with its numbers; no layout change | ⚠ partial | 8 Nov, at 1440: all 8 pages render, Method sources and Model split read right, cost card year from data; after the push (`4796d56`) Cumulative Volume reads $29.5B, "matches the public part, within 1%", and the Buyback line reads from the data. Not done: 375, the resize did not apply in this Chrome window; no layout changed |
+| T-T6g.9 | all | Chrome | All eight pages at 1440 and 375; Method, Follow the Fee and Model line by line against their files | Every sentence agrees with its numbers; no layout change | ✅ pass | 8 Nov, P7a: all eight pages at 1440 and 375 (same-origin frames) in Pro and Easy, dev and a production build: no horizontal scroll, no broken text; the 1440 line-by-line check stands from 8 Nov |
 
 ## T6h THESIS.md follows the data (docs/PLAN.md §6f, option A)
 
@@ -183,7 +183,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6h.2 | A | cli | Edit one figure in THESIS.md by hand, run `verify` | Fails and names the line | ✅ pass | 8 Nov, pipeline/verify.test.mjs: one edited figure gives "DIFF THESIS.md line N" and NOT OK |
 | T-T6h.3 | A | unit | Altered thesis docs: treasury 40% and 74%, SwapKit 79% and 85%, held and not held | Judgement words follow the lines; held text only when held | ✅ pass | 8 Nov, treasury 40% "at or under", 74% "well over"; 79% "just under", 85% "over"; hold text only when held |
 | T-T6h.4 | rules | unit | Scan the made THESIS.md | No Explorer or 1Click figure; the demand sentence present; no advice wording | ✅ pass | 8 Nov, no Explorer, 1Click or panel wording; demand sentence present; no advice wording; script reads 4 published files only |
-| T-T6h.5 | A | Actions | First refresh after the commit | THESIS.md committed only if a figure changed; matches the site | ⏭ not run | |
+| T-T6h.5 | A | Actions | First refresh after the commit | THESIS.md committed only if a figure changed; matches the site | ✅ pass | 8 Nov, P7a: hourly refreshes after 4796d56 commit THESIS.md only when a figure moves (6aeb681: 3.3× to 3.2×, 34% to 33%); runs without a change commit nothing (07:23 UTC) |
 
 ## T6i Easy and Pro (docs/PLAN.md §6g)
 
@@ -198,7 +198,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6i.7 | E2 | Chrome | Pick Easy, move through all eight pages, reload | Easy stays on every page and after reload; no flash | ✅ pass | Chrome: Easy kept on all eight pages and after reload; ?mode=easy and ?mode=pro set it and leave the address bar, other parameters kept |
 | T-T6i.8 | E2 | Chrome | Storage blocked (private window or `localStorage` throwing) | Site loads in Pro and the switch still works for the visit | ⚠ partial | Storage made to throw after load: the switch works and the choice holds across pages, no error. Blocked storage before load is unit-tested only: a sandboxed frame breaks the whole app, so it is no fair test |
 | T-T6i.9 | E1, E6 | Chrome | Keyboard only: reach the switch and a term note; Escape and a tap outside close the note | Focus visible; only the active mode is read by a screen reader | ✅ pass | Tab reaches a term note, focus ring shows, note opens, Escape closes it and keeps focus; mouse leave closes. The hidden mode is display:none |
-| T-T6i.10 | E1, E5, E6 | Chrome | All eight pages at 1440 and 375 in both modes, plus the error and stale states | Switch fits; no horizontal scroll; notes stay on screen; numbers match between modes | ⚠ partial | The Chrome window gives a 1366 viewport, not 1440: all eight pages in Easy, no horizontal scroll, error and stale previews. 375 in frames: Home menu, What Would Move with a note open (note inside 24 to 344 px). A full 375 sweep of every page in both modes is left for P7a |
+| T-T6i.10 | E1, E5, E6 | Chrome | All eight pages at 1440 and 375 in both modes, plus the error and stale states | Switch fits; no horizontal scroll; notes stay on screen; numbers match between modes | ✅ pass | 8 Nov, P7a: 8 pages and 28 state links (loading, stale, error on every page; few, empty, anchored, mismatch) × 1440 and 375 frames × Pro and Easy = 144 dev loads, plus 40 production loads with the panel off. Every load: mode as asked, no horizontal scroll, no undefined/NaN/[[, no text from the other mode, no error dialog |
 | T-T6i.11 | E8 | cli | `EXPLORER_PANEL=off npm test`, `verify`, `npm run build`; diff `/api/thesis.json`, THESIS.md and `data/` | All pass; API, THESIS.md and `data/` unchanged | ✅ pass | EXPLORER_PANEL=off npm test 283/283, verify ALL OK, next build passes; git shows no change in data/, THESIS.md, app/api or README |
 | T-T6i.13 | E9 | unit | Held and not-held docs: Pro count line, Easy answers line, card title, dots and on-hold line | Counts per side match the readings in both modes; on-hold line has the largest held treasury share, or "flow went private" when no share is read; all null when not held | ✅ pass | `lib/thesis_view.test.mjs` A2 rule 5 and `lib/easy_text.test.mjs` T-T6i.1 and the count-line test; the parity test skips labels such as A2 and Q3 |
 | T-T6i.14 | E9 | Chrome | Home in Pro and Easy at 1366 and 375 (frames) on today's data | Card reads "4 of 5 Answered" with five dots and "On hold: 79% went private" inside the card; lead and reason lines show; no horizontal scroll | ✅ pass | 8 Nov: as expected in both modes; on-hold line 42 px clear of the card edge at 1366 |
@@ -249,19 +249,32 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6j.34 | J25 | Chrome + unit | Concentration in Pro | No 77% card; panel 72 to 1279px; typed-figure allow-list without the card's entries | ✅ pass | Chrome 8 Nov; npm test 295/295 |
 | T-T6j.35 | J26 | unit + Chrome | A first failed download, then a good one; Follow the Fee | The panel loads on the second try; the log has only the type and try number, no body text | ✅ pass | pipeline/panel.test.mjs; Chrome 8 Nov: Rolling Panel, 11 hours old |
 
+## P7a review fixes (8 Nov 2026)
+
+From `/code-review` (high) and the spec review over T6i and T6j (6310967 to ad16287). No layout, figure, `data/`, thesis.json or THESIS.md changed.
+
+| ID | Covers | Type | Check | Expected | Status | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| T-P7a.1 | E10, J6 | unit | Easy Home with a measured Q3 (Neutral, treasury under the line); Easy Q3 row with no side figures | The row and What This Means give the spread and top 3 in plain words, read from the published detail; never "Not enough data yet", never the Pro detail | ✅ pass | lib/easy_text.test.mjs; the detail comes from `q3()` in analysis/readings.mjs, so a format change breaks the test |
+| T-P7a.2 | J5 | unit | `elasticityView` with under 3 usable changes | Easy has its own head, title, caption and smallest-effect line; no Pro words | ✅ pass | lib/elasticity_view.test.mjs T-5.4 |
+| T-P7a.3 | J26 | unit | GitHub answers 401, then 502 | 401 tried once, 502 three times; refused bodies cancelled; no body in the log | ✅ pass | pipeline/panel.test.mjs T-T6j.35 |
+| T-P7a.4 | P7b | build | `next build` | No "whole project traced" warning; the server trace holds data/published, data/chain and contract/deployment.json only | ✅ pass | Home's trace: 47 data files, 1 contract file, node_modules and chunks |
+| T-P7a.5 | E3 | review | Model's "When It Is Reached" on the Flat path | Easy and Pro pick the same branch | ✅ pass | components/ModelView.tsx, same order as Pro |
+| T-P7a.6 | J8 | review | Follow the Fee figures that round to zero or are negative | "0.0 bps", never "−0.0"; Easy lead has a real minus | ✅ pass | lib/fee_view.ts `one()` |
+
 ## Preview states (proposed)
 
 These are not in the SRS. They check the states the screens should show when data is old, loading, failed, anchored or mismatched (SRS 9.4, NFR-6). Expected text comes from the Figma frames and needs the human's confirmation.
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| P-1 (proposed) | NFR-6 | e2e | Open `/?state=stale` at 1440px and 375px | Headline shows its stale state; no invented numbers | ⏭ not run | |
-| P-2 (proposed) | NFR-6 | e2e | Open `/?state=loading` at 1440px and 375px | Headline shows its loading state; no layout jump when data arrives | ⏭ not run | |
-| P-3 (proposed) | NFR-6 | e2e | Open `/follow-the-fee/?state=error` at 1440px and 375px | Error state shown; no partial or invented data | ⏭ not run | |
-| P-4 (proposed) | NFR-6 | e2e | Open `/elasticity/?state=error` at 1440px and 375px | Error state shown; no partial or invented data | ⏭ not run | |
-| P-5 (proposed) | NFR-6 | e2e | Open `/reproduce/?state=error` at 1440px and 375px | Error state shown; no partial or invented data | ⏭ not run | |
-| P-6 (proposed) | SRS 9.4 | e2e | Open `/reproduce/?state=anchored` at 1440px and 375px | Shows "anchored" | ⏭ not run | |
-| P-7 (proposed) | SRS 9.4 | e2e | Open `/reproduce/?state=mismatch` at 1440px and 375px | Shows "mismatch" | ⏭ not run | |
+| P-1 (proposed) | NFR-6 | e2e | Open `/?state=stale` at 1440px and 375px | Headline shows its stale state; no invented numbers | ✅ pass | 8 Nov, P7a: `/?state=stale` at 1440 and 375, both modes: the Data Is Late banner names the day; numbers are the real ones, none invented |
+| P-2 (proposed) | NFR-6 | e2e | Open `/?state=loading` at 1440px and 375px | Headline shows its loading state; no layout jump when data arrives | ✅ pass | 8 Nov, P7a: `?state=loading` on all 8 pages at 1440 and 375, both modes: skeletons with aria-busy, no figure, no horizontal scroll. Layout jump on arrival not measured |
+| P-3 (proposed) | NFR-6 | e2e | Open `/follow-the-fee/?state=error` at 1440px and 375px | Error state shown; no partial or invented data | ✅ pass | 8 Nov, P7a: Follow the Fee error at 1440 and 375, both modes: the did-not-load state, no partial data |
+| P-4 (proposed) | NFR-6 | e2e | Open `/elasticity/?state=error` at 1440px and 375px | Error state shown; no partial or invented data | ✅ pass | 8 Nov, P7a: Elasticity error at 1440 and 375, both modes: Fee-Change List Did Not Load with Try Again, no result shown |
+| P-5 (proposed) | NFR-6 | e2e | Open `/reproduce/?state=error` at 1440px and 375px | Error state shown; no partial or invented data | ✅ pass | 8 Nov, P7a: Reproduce error at 1440 and 375, both modes and on production: NEAR Testnet Did Not Answer with Try Again; steps still shown |
+| P-6 (proposed) | SRS 9.4 | e2e | Open `/reproduce/?state=anchored` at 1440px and 375px | Shows "anchored" | ✅ pass | 8 Nov, P7a: Reproduce anchored preview at 1440 and 375, both modes: Anchored with both hashes. Since P7a the preview no longer gives way to a live testnet failure |
+| P-7 (proposed) | SRS 9.4 | e2e | Open `/reproduce/?state=mismatch` at 1440px and 375px | Shows "mismatch" | ✅ pass | 8 Nov, P7a: Reproduce mismatch preview at 1440 and 375, both modes: Mismatch, the attest:check next step and Report It on GitHub |
 
 ## Non-functional checks (proposed)
 
@@ -269,9 +282,9 @@ The SRS lists NFR-3 and NFR-4 but gives them no test ID.
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| N-1 (proposed) | NFR-3 | manual | Load golden-path pages on throttled 4G; view at 375px | Load under 2s; no horizontal scroll | ⏭ not run | |
-| N-2 (proposed) | NFR-4 | manual | Check text colour pairs on every screen | Contrast at least 4.5:1 | ⏭ not run | |
-| N-3 (proposed) | NFR-7 | cli | Scan the repo for secrets; confirm `.env` is gitignored | None found | ⏭ not run | |
+| N-1 (proposed) | NFR-3 | manual | Load golden-path pages on throttled 4G; view at 375px | Load under 2s; no horizontal scroll | ⚠ partial | 8 Nov, P7a: production build on localhost answers every page in 2 to 100 ms; no horizontal scroll at 375 on any page. Claude in Chrome cannot throttle to 4G, so the 2 s load is checked on Vercel (P7b) |
+| N-2 (proposed) | NFR-4 | manual | Check text colour pairs on every screen | Contrast at least 4.5:1 | ✅ pass | 8 Nov, P7a: contrast scan of every visible text node on all 8 pages, both modes, at 1440: lowest 4.94:1 (Easy), 5.34 to 5.79 in Pro; none under 4.5 (or 3 for large text). Approximate: glass over the background image is taken as the flat page colour; normal state only |
+| N-3 (proposed) | NFR-7 | cli | Scan the repo for secrets; confirm `.env` is gitignored | None found | ✅ pass | 8 Nov, P7a: gitleaks over all 57 commits, no leaks; `.env*` is gitignored (only .env.example is tracked) |
 
 ## Visual checks
 
