@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-08T03:23:16.914Z",
+ "asOf": "2026-11-08T04:23:31.523Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-07",
  "readings": [
@@ -410,19 +410,19 @@
  },
  "vstar": {
   "todayUsd": 4024044605,
-  "priceUsd": 3.71,
+  "priceUsd": 3.69,
   "at16": {
-   "low": 11357571841.780176,
-   "mid": 12644970275.738916,
-   "high": 48213193094.63843
+   "low": 11297154326.829868,
+   "mid": 12577704341.49492,
+   "high": 47956719144.46875
   },
   "at25": {
-   "low": 17899391112.57884,
-   "mid": 19928314936.10071,
-   "high": 75983389056.15541
+   "low": 17803707630.102036,
+   "mid": 19821785582.058014,
+   "high": 75577210140.37242
   },
-  "multiple16": 3.1423534073223616,
-  "multiple25": 4.952309651672142
+  "multiple16": 3.125637406172569,
+  "multiple25": 4.925836447595246
  },
  "notes": {
   "llamaLastDay": "2026-11-07",
@@ -446,7 +446,7 @@
    "Not measured because flow went private: Solver Competition (treasury 79% of USD). On the public swaps left, as side figures that set no reading: top 3 solvers hold 56%. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "The Confidential Intents treasury, where funds move to a private chain and the swap settles out of public view, carried 79% of the USD counted over the last 7 frozen days and 25% over the last 30. Other accounts' funds going into it were 85% of the flow we can see over 7 of the last 7 days, a side measure that sets no reading.",
    "A fall in these public numbers is not a fall in demand: swaps moving to the private chain leave the public record whether or not anyone stopped using them. What cannot be seen: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "Monthly volume would need to reach about 3.1x today's level under the 1.6% issuance plan, which passed its vote but is not in force yet, or 5.0x if issuance stays at 2.5%, with all revenue spent on buybacks."
+   "Monthly volume would need to reach about 3.1x today's level under the 1.6% issuance plan, which passed its vote but is not in force yet, or 4.9x if issuance stays at 2.5%, with all revenue spent on buybacks."
   ]
  }
 }
