@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). **P7a done on 8 Nov (22:45 WIB), not committed yet:** the review fixes and the ticked TESTS.md wait for the human's yes. Next: G6 (the human clicks through on localhost:3112 and settles the points under "P7a: for the human at G6"), then P7b. Waiting for user: the commit, the Codespaces run (T-T6j.29), the Telegram question, ticket 79934.
+Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Waiting for user: the Codespaces run (T-T6j.29), the Telegram question, ticket 79934.
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (8 Nov 2026, 20:40 WIB)
@@ -36,9 +36,9 @@ Checked on 8 Nov before the last push: `npm test` 296/296 (also with `EXPLORER_P
 - **Left as is (judgement calls):** the standards review found no breach of AGENTS.md, only duplication between Easy and Pro twin strings (ModelView, fee_view, thesis_view, easy_text); not refactored before ship. Two "Reading Mode" groups exist when the floating switch shows.
 - **Files changed:** components/ModelView.tsx, components/ReproduceView.tsx, lib/data.ts, lib/easy_text.ts, lib/elasticity_view.ts, lib/fee_view.ts, lib/panel_source.ts, next.config.mjs, the three test files, docs/TESTS.md, this file.
 
-### P7a: for the human at G6
+### P7a: settled at G6
 
-Spec points where the code and docs/PLAN.md disagree. Each touches wording or layout you chose, so nothing was changed:
+Spec points where the code and docs/PLAN.md disagree. **G6 (8 Nov): the human said everything is to their liking, so all seven stay as they are**, and the code, not the older plan line, is the intended behaviour:
 1. **T-6.3:** at 1440×900 Home shows the hero and the "4 of 5 Answered" card, but the gauge and the five readings need a scroll (gauge ends at 1528 px). The SRS asked for no scrolling; the approved layout scrolls. Keep the layout and close T-6.3 as "design changed"?
 2. **E9 vs E10:** E9 says Easy's What This Means opens with "the overall answer is on hold"; E10 (your later request) put the answers first, so the hold comes third. Pro opens with the verdict. Fine as is?
 3. **E10:** Easy still quotes questions in three places ("“Do the traders really compete?” cannot be answered").
@@ -51,7 +51,7 @@ Spec points where the code and docs/PLAN.md disagree. Each touches wording or la
 
 ## Next
 
-1. **G6:** the human clicks through on localhost and gives an explicit yes on the look. Layout changes need their yes (design references are exact; J14, J16 and J25 already changed Figma S5 and S6).
+1. **G6: passed 8 Nov.** Any later layout change still needs the human's yes (design references are exact).
 2. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). **Right after the deploy (the human asked to be reminded):** open Follow the Fee and Concentration after a few idle minutes and see whether the rolling panel's first view says "Not Available" there too (J26). If it does, the human decides whether the server may keep the last good panel in memory for a short time (a change to the "one request" rule). Then README demo link, pitch outline, demo script, demo video, final report.
 3. **Waiting on the human:**
    - **Codespaces run (T-T6j.29):** click "Open in Codespaces" on Reproduce, then `npm run verify` (expect ALL OK) and `npm run attest:check 2026-11-07` (expect match). Report what it prints.

@@ -75,7 +75,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | --- | --- | --- | --- | --- | --- | --- |
 | T-6.1 | AC-6.1 | unit | Feed each reading a value just below, at and just above its threshold | Side matches `PREREG.md` on every boundary | ✅ pass | 8 Nov, P7a: analysis/readings.test.mjs T-6.1 |
 | T-6.2 | AC-6.2 | unit | Compute HHI and top-3 on the fixture buckets | Both equal the hand-worked values | ✅ pass | 8 Nov, P7a: analysis/readings.test.mjs T-6.2 |
-| T-6.3 | AC-6.3 | e2e golden | Open the Headline page at 1440px | V* band, five readings and verdict are visible with no scrolling | ⚠ differs | 8 Nov, P7a, 1440×900 frame, production: the hero (V* multiple, 4 of 5 Answered card) is above the fold, but the gauge ends at 1528 px and the readings sit below it, so the page scrolls. This is the approved layout (DESIGN-REFERENCE-3, E9); the human decides at G6 |
+| T-6.3 | AC-6.3 | e2e golden | Open the Headline page at 1440px | V* band, five readings and verdict are visible with no scrolling | ✅ pass (design changed) | 8 Nov, G6: the human approved the scrolling Home layout. P7a, 1440×900 frame, production: the hero (V* multiple, 4 of 5 Answered card) is above the fold, but the gauge ends at 1528 px and the readings sit below it, so the page scrolls. This is the approved layout (DESIGN-REFERENCE-3, E9) |
 
 ## U7: Verify
 
