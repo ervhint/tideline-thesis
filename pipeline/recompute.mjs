@@ -5,8 +5,9 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 
-// The order matters: thesis reads what comes before it.
+// The order matters: thesis reads what comes before it. THESIS.md is written last, from the files these steps write (T6h).
 export const STEPS = ['chain_days', 'visibility', 'activity', 'fee_trace', 'elasticity', 'confidential', 'thesis', 'reconciliation', 'token_board'];
+export const THESIS_MD = 'pipeline/build_thesis_md.mjs';
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const { values: args } = parseArgs({ options: { bigquery: { type: 'boolean' }, read: { type: 'boolean' }, 'max-gb': { type: 'string' } } });
@@ -14,8 +15,8 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const { rerun } = await import('./bigquery.mjs');
     await rerun({ read: args.read, maxGb: args['max-gb'] ? Number(args['max-gb']) : undefined }).catch((e) => { console.error(e.message); process.exit(1); });
   }
-  for (const s of STEPS) {
-    const r = spawnSync(process.execPath, [`pipeline/build_${s}.mjs`], { stdio: 'inherit' });
+  for (const script of [...STEPS.map((s) => `pipeline/build_${s}.mjs`), THESIS_MD]) {
+    const r = spawnSync(process.execPath, [script], { stdio: 'inherit' });
     if (r.status !== 0) process.exit(r.status ?? 1);
   }
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Banner } from '@/components/Banner';
 import { Gauge } from '@/components/Gauge';
 import { Segmented, Slider } from '@/components/Slider';
-import { type Market, MAX_SEEN_FEE_BPS, atFee, firstReached, revenueMaxFeeBps, vStar, vStarPath, vStarRange } from '@/lib/model';
+import { type Market, MAX_SEEN_FEE_BPS, atFee, firstReached, revenueMaxFeeBps, splitSentence, vStar, vStarPath, vStarRange } from '@/lib/model';
 import { bn } from '@/lib/mock';
 import type { RevenueSplit } from '@/lib/data';
 
@@ -58,9 +58,7 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
         : `About ${fLow.toFixed(1)} to ${fHigh.toFixed(1)} bps all-in, against ${fee0.toFixed(1)} bps today. ${where(fLow, elast[0])}${beyond(Math.max(fLow, fHigh))}`;
   // V* on the revenue rate before 27 Oct and on the rate since, with the number of days behind each.
   const atRate = (s: { revenueRate: number; days: number }) => `${bn(vStar({ ...base, issuancePct: issuance }, market, s.revenueRate))} at ${(s.revenueRate * 1e4).toFixed(1)} bps`;
-  const splitText = split?.before && split.since
-    ? `${atRate(split.before)} from the ${split.before.days} days before 27 Oct. ${atRate(split.since)} from the ${split.since.days} days since, when swaps began to settle privately. So few days cannot show whether the rate has really changed, and DefiLlama may not see all private volume.`
-    : null;
+  const splitText = splitSentence(split, atRate);
   const when =
     v <= TODAY
       ? 'Already reached.'

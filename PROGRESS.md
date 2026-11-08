@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). Next gate: G6 (user acceptance). Waiting for user: yes, on the Telegram question below.
+Phase: P7 Test + ship (workflow V12). Next gate: G6 (user acceptance). Waiting for user: yes, on the T6g and T6h review and commit, and the Telegram question below.
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (7 Nov 2026, 19:30 WIB)
@@ -26,21 +26,32 @@ Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over 
 
 1. **Decide (user):** add Telegram failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
 2. **8 Nov, after 12:41 WIB:** check that chain-day froze 7 Nov and attest-days anchored it with its treasury hash in the record (`attest:check` on 2026-11-07). Check the 09:07 panel run.
-3. **T6g Words follow the numbers** (docs/PLAN.md §6e), new chat, Opus 5.5 · high (the human's choice). One sentence is wrong today (Method, Cumulative Volume).
-4. **T6h THESIS.md follows the data** (§6f), new chat after T6g. The human picks A, B or C first (A recommended).
+3. **T6g and T6h: ready for review, not committed** (below). After the human's yes: pull main, `npm run rebuild`, `verify`, commit, then check the next refresh (T-T6h.5) and the site's Cumulative Volume and Buyback lines (T-T6g.9).
+4. (T6h done in the same chat as T6g, at the human's request.)
 5. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
 6. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
 7. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). Then README demo link, pitch outline, demo script, demo video, final report.
 
 Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
-## Next unit: T6g Words follow the numbers (new chat)
+## Units ready for review: T6g Words follow the numbers, T6h THESIS.md follows the data
 
-Spec: docs/PLAN.md §6e. Tests: T-T6g.1 to T-T6g.9. Opus 5.5 · high. Status: todo.
+Built in one chat on 8 Nov at the human's request (an exception to one unit per chat). Status: **ready-for-review, not committed.** `npm test` 276/276 (also with `EXPLORER_PANEL=off`), `npm run rebuild` then `verify` ALL OK, `next build`, gitleaks on every changed file, wording scan clean.
 
-- **What:** five sentences built from data instead of typed (Cumulative Volume on Method, Buyback on Follow the Fee, "So few days" on Model, the 9 Nov email on Method, the year on the cost card), plus a guard test over every page's code so no typed figure or typed frontend name can come back.
-- **Start:** G1, the one wrong today. No layout change.
-- **Then T6h** (§6f): THESIS.md from the data. Ask the human A, B or C before any code.
+### T6g (§6e, T-T6g.1 to .9)
+
+- **G1** Cumulative Volume: `build_reconciliation.mjs` passes DefiLlama daily volume; Ours is $29.5B for 1 Sep 2025 to 21 Sep 2026, and the sentence is picked by distance from the source's public part (within 5% matches, otherwise how far, no total no claim). **G2** Buyback: `fee_trace.json` `nearRevenue.buyback` is now `{ share, burned, since }` from model_inputs; the line says "all" only at 100.0%, its value is revenue × share. **G3** "So few days" only while the days since 27 Oct are fewer than the 30 before (`splitSentence` in `lib/model.ts`). **G4** email sentence in the past tense. **G5** card year from `trace.to`.
+- **G6** `lib/typed_text.test.mjs`: the allow-list, each entry with a kind and reason; also scans `analysis/thesis_md.mjs`. T-T6g.8 compares against measured (non-whole) values only, because counts and the fixed `line` and `priceBand` coincide by chance; it catches exact copies, and a rounded copy fails the allow-list instead.
+- **Also fixed:** Method said treasury files "are not anchored"; it now says anchors from 8 Nov 2026 carry the file hash. A straight apostrophe in that sentence broke the page in dev; fixed and `next build` passes.
+- **T-T6g.9 partial:** localhost reads published files from GitHub, so Method's Cumulative Volume ("Not available") and the Buyback line ("not in the published file", the safe fallback for the old string field) show main's data until the push. The 375 px resize did not apply in this Chrome window. No layout changed.
+
+### T6h (§6f option A, the human's choice; T-T6h.1 to .5)
+
+- `analysis/thesis_md.mjs` (pure) and `pipeline/build_thesis_md.mjs` write THESIS.md from thesis, elasticity, visibility and model_inputs. Every judgement picked by condition (treasury vs 50%, largest frontend vs 50/80%, rate lower/level/higher, held or not, checks inside −1 or not).
+- Wiring: `npm run rebuild` writes it last; `refresh` writes it and keeps it only when the text changed; `verify` fails on a hand edit, naming the line; refresh, chain-day and both backfills `git add` THESIS.md. README says THESIS.md is generated.
+- The new THESIS.md differs from the old in the figures that moved (treasury 79%, confidential share 85%, interval tops) and says plainly that 8 of 9 elasticity checks keep −1 inside; the CoW Swap control sits just above (−0.99).
+- **Waiting on later:** T-T6h.5, the first refresh in Actions after the commit.
+- **Commit note:** the hourly refresh moves the data. Pull main right before committing, then `npm run rebuild` and `verify`, so fee_trace, reconciliation and THESIS.md match main's inputs.
 
 ## Units done: T6e Track brief charts, T6f Nothing stuck
 

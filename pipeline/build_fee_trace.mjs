@@ -38,7 +38,8 @@ const result = {
   nearRevenue: {
     bps: inputs.revenueRate * 1e4, from: inputs.window.from, to: inputs.window.to,
     source: 'DefiLlama revenue ÷ volume, all Intents (data/published/model_inputs.json)',
-    buyback: 'Since 2026-02-23 NEAR uses its captured Intents revenue to buy NEAR on the open market; the bought NEAR is not burned (DefiLlama methodology)',
+    // Read from DefiLlama each hour into model_inputs.json; Follow the Fee's buyback sentence is built from it.
+    buyback: { share: inputs.buyback?.shareOfRevenue ?? null, burned: inputs.buyback?.burned ?? null, since: '2026-02-23' },
   },
   query: 'analysis/realised_cost.mjs feeTrace, q3Spread, solverConcentrationChain over data/chain/*.jsonl, by pipeline/build_fee_trace.mjs',
 };

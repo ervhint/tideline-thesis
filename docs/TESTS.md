@@ -165,24 +165,24 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 
 | ID | Covers | Type | Check | Expected | Status | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-T6g.1 | G1 | unit | Reconciliation with volume within 5%, 20% off, and a day missing | Ours shows the total; "matches" only within 5%; otherwise how far apart; missing day gives Not available and no claim | ⏭ not run | |
-| T-T6g.2 | G1 | cli | `npm run rebuild` then `verify` | `reconciliation.json` holds our cumulative volume; ALL OK | ⏭ not run | |
-| T-T6g.3 | G2 | unit | Buyback share 1, 0.8, missing; burned true | "All" only at 100%; the share otherwise; "not burned" only when false; no claim without a figure | ⏭ not run | |
-| T-T6g.4 | G3 | unit | Model split with 11 and 40 days since 27 Oct | "So few days" at 11, not at 40 | ⏭ not run | |
-| T-T6g.5 | G4, G5 | unit | Method sources text; cost card with `trace.to` in 2027 | Past-tense email sentence; card shows 2027 | ⏭ not run | |
-| T-T6g.6 | G6 | unit | Guard test on the current code | Passes with the allow-list; each allowed entry has a reason | ⏭ not run | |
-| T-T6g.7 | G6 | unit | Guard test with a planted typed figure and a planted frontend name | Both fail `npm test` | ⏭ not run | |
-| T-T6g.8 | G6 | unit | Allow-list against published values | No allowed figure equals a live value in `thesis.json`, `model_inputs.json` or `fee_trace.json` | ⏭ not run | |
-| T-T6g.9 | all | Chrome | All eight pages at 1440 and 375; Method, Follow the Fee and Model line by line against their files | Every sentence agrees with its numbers; no layout change | ⏭ not run | |
+| T-T6g.1 | G1 | unit | Reconciliation with volume within 5%, 20% off, and a day missing | Ours shows the total; "matches" only within 5%; otherwise how far apart; missing day gives Not available and no claim | ✅ pass | 8 Nov, lib/reconcile_view.test.mjs: within 5% matches; 20% below or above says how far; a missing or null day gives Not available and no claim |
+| T-T6g.2 | G1 | cli | `npm run rebuild` then `verify` | `reconciliation.json` holds our cumulative volume; ALL OK | ✅ pass | 8 Nov, `npm run rebuild` then `verify` ALL OK; reconciliation.json Ours $29.5B, "matches the public part, within 1%" |
+| T-T6g.3 | G2 | unit | Buyback share 1, 0.8, missing; burned true | "All" only at 100%; the share otherwise; "not burned" only when false; no claim without a figure | ✅ pass | 8 Nov, lib/fee_view.test.mjs buybackPart with share 1, 0.8, missing, burned true |
+| T-T6g.4 | G3 | unit | Model split with 11 and 40 days since 27 Oct | "So few days" at 11, not at 40 | ✅ pass | 8 Nov, lib/model.test.mjs splitSentence: 11 days says it, 40 days does not |
+| T-T6g.5 | G4, G5 | unit | Method sources text; cost card with `trace.to` in 2027 | Past-tense email sentence; card shows 2027 | ✅ pass | 8 Nov, card source "Chain days to 5 Jan 2027."; Method email sentence past tense (lib/typed_text.test.mjs) |
+| T-T6g.6 | G6 | unit | Guard test on the current code | Passes with the allow-list; each allowed entry has a reason | ✅ pass | 8 Nov, lib/typed_text.test.mjs: every figure on ALLOW with kind and reason, no unused entry, no label or solver name in page code |
+| T-T6g.7 | G6 | unit | Guard test with a planted typed figure and a planted frontend name | Both fail `npm test` | ✅ pass | 8 Nov, planted 74%, $12.6B, 3.1×, 5.0 bps, 4 Nov 2026 and SwapKit all caught; comments and URLs ignored |
+| T-T6g.8 | G6 | unit | Allow-list against published values | No allowed figure equals a live value in `thesis.json`, `model_inputs.json` or `fee_trace.json` | ✅ pass | 8 Nov, no claim figure equals a measured (non-whole) value in the three files. Catches exact copies; a rounded copy is not on ALLOW, so T-T6g.6 fails it |
+| T-T6g.9 | all | Chrome | All eight pages at 1440 and 375; Method, Follow the Fee and Model line by line against their files | Every sentence agrees with its numbers; no layout change | ⚠ partial | 8 Nov, Chrome at 1440: all 8 pages render, Method sources and Model split read right, cost card year from data. Method Cumulative Volume and the Buyback line show GitHub main data until the push (localhost reads GitHub). The 375 resize did not apply in this Chrome window; no layout changed |
 
 ## T6h THESIS.md follows the data (docs/PLAN.md §6f, option A)
 
 | ID | Covers | Type | Check | Expected | Status | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-T6h.1 | A | unit | Run the script on the published files | Equals the committed THESIS.md | ⏭ not run | |
-| T-T6h.2 | A | cli | Edit one figure in THESIS.md by hand, run `verify` | Fails and names the line | ⏭ not run | |
-| T-T6h.3 | A | unit | Altered thesis docs: treasury 40% and 74%, SwapKit 79% and 85%, held and not held | Judgement words follow the lines; held text only when held | ⏭ not run | |
-| T-T6h.4 | rules | unit | Scan the made THESIS.md | No Explorer or 1Click figure; the demand sentence present; no advice wording | ⏭ not run | |
+| T-T6h.1 | A | unit | Run the script on the published files | Equals the committed THESIS.md | ✅ pass | 8 Nov, analysis/thesis_md.test.mjs: script output equals the committed THESIS.md |
+| T-T6h.2 | A | cli | Edit one figure in THESIS.md by hand, run `verify` | Fails and names the line | ✅ pass | 8 Nov, pipeline/verify.test.mjs: one edited figure gives "DIFF THESIS.md line N" and NOT OK |
+| T-T6h.3 | A | unit | Altered thesis docs: treasury 40% and 74%, SwapKit 79% and 85%, held and not held | Judgement words follow the lines; held text only when held | ✅ pass | 8 Nov, treasury 40% "at or under", 74% "well over"; 79% "just under", 85% "over"; hold text only when held |
+| T-T6h.4 | rules | unit | Scan the made THESIS.md | No Explorer or 1Click figure; the demand sentence present; no advice wording | ✅ pass | 8 Nov, no Explorer, 1Click or panel wording; demand sentence present; no advice wording; script reads 4 published files only |
 | T-T6h.5 | A | Actions | First refresh after the commit | THESIS.md committed only if a figure changed; matches the site | ⏭ not run | |
 
 ## Preview states (proposed)

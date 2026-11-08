@@ -11,11 +11,12 @@ const json = (f) => JSON.parse(readFileSync(f, 'utf8'));
 
 const thesis = json(`${PUB}/thesis.json`);
 const inputs = json(`${PUB}/model_inputs.json`);
+const daily = json('data/snapshot/defillama_daily.json').days;
 const rows = reconcileRows({
   vstar: thesis.vstar,
   buybackShare: inputs.buyback?.shareOfRevenue ?? null,
-  fees: json('data/snapshot/defillama_daily.json').days,
-  volume: [], // DefiLlama daily volume is saved from T1 on
+  fees: daily,
+  volume: daily.map((d) => ({ day: d.day, defillama: d.volume })),
 });
 
 mkdirSync(dirname(OUT), { recursive: true });

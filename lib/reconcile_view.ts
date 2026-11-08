@@ -6,7 +6,7 @@ export type Inputs = {
   vstar: { priceUsd: number; at16: { mid: number } } | null; // thesis.json
   buybackShare: number | null; // model_inputs.json
   fees: { day: string; fees: number; revenue: number }[]; // data/snapshot/defillama_daily.json days
-  volume: { day: string; defillama: number }[]; // data/snapshot/coverage.json daily
+  volume: { day: string; defillama: number | null }[]; // data/snapshot/defillama_daily.json days (volume)
 };
 
 const NONE = 'Not available';
@@ -17,10 +17,28 @@ const millionsTwo = (n: number) => `$${(n / 1e6).toFixed(2)}M`;
 const sum = <T extends { day: string }>(rows: T[], from: string, to: string, key: keyof T) =>
   rows.filter((r) => r.day >= from && r.day <= to).reduce((t, r) => t + (r[key] as number), 0);
 
+// Volume from VOL_FROM to the source's date: a total only when every day in between has a figure, never a sum with a hole.
+const VOL_FROM = '2025-09-01', VOL_TO = '2026-09-21';
+const PUBLIC_PART = 29.5e9; // Crypto Briefing's public intents figure, 22 Sep 2026 (the Other Source column below)
+const daysBetween = (a: string, b: string) => (Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / 86_400_000 + 1;
+export function cumulativeVolume(rows: Inputs['volume']): number | null {
+  const inRange = rows.filter((r) => r.day >= VOL_FROM && r.day <= VOL_TO);
+  if (new Set(inRange.map((r) => r.day)).size !== daysBetween(VOL_FROM, VOL_TO) || inRange.some((r) => typeof r.defillama !== 'number')) return null;
+  return inRange.reduce((t, r) => t + (r.defillama as number), 0);
+}
+// The sentence follows how far ours is from the public part: within 5% it matches; otherwise it says how far; with no total it claims nothing.
+export function volumeWhy(volume: number | null): string {
+  const rest = 'The source puts about $1.9B more in confidential intents, which DefiLlama appears not to count (our reading, not confirmed). Our series starts on 1 Sep 2025, so any earlier volume is missing.';
+  if (volume == null) return `We have no complete daily volume for these days, so there is nothing to compare. ${rest}`;
+  const off = volume / PUBLIC_PART - 1;
+  if (Math.abs(off) <= 0.05) return `Our figure matches the public part, within ${Math.max(1, Math.ceil(Math.abs(off) * 100))}%. ${rest}`;
+  return `Our figure is ${Math.round(Math.abs(off) * 100)}% ${off < 0 ? 'below' : 'above'} the public part, so the two do not match. ${rest}`;
+}
+
 export function reconcileRows(i: Inputs): Row[] {
   const v = i.vstar;
   const revenue = i.fees.length ? sum(i.fees, '2026-02-23', '2026-10-18', 'revenue') : null;
-  const volume = i.volume.length ? sum(i.volume, '0000-00-00', '2026-09-21', 'defillama') : null;
+  const volume = cumulativeVolume(i.volume);
   return [
     {
       figure: 'Monthly Volume Needed at 1.6%',
@@ -61,7 +79,7 @@ export function reconcileRows(i: Inputs): Row[] {
           date: '22 Sep 2026',
         },
       ],
-      why: 'Our figure matches the public part. The extra $1.9B is confidential intents, which DefiLlama appears not to count (our reading, not confirmed). Our series starts on 1 Sep 2025, so any earlier volume is missing.',
+      why: volumeWhy(volume),
     },
   ];
 }

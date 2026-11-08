@@ -138,7 +138,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/keep" "$RUNNER_TEMP/keep-treasury" && cp data/chain/*.jsonl data/chain/fillers.json "$RUNNER_TEMP/keep/"
           cp data/treasury/*.jsonl "$RUNNER_TEMP/keep-treasury/" 2>/dev/null || true
           for i in 1 2 3; do
-            git add data
+            git add data THESIS.md
             if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
             git commit -m "data: freeze chain day"
             git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && exit 0

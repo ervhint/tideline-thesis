@@ -1,37 +1,37 @@
 # Tideline: the thesis
 
-Research, not financial advice. Figures are as of 7 Nov 2026 and come from data stored in this repo. The live numbers are on the site and in `data/published/thesis.json`; `npm run verify` recomputes them.
+Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days and DefiLlama data run to 7 Nov 2026.
 
 ## The claim
 
 NEAR uses its share of NEAR Intents fees to buy NEAR on the open market. The question is whether those buybacks could ever cover the new NEAR being issued.
 
-**At today's revenue rate, Intents volume would have to reach about 3.1 times today's level to cover issuance under the 1.6% plan, or 4.9 times if issuance stays at 2.5%. The evidence does not yet say whether it can get there, and the public data needed to answer that is going away.**
+**At today's revenue rate, Intents volume would have to reach about 3.2 times today's level to cover issuance under the 1.6% plan, or 5.1 times if issuance stays at 2.5%. The evidence does not yet say whether it can get there, and most of the public data needed to answer that has moved out of public view.**
 
 The verdict is **Undecided**. The score is +3 of 7, which would normally read Bullish. It is held at Undecided on purpose: Solver Competition can no longer be measured, and a rule written in advance (PREREG.md, amendment A2) says a loss of data may not move the verdict.
 
-**How much went private.** Over the last 7 frozen days, 31 Oct to 6 Nov 2026, the Confidential Intents Treasury carried 74% of the USD counted on chain, well over the 50% line in A2. Other accounts' funds going into it were 81% of the flow we can see. That share is a side measure and sets no reading. It shows where the public record went, not that demand fell.
+**How much went private.** Over the last 7 frozen days, 1 Nov to 7 Nov 2026, the Confidential Intents Treasury carried 79% of the USD counted on chain, well over the 50% line in A2. Other accounts' funds going into it were 85% of the flow we can see. That share is a side measure and sets no reading. It shows where the public record went, not that demand fell.
 
 ## The evidence for
 
 - **NEAR keeps a real share of the fees.** DefiLlama books 34% of Intents fees as NEAR revenue over the last 30 days, above the 30% line for Bullish.
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $4.02B. The level needed under the 1.6% plan is about $12.6B, with an interval of $11.3B to $47.9B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $3.88B. The level needed under the 1.6% plan is about $12.6B, with an interval of $11.3B to $48.0B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
-- **The gap is large.** A 3.1 times rise is not a rounding error, and the top of the interval is far higher.
-- **Revenue per dollar of volume looks lower lately.** It was 5.3 bps over the 30 days before 27 Oct and 4.5 bps over the 11 days since. So few days cannot show that the rate really changed, and DefiLlama may not see all private volume, so this is a warning and not a finding. If the 30-day capture falls under 30%, NEAR's Share of Fees moves from Bullish to Neutral.
-- **One frontend brings most visible fees.** SwapKit pays 75% of visible app fees over the last 30 frozen days, just under the 80% line for Bearish. Visible app fees are a shrinking part of the flow.
+- **The gap is large.** A 3.2 times rise is not a rounding error, and the top of the interval is far higher.
+- **Revenue per dollar of volume looks lower lately.** It was 5.3 bps over the 30 days before 27 Oct and 4.4 bps over the 12 days since. So few days cannot show that the rate really changed, and DefiLlama may not see all private volume, so this is a warning and not a finding. If the 30-day capture falls under 30%, NEAR's Share of Fees moves from Bullish to Neutral.
+- **One frontend brings much of the visible fees.** SwapKit pays 75% of visible app fees over the last 30 frozen days, just under the 80% line for Bearish. Visible app fees are a shrinking part of the flow: the Treasury carried 79% of counted USD over the last 7 days against 25% over 30.
 - **Pricing power is unproven.** The best estimate says volume barely moves when a fee changes, but the data cannot tell that apart from a large effect in either direction (below).
 
 ## What the fee changes showed
 
-Across a year of chain data, 1 Oct 2025 to 6 Nov 2026, 27 fee changes passed the rules and 21 were usable. Elasticity is −0.06, with a 95% interval of −1.66 to 1.54, and random dates with no fee change gave results this large or larger 91% of the time. The smallest effect this test could see is 2.01, so it is underpowered.
+Across 403 days of chain data, 1 Oct 2025 to 7 Nov 2026, 27 fee changes passed the rules and 21 were usable. Elasticity is −0.06, with a 95% interval of −1.66 to 1.53, and random dates with no fee change gave results this large or larger 91% of the time. The smallest effect this test could see is 2.01, so it is underpowered.
 
-At −1 a higher fee leaves revenue flat. The interval runs from well below that to well above it, so **Pricing Power reads Neutral: not settled**. It is not evidence that volume ignores fees. Every check gives an estimate near zero, and none settles it: dropping the largest frontend, changing the fee shift, and using five outside venues as the control.
+At −1 a higher fee leaves revenue flat. The interval runs from below that to above it, so **Pricing Power reads Neutral: not settled**. It is not evidence that volume ignores fees. Every check gives an estimate near zero: dropping the largest frontend, changing the fee shift, leaving out the days of the move to the Treasury and using five outside venues as the control. 8 of 9 keep −1 inside their interval. CoW Swap on DefiLlama as the control gives −0.99 to 1.12, just above −1. It is a check on the reading, not the reading.
 
-Pass-through, how much of a fee change reaches users, is 0.33 with an interval of −0.34 to 0.99, on 16 fee changes. It is underpowered as well.
+Pass-through, how much of a fee change reaches users, is 0.33 with an interval of −0.35 to 1.00, on 16 fee changes. It is underpowered as well.
 
 ## What would change my mind
 
@@ -46,7 +46,7 @@ Each line, its level and when it was set are in `PREREG.md` and on the What Woul
 ## What could not be computed
 
 - **Fees on confidential swaps.** Since 27 Oct 2026 swaps settle on `intents.far`, which public indexers cannot see. Funds moving to and from the Treasury on `intents.near` are public; what happens in between is not. Any fee on that path is hidden, so it is reported as an all-in cost and never called an app fee.
-- **Which solver filled a confidential swap.** Solver identity is gone with the settlement, so Solver Competition reads Not Measured.
+- **Which solver filled a confidential swap.** Solver identity is gone with the settlement, so Solver Competition cannot be read on that flow.
 - **Any flow that stays shielded.** Funds that go in and do not come back in the same day cannot be paired, so counts of confidential flows read low.
 - **A fall in public numbers is not a fall in demand.** Flow leaving the public record looks the same as flow leaving the product. Nothing here reads it as the second.
 - **A visibility line.** The ratio of DefiLlama volume to chain-counted USD is shown, but with no line and no state: chain days reach only 23 of the 90 days wanted before 27 Oct.

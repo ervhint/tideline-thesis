@@ -9,7 +9,7 @@ import { spawnSync } from 'node:child_process';
 import { dirname } from 'node:path';
 import { parseArgs } from 'node:util';
 import { sideChanges, alarmMessage } from '../analysis/alarm.mjs';
-import { STEPS } from './recompute.mjs';
+import { STEPS, THESIS_MD } from './recompute.mjs';
 
 const { values: args } = parseArgs({ options: { 'dry-run': { type: 'boolean' }, 'message-file': { type: 'string' } } });
 const dry = args['dry-run'];
@@ -21,7 +21,8 @@ const P = 'data/published';
 const VENUES = 'data/snapshot/control_venues.json';
 const TOKENS = 'data/labels/tokens.json';
 const DERIVED = STEPS;
-const FILES = [LLAMA, COW, VENUES, TOKENS, PROTOCOL, `${P}/model_inputs.json`, ...DERIVED.map((f) => `${P}/${f}.json`), HISTORY];
+const THESIS = 'THESIS.md';
+const FILES = [LLAMA, COW, VENUES, TOKENS, PROTOCOL, `${P}/model_inputs.json`, ...DERIVED.map((f) => `${P}/${f}.json`), THESIS, HISTORY];
 
 const read = (f) => (existsSync(f) ? readFileSync(f, 'utf8') : null);
 const backup = new Map(FILES.map((f) => [f, read(f)]));
@@ -31,7 +32,8 @@ const restore = (f) => { const old = backup.get(f); if (old !== null) writeFileS
 // until fee() or its collector changes, so its readAt is the first read of the current value.
 const VOLATILE = ['asOf', 'pulledAt', 'readAt'];
 const core = (text) => { const o = JSON.parse(text); for (const k of VOLATILE) delete o[k]; return JSON.stringify(o); };
-const changed = (f) => backup.get(f) === null || core(backup.get(f)) !== core(readFileSync(f, 'utf8'));
+// THESIS.md has no timestamp: it changes only when a figure or a judgement in it does.
+const changed = (f) => backup.get(f) === null || (f === THESIS ? backup.get(f) !== readFileSync(f, 'utf8') : core(backup.get(f)) !== core(readFileSync(f, 'utf8')));
 
 function node(script, ...a) {
   const r = spawnSync(process.execPath, [script, ...a], { encoding: 'utf8' });
@@ -61,6 +63,8 @@ try {
   // Every derived file, in the order `npm run rebuild` uses: fee_trace reads model_inputs, elasticity reads the control venues.
   for (const f of DERIVED) node(`pipeline/build_${f}.mjs`);
   for (const f of DERIVED) settle(`${P}/${f}.json`);
+  node(THESIS_MD);
+  settle(THESIS);
 
   const before = backup.get(`${P}/thesis.json`) && JSON.parse(backup.get(`${P}/thesis.json`));
   const after = JSON.parse(readFileSync(`${P}/thesis.json`, 'utf8'));

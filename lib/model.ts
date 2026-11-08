@@ -82,3 +82,13 @@ export function atFee(i: Inputs, m: Market, feeBps: number, e: number) {
   const need = vStar(i, m, (m.revenueRate * feeBps) / f0);
   return { feeBps, volume, need, multiple: need / volume };
 }
+
+// Model, "Volume Needed Before and Since 27 Oct": V* on the revenue rate before 27 Oct and on the rate since, with the days behind each.
+// "So few days" only while the days since are fewer than the window before; from then on both rates stand with no claim either way.
+type Side = { days: number; revenueRate: number };
+export function splitSentence(split: { before: Side | null; since: Side | null } | null, atRate: (s: Side) => string): string | null {
+  if (!split?.before || !split.since) return null;
+  const { before, since } = split;
+  const few = since.days < before.days ? ' So few days cannot show whether the rate has really changed, and DefiLlama may not see all private volume.' : ' DefiLlama may not see all private volume.';
+  return `${atRate(before)} from the ${before.days} days before 27 Oct. ${atRate(since)} from the ${since.days} days since, when swaps began to settle privately.${few}`;
+}

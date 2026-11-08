@@ -44,3 +44,20 @@ test('the scan finds API fields in stored data, and the stored data has none', a
   assert.equal(apiDataIn([dir]).found.length, 1);
   rmSync(dir, { recursive: true, force: true });
 });
+
+test('T-T6h.2 a hand edit to one figure in THESIS.md fails verify and names the line', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'thesis-md-'));
+  const f = join(dir, 'THESIS.md');
+  const text = readFileSync('THESIS.md', 'utf8');
+  const lines = text.split('\n');
+  const i = lines.findIndex((l) => /\d+% of the USD counted on chain/.test(l));
+  assert.ok(i >= 0, 'THESIS.md has the treasury figure');
+  lines[i] = lines[i].replace(/(\d+)% of the USD counted on chain/, (m, n) => `${Number(n) === 1 ? 2 : 1}% of the USD counted on chain`);
+  writeFileSync(f, lines.join('\n'));
+  try {
+    const r = verify({ THESIS_MD: f });
+    assert.notEqual(r.status, 0);
+    assert.match(r.stdout, new RegExp(`DIFF THESIS\.md line ${i + 1}:`));
+    assert.match(r.stdout, /NOT OK/);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});

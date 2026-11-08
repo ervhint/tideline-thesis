@@ -39,7 +39,7 @@
   },
   {
    "figure": "Cumulative Volume",
-   "ours": "Not available",
+   "ours": "$29.5B (DefiLlama daily volume, 1 Sep 2025 to 21 Sep 2026)",
    "others": [
     {
      "name": "Crypto Briefing, citing Dune",
@@ -48,7 +48,7 @@
      "date": "22 Sep 2026"
     }
    ],
-   "why": "Our figure matches the public part. The extra $1.9B is confidential intents, which DefiLlama appears not to count (our reading, not confirmed). Our series starts on 1 Sep 2025, so any earlier volume is missing."
+   "why": "Our figure matches the public part, within 1%. The source puts about $1.9B more in confidential intents, which DefiLlama appears not to count (our reading, not confirmed). Our series starts on 1 Sep 2025, so any earlier volume is missing."
   }
  ]
 }

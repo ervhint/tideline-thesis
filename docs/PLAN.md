@@ -1,6 +1,6 @@
 # Tideline: build plan
 
-Status: T0 to T6b done. Current state is in PROGRESS.md.
+Status: T0 to T6f done; T6g and T6h ready for review. Current state is in PROGRESS.md.
 
 ## 1. Why the stored record is public chain data only
 

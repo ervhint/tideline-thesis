@@ -24,6 +24,13 @@ const checks = [
   { file: 'activity.json', script: 'pipeline/build_activity.mjs' },
 ];
 const inputs = ['model_inputs.json', 'fee_account.json'];
+// THESIS.md is written from the published files (T6h). A hand edit fails here, named by its first differing line. THESIS_MD overrides the copy checked.
+const thesisMdPath = process.env.THESIS_MD ?? 'THESIS.md';
+export function firstLineDiff(a, b) {
+  const x = a.split('\n'), y = b.split('\n');
+  for (let i = 0; i < Math.max(x.length, y.length); i++) if (x[i] !== y[i]) return { line: i + 1, committed: x[i] ?? '(missing)', written: y[i] ?? '(missing)' };
+  return null;
+}
 
 // Every number and string in a file, by path.
 function leaves(v, path = '', out = new Map()) {
@@ -68,6 +75,15 @@ async function run() {
         console.log(`DIFF ${c.file}: ${d.bad.length} of ${d.checked} values differ`);
         for (const x of d.bad.slice(0, 20)) console.log(`     ${x.path}: published ${JSON.stringify(x.published)}, recomputed ${JSON.stringify(x.recomputed)}`);
       }
+    }
+    const out = join(tmp, 'THESIS.md');
+    const r = spawnSync(process.execPath, ['pipeline/build_thesis_md.mjs'], { env: { ...process.env, OUT: out, PUBLISHED_DIR: pub }, encoding: 'utf8' });
+    const d = r.status === 0 ? firstLineDiff(readFileSync(thesisMdPath, 'utf8'), readFileSync(out, 'utf8')) : { line: 0, committed: '', written: (r.stderr || r.stdout).split('\n')[0] };
+    if (!d) console.log('OK   THESIS.md: matches what pipeline/build_thesis_md.mjs writes from the published files');
+    else {
+      bad++;
+      console.log(`DIFF THESIS.md line ${d.line}: not what pipeline/build_thesis_md.mjs writes. Edit the generator, not the file, then run npm run rebuild.`);
+      console.log(`     committed: ${d.committed.slice(0, 200)}\n     written:   ${d.written.slice(0, 200)}`);
     }
   } finally { rmSync(tmp, { recursive: true, force: true }); }
   for (const f of inputs) console.log(`INPUT ${f}: source data, used as given`);

@@ -11,7 +11,7 @@ export type FeeTrace = {
   from: string; to: string; days: number; gapsInWindow: number;
   protocolFee?: { bps: number; collector: string; pips?: number; sameSince?: string };
   trace: { days: string[]; bySize: Record<string, ByKind>; allSizes: ByKind };
-  nearRevenue?: { bps: number; from: string; to: string };
+  nearRevenue?: { bps: number; from: string; to: string; buyback?: { share: number | null; burned: boolean | null; since?: string } };
   query?: string;
 };
 const SIZE = 10000;
@@ -30,6 +30,18 @@ export function protocolText(p: FeeTrace['protocolFee']) {
   const pips = p.pips ?? Math.round(p.bps * 100);
   const since = p.sameSince ? `, and it has read the same at every check since at least ${Number(p.sameSince.slice(8, 10))} ${new Date(`${p.sameSince}T00:00:00Z`).toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })}` : '';
   return `fee() is ${pips} pip${pips === 1 ? '' : 's'}, which is ${Number(p.bps.toFixed(4))} bps${since}.`;
+}
+
+// The buyback line follows DefiLlama's share and its burned flag: "all" only at 100.0%, the share otherwise, and no claim without a figure.
+export function buybackPart(near: FeeTrace['nearRevenue']) {
+  const b = near?.buyback;
+  if (!near || b?.share == null) return { value: '—', text: 'The buyback share is not in the published file, so nothing is said about it here.' };
+  const pct1 = Number((b.share * 100).toFixed(1));
+  const burn = b.burned === false ? ' The bought NEAR is not burned (DefiLlama methodology).' : b.burned === true ? ' The bought NEAR is burned (DefiLlama methodology).' : '';
+  const text = pct1 === 100
+    ? `All of NEAR's captured Intents revenue over the same 30 days bought NEAR on the open market, as DefiLlama books it${b.since ? ` (buybacks began on ${dayName(b.since)} ${b.since.slice(0, 4)})` : ''}, so the buyback is the NEAR revenue above.${burn}`
+    : `${pct1}% of NEAR's captured Intents revenue over the same 30 days bought NEAR on the open market, as DefiLlama books it, so the buyback is that share of the NEAR revenue above.${burn}`;
+  return { value: `${(near.bps * b.share).toFixed(1)} bps`, text };
 }
 
 // S2: what a $10,000 swap costs, from the realised swaps of the last frozen chain days.
@@ -76,14 +88,14 @@ export function feeView(trace: FeeTrace | null) {
       near
         ? { key: 'revenue', value: `${near.bps.toFixed(1)} bps`, name: 'NEAR Revenue', share: 0, minPx: 0, text: `Part of the fees above, not on top of them. DefiLlama books ${near.bps.toFixed(1)} bps of Intents volume as NEAR revenue over the 30 days to ${dayName(near.to)}, all Intents. The chain does not show which fee account is NEAR's, so it can't be traced swap by swap.` }
         : { key: 'revenue', value: '—', name: 'NEAR Revenue', share: 0, minPx: 0, text: 'The revenue figure is not in the published file.' },
-      { key: 'buyback', value: near ? `${near.bps.toFixed(1)} bps` : '—', name: 'Buyback', share: 0, minPx: 0, text: "All of NEAR's captured Intents revenue has bought NEAR on the open market since 23 Feb 2026, so the buyback is the NEAR revenue above. The bought NEAR is not burned (DefiLlama methodology)." },
+      { key: 'buyback', ...buybackPart(near), name: 'Buyback', share: 0, minPx: 0 },
     ],
     bannerText: `Anything the fees do not explain shows as "unexplained", never hidden. Left out and counted: ${int(left.notBothPriced.swaps)} swaps without a price on both sides, ${int(left.feeUnreadable.swaps)} with an app fee paid in a token the swap did not give, ${int(left.priceCheck.swaps)} that failed the price check. Swaps through the Confidential Intents treasury are not in this split.${gap}`,
     card: {
       value: bps(g.allInBps),
       label: `All-In Cost, ${size} Swaps`,
       text: `USD-weighted over ${int(g.swaps)} swaps, ${span}, against DefiLlama hourly prices. token_diff swaps ${td.allInBps != null ? bps(td.allInBps) : 'not measured'}, confidential path ${conf?.allInBps != null ? bps(conf.allInBps) : 'not measured'}, reported apart.`,
-      source: `Chain days to ${dayName(trace.to)} 2026. Open the Query`,
+      source: `Chain days to ${dayName(trace.to)} ${trace.to.slice(0, 4)}. Open the Query`,
     },
     explain: `A $10,000 swap costs about ${usd(d(g.allInBps))}: ${bps(g.allInBps)} less value comes out than goes in, at DefiLlama hourly prices. It is the USD-weighted average of ${int(g.swaps)} real public swaps of ${size}, ${span}.`,
     query: `Query: ${trace.query ?? 'feeTrace in analysis/realised_cost.mjs'}, published as data/published/fee_trace.json. Rules in PREREG.md section 7 and amendment A2.`,
