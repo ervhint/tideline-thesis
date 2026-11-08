@@ -1,0 +1,14 @@
+{
+  // Opens Tideline in GitHub Codespaces with Node 24 and the packages installed, so a reader can run
+  // `npm run verify` and `npm run attest:check <day>` in their own codespace (docs/PLAN.md §6h J20).
+  // No keys: everything the three steps need is public. The codespace runs under the reader's account.
+  "name": "Tideline",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": { "version": "24" }
+  },
+  "postCreateCommand": "npm ci",
+  "customizations": {
+    "codespaces": { "openFiles": ["README.md"] }
+  }
+}

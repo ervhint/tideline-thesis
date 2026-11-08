@@ -2,7 +2,7 @@ import { Banner } from '@/components/Banner';
 import { ErrorSwap, RetryButton } from '@/components/ErrorSwap';
 import { NumberSheet } from '@/components/NumberSheet';
 import { Page } from '@/components/Page';
-import { PanelNote } from '@/components/PanelNote';
+import { PanelSlot } from '@/components/PanelNote';
 import { Rich, Say } from '@/components/Say';
 import { getNumbers } from '@/lib/data';
 import { EASY } from '@/lib/easy_text';
@@ -32,7 +32,7 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
           <Banner tone="neutral" title="No Public Swaps to Split"><Say pro={fee.body} easy={<Rich text={fee.easyBody} />} /></Banner>
         </div>
         <div className="split-foot">
-          <PanelNote pick={['swapsText', 'quoteText']} />
+          <PanelSlot pick={['swapsText', 'quoteText']} />
         </div>
       </Page>
     );
@@ -57,13 +57,13 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
         normal={<>
       <div className="s2-grid">
         <div className="glass split num">
-          <p className="s-title">Of the {fee.total}, Where It Goes</p>
+          <p className="s-title"><Say pro={`Of the ${fee.total}, Where It Goes`} easy={fee.easyTitle} /></p>
           <div className="cbar" role="img" aria-label={bar.map((p) => `${p.value} ${p.name}`).join(', ')}>
-            <p className="abs strong" style={{ left: 0, top: 0 }}>All-In {fee.total}</p>
-            <p className="abs small" style={{ left: 0, top: 26 }}>{fee.card.value} below the outside price</p>
+            <p className="abs strong" style={{ left: 0, top: 0 }}><Say pro={`All-In ${fee.total}`} easy={`Total ${fee.total}`} /></p>
+            <p className="abs small" style={{ left: 0, top: 26 }}><Say pro={`${fee.card.value} below the outside price`} easy={fee.easyBelow} /></p>
             <div className="callout">
-              <p className="strong">{fee.spreadNote}</p>
-              <p className="small">{fee.spreadSub}</p>
+              <p className="strong"><Say pro={fee.spreadNote} easy={fee.easySpreadNote} /></p>
+              <p className="small"><Say pro={fee.spreadSub} easy={fee.easySpreadSub} /></p>
               <span className="ctick" />
             </div>
             <div className="ctrack">
@@ -78,7 +78,7 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
               {p.share ? <span className="sw" style={{ background: swatch[p.key] }} /> : <img src="/assets/ring.svg" alt="" width={14} height={14} />}
               <p className={`s-val${p.share ? '' : ' dim'}`}>{p.value}</p>
               <div>
-                <p className="s-name">{p.name}</p>
+                <p className="s-name"><Say pro={p.name} easy={p.easyName ?? p.name} /></p>
                 <p className="s-text"><Say pro={p.text} easy={<Rich text={p.easy} />} /></p>
               </div>
             </div>
@@ -92,13 +92,14 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
           easyText={fee.card.easy}
           easyExplain={fee.easyExplain}
           query={fee.query}
+          easyQuery={fee.easyQuery}
         />
       </div>
       <div className="split-foot">
-        <Banner tone="neutral" title="Unexplained Part Is Shown, Never Hidden"><Say pro={fee.bannerText} easy={fee.easyBanner} /></Banner>
+        <Banner tone="neutral" title={<Say pro="Unexplained Part Is Shown, Never Hidden" easy={EASY.leftOutTitle} />}><Say pro={fee.bannerText} easy={fee.easyBanner} /></Banner>
       </div>
       <div className="split-foot">
-        <PanelNote pick={['swapsText', 'quoteText']} />
+        <PanelSlot pick={['swapsText', 'quoteText']} />
       </div>
         </>}
       />

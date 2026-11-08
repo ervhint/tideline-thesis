@@ -13,13 +13,13 @@ const dot: Record<Status, { src: string; color: string; term: TermKey }> = {
 };
 
 // Easy names each reading by its plain question (docs/PLAN.md §6g E5); the side keeps its name, with a note.
-export function ReadingCell({ qid, name, detail, status }: { qid?: string; name: string; detail: string; status: Status }) {
+export function ReadingCell({ qid, name, detail, easyDetail, status }: { qid?: string; name: string; detail: string; easyDetail?: string; status: Status }) {
   const d = dot[status];
   return (
     <div className="reading">
       <div>
         <p className="name"><Say pro={name} easy={qid && QUESTIONS[qid] ? QUESTIONS[qid] : name} /></p>
-        <p className="detail">{detail}</p>
+        <p className="detail">{easyDetail ? <Say pro={detail} easy={easyDetail} /> : detail}</p>
       </div>
       <div className="status" style={{ color: d.color }}>
         <img src={d.src} alt="" width={9} height={9} />

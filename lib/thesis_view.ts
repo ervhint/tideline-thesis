@@ -20,6 +20,8 @@ type PrivateFlow = {
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const date = (iso: string) => `${Number(iso.slice(8, 10))} ${MONTHS[Number(iso.slice(5, 7)) - 1]} ${iso.slice(0, 4)}`;
 
+// Display only (docs/PLAN.md §6h J8): thesis.json keeps its text; the page shows a real minus and names token_diff swaps.
+const proDetail = (d: string) => d.replace(/(^|[\s(])-(?=\d)/g, (_m, pre) => `${pre}−`).replace('token_diff swaps only', 'fee-tagged (token_diff) swaps only');
 const READING_NAMES = ['Pricing Power', "NEAR's Share of Fees", 'Solver Competition', 'Largest Integrator', 'Path to Deflation'];
 const GAUGE_MAX = 25e9;
 
@@ -60,7 +62,7 @@ export function thesisView(doc: ThesisDoc | null) {
         { at: v.at25.mid, note: 'if issuance stays at 2.5%' },
       ],
     },
-    readings: doc.readings.map((r) => ({ qid: r.id, name: r.name, detail: r.detail, status: r.side })),
+    readings: doc.readings.map((r) => ({ qid: r.id, name: r.name, detail: proDetail(r.detail), status: r.side })),
     verdictText,
     // Held: the count of sides leads and verdictText follows as the reason. Otherwise verdictText is the lead.
     countLine: held.length ? countSides(doc.readings.map((r) => r.side)) : null,
@@ -108,7 +110,7 @@ function heldShares(held: string[], p?: PrivateFlow) {
 function privateLine(p?: PrivateFlow) {
   if (p?.q3?.share == null) return null;
   const c = p.confidential?.last7;
-  const conf = c?.confidentialShare != null ? `Confidential share ${pct(c.confidentialShare)} (${c.daysRead} of ${c.days} days read).` : 'Confidential share Not Measured until the treasury days are read.';
+  const conf = c?.confidentialShare != null ? `Confidential share ${pct(c.confidentialShare)}: other accounts' deposits into the treasury as a share of the flow still visible (${c.daysRead} of ${c.days} days read).` : 'Confidential share Not Measured until the treasury days are read.';
   return `The Confidential Intents treasury carried ${pct(p.q3.share)} of counted USD over the last ${p.q3.days} frozen days. ${conf}`;
 }
 
@@ -144,16 +146,16 @@ export function concentrationView(doc: { concentration?: ConcentrationDoc; priva
     }),
     solverDays: c.solvers ? c.solvers.days : null,
     solverNote: c.solvers?.stability && c.solvers.allSizes?.top3 != null
-      ? `All sizes together, the top 3 solvers fill ${pct(c.solvers.allSizes.top3)} of public USD over these days. Single days range from ${pct(Math.min(...tops))} to ${pct(Math.max(...tops))}, and leaving out any one day gives ${pct(c.solvers.stability.leaveOneDayOut.min)} to ${pct(c.solvers.stability.leaveOneDayOut.max)}, ${side(c.solvers.stability.leaveOneDayOut.min, c.solvers.stability.leaveOneDayOut.max)}. The Confidential Intents treasury 51e8f94d… is left out: it is a bridge to a private chain, not a solver.${c.solvers.tokenDiffOnly?.top3 != null ? ` Counting token_diff swaps only, the top 3 fill ${pct(c.solvers.tokenDiffOnly.top3)}.` : ''}${over(pf?.q3) ? ` The treasury carried ${pct(pf!.q3!.share!)} of USD over these days, so these are side figures that set no reading.` : ''}`
+      ? `All sizes together, the top 3 solvers fill ${pct(c.solvers.allSizes.top3)} of public USD over these days. Single days range from ${pct(Math.min(...tops))} to ${pct(Math.max(...tops))}, and leaving out any one day gives ${pct(c.solvers.stability.leaveOneDayOut.min)} to ${pct(c.solvers.stability.leaveOneDayOut.max)}, ${side(c.solvers.stability.leaveOneDayOut.min, c.solvers.stability.leaveOneDayOut.max)}. The Confidential Intents treasury 51e8f94d… is left out: it is a bridge to a private chain, not a solver.${c.solvers.tokenDiffOnly?.top3 != null ? ` Counting fee-tagged swaps only, the top 3 fill ${pct(c.solvers.tokenDiffOnly.top3)}.` : ''}${over(pf?.q3) ? ` The treasury carried ${pct(pf!.q3!.share!)} of USD over these days, so these are side figures that set no reading.` : ''}`
       : null,
     integratorNote: c.largest && c.tokenDiffShareOfUsd != null
-      ? `Only token_diff swaps carry a frontend and a visible app fee; they are ${pct(c.tokenDiffShareOfUsd)} of the USD over these days, less since flow moved to the Confidential Intents treasury from 28 Oct. ${c.largest.name} pays ${pct(c.largest.share)} of the app fees seen; with unnamed and blank referrals left out it is ${pct(c.largest.shareOfNamed)}. Swaps whose fee is paid in a token the swap did not give (${money(c.feeUnreadable?.usd ?? 0)}) are left out.${over(pf?.q4) ? ` The treasury carried ${pct(pf!.q4!.share!)} of USD over these days, so this is a side figure that sets no reading.` : ''}`
+      ? `Only fee-tagged (token_diff) swaps name a frontend and carry a visible app fee; they are ${pct(c.tokenDiffShareOfUsd)} of the USD over these days, less since flow moved to the Confidential Intents treasury from 28 Oct. ${c.largest.name} accounts for ${pct(c.largest.share)} of the app fees seen; leaving out swaps with no frontend named, it is ${pct(c.largest.shareOfNamed)}. Swaps whose app fee is paid in a third token that cannot be valued (${money(c.feeUnreadable?.usd ?? 0)} of volume) are left out.${over(pf?.q4) ? ` The treasury carried ${pct(pf!.q4!.share!)} of USD over these days, so this is a side figure that sets no reading.` : ''}`
       : null,
     easySolverNote: c.solvers?.stability && c.solvers.allSizes?.top3 != null
-      ? `All sizes together, the three biggest [[solvers|solver]] fill ${pct(c.solvers.allSizes.top3)} of the public money over these days. Single days range from ${pct(Math.min(...tops))} to ${pct(Math.max(...tops))}, and leaving out any one day gives ${pct(c.solvers.stability.leaveOneDayOut.min)} to ${pct(c.solvers.stability.leaveOneDayOut.max)}, ${easySide(c.solvers.stability.leaveOneDayOut.min, c.solvers.stability.leaveOneDayOut.max)}. The [[Treasury]] 51e8f94d… is left out, because it is a bridge into the private system.${c.solvers.tokenDiffOnly?.top3 != null ? ` Counting only the swaps that show an app fee, the three biggest fill ${pct(c.solvers.tokenDiffOnly.top3)}.` : ''}${over(pf?.q3) ? ` Over these days ${pct(pf!.q3!.share!)} of the money went through the private system, so these figures are shown for interest and count toward no answer.` : ''}`
+      ? `All sizes together, the three biggest traders ([[solvers|solver]]) fill ${pct(c.solvers.allSizes.top3)} of the public money over these days. Single days range from ${pct(Math.min(...tops))} to ${pct(Math.max(...tops))}, and leaving out any one day gives ${pct(c.solvers.stability.leaveOneDayOut.min)} to ${pct(c.solvers.stability.leaveOneDayOut.max)}, ${easySide(c.solvers.stability.leaveOneDayOut.min, c.solvers.stability.leaveOneDayOut.max)}. The doorway into the private system ([[Treasury]]) is left out, because it only passes money through.${c.solvers.tokenDiffOnly?.top3 != null ? ` Counting only the swaps that show an app fee, the three biggest fill ${pct(c.solvers.tokenDiffOnly.top3)}.` : ''}${over(pf?.q3) ? ` Over these days ${pct(pf!.q3!.share!)} of the money went through the private system, so these figures are shown for interest and count toward no answer.` : ''}`
       : null,
     easyIntegratorNote: c.largest && c.tokenDiffShareOfUsd != null
-      ? `Only one kind of swap shows which app sent it and what fee the app took. Those swaps are ${pct(c.tokenDiffShareOfUsd)} of the money over these days, fewer since money started moving into the private system on 28 Oct. ${c.largest.name} brings ${pct(c.largest.share)} of the app fees seen; leaving out swaps with no app named, it is ${pct(c.largest.shareOfNamed)}. Swaps whose fee is paid in a token the swap did not give (${money(c.feeUnreadable?.usd ?? 0)}) are left out.${over(pf?.q4) ? ` Over these days ${pct(pf!.q4!.share!)} of the money went through the private system, so this is shown for interest and counts toward no answer.` : ''}`
+      ? `Only one kind of swap shows which app sent it and what fee the app took. Those swaps are ${pct(c.tokenDiffShareOfUsd)} of the money over these days, fewer since money started moving into the private system on 28 Oct. ${c.largest.name} brings ${pct(c.largest.share)} of the app fees seen; leaving out swaps with no app named, it is ${pct(c.largest.shareOfNamed)}. Swaps whose app fee we couldn’t read (${money(c.feeUnreadable?.usd ?? 0)}) are left out.${over(pf?.q4) ? ` Over these days ${pct(pf!.q4!.share!)} of the money went through the private system, so this is shown for interest and counts toward no answer.` : ''}`
       : null,
     window: c.window,
     ours: headlineShare,

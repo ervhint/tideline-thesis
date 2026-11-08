@@ -42,6 +42,6 @@ export function panelView(doc: PanelDoc | null, { off = false, now = new Date() 
     swapsText: `The Intents Explorer lists ${int(doc.swaps.swaps)} swaps worth ${usd(doc.swaps.usd)} over the last ${doc.window.days} days, at ${bps(doc.swaps.appFeeBps)} in app fees, ${int(s.swaps)} of them since confidential settlement began. It sees swaps the public chain no longer shows.`,
     frontendText: `Largest frontends by Explorer volume, last ${doc.window.days} days: ${doc.frontends.map((f) => `${f.name} ${pct(f.share)}`).join(', ')}.`,
     days: doc.byDay?.length ? windowDays(doc.window.from, doc.window.to).map((day) => ({ day, usd: doc.byDay!.find((d) => d.day === day)?.usd ?? null })) : null,
-    quoteText: q.length ? `Live 1Click dry quotes, median across four pairs: ${q.map((x) => `${size(x.sizeUsd)} costs ${bps(x.allInBps)} all-in, ${bps(x.appFeeBps)} of it app fee`).join('; ')}.` : 'No live quote came back this time.',
+    quoteText: q.length ? `Live 1Click dry quotes, median across BTC, ETH, SOL and NEAR into USDC: ${q.map((x) => `${size(x.sizeUsd)} costs ${bps(x.allInBps)} all-in, of which ${bps(x.appFeeBps)} app fee${x.withdrawBps != null ? `, ${bps(x.withdrawBps)} withdraw fee` : ''}${x.unexplainedBps != null ? ` and ${bps(x.unexplainedBps)} spread and rest` : ''}`).join('; ')}. The app fee here is the one 1Click attached to our own test request, not what real swaps paid.` : 'No live quote came back this time.',
   };
 }

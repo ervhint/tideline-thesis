@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react';
 // Pure helpers for components/BarCharts.tsx and Method's activity charts. Shared, so it imports nothing from the panel.
-export type BarSeries = { title: string; values: (number | null)[]; fmt: (n: number) => string };
-export type BarProps = { series: BarSeries[]; periods: string[]; latestLabel: string; marker?: { index: number; label: string }; label: string };
+export type BarSeries = { title: string; easyTitle?: string; values: (number | null)[]; fmt: (n: number) => string };
+export type BarProps = { series: BarSeries[]; periods: string[]; latestLabel: string; marker?: { index: number; label: ReactNode; easyLabel?: string }; label: string };
 type Activity = { weeks: { from: string; to: string; transactions: number; signersPerDay: number; receipts: number; nearBurnt: number }[] } | null;
 
 export const CONFIDENTIAL_DAY = '2026-10-27';
@@ -23,7 +24,7 @@ export function activityCharts(a: Activity): BarProps | null {
     label: 'Weekly public activity on intents.near',
     periods: w.map((x) => shortDay(x.to)),
     latestLabel: `Week to ${shortDay(w[w.length - 1].to)}`,
-    ...(i >= 0 ? { marker: { index: i, label: 'Confidential settlement begins (the week holding 27 Oct 2026)' } } : {}),
+    ...(i >= 0 ? { marker: { index: i, label: 'Confidential settlement begins (the week holding 27 Oct 2026)', easyLabel: 'Private swaps begin (the week holding 27 Oct 2026)' } } : {}),
     series: [
       { title: 'Transactions', values: w.map((x) => x.transactions), fmt: int },
       { title: 'Signers a Day', values: w.map((x) => x.signersPerDay), fmt: int },

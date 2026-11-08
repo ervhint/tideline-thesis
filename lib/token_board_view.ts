@@ -16,6 +16,7 @@ export function tokenBoardView(b: TokenBoard | null) {
   if (!b?.byStatus?.both) return null;
   const { both, one, none } = b.byStatus;
   return {
+    easy: `Over the last ${b.days} saved days, ${pct(both.swapShare)} of swaps had a dollar price for both coins, so only those are used for the costs on Follow the Fee. The others still count in the totals, and no price is guessed.`,
     summary: `Over ${b.days} days (${b.from} to ${b.to}), the frozen days hold ${b.swaps.toLocaleString('en-US')} swaps on ${b.routes.toLocaleString('en-US')} routes. ${pct(both.swapShare)} of the swaps, ${pct(both.usdShare)} of the USD, have a price on both sides; only these are costed on Follow the Fee. ${pct(one.swapShare)} have a price on one side, so they count in volume and size but not in cost. ${pct(none.swapShare)} have no price at all and are counted, never guessed. Swaps through the Confidential Intents treasury are paired confidential flows, not a full count of private swaps, and Follow the Fee reports them apart.`,
     rows: b.largest.map((r) => [r.route, money(r.usd), pct(r.share), STATUS[r.status]]),
     missing: b.largestOneSide.slice(0, 5).map((r) => `${r.route} (${pct(r.share)})`).join(', '),

@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). T6i Easy and Pro built, waiting for the human's yes on the commit. Next: P7a test, then gate G6 (user acceptance). Waiting for user: yes, on the T6i commit and the Telegram question below.
+Phase: P7 Test + ship (workflow V12). T6j Beautification and adjustment J1 to J23 committed and pushed on 8 Nov (docs/PLAN.md §6h). Next: the human opens one GitHub Codespace and runs verify and attest:check (T-T6j.29), then P7a test and gate G6.
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (7 Nov 2026, 19:30 WIB)
@@ -35,7 +35,36 @@ Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over 
 
 Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
-## Unit ready for review: T6i Easy and Pro
+## Open unit: T6j Beautification and adjustment
+
+Spec: docs/PLAN.md §6h. Items are added as the human clicks through; each needs the human's yes. Status: **J1 to J23 on main (8 Nov).** Checked before the commit: `npm test` 295/295 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, `tsc`, gitleaks on every changed file, wording scan clean, no panel figure in the diff. Open: T-T6j.29 (a real codespace run), and the 77% card on Concentration names no source.
+
+- **J1 (8 Nov):** Easy only, Pro unchanged. Unexplained note in plain words (`easyBanner` in `lib/fee_view.ts`). Rolling panel in Easy: heading "Outside Count", the fixed sentence, the chart, marker "Private swaps begin (27 Oct 2026)" and one plain source line; the swaps and quote sentences are Pro only (`components/PanelNote.tsx`, labels in `EASY`). Banner titles and chart markers now take a node so they can swap words. `npm test` 289/289 (also with `EXPLORER_PANEL=off`), verify ALL OK, typecheck clean, wording scan clean, Chrome 1366 both modes (T-T6j.1, .2).
+- **J2 (8 Nov):** the same two notes in a human voice in Easy (why before what, short sentences, "we"): "What We Couldn’t Explain" with one total and each non-zero group (`easyLeftOut` in `lib/fee_view.ts`), and "Another Tracker’s Count" with the new sentence and source line (`EASY`). Pro unchanged. The human will come back to Home next to carry this voice across the site.
+- **J3 (8 Nov):** the top of Follow the Fee in the same voice in Easy: lead, bar labels, row names (`easyName`), row text, card label (`easyLabel` in NumberSheet) and number sheet. Numbers the same as Pro (T-T6j.5). `npm test` 290/290 (also panel off), verify ALL OK, wording scan clean, Chrome 1366 both modes. 375 checked under J4.
+- **J4 (8 Nov):** floating Easy | Pro pill at the bottom right while the header is out of view (`ModeFloat` in `components/ModeSwitch.tsx`, mounted in Nav; CSS `.mode-float`). The human picked it over a sticky header or an always-on pill. Chrome 1366 and 375 (frame) pass; J3's 375 check done too. The Easy buyback line no longer leaves "(" at a line end.
+- **J5 (8 Nov):** Elasticity in the same voice in Easy: head, text, plot key, a checks summary built from the runs with the rows in a "See Each Check" fold (Easy only), and the timeline words (`elasticityView(...).easy`, `easyElasticity`, `IntervalPlot`). Pro unchanged. Chrome 1366 and 375 (frame) both modes.
+- **J6 (8 Nov):** Home's five rows in Easy: Q1 asks "When fees go up, do people stop swapping?" (apps changed their fees, not NEAR), and each row's line is the answer in plain words from the same files (`easyReadingLine`, wired in `lib/data.ts`, shown by ReadingCell). Pro unchanged. Chrome 1366 both modes.
+- **J7 (8 Nov):** one Easy word per thing on every page: swapping, traders, app, the private system, NEAR's fee income, answers, overall answer, still missing each month. Easy titles and links for Elasticity, Concentration and What Would Move; Reproduce names the questions; Concentration and Model labels and lower boxes in plain words. Method's body stays Pro. Guard T-T6j.13. `npm test` 293/293. Chrome scan of all eight pages in Easy.
+- **J8 (8 Nov):** Pro wording across pages: the two swap kinds named once (fee-tagged, logged as token_diff; plain transfer), round trips instead of paired flows, the negative spread explained, the panel's pairs and whose app fee named with the rest shown, pass-through named, dropped fee changes and the MDE rule stated, SwapKit "accounts for", the confidential share defined, Model's fee rate told apart from the realised cost. thesis.json and THESIS.md untouched (display-time only). `npm test` 294/294. Open: the 77% card names no source.
+- **J9 (8 Nov):** term notes drawn on <body> with a fixed position, so no glass panel covers them; above the word when there is no room below; they follow on scroll. Chrome: Home readings row, bottom of screen, number sheet, Escape.
+- **J10 (8 Nov):** Follow the Fee's number card and sheet: Easy shows "$75.72 on a $10,000 swap" under 75.7 bps and a plain query line; Pro's query line names only this number's query.
+- **J11 (8 Nov):** Model spacing under the panels matches Elasticity (32px to the link, 24px to the button).
+- **J12 (8 Nov):** Model's gap from intro to gauge panel 48px in both modes (was 104px); Home unchanged.
+- **J13 (8 Nov):** Model's gauge panel lines up with the column and sits 32px above the panels below (Gauge `inset`); Home unchanged.
+- **J23 (8 Nov):** the rolling panel streams in on its own on Concentration and Follow the Fee (`PanelSlot`), so the pages show in about 0.1s instead of waiting 1.2 to 3s for GitHub.
+- **J22 (8 Nov):** banners inside glass panels fill the panel width (Concentration's rolling panel, Method's error banners).
+- **J21 (8 Nov):** Method: Easy opens each section with a plain line from the data and folds the detail; Pro gets the treasury note as points, the visibility ratio in its own block, and the activity table folded.
+- **J20 (8 Nov):** "Open in Codespaces" on Reproduce with `.devcontainer/devcontainer.json` (Node 24, npm ci, no keys). Waiting on the push to main, then one real codespace run by the human.
+- **J19 (8 Nov):** links that leave the site (GitHub files, NearBlocks contract, Report It on GitHub, Method sources) open in a new tab with a ↗ mark; Tideline links unchanged.
+- **J18 (8 Nov):** Reproduce's Every Reading and Chart grouped into readings, charts and side measures; Easy shows plain sentences with the files folded; dip4 explained in Pro; the J7 guard now covers these words.
+- **J17 (8 Nov):** Reproduce's testnet check runs six days at a time with one retry per call and logs why it failed; Try Again re-checks only the card; Going Further rows get dot markers.
+- **J16 (8 Nov), replaces J14 and J15:** Reproduce as numbered steps with small terminal frames and copy icons (install-guide pattern), Going Further in the same form; the proof card streams in on its own, so the page shows in under 0.1s instead of waiting about 5s.
+- **J15 (8 Nov, replaced by J16):** Reproduce as a recipe: proof card, then three numbered steps (get the code, verify, attest:check with the newest anchored day), then Going Further with what each extra needs.
+- **J14 (8 Nov, replaced by J15):** Reproduce reordered at the human's pick: proof card first at full width, then the commands two to a row with Copy inside each; phones stack them. Changes Figma S5.
+- **Done by J8 (was noted, not done):** the human said Easy only for now):** the quote line's app fee is the one the API adds to our own test quotes, not what real swaps paid, and the two read as a clash; the quote breakdown leaves the rest unnamed; the Unexplained counts have no denominator. (No panel figure written here: 4.1(e).)
+
+## Unit on main: T6i Easy and Pro
 
 Spec: docs/PLAN.md §6g (the human's five answers are recorded there, 8 Nov: switch inside the nav pill and first in the phone menu; hint as tooltip only; `?mode=easy|pro` share link that leaves the address bar; term notes in both modes; BEGINNER.md used, then deleted). Status: **not committed.** `npm test` 283/283 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, gitleaks on lib, components, app and docs, wording scan clean. `data/`, THESIS.md, `/api/*` and README unchanged.
 

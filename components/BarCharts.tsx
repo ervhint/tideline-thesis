@@ -1,3 +1,4 @@
+import { Say } from './Say';
 // Small bar charts, one per measure, sharing one row of periods. Pure and data-agnostic: Method's activity weeks and the
 // rolling panel's days both use it. Every bar starts at zero; a period with no value is not drawn, never drawn as zero.
 import { barAria, type BarProps } from '@/lib/bar_charts';
@@ -12,7 +13,7 @@ export function BarCharts({ series, periods, latestLabel, marker, label }: BarPr
           const last = s.values[n - 1];
           return (
             <div key={s.title} className="bars-one" aria-hidden="true">
-              <p className="bars-title">{s.title}</p>
+              <p className="bars-title">{s.easyTitle ? <Say pro={s.title} easy={s.easyTitle} /> : s.title}</p>
               <p className="bars-latest num">{last == null ? '—' : s.fmt(last)}</p>
               <p className="bars-when">{latestLabel}</p>
               <div className="bars-plot">
@@ -26,7 +27,7 @@ export function BarCharts({ series, periods, latestLabel, marker, label }: BarPr
           );
         })}
       </div>
-      {marker && <figcaption className="bars-key"><span className="bars-swatch" />{marker.label}</figcaption>}
+      {marker && <figcaption className="bars-key"><span className="bars-swatch" />{marker.easyLabel ? <Say pro={marker.label} easy={marker.easyLabel} /> : marker.label}</figcaption>}
     </figure>
   );
 }

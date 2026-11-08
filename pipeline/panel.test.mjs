@@ -137,6 +137,9 @@ test('the live panel says what it is and names no wallet', async () => {
   assert.equal(v.age, '0 hours old');
   assert.match(v.frontendText, /canary-frontend 100%/);
   assert.match(v.quoteText, /\$1,000 costs 100\.0 bps all-in/);
+  // T-T6j.16 (J8): the pairs are named, and the app fee is said to be the one on our own test request.
+  assert.match(v.quoteText, /median across BTC, ETH, SOL and NEAR into USDC/);
+  assert.match(v.quoteText, /the one 1Click attached to our own test request, not what real swaps paid/);
 });
 
 function zipOf(name, body, method) {

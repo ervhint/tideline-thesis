@@ -86,6 +86,14 @@ export function atFee(i: Inputs, m: Market, feeBps: number, e: number) {
 // Model, "Volume Needed Before and Since 27 Oct": V* on the revenue rate before 27 Oct and on the rate since, with the days behind each.
 // "So few days" only while the days since are fewer than the window before; from then on both rates stand with no claim either way.
 type Side = { days: number; revenueRate: number };
+// Easy twin (docs/PLAN.md §6h J7): the same figures and the same few-days rule, in plain words.
+export function easySplitSentence(split: { before: Side | null; since: Side | null } | null, atRate: (s: Side) => string): string | null {
+  if (!split?.before || !split.since) return null;
+  const { before, since } = split;
+  const few = since.days < before.days ? ' That’s too few days to tell whether the rate really changed, and DefiLlama may not see all private swaps.' : ' DefiLlama may not see all private swaps.';
+  return `${atRate(before)}, going by the ${before.days} days before 27 Oct. ${atRate(since)}, going by the ${since.days} days since, when swaps started going private.${few}`;
+}
+
 export function splitSentence(split: { before: Side | null; since: Side | null } | null, atRate: (s: Side) => string): string | null {
   if (!split?.before || !split.since) return null;
   const { before, since } = split;

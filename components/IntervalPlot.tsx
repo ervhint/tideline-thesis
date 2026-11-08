@@ -1,5 +1,7 @@
 // S3: where the elasticity result sits against 0 ("fees don't matter") and -1 ("revenue stays flat").
 // Dot = estimate, bar = 95% interval, pale band = smaller than the smallest effect it could see.
+import { Say } from './Say';
+
 export type Plot = { est: number; lo: number; hi: number; mde: number };
 
 const f = (v: number) => v.toFixed(2).replace('-', '−');
@@ -11,8 +13,8 @@ export function IntervalPlot({ est, lo, hi, mde }: Plot) {
   const ticks = [-3, -2, -1, 0, 1, 2].filter((t) => t >= min && t <= max);
   return (
     <figure className="ci" role="img" aria-label={`Elasticity ${f(est)}, 95% interval ${f(lo)} to ${f(hi)}, smallest effect it could see ${f(mde)}`}>
-      <p className="ci-title">Where the Answer Sits</p>
-      <p className="ci-cap">Dot: the estimate. Bar: the 95% interval. Pale band: effects too small to tell from chance.</p>
+      <p className="ci-title"><Say pro="Where the Answer Sits" easy="Our Best Guess and Its Range" /></p>
+      <p className="ci-cap"><Say pro="Dot: the estimate. Bar: the 95% interval. Pale band: effects too small to tell from chance." easy="Dot: our best guess. Bar: where the real answer probably is. Grey band: too small to tell apart from luck." /></p>
       <div className="ci-plot">
         <span className="ci-track" />
         <span className="ci-band" style={{ left: pct(-mde), width: wide(-mde, mde) }} />
@@ -27,7 +29,7 @@ export function IntervalPlot({ est, lo, hi, mde }: Plot) {
         <span className="ci-end" style={{ left: pct(lo) }}>{f(lo)}</span>
         <span className="ci-end" style={{ left: pct(hi) }}>{f(hi)}</span>
       </div>
-      <p className="ci-key"><b>0</b> fees do not change volume. <b>−1</b> volume falls as fast as the fee rises, so revenue stays flat. Left of −1, a higher fee loses revenue.</p>
+      <p className="ci-key"><Say pro={<><b>0</b> fees do not change volume. <b>−1</b> volume falls as fast as the fee rises, so revenue stays flat. Left of −1, a higher fee loses revenue.</>} easy={<><b>0</b>: fees don’t change how much people swap. <b>−1</b>: swapping drops as fast as fees rise, so income stays the same. Left of −1: raising the fee loses money.</>} /></p>
     </figure>
   );
 }

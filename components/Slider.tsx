@@ -1,6 +1,7 @@
 'use client';
+import { Say } from './Say';
 
-type Common = { disabled?: boolean; label: string; display: string; min: number; max: number; step: number; ticks: string[] };
+type Common = { disabled?: boolean; label: string; easyLabel?: string; display: string; min: number; max: number; step: number; ticks: string[] };
 type One = Common & { value: number; onChange: (v: number) => void };
 type Two = Common & { range: [number, number]; onRange: (v: [number, number]) => void };
 
@@ -8,7 +9,7 @@ const pct = (v: number, min: number, max: number) => ((v - min) / (max - min)) *
 
 // Figma: Slider. A single handle, or two for a range (the elasticity assumption).
 export function Slider(props: One | Two) {
-  const { label, display, min, max, step, ticks } = props;
+  const { label, easyLabel, display, min, max, step, ticks } = props;
   const two = 'range' in props;
   const lo = two ? props.range[0] : min;
   const hi = two ? props.range[1] : props.value;
@@ -16,7 +17,7 @@ export function Slider(props: One | Two) {
   const to = pct(hi, min, max);
   return (
     <div className={`slider${props.disabled ? ' off' : ''}`}>
-      <div className="sl-head"><span>{label}</span><span className="num">{display}</span></div>
+      <div className="sl-head"><span>{easyLabel ? <Say pro={label} easy={easyLabel} /> : label}</span><span className="num">{display}</span></div>
       <div className="sl-track">
         <span className="sl-fill" style={{ left: `${from}%`, width: `${to - from}%` }} />
         {two ? (
@@ -36,10 +37,10 @@ export function Slider(props: One | Two) {
   );
 }
 
-export function Segmented<T extends string>({ label, options, value, onChange }: { label: string; options: readonly T[]; value: T | null; onChange: (v: T) => void }) {
+export function Segmented<T extends string>({ label, easyLabel, options, value, onChange }: { label: string; easyLabel?: string; options: readonly T[]; value: T | null; onChange: (v: T) => void }) {
   return (
     <div className="seg-wrap">
-      <p className="seg-label" id={`seg-${label}`}>{label}</p>
+      <p className="seg-label" id={`seg-${label}`}>{easyLabel ? <Say pro={label} easy={easyLabel} /> : label}</p>
       <div className="seg" role="radiogroup" aria-labelledby={`seg-${label}`}>
         {options.map((o) => (
           <button key={o} type="button" role="radio" aria-checked={o === value} className={o === value ? 'on' : ''} onClick={() => onChange(o)}>{o}</button>

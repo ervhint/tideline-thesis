@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { ModeSwitch } from './ModeSwitch';
+import { ModeFloat, ModeSwitch } from './ModeSwitch';
 
 const before = [
   ['/follow-the-fee/', 'Follow the Fee'],
@@ -91,6 +91,7 @@ export function Nav() {
           <span className="hx-knob"><Chevron /></span>
         </a>
       </div>
+      <ModeFloat />
     </header>
   );
 }

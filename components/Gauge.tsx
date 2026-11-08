@@ -1,15 +1,17 @@
+import { Say } from './Say';
 import { bn } from '@/lib/mock';
 
 type Threshold = { at: number; note: string };
 // today === null: the volume feed did not load (Figma: S4 error). No fill and no gap, only the thresholds.
-type Props = { today: number | null; max: number; thresholds: Threshold[]; todayNote: string; gapCaption: string; gapTo?: number };
+type Props = { today: number | null; max: number; thresholds: Threshold[]; todayNote: string; gapCaption: string; easyGapCaption?: string; gapTo?: number; inset?: boolean };
 
 const EDGE = 0.92;
 const pct = (n: number, max: number) => `${Math.min(100, Math.max(0, (n / max) * 100))}%`;
 const scale = [0, 5, 10, 15, 20, 25];
 const NO_GAP = "Gap not shown: needs today's volume";
 
-export function Gauge({ today, max, thresholds, todayNote, gapCaption, gapTo }: Props) {
+// inset (Model, docs/PLAN.md §6h J13): the glass lines up with the page column like the panels under it; Home keeps the wider panel.
+export function Gauge({ today, max, thresholds, todayNote, gapCaption, easyGapCaption, gapTo, inset = false }: Props) {
   const p = (n: number) => pct(n, max);
   const target = gapTo ?? thresholds[0].at;
   const known = today !== null;
@@ -19,10 +21,10 @@ export function Gauge({ today, max, thresholds, todayNote, gapCaption, gapTo }: 
   const mid = p((t0 + target) / 2);
   const todayLabel = known ? `Today ${bn(t0, 2)}` : 'Today: Not Loaded';
   const note = known ? todayNote : 'needs the volume feed';
-  const cap = known ? gapCaption : NO_GAP;
+  const cap = known ? (easyGapCaption ? <Say pro={gapCaption} easy={easyGapCaption} /> : gapCaption) : NO_GAP;
   return (
     <>
-      <figure className="gauge num" aria-label={`Fee volume today against the ${thresholds.length} thresholds`} style={{ marginLeft: 0, marginRight: 0 }}>
+      <figure className={inset ? "gauge num gauge-inset" : "gauge num"} aria-label={`Fee volume today against the ${thresholds.length} thresholds`} style={inset ? undefined : { marginLeft: 0, marginRight: 0 }}>
         <div className="abs track" />
         {scale.map((s) => (
           <span key={s}>

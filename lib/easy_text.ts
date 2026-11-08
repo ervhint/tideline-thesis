@@ -39,7 +39,7 @@ export function tenths(share: number) {
 
 // The five readings as plain questions (§6g E5). The reading names stay in Pro.
 export const QUESTIONS: Record<string, string> = {
-  Q1: 'If NEAR raises its fee, do people stop swapping?',
+  Q1: 'When fees go up, do people stop swapping?',
   Q2: 'Does NEAR keep a fair share of the fees?',
   Q3: 'Do the traders really compete?',
   Q4: 'Does one app bring most of the business?',
@@ -75,26 +75,89 @@ export const EASY = {
     'Tideline asks whether NEAR’s swap fees could ever buy back as many NEAR coins as the network creates each year. This is research, not financial advice.',
     'A [[Bullish]] answer means the evidence passed a line written down in advance, not that the price will go up.',
   ],
-  modelLead: 'Move the inputs and watch the line move. The big number is [[V*|vstar]]: the monthly swap [[volume]] at which [[buybacks|buyback]] would cancel out the new coins from [[issuance]].',
-  modelElasticity: '[[Elasticity]] is how much people change their swapping when the fee changes. It moves the best fee to charge, not the volume needed at today’s fee.',
+  modelLead: 'Move the inputs and watch the line move. The big number is [[V*|vstar]]: how many dollars a month people would need to swap for [[buybacks|buyback]] to cancel out the new coins from [[issuance]].',
+  modelElasticity: '[[Elasticity]] is how much people change their swapping when the fee changes. It moves the best fee to charge, not the swapping needed at today’s fee.',
   methodLead: 'In short: Tideline uses public data anyone can download again, wrote its rules down before looking at the results, and seals each [[frozen day|frozenday]] with a [[hash]] stored on NEAR’s [[testnet]]. Below is the detail.',
   reproduceLead: 'You do not have to trust Tideline. These commands re-run the numbers on your own computer, and the chain check shows that no saved day was changed later: each day’s [[hash]] is [[attested|attest]] on NEAR’s [[testnet]].',
-  panel: 'A daily count from another source, shown for one day and then thrown away, because its terms do not allow keeping it. It is not used for any answer.',
-  concentrationLead: 'If most swaps come through one app, or are filled by a few [[solvers|solver]], NEAR’s fee income depends on them staying.',
-  concentrationKey: 'Largest Integrator is the biggest app’s share of the app fees. Top-3 Solver Share is how much of the swapping the three biggest [[solvers|solver]] filled. [[HHI]] is one number for how concentrated it is: higher means fewer players hold more.',
+  panel: 'These figures come from another site that tracks these swaps. Its rules don’t let us keep its data, so we show today’s copy and delete it tomorrow. It’s here for context only and doesn’t change any answer on this site.',
+  // The rolling panel's Easy labels (docs/PLAN.md §6h J1): fixed words, no figure.
+  panelTitle: 'Another Tracker’s Count',
+  panelGone: 'The other tracker’s count is over a day old or could not be read, so it is not shown. We keep no history of it.',
+  panelMarker: 'Private swaps begin',
+  panelSource: 'Source: Intents Explorer. Refreshed daily, deleted after a day.',
+  leftOutTitle: 'What We Couldn’t Explain',
+  // Method in Easy (J21): a plain line per section; the detail sits in a fold.
+  method: {
+    sources: 'Every answer comes from public data that anyone can download again. The copies we keep need no key or account to re-run.',
+    sourceLines: {
+      DefiLlama: 'Swap totals, fees, NEAR’s fee income and hourly prices.',
+      BigQuery: 'Google’s copy of the public NEAR record: a year of fee changes and recent weekly activity.',
+      FastNEAR: 'Reads every NEAR Intents transaction of each day, in full.',
+      'Confidential Intents': 'The private system. We only see money going in and out of its doorway, the [[Treasury]].',
+      'Intents Explorer and 1Click': 'The outside count: kept for one day and used for no answer.',
+      'NEAR RPC': 'NEAR’s coin supply, and the testnet record that stores each day’s fingerprint.',
+    } as Record<string, string>,
+    decided: 'We wrote down the rules, and the line for each answer, before looking at the results. It is not perfectly blind: an earlier rough estimate had been seen, and the rules say so. A few rules were added later, after money started moving into the private system; each one says what was already known.',
+    detail: 'See the Detail',
+  },
+  // J7: one Easy name per page, the same in titles and links. Pro titles and the nav labels stay.
+  titles: {
+    elasticity: 'Do People Stop Swapping When Fees Go Up?',
+    concentration: 'Who Brings the Swaps?',
+    move: 'What Would Change Each Answer',
+    queries: 'Open the Query for Each Answer',
+  },
+  panelNoFigures: 'Another site that tracks these swaps also counts which apps bring them. Its rules don’t let us keep its data, so we show only today’s copy, in Pro. It’s here for context only and doesn’t change any answer on this site.',
+  concentrationLead: 'If most swaps come through one app, or are filled by a few traders ([[solvers|solver]]), NEAR’s fee income depends on them staying.',
+  concentrationKey: 'Biggest App is the biggest app’s share of the app fees. Top 3 Traders is how much of the swapping the three biggest traders ([[solvers|solver]]) filled. [[HHI]] is one score for how bunched up it is: higher means fewer players hold more.',
   reported: 'Another public source reports this share for the biggest app. It may measure something different, so the two need not match.',
   moveLead: 'For each of the five questions, the line that would turn the answer [[Bullish]] or [[Bearish]]. The lines were written down before the results, so they cannot be moved to fit.',
   // The pre-registered lines (PREREG.md section 6), in plain words. The figures are the same lines Pro shows.
   moves: [
     ['The whole likely range of [[elasticity]] sits above −1: raising fees brings in more money.', 'The whole range sits below −1: raising fees brings in less money.'],
     ['NEAR keeps more than 30% of the fees over the last 30 days, as DefiLlama counts it.', 'NEAR keeps under 20% on each of the last 14 days.'],
-    ['[[Solvers|solver]] keep under 5 bps on $1k to $10k swaps, and the three biggest fill under 60%.', 'Solvers keep over 10 bps, or the three biggest fill over 80%.'],
+    ['Traders ([[solvers|solver]]) keep under 5 bps on $1k to $10k swaps, and the three biggest fill under 60%.', 'Traders keep over 10 bps, or the three biggest fill over 80%.'],
     ['The biggest app brings under 50% of the last 30 days of fees.', 'The biggest app brings over 80% of those fees.'],
     ['NEAR’s fee income over 90 days went up at each of the last three month-ends.', 'It went down at each of the last three month-ends.'],
   ],
-  moveKey: 'Between the two lines the answer is [[Neutral]], and exactly on a line counts as Neutral. Missing data reads [[Not Measured|notmeasured]]. Two lines (the second and fourth) were set after the current figures were seen, and PREREG.md says so. While more than half the money moves through the private system, “Do the traders really compete?” and “Does one app bring most of the business?” cannot be measured, and the verdict stays [[Undecided]] whatever the score, so lost data cannot move it.',
+  moveKey: 'Between the two lines the answer is [[Neutral]], and exactly on a line counts as Neutral. Missing data reads [[Not Measured|notmeasured]]. Two lines (the second and fourth) were set after the current figures were seen, and PREREG.md says so. While more than half the money moves through the private system, “Do the traders really compete?” and “Does one app bring most of the business?” cannot be measured, and the overall answer stays [[Undecided]] whatever the score, so lost data cannot move it.',
   elasticityChecks: 'Extra tests that try to break the result: random dates with no fee change, and other ways of counting.',
 } as const;
+
+// The line under each Home question (docs/PLAN.md §6h J6): the answer in plain words, built from the same files as Pro's line.
+// Q1 reads the elasticity result, Q4 the largest app; every judgement is picked from the numbers. No figure here is typed.
+export type ReadingContext = { elasticity?: { estimate: number; lo: number; hi: number } | null; largest?: { name: string; share: number } | null };
+export function easyReadingLine(r: Reading & { capture?: number; treasuryShare?: number }, ctx: ReadingContext = {}) {
+  const n = (v: number) => v.toFixed(2).replace('-', '−');
+  const gone = r.privateFlow && r.treasuryShare != null ? `${cap(tenths(r.treasuryShare))} went private, so we can’t see this right now` : null;
+  switch (r.id) {
+    case 'Q1': {
+      const e = ctx.elasticity;
+      if (!e) return 'Not enough fee changes to tell yet';
+      const crosses = e.lo <= -1 && e.hi >= -1;
+      const guess = e.hi < -1 ? 'Yes: a higher fee seems to lose money' : Math.abs(e.estimate) < 0.5 ? 'Barely, as far as we can tell' : e.estimate < 0 ? 'Somewhat' : 'No, they swap a bit more';
+      return `${guess}${crosses ? ', but the data is too thin to be sure' : ''} (${n(e.estimate)})`;
+    }
+    case 'Q2':
+      return r.capture != null ? `NEAR keeps ${pct(r.capture)} of the swap fees (last 30 days)` : 'NEAR’s share could not be read';
+    case 'Q3': {
+      if (gone) return gone.replace('this', 'the traders');
+      const f = r.sideFigures;
+      if (f?.top3 == null && f?.spreadBps == null) return 'Not enough data yet';
+      return [f?.top3 != null ? `The 3 biggest traders fill ${pct(f.top3)} of public swaps` : null, f?.spreadBps != null ? `they keep ${f.spreadBps.toFixed(1)} bps` : null].filter(Boolean).join(', and ');
+    }
+    case 'Q4':
+      if (gone) return gone.replace('this', 'which app brings the most');
+      return ctx.largest ? `The biggest app, ${ctx.largest.name}, brings ${pct(ctx.largest.share)} of the app fees we can see` : 'Not enough data yet';
+    case 'Q5':
+      return r.side === 'Bullish' ? 'Yes: it rose at each of the last three month-ends (90-day total)'
+        : r.side === 'Bearish' ? 'No: it fell at each of the last three month-ends (90-day total)'
+          : r.side === 'Neutral' ? 'Mixed: it neither rose nor fell at all of the last three month-ends'
+            : 'Not enough data yet';
+    default:
+      return r.detail;
+  }
+}
 
 // Home (§6g E5): the tug of war, the verdict and why it is held, and the five readings as plain questions.
 export function easyHome(doc: EasyThesisDoc | null) {
@@ -119,14 +182,14 @@ export function easyHome(doc: EasyThesisDoc | null) {
   const sideCount = (s: Side) => readings.filter((r) => r.side === s).length;
   const share = Math.max(...[held.includes('Q3') ? pf?.q3?.share : null, held.includes('Q4') ? pf?.q4?.share : null].filter((x): x is number => x != null), -1);
   const hold = held.length
-    ? `Overall answer on hold: ${share >= 0 ? `${tenths(share)} now trade in private` : 'most of the money now trades in private'}, out of public view. The visible signs score ${score}, but missing data may not move the verdict.`
+    ? `Overall answer on hold: ${share >= 0 ? `${tenths(share)} now trade in private` : 'most of the money now trades in private'}, out of public view. The visible answers score ${score}, but missing data may not move the overall answer.`
     : null;
   const lead = held.length
     ? answersLine(sideCount)
     : v.verdict === 'Bullish' || v.verdict === 'Bearish'
       ? `The answers lean [[${v.verdict}|${v.verdict.toLowerCase()}]] (score ${score}).`
       : v.missing >= 3
-        ? `${v.missing} of the five questions cannot be answered yet, so the verdict stays open.`
+        ? `${v.missing} of the five questions cannot be answered yet, so the overall answer stays open.`
         : `Score ${score}: the answers do not lean either way.`;
 
   const body = `Think of a tug of war. Each year the network creates new NEAR coins ([[issuance]]), pulling the supply up. Part of every swap fee on [[NEAR Intents|intents]] is used to buy NEAR back ([[buyback]]), pulling it down. If buybacks win, the supply shrinks ([[deflation]]). This assumes NEAR costs $${vstar.priceUsd.toFixed(2)} and all of NEAR’s fee income goes to buybacks.`;
@@ -134,14 +197,14 @@ export function easyHome(doc: EasyThesisDoc | null) {
   // What the private flow means, said once with its figures (§6g E10). The Treasury sentence names no solver or trader.
   const sf = readings.filter((r) => r.privateFlow && r.sideFigures).flatMap((r) => {
     const f = r.sideFigures!;
-    if (r.id === 'Q3') return [f.spreadBps != null && `the solvers keep ${f.spreadBps.toFixed(1)} [[bps]] on public swaps`, f.top3 != null && `the three biggest solvers fill ${pct(f.top3)} of the public swaps`].filter((x): x is string => !!x);
+    if (r.id === 'Q3') return [f.spreadBps != null && `the traders keep ${f.spreadBps.toFixed(1)} [[bps]] on public swaps`, f.top3 != null && `the three biggest traders fill ${pct(f.top3)} of the public swaps`].filter((x): x is string => !!x);
     if (r.id === 'Q4') return f.share != null ? [`${f.name ? `${f.name} brings` : 'the biggest app brings'} ${pct(f.share)} of the app fees seen`] : [];
     return [];
   });
   const gone = readings.filter((r) => r.privateFlow);
   const priv: string[] = [];
   if (pf?.q3?.share != null) {
-    priv.push(`${cap(tenths(pf.q3.share))} counted over the last ${pf.q3.days} [[frozen days|frozenday]] went through the [[Treasury]], the doorway into NEAR’s private swap system${pf.q4?.share != null ? ` (${tenths(pf.q4.share)} over the last ${pf.q4.days})` : ''}.${gone.length ? ` So ${list(gone.map((r) => q(r.id)))} cannot be answered ([[Not Measured|notmeasured]]).` : ''}`);
+    priv.push(`${cap(tenths(pf.q3.share))} counted over the last ${pf.q3.days} [[frozen days|frozenday]] went through the doorway into NEAR’s private system ([[Treasury]])${pf.q4?.share != null ? ` (${tenths(pf.q4.share)} over the last ${pf.q4.days})` : ''}.${gone.length ? ` So ${list(gone.map((r) => q(r.id)))} cannot be answered ([[Not Measured|notmeasured]]).` : ''}`);
     const c = pf.confidential?.last7;
     const extra = [...(c?.confidentialShare != null ? [`${tenths(c.confidentialShare)} of the flow we can see went private (${c.daysRead} of ${c.days} days read)`] : []), ...sf];
     if (extra.length) priv.push(`Shown for interest, counting toward no answer: ${list(extra)}.`);
@@ -171,8 +234,8 @@ export function easyHome(doc: EasyThesisDoc | null) {
 
   const m16 = vstar.multiple16;
   const distance = m16 <= 1
-    ? `At today’s fees and NEAR price, monthly swap [[volume]] is already enough for buybacks to cancel out new coins under the 1.6% plan: the volume needed is ${times(m16)} today’s${vstar.multiple25 == null ? '' : vstar.multiple25 <= 1 ? `, and ${times(vstar.multiple25)} if issuance stays at 2.5%` : `. If issuance stays at 2.5%, volume would need to grow to ${times(vstar.multiple25)} today’s`}.`
-    : `For buybacks to cancel out new coins, monthly swap [[volume]] would need to grow to ${times(m16)} today’s under the 1.6% plan (voted in, not yet in force)${vstar.multiple25 != null ? `, or ${times(vstar.multiple25)} if issuance stays at 2.5%` : ''}.`;
+    ? `At today’s fees and NEAR price, the money swapped each month is already enough for buybacks to cancel out new coins under the 1.6% plan: the swapping needed is ${times(m16)} today’s${vstar.multiple25 == null ? '' : vstar.multiple25 <= 1 ? `, and ${times(vstar.multiple25)} if issuance stays at 2.5%` : `. If issuance stays at 2.5%, swapping would need to grow to ${times(vstar.multiple25)} today’s`}.`
+    : `For buybacks to cancel out new coins, the money swapped each month would need to grow to ${times(m16)} today’s under the 1.6% plan (voted in, not yet in force)${vstar.multiple25 != null ? `, or ${times(vstar.multiple25)} if issuance stays at 2.5%` : ''}.`;
 
   // On hold the answers come first, then what went private, then why the overall answer waits (§6g E10).
   const answers = [sides, ...why].join(' ');
@@ -204,11 +267,15 @@ type ElInfo = { usable: number; total: number; span: string; pass: { est: number
 export function easyElasticity(plot: { est: number; lo: number; hi: number } | null, info: ElInfo) {
   const n = (v: number) => v.toFixed(2).replace('-', '−');
   if (!plot) return `${info.total === 0 ? `No app changed its fee in a way the rules written in advance accept, in the ${info.span}: an app has to hold one fee for 7 days, then another fee at least 5 bps away for 7 days.` : `Too few apps changed their fee in a way the rules accept: only ${info.usable} of the ${info.total} fee changes found are usable, and it takes 3.`} So this question cannot be answered yet ([[Not Measured|notmeasured]]). The fee breakdown and the threshold lead until there are more.`;
-  const where = plot.lo > -1
-    ? 'The whole range sits above −1, so higher fees seem to bring in more money.'
-    : plot.hi < -1
-      ? 'The whole range sits below −1, so higher fees seem to bring in less money.'
-      : 'The range crosses −1, so the data cannot yet say whether a higher fee brings in more money or less.';
-  const pass = info.pass ? ` Users seem to pay ${n(info.pass.est)} of each fee change, where 1 means all of it ([[pass-through|passthrough]]); likely from ${n(info.pass.lo)} to ${n(info.pass.hi)}.` : '';
-  return `When apps changed their fees in the past, Tideline measured how swapping changed: the [[elasticity]] is ${n(plot.est)}, likely somewhere from ${n(plot.lo)} to ${n(plot.hi)}, from ${info.usable} of ${info.total} fee changes in the ${info.span}. The key mark is −1: below it, a higher fee brings in less money; above it, more. ${where}${pass}`;
+  // docs/PLAN.md §6h J5: why before what, short sentences, "we". Every judgement is picked from the numbers.
+  const crosses = plot.lo <= -1 && plot.hi >= -1;
+  const guess = Math.abs(plot.est) < 0.5 ? 'they barely reacted' : plot.est < 0 ? 'they swapped less' : 'they swapped more';
+  const where = crosses
+    ? 'Our range sits on both sides of that line, so we can’t say yet.'
+    : plot.lo > -1
+      ? 'Our whole range is on the safe side of that line, so higher fees seem to bring in more money.'
+      : 'Our whole range is past that line, so higher fees seem to lose money.';
+  const share = (v: number) => (v < 0.15 ? 'almost none' : v < 0.42 ? 'about a third' : v < 0.6 ? 'about half' : v < 0.85 ? 'most' : 'nearly all');
+  const pass = info.pass ? ` Apps seem to pass ${share(info.pass.est)} of a fee change on to users (${n(info.pass.est)}, [[pass-through|passthrough]]), though it could be anywhere from ${n(info.pass.lo)} to ${n(info.pass.hi)}.` : '';
+  return `We looked at ${info.usable} times an app changed its fee (out of ${info.total} we found in ${info.span}) and checked whether people swapped less afterwards. Our best guess: ${guess} (${n(plot.est)}, what economists call [[elasticity]]).${crosses ? ' But the data is thin.' : ''} The real answer could be anywhere from ${n(plot.lo)}${plot.lo < -1 ? ' (people leave fast)' : ''} to ${n(plot.hi)}${plot.hi > 0 ? ' (people swap even more)' : ''}. The line that matters is −1: past it, raising the fee loses money. ${where}${pass}`;
 }

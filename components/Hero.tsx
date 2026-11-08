@@ -49,7 +49,7 @@ export function Hero({ asOf, multiple, covered, today, gapTo, gapCaption, verdic
               </span>
             )}
             <span className="ring"><img src="/assets/mark.svg" alt="" width={30} height={30} /></span>
-            <p className="p-sub sx" style={{ '--sx': 0.8899 } as CSSProperties}>Volume Today Per Month</p>
+            <p className="p-sub sx" style={{ '--sx': 0.8899 } as CSSProperties}><Say pro="Volume Today Per Month" easy="Swapped Today, Per Month" /></p>
             <div className="hx-scale num"><span>$0</span><span>$10B</span><span>$20B</span><span>$30B</span></div>
             <div className="hx-track" role="img" aria-label={`Today ${bn(today, 2)} on a scale to ${bn(METER_MAX, 0)}`}>
               <i style={{ width: `${Math.min(100, (today / METER_MAX) * 100)}%` }} />

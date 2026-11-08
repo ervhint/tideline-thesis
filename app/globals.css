@@ -93,16 +93,48 @@ header.wrap{padding:0 54px}
 .n-value{font-weight:300;font-size:34px;line-height:40px;letter-spacing:-.03em}
 .n-label{font-weight:500;font-size:15px;line-height:19px;letter-spacing:-.02em}
 .n-text{font-size:14px;line-height:19px;letter-spacing:-.01em;color:var(--text-muted)}
+.n-note{margin:2px 0 6px;font-weight:500;font-size:16px;line-height:20px;letter-spacing:-.02em;color:var(--text)}
 .n-link{font-weight:500;font-size:14px;line-height:18px;text-decoration:underline}
 
 /* S5 reproduce */
-.repro{display:grid;grid-template-columns:minmax(0,1fr) 528px;gap:24px;margin-top:40px;align-items:start}
-.cmds{display:flex;flex-direction:column;gap:32px}
-.cmd-row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:24px;align-items:center}
-.cmd-row .btn{justify-self:end}
-.cmd-row .cmd{width:auto!important}
+/* J21: Method folds, the treasury points and the visibility block. */
+.m-fold{margin:0}
+.m-fold-body{display:flex;flex-direction:column;gap:20px;margin-top:16px}
+.src-list{margin:4px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.vis-block{display:flex;flex-direction:column;gap:6px;padding-top:16px;border-top:1px solid var(--track)}
+.vis-block p{margin:0}
+/* J20: the Codespaces row at the top of the steps. */
+.cs-row{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:16px 0 4px;padding:18px 20px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid rgba(120,145,180,.2)}
+.cs-row p{margin:0}
+.cs-row .s-text{margin-top:4px;text-wrap:pretty}
+.cs-btn{flex:none}
+.btn.ext::after{content:none}
+@media (max-width:700px){.cs-row{flex-direction:column;align-items:flex-start}}
+/* J18: Every Reading and Chart, grouped. */
+.q-group{display:flex;flex-direction:column;gap:inherit}
+.q-group + .q-group{margin-top:12px;padding-top:20px;border-top:1px solid var(--track)}
+.q-group-name{margin:0;font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}
+.q-fold{margin:2px 0 0}
+/* J16: proof card, then numbered steps with the words on the left and a small terminal frame on the right
+   (the pattern install guides use), then Going Further in the same form. */
+.repro{display:flex;flex-direction:column;gap:32px;margin-top:40px}
+.steps{padding:28px 40px 12px}
+.steps ol,.steps ul{list-style:none;margin:8px 0 0;padding:0}
+.steps p{margin:0}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,1.15fr);gap:8px 24px;align-items:start;padding:22px 0;border-top:1px solid var(--track)}
+.step:first-child{border-top:0}
+.step-dot::after{content:"";width:6px;height:6px;border-radius:999px;background:var(--text-muted)}
+.step-n{font-family:var(--font-mono),monospace;font-size:13px;line-height:18px;color:var(--text-muted);border:1px solid var(--track);border-radius:6px;padding:0;box-sizing:border-box;width:30px;height:24px;display:grid;place-items:center;margin-top:1px}
+.step-words{display:flex;flex-direction:column;gap:6px}
+.step-see{font-size:14px;line-height:19px;color:var(--text)}
+.more-need{color:var(--text)}
+.frame{border-radius:14px;background:rgba(255,255,255,.72);border:1px solid rgba(120,145,180,.25);overflow:hidden;min-width:0}
+.frame-head{display:flex;align-items:center;justify-content:space-between;padding:6px 8px 6px 14px;border-bottom:1px solid rgba(120,145,180,.18);font-family:var(--font-label);font-size:12px;line-height:16px;color:var(--text-muted)}
+.frame-copy{display:grid;place-items:center;width:30px;height:30px;border:0;border-radius:8px;background:transparent;color:var(--text-muted);cursor:pointer}
+.frame-copy:hover{background:var(--track);color:var(--text)}
+.frame-copy:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.frame code{display:block;padding:12px 14px 14px;font-family:var(--font-mono),monospace;font-size:14px;line-height:21px;color:var(--text);overflow-wrap:anywhere}
 .cmd{background:var(--action);color:var(--text-inverse);border-radius:20px;padding:22px 28px;font-family:var(--font-mono),monospace;display:flex;flex-direction:column;gap:8px;min-width:0;flex:0 1 auto}
-.cmd-row .btn{flex:none}
 .cmd code{font:inherit;font-size:18px;line-height:normal}
 .cmd span{font-size:15px;line-height:normal}
 .anchor{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
@@ -146,6 +178,11 @@ header.wrap{padding:0 54px}
 .r-text{color:var(--text-muted);max-width:660px;margin-top:2px!important}
 
 .title + .gauge{margin-top:8px}
+/* J12: under a page intro (Model), the gauge's glass starts 44px into its box, so 4px here puts the panel 48px below the intro, as on the other pages. */
+.page-lift > .lead-muted ~ .gauge{margin-top:4px}
+/* J13: Model's gauge glass sits on the page column (28px in from the box, as its ::before reaches 28px out), and 32px above the panels below (the glass runs 14px past the box). */
+.gauge-inset{margin-left:28px;margin-right:28px}
+.gauge-inset ~ .model-grid{margin-top:46px}
 
 /* S3 elasticity */
 .btn-2{background:transparent;color:var(--text);border:1.5px solid var(--text);padding-top:6.5px;padding-bottom:6.5px}
@@ -190,6 +227,8 @@ header.wrap{padding:0 54px}
 .panel-row.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .glass.stack{display:flex;flex-direction:column;gap:20px}
 .glass.stack p{margin:0}
+/* J22: a banner inside a panel fills the panel, as on Follow the Fee; on its own it keeps the 560px cap. */
+.glass.stack > .banner{max-width:none}
 .stack-top{margin-top:48px}
 .p-body{font-size:16px;line-height:23px;letter-spacing:-.01em;color:var(--text-muted)}
 .q-entry{scroll-margin-top:96px;padding:8px;margin:-8px;border-radius:12px}
@@ -261,13 +300,12 @@ header.wrap{padding:0 54px}
   .chart .axis{left:20px;right:20px}
   .mde{left:20px!important;right:20px!important;top:250px!important;height:50px;padding:10px 12px}
   .atick{top:132px!important;height:44px}.atrack{top:160px!important}.amark{top:174px!important}.alabel{top:186px!important}
-  .repro{grid-template-columns:1fr;gap:32px;margin-top:24px}
-  .cmd-row{grid-template-columns:1fr;gap:16px;align-items:stretch}
-  .cmd{width:100%!important}
+  .repro{gap:24px;margin-top:24px}
+  .steps{padding:24px 20px 8px}
   .cmd code{font-size:16px;overflow-wrap:anywhere}
-  .cmd-row .btn{justify-self:start}
   .err-body{margin-top:24px}
   .t-cell[data-l]::before{content:attr(data-l) ": ";color:var(--text);font-weight:500}
+  html[data-mode=easy] .t-cell[data-le]::before{content:attr(data-le) ": "}
   .model-grid{grid-template-columns:minmax(0,1fr);gap:24px;margin-top:24px}
   .result{padding:28px 24px}
   .r-big{font-size:72px;line-height:76px}
@@ -276,7 +314,6 @@ header.wrap{padding:0 54px}
   .model-grid{display:flex;flex-direction:column}
   .result{order:-1}
   .model-grid ~ .btn{width:100%;justify-content:space-between}
-  .cmd-row .btn{width:100%;justify-content:space-between}
   .vote-sentence{display:none}
   .gauge-m .gapnum{color:var(--text)}
 }
@@ -318,6 +355,9 @@ header.wrap{padding:0 54px}
 .n-open:hover{text-decoration:underline dotted}
 @media (prefers-reduced-motion:reduce){.knob{transition:none}.btn:hover .knob{transform:none}}
 .model-grid ~ .btn,.model-grid ~ .err-actions{margin-top:32px}
+/* J11: with Open the Query above it, the button sits as on Elasticity (the link's own 24px only). */
+.model-grid ~ .q-own + .btn{margin-top:0}
+.model-grid + .q-own{margin-top:32px}
 .gauge .unknown{top:130px;height:14px;border-radius:7px;border:2px dashed var(--text-muted)}
 .m-err{margin-top:24px}
 .m-err .banner{max-width:760px}
@@ -365,6 +405,11 @@ body[data-state=loading] .reading img{opacity:0}
 .ci-end{position:absolute;top:14px;transform:translateX(-50%);font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;color:#3d679a} /* accent darkened for 4.5:1 at 13px (NFR-4, measured 3 Nov) */
 .ci-key{font-size:14px;line-height:19px;letter-spacing:-.01em;color:var(--text-muted);margin-top:12px!important;max-width:700px}
 .ci-key b{font-weight:500;color:var(--text)}
+/* J5: Easy checks summary and fold (docs/PLAN.md §6h). */
+.e-checks .e-sum,.e-fold{grid-column:1/-1}
+.e-fold{margin:0}
+.e-fold-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;margin-top:20px}
+@media (max-width:700px){.e-fold-grid{grid-template-columns:1fr}}
 @media (max-width:700px){.e-checks + .chart{margin-top:24px}.e-checks{grid-template-columns:1fr;padding:24px 20px 28px}.ci{padding:24px 20px 28px}.ci-plot{margin:20px 14px 0}}
 /* T6e: small bar charts (components/BarCharts.tsx), in the interval plot's language: thin track, accent bars, muted 13px labels */
 .bars{margin:0}
@@ -391,6 +436,15 @@ html[data-mode=easy] .m-pro,html:not([data-mode=easy]) .m-easy{display:none!impo
 .mode-sw button{border:0;font:inherit;font-size:calc(14*var(--u));font-weight:570;letter-spacing:-.03em;line-height:1;padding:calc(8*var(--u)) calc(13*var(--u));border-radius:999px;background:transparent;color:#202940;cursor:pointer}
 html:not([data-mode=easy]) .mode-sw [data-v=pro],html[data-mode=easy] .mode-sw [data-v=easy]{background:var(--action);color:var(--text-inverse)}
 .mode-sw button:focus-visible{outline-offset:2px}
+/* J4 (docs/PLAN.md §6h): the floating copy, shown while the header is out of view. */
+.mode-float{position:fixed;right:24px;bottom:24px;z-index:8;padding:5px;border-radius:999px;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.85);-webkit-backdrop-filter:blur(40px);backdrop-filter:blur(40px);box-shadow:0 0 0 1.3px rgba(120,145,180,.2),0 4px 16px rgba(28,52,92,.1);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s,transform .2s,visibility 0s .2s}
+.mode-float[data-show]{opacity:1;visibility:visible;transform:none;transition:opacity .2s,transform .2s}
+.mode-float .mode-sw button{font-size:15px;padding:10px 16px}
+@media (max-width:700px){.mode-float{right:16px;bottom:16px}}
+/* J16 on phones: number, words, then the frame, one under the other. */
+@media (max-width:700px){.step{grid-template-columns:minmax(0,1fr);gap:10px}}
+@media (prefers-reduced-motion:reduce){.mode-float,.mode-float[data-show]{transition:none;transform:none}}
+@media print{.mode-float{display:none}}
 @media (max-aspect-ratio:1/1),(max-height:520px) and (max-width:1023px){
   .menu .mode-div{display:none}
   .menu .mode-sw{order:-1;gap:4px;padding:4px;margin:0 0 4px}
@@ -400,7 +454,11 @@ html:not([data-mode=easy]) .mode-sw [data-v=pro],html[data-mode=easy] .mode-sw [
 .below>.ask{margin:0 0 12px}
 .term{position:relative;display:inline}
 .term-btn{border:0;background:none;padding:0;margin:0;font:inherit;color:inherit;letter-spacing:inherit;text-decoration:underline dotted;text-decoration-thickness:1.5px;text-underline-offset:4px;cursor:help;text-align:inherit}
-.term-note{position:absolute;top:calc(100% + 8px);z-index:30;display:block;box-sizing:border-box;padding:14px 18px;border-radius:20px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 0 0 1.3px rgba(120,145,180,.25),0 12px 30px rgba(28,52,92,.14);font-family:var(--font-inter),system-ui,sans-serif;font-weight:400;font-size:14px;line-height:19px;letter-spacing:-.01em;color:var(--text-muted);text-align:left;white-space:normal;text-transform:none}
+.term-note{position:fixed;top:0;left:0;z-index:30;display:block;box-sizing:border-box;padding:14px 18px;border-radius:20px;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 0 0 1.3px rgba(120,145,180,.25),0 12px 30px rgba(28,52,92,.14);font-family:var(--font-inter),system-ui,sans-serif;font-weight:400;font-size:14px;line-height:19px;letter-spacing:-.01em;color:var(--text-muted);text-align:left;white-space:normal;text-transform:none}
 .term-note[hidden]{display:none}
 .term-note b{display:block;margin-bottom:3px;font-weight:600;color:var(--text)}
 .nowrap{white-space:nowrap}
+
+/* J19: links that leave the site open in a new tab, with a small mark. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.ext::after{content:"\2197";display:inline-block;margin-left:2px;font-size:.8em;line-height:1;text-decoration:none;opacity:.7}

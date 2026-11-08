@@ -8,7 +8,7 @@ import path from 'node:path';
 import { anchorPanel, dayState, FAILED_PANEL, type AttestRecord, type DayCheck } from './attest_view';
 import { listRepoDir, readRepoFile } from './github_data';
 import { callView, type RpcTarget } from './near_view';
-import { easyElasticity, easyHome } from './easy_text';
+import { easyElasticity, easyHome, easyReadingLine } from './easy_text';
 import { elasticitySpan, elasticityView, type ElasticityDoc } from './elasticity_view';
 import { feeView } from './fee_view';
 import { concentrationView, thesisView, type ConcentrationDoc, type ThesisDoc } from './thesis_view';
@@ -79,7 +79,13 @@ export async function getNumbers({ few = false, emptyFee = false } = {}) {
   const easyEl = el && elasticity.live
     ? easyElasticity(elasticity.plot ? { est: elasticity.plot.est, lo: elasticity.plot.lo, hi: elasticity.plot.hi } : null, { usable: el.main.usable, total: el.frozenEvents, span: elasticitySpan(el), pass: elasticity.plot && el.main.e2 ? { est: el.main.e2.estimate, lo: el.main.e2.lo, hi: el.main.e2.hi } : null })
     : null;
-  return { figures: head.figures, readings: head.readings, headline: head, fee: feeView(trace), elasticity, easy: { home: easyHome(th), elasticity: easyEl } };
+  // The line under each Home question in Easy (docs/PLAN.md §6h J6), from the same files.
+  const ctx = { elasticity: el?.main?.e1 ?? null, largest: (th as { concentration?: { largest?: { name: string; share: number } } } | null)?.concentration?.largest ?? null };
+  const readings = th ? head.readings.map((r) => {
+    const raw = th.readings.find((x) => x.id === r.qid);
+    return raw ? { ...r, easyDetail: easyReadingLine(raw as Parameters<typeof easyReadingLine>[0], ctx) } : r;
+  }) : head.readings;
+  return { figures: head.figures, readings, headline: head, fee: feeView(trace), elasticity, easy: { home: easyHome(th), elasticity: easyEl } };
 }
 
 // S6: per-size integrator shares from thesis.json; Not Measured when the file is missing.
@@ -167,23 +173,46 @@ async function readDeployment() {
   return { rpcUrl: d.rpcUrl as string, contractId: d.contractId as string };
 }
 
+// NEAR's public testnet endpoint refuses bursts, so a refused call is tried once more after a short pause.
+async function callViewRetry(method: string, args: object, target: RpcTarget) {
+  try {
+    return await callView(method, args, target);
+  } catch {
+    await new Promise((r) => setTimeout(r, 600));
+    return callView(method, args, target);
+  }
+}
+
 async function checkDay(day: string, target: RpcTarget): Promise<DayCheck> {
   const bytes = await readData(`data/chain/${day}.jsonl`);
-  const record: AttestRecord | null = await callView('get', { day }, target);
+  const record: AttestRecord | null = await callViewRetry('get', { day }, target);
   return { day, local: bytes && createHash('sha256').update(bytes).digest('hex'), record };
+}
+
+// Runs the day checks a few at a time instead of all at once (docs/PLAN.md §6h J17).
+async function inBatches<T, R>(items: T[], size: number, fn: (x: T) => Promise<R>): Promise<R[]> {
+  const out: R[] = [];
+  for (let i = 0; i < items.length; i += size) out.push(...(await Promise.all(items.slice(i, i + size).map(fn))));
+  return out;
+}
+
+// The newest frozen chain day, for Reproduce's step 3 (docs/PLAN.md §6h J16). One small published file, no testnet call.
+export async function getLatestChainDay(): Promise<string | null> {
+  return (await readPublished<{ lastDay?: string }>('chain_days.json'))?.lastDay ?? null;
 }
 
 export async function getAnchorPanel() {
   let current = FAILED_PANEL;
   try {
     const target = await readDeployment();
-    const lastDay: string | null = await callView('last_day', {}, target);
+    const lastDay: string | null = await callViewRetry('last_day', {}, target);
     const days = (await listChainDays()).filter((d) => lastDay && d <= lastDay);
     if (lastDay && !days.includes(lastDay)) days.push(lastDay);
-    const checks = await Promise.all(days.map((d) => checkDay(d, target)));
+    const checks = await inBatches(days, 6, (d) => checkDay(d, target));
     current = anchorPanel(checks, `https://testnet.nearblocks.io/address/${target.contractId}`);
-  } catch {
-    // Testnet did not answer: the page says so instead of guessing.
+  } catch (e) {
+    // Testnet did not answer: the page says so instead of guessing, and the log says why.
+    console.warn(`Anchor panel: NEAR testnet check failed: ${(e as Error).message}`);
   }
   return { current, anchorStates, commands: commandsFor(process.env.EXPLORER_PANEL === 'off') };
 }

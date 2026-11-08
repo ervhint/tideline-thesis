@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Banner } from '@/components/Banner';
 import { Gauge } from '@/components/Gauge';
 import { Segmented, Slider } from '@/components/Slider';
-import { type Market, MAX_SEEN_FEE_BPS, atFee, firstReached, revenueMaxFeeBps, splitSentence, vStar, vStarPath, vStarRange } from '@/lib/model';
+import { type Market, MAX_SEEN_FEE_BPS, atFee, firstReached, revenueMaxFeeBps, easySplitSentence, splitSentence, vStar, vStarPath, vStarRange } from '@/lib/model';
 import { bn } from '@/lib/mock';
 import type { RevenueSplit } from '@/lib/data';
 import { EASY } from '@/lib/easy_text';
@@ -52,15 +52,33 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
   const at = (f: number, e: number) => atFee({ ...base, issuancePct: issuance }, market, f, e);
   const where = (f: number, e: number) => { const a = at(f, e); return `At ${f.toFixed(1)} bps, expect about ${bn(a.volume)} a month and need ${bn(a.need)} (${a.multiple.toFixed(1)}×).`; };
   const beyond = (f: number) => (f > MAX_SEEN_FEE_BPS ? ` That is past the largest fee in the events (${MAX_SEEN_FEE_BPS} bps), so the estimate does not cover it.` : '');
+  // Easy twins of the lower boxes (docs/PLAN.md §6h J7): the same figures in plain words.
+  const easyWhere = (f: number, e: number) => { const a = at(f, e); return `At ${f.toFixed(1)} bps, expect about ${bn(a.volume)} of swapping a month, with ${bn(a.need)} needed (${a.multiple.toFixed(1)}×).`; };
+  const easyBeyond = (f: number) => (f > MAX_SEEN_FEE_BPS ? ` That’s higher than any fee in the changes we studied (${MAX_SEEN_FEE_BPS} bps), so our estimate doesn’t cover it.` : '');
+  const easyMaxFee =
+    fLow === null
+      ? `With elasticity from ${minus(elast[0])} to ${minus(elast[1])}, NEAR earns more the higher the fee, across every fee we’ve seen (up to ${MAX_SEEN_FEE_BPS} bps), so there’s no best fee to show. Today’s fee rate is ${fee0.toFixed(1)} bps.`
+      : fHigh === null
+        ? `Only the low end of the range has a best fee: about ${fLow.toFixed(1)} bps if people react as strongly as ${minus(elast[0])}, against today’s fee rate of ${fee0.toFixed(1)} bps. ${easyWhere(fLow, elast[0])}${easyBeyond(fLow)} From −1 up, NEAR keeps earning more as the fee rises.`
+        : `About ${fLow.toFixed(1)} to ${fHigh.toFixed(1)} bps, against today’s fee rate of ${fee0.toFixed(1)} bps. ${easyWhere(fLow, elast[0])}${easyBeyond(Math.max(fLow, fHigh))}`;
   const maxFee =
     fLow === null
-      ? `With elasticity ${minus(elast[0])} to ${minus(elast[1])}, revenue keeps rising with the fee across the fees seen (up to ${MAX_SEEN_FEE_BPS} bps), so there is no maximum to show. Today's all-in fee is ${fee0.toFixed(1)} bps.`
+      ? `With elasticity ${minus(elast[0])} to ${minus(elast[1])}, revenue keeps rising with the fee across the fees seen (up to ${MAX_SEEN_FEE_BPS} bps), so there is no maximum to show. Today's fee rate is ${fee0.toFixed(1)} bps (DefiLlama fees over volume, 30 days, all sizes; not the realised cost on Follow the Fee).`
       : fHigh === null
-        ? `Only the low end has a maximum: about ${fLow.toFixed(1)} bps all-in at ${minus(elast[0])}, against ${fee0.toFixed(1)} bps today. ${where(fLow, elast[0])}${beyond(fLow)} From −1 up, revenue keeps rising with the fee.`
-        : `About ${fLow.toFixed(1)} to ${fHigh.toFixed(1)} bps all-in, against ${fee0.toFixed(1)} bps today. ${where(fLow, elast[0])}${beyond(Math.max(fLow, fHigh))}`;
+        ? `Only the low end has a maximum: about ${fLow.toFixed(1)} bps at ${minus(elast[0])}, against today's ${fee0.toFixed(1)} bps fee rate (DefiLlama fees over volume, 30 days, all sizes; not the realised cost on Follow the Fee). ${where(fLow, elast[0])}${beyond(fLow)} From −1 up, revenue keeps rising with the fee.`
+        : `About ${fLow.toFixed(1)} to ${fHigh.toFixed(1)} bps, against today's ${fee0.toFixed(1)} bps fee rate (DefiLlama fees over volume, 30 days, all sizes). ${where(fLow, elast[0])}${beyond(Math.max(fLow, fHigh))}`;
   // V* on the revenue rate before 27 Oct and on the rate since, with the number of days behind each.
   const atRate = (s: { revenueRate: number; days: number }) => `${bn(vStar({ ...base, issuancePct: issuance }, market, s.revenueRate))} at ${(s.revenueRate * 1e4).toFixed(1)} bps`;
   const splitText = splitSentence(split, atRate);
+  const easySplitText = easySplitSentence(split, atRate);
+  const easyWhen =
+    v <= TODAY || hit?.index === 0
+      ? 'Already reached.'
+      : path === 'Flat'
+        ? 'Not reached if swapping stays flat. Pick a growth path to see a date.'
+        : hit === null
+          ? 'Not reached within ten years on this path.'
+          : `About ${hit.index} months, around ${new Date(Date.UTC(Number(hit.month.slice(0, 4)), Number(hit.month.slice(5, 7)) - 1, 1)).toLocaleString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' })}. ${path} means swapping changes by that much over 12 months, growing a little each month.${schedule.startsWith('1.6') ? ' New coins follow the planned HSP-029 steps.' : ''}`;
   const when =
     v <= TODAY
       ? 'Already reached.'
@@ -75,11 +93,13 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
   return (
     <>
       <Gauge
+        inset
         today={failed ? null : TODAY}
         max={25e9}
         thresholds={[{ at: v16, note: 'under the 1.6% plan that passed its vote' }, { at: v25, note: 'if issuance stays at 2.5%' }]}
         todayNote="last 30 days"
         gapCaption={`short each month at ${issuance}% issuance`}
+        easyGapCaption={`still missing each month at ${issuance}% issuance`}
         gapTo={v}
       />
 
@@ -94,19 +114,19 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
       <div className="model-grid">
         <div className="glass inputs">
           <Segmented label="HSP-029 Issuance Schedule" options={SCHEDULES} value={schedule} onChange={pickSchedule} />
-          <Segmented label="Volume Growth Path" options={PATHS} value={path} onChange={setPath} />
+          <Segmented label="Volume Growth Path" easyLabel="Swapping Growth Path" options={PATHS} value={path} onChange={setPath} />
           <Slider label="Issuance (Custom)" display={`${issuance.toFixed(1)}% a year`} min={0} max={4} step={0.1} value={issuance} onChange={setIssuance} ticks={['0%', '1.33%', '2.67%', '4%']} />
           <Slider label="NEAR Price" display={`$${price.toFixed(2)}`} min={2} max={8} step={0.01} value={price} onChange={setPrice} ticks={['$2', '$4', '$6', '$8']} />
           <Slider label="Elasticity (Assumed Range)" display={`${minus(elast[0])} to ${minus(elast[1])}`} min={E_MIN} max={E_MAX} step={0.01} range={elast} onRange={setElast} ticks={['−2.0', '−0.7', '+0.7', '+2.0']} />
           <p className="s-text"><Say
-            pro={elasticity ? `Starts at the measured 95% interval, ${minus(elasticity.lo)} to ${minus(elasticity.hi)}. It moves the revenue-maximizing fee, not V* at today's fee.` : 'The elasticity estimate did not load, so this starts at an assumed range.'}
+            pro={elasticity ? `Starts at the measured 95% interval, ${minus(elasticity.lo)} to ${minus(elasticity.hi)}. It moves the revenue-maximizing fee, not the volume needed (V*) at today's fee.` : 'The elasticity estimate did not load, so this starts at an assumed range.'}
             easy={<Rich text={`${EASY.modelElasticity} ${elasticity ? `It starts at the measured likely range, ${minus(elasticity.lo)} to ${minus(elasticity.hi)}.` : 'The elasticity estimate did not load, so this starts at an assumed range.'}`} />}
           /></p>
-          <Slider label="Share of Revenue Spent on Buybacks" display={`${buyback}%`} min={0} max={100} step={1} value={buyback} onChange={(x) => setBuyback(Math.max(1, x))} ticks={['0%', '33%', '67%', '100%']} />
+          <Slider label="Share of Revenue Spent on Buybacks" easyLabel="Share of Fee Income Spent on Buybacks" display={`${buyback}%`} min={0} max={100} step={1} value={buyback} onChange={(x) => setBuyback(Math.max(1, x))} ticks={['0%', '33%', '67%', '100%']} />
         </div>
 
         <div className="glass result">
-          <p className="s-title">Monthly Volume Needed</p>
+          <p className="s-title"><Say pro="Monthly Volume Needed" easy="Swapping Needed Each Month" /></p>
           <p className="r-big" aria-live="polite">{bn(v)}</p>
           <p className="r-line">
             {failed ? null : <Say pro={null} easy={<Rich text={`${(v / TODAY).toFixed(1)} times today’s ${bn(TODAY, 2)} a month. The likely range runs from ${bn(range.low)} to ${bn(range.high)}, because NEAR’s income per dollar swapped moves around. Inputs as of ${asOf.slice(0, 10)}. [[Elasticity]] does not move this number: at today’s fee, people keep swapping as they do now.`} />} />}
@@ -115,9 +135,9 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
               : <span className="m-pro">{`${(v / TODAY).toFixed(1)}× today's ${bn(TODAY, 2)}. Interval ${bn(range.low)} to ${bn(range.high)}, from how far revenue per dollar of volume has moved. Inputs as of ${asOf.slice(0, 10)}. Elasticity does not move this number: at today's fee, volume stays where it is.`}</span>}
           </p>
           <hr />
-          <div><p className="s-name">When It Is Reached</p><p className="r-text">{when}</p></div>
-          <div><p className="s-name">Revenue-Maximizing Fee</p><p className="r-text"><Say pro={null} easy="The fee at which NEAR would earn the most from swaps, if the elasticity range is right. " />{maxFee}</p></div>
-          {splitText && <div><p className="s-name">Volume Needed Before and Since 27 Oct</p><p className="r-text">{splitText}</p></div>}
+          <div><p className="s-name">When It Is Reached</p><p className="r-text"><Say pro={when} easy={easyWhen} /></p></div>
+          <div><p className="s-name"><Say pro="Revenue-Maximizing Fee" easy="The Fee That Earns NEAR the Most" /></p><p className="r-text"><Say pro={maxFee} easy={`The fee at which NEAR would earn the most from swaps, if the elasticity range is right. ${easyMaxFee}`} /></p></div>
+          {splitText && <div><p className="s-name"><Say pro="Volume Needed Before and Since 27 Oct" easy="Swapping Needed Before and Since 27 Oct" /></p><p className="r-text"><Say pro={splitText} easy={easySplitText ?? splitText} /></p></div>}
         </div>
       </div>
     </>

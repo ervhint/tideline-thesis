@@ -38,6 +38,7 @@ export default async function Headline() {
           thresholds={figures.thresholds}
           todayNote="last 30 days"
           gapCaption={figures.gapCaption}
+          easyGapCaption={figures.gapCaption.replace('short each month', 'still missing each month')}
         />
         <div className="links-row"><a className="link" href="/reproduce/#gauge">Open the Query</a></div>
 
@@ -45,9 +46,9 @@ export default async function Headline() {
           {readings.map((r) => <ReadingCell key={r.name} {...r} />)}
         </div>
         <div className="links-row links-3">
-          <a className="link" href="/reproduce/#q1">Open the Query for Each Reading</a>
-          <a className="link" href="/what-would-move/">What Would Move Each Reading</a>
-          <a className="link" href="/concentration/">Who Brings the Volume?</a>
+          <a className="link" href="/reproduce/#q1"><Say pro="Open the Query for Each Reading" easy={EASY.titles.queries} /></a>
+          <a className="link" href="/what-would-move/"><Say pro="What Would Move Each Reading" easy={EASY.titles.move} /></a>
+          <a className="link" href="/concentration/"><Say pro="Who Brings the Volume?" easy={EASY.titles.concentration} /></a>
         </div>
         {headline.text && (
           <section className="means" aria-labelledby="means-h">

@@ -2,17 +2,20 @@
 export type Status = 'Bullish' | 'Neutral' | 'Bearish' | 'Not Measured';
 
 // S5: the commands, and example values for previewing the anchored and mismatch states.
+// J15 (docs/PLAN.md §6h): three steps anyone can run with no key, then the extras, each saying what it needs.
 export type AnchorState = 'anchored' | 'mismatch';
-export const commands = [
-  { cmd: 'npm run verify', example: 'Example output: every number prints OK, then ALL OK', width: 520 },
-  { cmd: 'npm run attest:check <day>', example: 'Example output: match, mismatch, or not yet anchored', width: 560 },
-  { cmd: 'npm run rebuild', example: 'Recomputes every chart from stored public data, with no key', width: 520 },
-  { cmd: 'npm run rebuild -- --bigquery', example: 'Re-runs the SQL with your own Google project', width: 520 },
-  { cmd: 'npm run panel', example: 'Prints the rolling panel with your own key and writes nothing', width: 520 },
+export type Command = { group: 'step' | 'extra'; title: string; text: string; cmd: string; example: string; need?: string };
+export const commands: Command[] = [
+  { group: 'step', title: 'Get the code', text: 'Download the project and install what it uses. Needs Node 24; no key and no account.', cmd: 'git clone https://github.com/ervhint/tideline-thesis.git && cd tideline-thesis && npm ci', example: '' },
+  { group: 'step', title: 'Check every number', text: 'Works out every published number again from the saved data and compares it with the files. About a minute.', cmd: 'npm run verify', example: 'You should see: every number OK, then ALL OK.' },
+  { group: 'step', title: 'Check a saved day against NEAR testnet', text: 'Fingerprints a saved day and compares it with the fingerprint stored on NEAR testnet, so you can see it was not changed later.', cmd: 'npm run attest:check <day>', example: 'You should see: match. The newest day says not yet anchored until its daily anchor runs.' },
+  { group: 'extra', title: 'Recompute every chart', text: 'From the stored public data.', cmd: 'npm run rebuild', example: '', need: 'nothing' },
+  { group: 'extra', title: 'Re-run the SQL', text: 'Reads the public NEAR dataset on BigQuery again.', cmd: 'npm run rebuild -- --bigquery', example: '', need: 'your own Google project' },
+  { group: 'extra', title: 'Print the rolling panel', text: 'Writes nothing to the repo.', cmd: 'npm run panel', example: '', need: 'your own Explorer key' },
 ];
 // With the panel switched off, nothing on the page mentions it.
 export const commandsFor = (off: boolean) => commands.filter((c) => !off || c.cmd !== 'npm run panel');
-export const reproduceLead = (off: boolean) => `The first three commands need no key and no account. BigQuery needs your own Google project${off ? '' : ', and the panel your own key'}.`;
+export const reproduceLead = (off: boolean) => `Three steps, no key and no account. Going further, BigQuery needs your own Google project${off ? '' : ', and the panel your own key'}.`;
 export const anchorStates: Record<AnchorState, { tag: string; text: string; archive: string; chain: string }> = {
   anchored: {
     tag: 'Anchored: 10 Nov 2026',

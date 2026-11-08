@@ -1,6 +1,6 @@
 # Tideline: build plan
 
-Status: T0 to T6h done; T6i ready for review. Current state is in PROGRESS.md.
+Status: T0 to T6i done; T6j (beautification and adjustment) open. Current state is in PROGRESS.md.
 
 ## 1. Why the stored record is public chain data only
 
@@ -96,6 +96,7 @@ Deadline 14 Nov 23:59 UTC.
 | T6g | **Words follow the numbers** (§6e). Five sentences built from data, and a guard test against typed figures on every page | 3h | §6e done list |
 | T6h | **THESIS.md follows the data** (§6f). Its figures from `thesis.json`, never typed | 3h | §6f done list |
 | T6i | **Easy and Pro** (§6g). An Easy / Pro switch on every page, Pro by default; Easy words built from the same data; tap-to-explain notes on hard words | 7h | §6g done list |
+| T6j | **Beautification and adjustment** (§6h). Small wording and look fixes the human finds while clicking through; first item: Easy words on Follow the Fee's last two notes | open | §6h done list |
 | T7 | **P7.** Vercel, README, video | per workflow | G6 and G7 |
 
 About 32 hours of work plus Actions runtime, which is tight but fits if T1 passes by 6 Nov.
@@ -304,6 +305,86 @@ The full text sits under "Read the Full Explanation". The research-not-advice li
 **E12. The hero in plain words** (the human's yes, 8 Nov). Easy swaps the hero's words, never its numbers or layout: "Swaps Must Grow / to 3.3× Today", "so fees can buy back the new NEAR coins.", "Swapped Last 30 Days" and "still missing each month" (`EASY.hero`). "to" sits on the second line so the first fits at 375. When volume already covers issuance: "Fees Already Buy Back / The New Coins". Pro is unchanged.
 
 **Done when:** the human's answers to the five questions above are recorded here; T-T6i.1 to T-T6i.19 pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK with `data/` unchanged, `npm run build`, gitleaks and `.private/wording-scan.mjs` (extended to Easy text) pass; Chrome at 1440 and 375 on all eight pages in both modes; unit report; the human's yes on the commit.
+
+## 6h. T6j plan: beautification and adjustment (opened 8 Nov 2026)
+
+**Why.** The human clicks through the site and asks for small fixes to wording and look. One open unit collects them, each item recorded here with the human's yes. Layout changes still need the human's yes first (AGENTS.md). Pro text changes only when an item says so.
+
+**J1. Easy words on Follow the Fee's last two notes** (the human's yes, 8 Nov: "update only for easy"). Pro is unchanged.
+- **Unexplained note:** the three left-out groups in plain words, counts still built from the same data: no dollar price for one of the two coins; an app fee that could not be read; got back far more or far less than put in, so the price looked wrong.
+- **Rolling panel:** Easy shows the fixed Easy sentence, the chart and one source line. The swaps and quote sentences (bps, all-in, dry quotes) are Pro only, so the source line no longer shows twice. Easy may show fewer panel figures, never more (4.1(e)). The frontend list on Concentration stays in both modes.
+- **Easy labels:** heading "Outside Count" instead of "Rolling Panel"; chart marker "Private swaps begin (27 Oct 2026)"; source line in plain words. Fixed text, no figure.
+
+**J2. Easy in a human voice on the same two notes** (the human's yes, 8 Nov). Easy says why before what, in short sentences with "we". Pro is unchanged. The rest of the site moves to this voice later, starting from Home, when the human comes back to it.
+- **Unexplained:** title "What We Couldn’t Explain"; one total, then each group that has swaps (a group at zero is not named); private swaps left out "because nobody can see their fees". Built from the same counts.
+- **Rolling panel:** title "Another Tracker’s Count"; "These figures come from another site that tracks these swaps. Its rules don’t let us keep its data, so we show today’s copy and delete it tomorrow. It’s here for context only and doesn’t change any answer on this site."; source line "Source: Intents Explorer. Refreshed daily, deleted after a day." Fixed text, no figure. Replaces J1's "Outside Count" and source line.
+
+**J3. Easy in a human voice on the top of Follow the Fee** (the human's yes, 8 Nov). Same voice as J2; every number the same as Pro; Pro unchanged.
+- Lead: "Swap $10,000 and you get about $X less back (N bps). We worked that out from N real public swaps…".
+- Bar: "Where the $X Goes", "Total $X", "N bps less than the market price", "$X Not From the App" with "NEAR Intents’ own fee $X, and $X to the solver or price moves".
+- Rows get Easy names (The App’s Fee, Withdraw Fee Not Here, NEAR Intents’ Own Fee, What’s Left, Private Swaps Counted Apart, NEAR’s Cut; Buyback keeps its name) and plain text: no "plain transfer", "all-in" or "price noise". What’s Left adds "A minus means people got back slightly more than the market price" only when a shown part is negative.
+- Card: "Total Cost, … Swaps" and plain text; the number sheet's Easy text in the same voice.
+
+**J4. Easy | Pro follows the reader** (the human's pick, 8 Nov, from three sketches). A small glass Easy | Pro pill at the bottom right fades in once the header scrolls out of view and hides again at the top. The header stays exactly as it is. Both switches stay in step through one event; the floating one is hidden with visibility while away, so it leaves the tab order. Each copy keeps the hint as its accessible description, with its own id. No motion when the reader asks for reduced motion; not printed.
+
+**J5. Elasticity in a human voice, with the checks folded in Easy** (the human's yes, 8 Nov, fold included). Pro unchanged; every number as Pro.
+- Head: "Not Enough Data Yet" while underpowered, else "People Swap Less When Fees Rise" or "People Keep Swapping When Fees Rise".
+- Text (`easyElasticity`): the count of fee changes, the best guess in words picked from the number, "the data is thin" while the range crosses −1, the range with "people leave fast" or "people swap even more" only when the ends say so, the −1 line, and pass-through as a share in words with its range.
+- Plot: "Our Best Guess and Its Range", a plain key and plain notes on 0 and −1.
+- Checks: one summary built from the runs (how many, what the random dates showed, the spread of guesses, how many ranges cross −1); the rows sit in a "See Each Check" fold in Easy only. The near-miss state keeps its rows open.
+- Timeline: "N Fee Changes We Studied", a plain caption and a plain line for the smallest effect it could see.
+
+**J6. The five Home rows match their pages in Easy** (the human's yes, 8 Nov; found because Home and Elasticity read as two different answers). Pro unchanged; sides keep their names.
+- Q1's question becomes "When fees go up, do people stop swapping?": what was measured is apps changing their own fees, not NEAR changing its fee. The new wording shows wherever the question shows.
+- The line under each question is the answer in plain words (`easyReadingLine`), from the same files: Q1 from elasticity.json ("Barely, as far as we can tell, but the data is too thin to be sure (−0.06)" while the range crosses −1), Q2 from the capture share, Q3 and Q4 from the private share or their figures, Q4 from the largest app, Q5 from its side.
+
+**J7. One Easy word per thing, on every page** (the human's yes, 8 Nov; found because Elasticity's title said "volume" while Home asked about "swapping"). Pro, the nav labels, the numbers and the layout are unchanged.
+- Words: swapping (not volume, except beside a dollar figure or its note); traders, with the solver note (not solvers); app (not integrator or frontend); the private system and private swaps, with the Treasury as "the doorway into the private system"; NEAR's fee income (not revenue); answers (not readings or signs); overall answer (not verdict); still missing each month (not short).
+- Easy titles and links: "Do People Stop Swapping When Fees Go Up?", "Who Brings the Swaps?", "What Would Change Each Answer", "Open the Query for Each Answer" (`EASY.titles`). Reproduce names the five readings by their questions.
+- Concentration: Easy table heads and notes; the panel's app list stays in Pro, and Easy says in fixed words what it is (no panel figure in an Easy sentence, §6g E5).
+- Model: Easy labels and plain twins of the three lower boxes (`easySplitSentence` and the fee and date lines).
+- Method: titles, links and the chart marker only; its body is the technical detail and stays in Pro wording, as its Easy intro says.
+- Guard: T-T6j.13 fails if an old word comes back in Easy text. Tap-notes are shared by both modes and may use them.
+
+**J8. Pro wording a domain reader can follow** (the human's go-ahead, 8 Nov, all pages). Our own internal names are explained or replaced; Easy, numbers, layout, thesis.json and THESIS.md are unchanged.
+- The two swap kinds are named once: "fee-tagged swaps (logged as token_diff, which name the frontend and its fee)" and "plain transfer swaps"; every other Pro line says fee-tagged. Home and What Would Move show thesis.json's reading line with a real minus and "fee-tagged (token_diff)", at display time only.
+- Follow the Fee: "round trips" matched into and out of the treasury instead of "paired confidential flows from the two public edges"; a negative spread is explained when one shows; the left-out note says "a third token that could not be valued" and what the price check is; real minus signs.
+- Rolling panel (runtime text, never stored): the four pairs named, each quote split into app fee, withdraw fee and the rest, and the app fee named as the one 1Click attached to our own test request, not what real swaps paid.
+- Elasticity: "Pass-through" named; the dropped fee changes and why ("6 had under $50,000 in the 7 days before", from the file); "Minimum detectable effect … 2.8 × the placebo spread, for 80% power at p = 0.05".
+- Concentration: "SwapKit accounts for" (not "pays"), "no frontend named", "solver account", "$… of volume". Home: the confidential share is defined beside the treasury share. Model: V* named, and today's 14.8 bps is called a fee rate (DefiLlama fees over volume) so it is not mixed up with Follow the Fee's realised cost.
+- Not changed: the 77% card on Concentration does not name its source, and the code does not say which source it is. Flagged for the human.
+
+**J9. Tap-to-explain notes always come to the front** (the human's report, 8 Nov: a note opened on Home's readings row sat under the What This Means panel). Cause: each glass panel's blur makes its own layer, so a note could not rise above the next panel. Fix in `components/Term.tsx`: the open note is drawn on <body> with a fixed position, placed under the word or above it when there is no room below, and it follows the word on scroll. Hover may move from the word onto the note. Same words, same look; `react-dom.d.ts` types the one function used, since no package is added.
+
+**J10. Follow the Fee's number card and sheet** (the human's yes, 8 Nov). Easy: under "75.7 bps" the dollar figure ("$75.72 on a $10,000 swap") on the card and in the sheet, and the file-name query line becomes "We worked this out from the public swap records we save each day. Open the Query to see the exact steps." Pro: the query line names only what makes this number (feeTrace over data/chain), not every function in fee_trace.json's own query (q3Spread and the solver count belong to other figures); the file is unchanged.
+
+**J11. Model page spacing matches Elasticity** (the human's report, 8 Nov, with Elasticity as the reference). Panel to Open the Query 32px, link to Check It Yourself 24px; before, the button carried an extra 32px top margin (56px in all). The left panel still ends above the right one; stretching it was offered and not asked for.
+
+**J12. Model: intro to the gauge panel 48px** (the human's report, 8 Nov). The gauge's glass starts 44px into its box and the 8px rule for a gauge right under the title stopped matching once T6i put hidden Easy lines between them, so Model showed 104px in both modes. Now 48px in Easy and Pro, as on Follow the Fee, Concentration, What Would Move and Method. Home's gauge is unchanged. Elasticity uses 60px; left as it is unless the human asks.
+
+**J13. Model: the gauge panel lines up with the panels below** (the human's report, 8 Nov). The gauge's glass reaches 28px past its box on each side and 14px below, Home's wider style, so on Model it stuck out past the column and sat 14px above the next panels. Model now uses an inset gauge: glass on the column (72 to 1279px at 1366) and 32px above the panels; numbers and marks unchanged. Home keeps its gauge as designed.
+
+**J14. Reproduce: proof first, then the commands** (the human's pick, 8 Nov, from three sketches; changes Figma S5). The Daily Hash card comes first at full width, so the reader sees what is proven before how to check it. The five commands follow two to a row, each with its Copy button inside its dark box, in a solid light style so it reads on the dark. On phones each box stacks the command, its note, then Copy. The error state keeps its banner and Try Again first. Words and commands unchanged.
+
+**J15. Reproduce as a three-step recipe** (the human's pick, 8 Nov, after J14 looked worse; replaces J14's tile grid). The proof card stays first. Then one dark panel, "Check It Yourself in Three Steps": 1 get the code (git clone, npm ci, Node 24), 2 npm run verify (ends in ALL OK), 3 npm run attest:check with the newest anchored day filled in. Each step has its title, the command, what you should see, and a Copy. Then a light "Going Further" list: `npm run rebuild` (no key), `npm run rebuild -- --bigquery` (your own Google project), `npm run panel` (your own Explorer key; gone with EXPLORER_PANEL=off). The page lead says the three steps need no key. Changes Figma S5.
+
+**J16. Reproduce in the install-guide pattern, and fast** (the human's yes, 8 Nov, after looking at how install guides such as Tailwind's show steps; replaces J14 and J15). Each step has a number, a title, one sentence, what you should see, and the command in a small light terminal frame with a copy icon in its header; Going Further uses the same form and says what each extra needs. Speed: the proof card checks every saved day (36 files, about 29 MB from GitHub, and 37 testnet calls), which held the whole page for about 5 seconds on an uncached visit. It now sits in its own Suspense boundary: the page arrives in under 0.1 seconds with "Checking every saved day against NEAR testnet…", and the card fills in when the check is done; the check itself is unchanged. Step 3 names the newest frozen day from chain_days.json (no testnet call). Changes Figma S5.
+
+**J17. Reproduce: Try Again re-checks only the card; Going Further gets bullets** (the human's report, 8 Nov). The card fired 37 testnet calls at once and one refused call failed it, so the human saw "NEAR Testnet Did Not Answer". Now the days are checked six at a time, each call is tried once more after 0.6s, and a failure is logged with its reason. Try Again refreshes the server parts in place (the card shows "Checking…", then its result) instead of reloading the page. Going Further rows carry a dot in the same small box as the step numbers; every badge is a fixed 30 by 24px box, so numbers and dots match.
+
+**J18. Reproduce: Every Reading and Chart, grouped, with Easy words** (the human's yes, 8 Nov). Grouped under The Five Readings, Charts and Pages, and Side Measures (Set No Reading). Easy: the title "Where Each Number Comes From", each entry by its Easy name and one plain sentence in the J7 words, with Query and Source in a "Show the Files" fold. Pro: unchanged text, now grouped; "dip4" is explained as the event standard intents.near logs. The J7 guard (T-T6j.13) now also reads these Easy sentences and names; before, the shared Pro sentences showed in Easy with "frontend", "solvers", "revenue" and "interval", which the guard did not cover.
+
+**J19. Links that leave the site open in a new tab** (the human's request, 8 Nov, starting from Reproduce's file links). components/ExtLink.tsx: new tab, rel noopener, "(opens in a new tab)" for screen readers, a small ↗ mark. Used for the GitHub file links on Reproduce, Open the Contract on NEAR Testnet, Report It on GitHub, and Method's outside sources. Links within Tideline stay in the same tab.
+
+**J20. Open in GitHub Codespaces** (the human's yes, 8 Nov). A ready terminal in the reader's own codespace: `.devcontainer/devcontainer.json` (Ubuntu base, the Node feature at version 24, `npm ci` after creation, no keys) and a row at the top of Reproduce's steps with an "Open in Codespaces" button (codespaces.new, new tab). It runs under the reader's GitHub account and billing, never on Tideline's server, so the proof stays theirs. **Open:** the settings file works only once it is on GitHub's main branch; then the human opens one codespace and runs verify and attest:check to confirm.
+
+**J21. Method: plain summaries in Easy, three Pro tidy-ups** (the human's yes, 8 Nov; replaces J7's "Method body stays Pro"). Easy: each section opens with one or two plain sentences, built from the same files where they hold figures (chain checks, swap coverage, the comparison count, the visibility ratio against its range before 27 Oct), and the full Pro detail sits under "See the Detail". Pro: the Confidential Intents note as five short points; "How Much the Public Chain Still Sees" as its own block led by the ratio; the weekly activity table in a fold under its charts (both modes). The repeated weeks in the human's screenshot were the full-page capture; the table shows 8 rows.
+
+**J22. A banner inside a panel fills the panel** (the human's report, 8 Nov: empty space beside the rolling panel on Concentration). Banners keep their 560px cap when they stand alone; inside a glass panel they now use its full width, as on Follow the Fee. Also widens Method's load-error banners inside their panels.
+
+**J23. The rolling panel no longer holds the page** (the human's report, 8 Nov: Concentration slow). Each load lists the GitHub artifacts and downloads the newest panel, about 1.2 to 3 seconds, and Concentration and Follow the Fee waited for it. Pages now use `PanelSlot`: nothing when EXPLORER_PANEL=off, otherwise the panel in a Suspense boundary with a fixed-words loading box. The main content arrives in about 0.05 to 0.15 seconds. The panel is still fetched per request and kept nowhere; a memory cache would change that rule, so it was not added.
+
+**Done when (each item):** its tests pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK with `data/` unchanged, gitleaks and the wording scan pass; Chrome in both modes; the human's yes on the commit.
 
 ## 7. Decisions for the human
 
