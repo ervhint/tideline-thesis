@@ -161,6 +161,30 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6f.7 | F4 | unit | The protocol fee sentence for 1 pip, 5 pips and no read | Built from the read; no typed "January 2026" left | ✅ pass | 8 Nov |
 | T-T6f.8 | F2 | Actions | First `activity` run after the key is set | Commits `data: activity <date>` with the new window; `verify` passes; the Method chart's last week moves | ✅ pass (partly) | 8 Nov 01:10 WIB, run 42399907122: signed in, 3.52 + 18.31 GB, 90 rows each to 6 Nov, ALL OK, committed `1abe79f`. Same window as before (still 7 Nov in UTC), so the chart did not move yet; the 14 Nov run shows that |
 
+## T6g Words follow the numbers (docs/PLAN.md §6e)
+
+| ID | Covers | Type | Check | Expected | Status | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| T-T6g.1 | G1 | unit | Reconciliation with volume within 5%, 20% off, and a day missing | Ours shows the total; "matches" only within 5%; otherwise how far apart; missing day gives Not available and no claim | ⏭ not run | |
+| T-T6g.2 | G1 | cli | `npm run rebuild` then `verify` | `reconciliation.json` holds our cumulative volume; ALL OK | ⏭ not run | |
+| T-T6g.3 | G2 | unit | Buyback share 1, 0.8, missing; burned true | "All" only at 100%; the share otherwise; "not burned" only when false; no claim without a figure | ⏭ not run | |
+| T-T6g.4 | G3 | unit | Model split with 11 and 40 days since 27 Oct | "So few days" at 11, not at 40 | ⏭ not run | |
+| T-T6g.5 | G4, G5 | unit | Method sources text; cost card with `trace.to` in 2027 | Past-tense email sentence; card shows 2027 | ⏭ not run | |
+| T-T6g.6 | G6 | unit | Guard test on the current code | Passes with the allow-list; each allowed entry has a reason | ⏭ not run | |
+| T-T6g.7 | G6 | unit | Guard test with a planted typed figure and a planted frontend name | Both fail `npm test` | ⏭ not run | |
+| T-T6g.8 | G6 | unit | Allow-list against published values | No allowed figure equals a live value in `thesis.json`, `model_inputs.json` or `fee_trace.json` | ⏭ not run | |
+| T-T6g.9 | all | Chrome | All eight pages at 1440 and 375; Method, Follow the Fee and Model line by line against their files | Every sentence agrees with its numbers; no layout change | ⏭ not run | |
+
+## T6h THESIS.md follows the data (docs/PLAN.md §6f, option A)
+
+| ID | Covers | Type | Check | Expected | Status | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| T-T6h.1 | A | unit | Run the script on the published files | Equals the committed THESIS.md | ⏭ not run | |
+| T-T6h.2 | A | cli | Edit one figure in THESIS.md by hand, run `verify` | Fails and names the line | ⏭ not run | |
+| T-T6h.3 | A | unit | Altered thesis docs: treasury 40% and 74%, SwapKit 79% and 85%, held and not held | Judgement words follow the lines; held text only when held | ⏭ not run | |
+| T-T6h.4 | rules | unit | Scan the made THESIS.md | No Explorer or 1Click figure; the demand sentence present; no advice wording | ⏭ not run | |
+| T-T6h.5 | A | Actions | First refresh after the commit | THESIS.md committed only if a figure changed; matches the site | ⏭ not run | |
+
 ## Preview states (proposed)
 
 These are not in the SRS. They check the states the screens should show when data is old, loading, failed, anchored or mismatched (SRS 9.4, NFR-6). Expected text comes from the Figma frames and needs the human's confirmation.

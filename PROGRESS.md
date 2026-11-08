@@ -26,14 +26,23 @@ Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over 
 
 1. **Decide (user):** add Telegram failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
 2. **8 Nov, after 12:41 WIB:** check that chain-day froze 7 Nov and attest-days anchored it with its treasury hash in the record (`attest:check` on 2026-11-07). Check the 09:07 panel run.
-3. **T6e and T6f** (below): ready for review, not committed. Then the human's T6f setup: the Google key `GOOGLE_SA_KEY` and the fifth cronjob (docs/CRON.md 2b), then start `activity` once by hand.
-4. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
-5. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
-6. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). Then README demo link, pitch outline, demo script, demo video, final report.
+3. **T6g Words follow the numbers** (docs/PLAN.md §6e), new chat, Opus 5.5 · high (the human's choice). One sentence is wrong today (Method, Cumulative Volume).
+4. **T6h THESIS.md follows the data** (§6f), new chat after T6g. The human picks A, B or C first (A recommended).
+5. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
+6. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
+7. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). Then README demo link, pitch outline, demo script, demo video, final report.
 
 Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
-## Units in review: T6e Track brief charts, T6f Nothing stuck
+## Next unit: T6g Words follow the numbers (new chat)
+
+Spec: docs/PLAN.md §6e. Tests: T-T6g.1 to T-T6g.9. Opus 5.5 · high. Status: todo.
+
+- **What:** five sentences built from data instead of typed (Cumulative Volume on Method, Buyback on Follow the Fee, "So few days" on Model, the 9 Nov email on Method, the year on the cost card), plus a guard test over every page's code so no typed figure or typed frontend name can come back.
+- **Start:** G1, the one wrong today. No layout change.
+- **Then T6h** (§6f): THESIS.md from the data. Ask the human A, B or C before any code.
+
+## Units done: T6e Track brief charts, T6f Nothing stuck
 
 Both built in one chat on 7 and 8 Nov, at the user's request (an exception to one unit per chat). Each has its own file list and commit.
 
@@ -48,7 +57,7 @@ Spec: docs/PLAN.md §6c. Tests: docs/TESTS.md, T-T6e.1 to T-T6e.12. Opus 5.5 · 
 
 ### T6f
 
-Spec: docs/PLAN.md §6d. Tests: T-T6f.1 to T-T6f.8. Status: **ready-for-review**, not committed. `npm test` 261/261 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, gitleaks on the changed files, wording scan clean.
+Spec: docs/PLAN.md §6d. Tests: T-T6f.1 to T-T6f.8. Status: **on main** (`e4dcb81`, fix `96756fd`). `npm test` 261/261 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, gitleaks on the changed files, wording scan clean.
 - **What:** a weekly `activity` job re-runs the two BigQuery activity queries for the last 90 days (Saturday 11:41 WIB, about 20 GB); the hourly refresh re-reads the protocol fee and commits only when it changes; Follow the Fee's protocol fee sentence comes from the read.
 - **Fifth cronjob done (8 Nov):** `tideline activity` on cron-job.org, cloned from `tideline refresh` (same headers and token), `41 11 * * 6` Asia/Jakarta, body `{"ref":"main"}`, enabled, no test run. First run Saturday 14 Nov 11:41 WIB, so this unit must be on main before then.
 - **Committed 8 Nov as `e4dcb81`;** `test` passed in Actions. `GOOGLE_SA_KEY` is set. The first `activity` run (by hand) failed at sign-in: `token_format: access_token` needs the IAM Credentials API, which the project does not have. Fix (not committed yet): gcloud on the runner mints the token from the key, masked in the log. Fix committed as `96756fd`. The run by hand then passed (8 Nov 01:10 WIB): signed in, 21.8 GB, `verify` ALL OK, committed `1abe79f`; `test` passed too. The stored files lost their hand-written `project`, `bytesBilled` and `note` fields (the job writes query, date and bytes only); the numbers are the same. BigQuery used in November: about 869 GB; three more Saturdays bring it to about 935 GB, under the 950 GB line.

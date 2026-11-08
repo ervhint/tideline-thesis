@@ -93,6 +93,8 @@ Deadline 14 Nov 23:59 UTC.
 | T6d | **Rolling panel.** Done 7 Nov: docs/EXPLORER.md, PREREG A3 | | Local tests pass; a real run needs the repo |
 | T6e | **Track brief charts** (§6c). Activity chart on Method, a per-day chart in the rolling panel, the README note on the terms | 4h | §6c done list |
 | T6f | **Nothing stuck** (§6d). Weekly BigQuery activity job; protocol fee re-read hourly | 2h | §6d done list |
+| T6g | **Words follow the numbers** (§6e). Five sentences built from data, and a guard test against typed figures on every page | 3h | §6e done list |
+| T6h | **THESIS.md follows the data** (§6f). Its figures from `thesis.json`, never typed | 3h | §6f done list |
 | T7 | **P7.** Vercel, README, video | per workflow | G6 and G7 |
 
 About 32 hours of work plus Actions runtime, which is tight but fits if T1 passes by 6 Nov.
@@ -209,6 +211,41 @@ Terms first (AGENTS.md, "Terms rules"; docs/EXPLORER.md). A per-day total is sti
 - **The human's part:** the service account and its key as `GOOGLE_SA_KEY`, and the fifth cronjob (docs/CRON.md 2b). Neither can be done by the agent.
 
 **Done when:** T-T6f.1 to T-T6f.8 pass; `npm test`, `verify`, `npm run build`, gitleaks and the wording scan pass; the first `activity` run commits after the key is in place.
+
+## 6e. T6g plan: words follow the numbers (written 8 Nov 2026)
+
+**Why.** A check of every page's code on 8 Nov: the figures are all read from data, and most sentences are picked by code from the data. Five are not, and one of those is wrong today. The human asked that the wording never disagree with the numbers, now or later, on every page. One unit, one chat, Opus 5.5 · high (the human's choice). No layout change.
+
+**G1. Cumulative Volume (Method, "Where Public Figures Disagree"). Wrong today.** "Ours" says "Not available" while "Why They Differ" says "Our figure matches the public part". Cause: `pipeline/build_reconciliation.mjs` passes `volume: []` (line 18, "saved from T1 on"), though `data/snapshot/defillama_daily.json` holds daily volume from 10 May 2025. Fix: pass that volume; "Ours" sums 1 Sep 2025 to 21 Sep 2026 (the source's date); the sentence is picked by how far ours is from the source's public part ($29.5B): within 5% says it matches; otherwise it says how far apart they are; no total says nothing about matching. A day with no volume inside the range means no total, never a sum with a hole. `lib/reconcile_view.ts` lines 52 to 64.
+
+**G2. Buyback (Follow the Fee).** "All of NEAR's captured Intents revenue has bought NEAR on the open market since 23 Feb 2026 … not burned" is typed (`lib/fee_view.ts` line 79), but `model_inputs.json` `buyback.shareOfRevenue` is pulled from DefiLlama every hour. Fix: `build_fee_trace.mjs` carries `buyback` (share, burned) into `fee_trace.json` beside `nearRevenue`; the sentence says "all" only at 100% (to one decimal), else the share; "not burned" only when `burned` is false; no figure, no claim. The Buyback value follows the share too (revenue × share), not a copy of the revenue.
+
+**G3. "So few days" (Model, "Volume Needed Before and Since 27 Oct").** `components/ModelView.tsx` line 62 always says "So few days cannot show whether the rate has really changed". Fix: say it only while the days since 27 Oct are under 30 (the length of the window before it); from 30 days on, the sentence states both rates and their days, with no claim either way.
+
+**G4. The NEAR Intents email (Method, Sources).** "says this becomes the main path on 9 Nov" (`app/method/page.tsx` line 13) reads wrong after 9 Nov. Fix: "said it would become the main path on 9 Nov 2026", true on any date.
+
+**G5. Year on Follow the Fee's cost card.** "Chain days to 6 Nov 2026" types "2026" (`lib/fee_view.ts`, `card.source`). Fix: the year from `trace.to`.
+
+**G6. Guard test, every page.** `lib/typed_text.test.mjs` scans the string literals and JSX text of `app/**/*.tsx`, `components/*.tsx`, `lib/*.ts` (not tests) and `analysis/thesis_text.mjs`, with comments stripped, for typed figures: `$` amounts, percentages, bps, multiples (× or x), day-month dates and month-year dates. Anything found must be on an allow-list in the same file, each entry with its reason. A new typed figure fails `npm test`. It also fails on any frontend or solver name from `data/labels/` typed into page code (names must come from data).
+- Allowed, from the 8 Nov check: the pre-registered lines (What Would Move, `thesis_text` Q2 and Q4 phrases, the 60% and 80% Solver Competition lines, the 50% treasury line); the issuance presets 1.6% and 2.5% and the vote status; fixed scales and ticks (gauge, model sliders, cost bar, the share bar's 0/50/100%); size bucket names and the $10,000 title; quotes from other sources with their dates (Concentration's 77% Reported; Method's Other Source column, and the then-prices $4.97 and $1.35 it names); dated history (A2 6 Nov, A3 and A4 7 Nov, the move to the treasury 28 to 30 Oct, the 27 Oct marker, BigQuery logs to 3 Oct 2026 and from 1 Oct 2025, DefiLlama from 1 Sep 2025, buyback start 23 Feb 2026, the 0.03% re-freeze note); `lib/mock.ts` examples marked "Example only".
+- The allow-list must not hold a figure that a published file also holds (a typed copy of live data). The test checks the allowed numbers against `thesis.json`, `model_inputs.json` and `fee_trace.json` values.
+
+**G7. Each fixed sentence gets a unit test with altered data:** volume within 5%, 20% off and missing; buyback share 1, 0.8 and missing, burned true; days since 11 and 40; a `trace.to` in 2027.
+
+**Done when:** T-T6g.1 to T-T6g.9 pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify`, `npm run build`, gitleaks and the wording scan pass; Chrome at 1440 and 375 on all eight pages reads right, with Method, Follow the Fee and Model checked line by line against their published files; unit report; the human's yes on the commit.
+
+## 6f. T6h plan: THESIS.md follows the data (written 8 Nov 2026)
+
+**Why.** THESIS.md is a snapshot "as of 7 Nov 2026" with about 30 figures typed by hand, and it already differs from the live site (NEAR's share 34% there, 33% on the site; $12.6B there, $12.5B on the site). Nothing checks it. Judges read it on GitHub. The README holds rules only, no figures, and stays as it is.
+
+**Decide first (human), at the start of the T6h chat:**
+- **A (recommended).** `pipeline/build_thesis_md.mjs` writes THESIS.md from `thesis.json` and the other published files, with every figure filled in and every judgement ("well over the 50% line", "just under the 80% line", "looks lower lately") picked by condition, the way `analysis/thesis_text.mjs` does for the home page. The refresh and chain-day jobs run it, `verify` checks it, and it is committed only when it changes. THESIS.md then always matches the site.
+- **B.** Keep a dated snapshot, freeze its inputs as `data/published/thesis_snapshot_<date>.json`, and have `verify` check every figure in THESIS.md against that file. The page says plainly that the site is newer.
+- **C.** Take the figures out of THESIS.md and link to the live pages; keep only the argument.
+
+**Rules either way:** no Explorer or 1Click figure (AGENTS.md 4.1(e)); "a fall in public numbers is not a fall in demand" stays; nothing reads as advice; every sentence written in advance, filled from data.
+
+**Done when (A):** THESIS.md made by the script equals the committed file; `verify` fails on a hand edit; T-T6h.1 to T-T6h.5 pass; the refresh run after the commit leaves THESIS.md consistent with the site.
 
 ## 7. Decisions for the human
 
