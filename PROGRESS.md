@@ -1,44 +1,52 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). T6j Beautification and adjustment J1 to J23 committed and pushed on 8 Nov (docs/PLAN.md §6h). Next: the human opens one GitHub Codespace and runs verify and attest:check (T-T6j.29), then P7a test and gate G6.
+Phase: P7 Test + ship (workflow V12). All build units and T6j (the look and wording pass) are on main; last commit `756ba40` (8 Nov, 20:32 WIB), GitHub `test` green. **Next chat starts P7a.** Waiting for user: the Codespaces run (T-T6j.29), the Telegram question, ticket 79934.
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
-## State (7 Nov 2026, 19:30 WIB)
+## State (8 Nov 2026, 20:40 WIB)
 
-Readings as of the 6 Nov chain day: Q1 Neutral, Q2 Bullish, Q3 Not Measured, Q4 Neutral, Q5 Bullish, verdict Undecided on the A2 hold, score +3. Treasury carried 74% of counted USD over 31 Oct to 6 Nov.
+Readings as of the 7 Nov chain day (thesis.json 8 Nov 13:23 UTC): Q1 Neutral, Q2 Bullish, Q3 Not Measured, Q4 Neutral, Q5 Bullish; verdict Undecided on the A2 hold (Q3 held), score +3 of 7. The treasury carried 79% of counted USD over the last 7 frozen days.
 
-Checked locally on 7 Nov: `npm test` 244/244, `verify` ALL OK, `npm run build`, gitleaks over the full history, the wording scan, the API-data scan, Chrome at 1440 and 375 for every page and state (also with `EXPLORER_PANEL=off` on a production build). `attest:check` MATCH on 2026-10-04, 2026-10-20 and 2026-11-03.
+Data: 35 frozen chain days, 4 Oct to 7 Nov 2026, no gaps; 7 Nov anchored on testnet (the Reproduce card reads "Anchored: 7 Nov 2026", 35 days all matching). Actions on 8 Nov: `attest-days`, the hourly `refresh` and `test` green.
 
-Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over the full history, `contract`, `refresh` (committed), `chain-day` (6 Nov already frozen, stopped), `panel` (artifact kept one day; the log shows only progress lines). Treasury days 4 Oct to 6 Nov are in `data/treasury/`; `npm run rebuild` left the readings as they were.
+Checked on 8 Nov before the last push: `npm test` 296/296 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `tsc`, `next build`, gitleaks on every changed file, wording scan clean, no panel figure in any diff.
 
 **Setup done:**
 - Repo secrets: `INTENTS_EXPLORER_JWT`, `NEAR_ATTEST_ACCOUNT`, `NEAR_ATTEST_PRIVATE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
-- cron-job.org: four jobs start this repo's workflows (docs/CRON.md): chain-day 10:17 and 13:17 WIB, attest-days 12:41 and 15:41, refresh hourly at :23, panel 09:07. The `tideline-cron` token covers this repo; a test run of refresh returned 204 and passed.
+- cron-job.org: four jobs start this repo's workflows (docs/CRON.md): chain-day 10:17 and 13:17 WIB, attest-days 12:41 and 15:41, refresh hourly at :23, panel 09:07. The `tideline-cron` token covers this repo.
 - This repo is the only one that freezes, anchors and refreshes.
-- Localhost: `GITHUB_DATA_TOKEN` (Contents and Actions read) is in `.env`, so pages and the panel read from GitHub. Checked: the panel shows on Follow the Fee and Concentration.
+- Localhost: `GITHUB_DATA_TOKEN` (Contents and Actions read) is in `.env`, so pages and the panel read from GitHub.
+- `.devcontainer/devcontainer.json` (Node 24, `npm ci`, no keys) is on main, so "Open in Codespaces" on Reproduce works for anyone.
 
 **Watch out:**
 - A terminal that ran a local panel test may still hold `PANEL_FILE`. The site then reads only that file and shows "Rolling Panel: Not Available". Start the dev server from a fresh terminal.
+- **Panel after idle (J26):** on localhost the dev server's first GitHub connections after a few idle minutes stall 15 to 20s, so the first view of Follow the Fee or Concentration can say "Not Available"; the next view works. The page itself is not held (J23). Check on Vercel; see Next 3.
+- **Shell escaping on this machine:** the Bash tool collapses backslashes inside heredocs and `node -e` strings (a CSS `\2197` became a control character once). For regexes and CSS escapes, use the Edit tool or build the backslash with `String.fromCharCode(92)`. Python writes CRLF; edit with Node or the Edit tool.
+- **Full-page screenshots** from the human sometimes show doubled rows or headings: stitching marks, not page bugs (seen twice on 8 Nov). Check the live DOM before fixing.
+- **OneDrive** can touch `.git` mid-fetch ("cannot lock ref"); the pull still lands. Compare `git rev-parse HEAD origin/main` before committing.
 - Gitleaks in Actions fails on a repo's first push (no parent for the root commit); a hand-started `test` run scans the full history.
-- Telegram alerts only a failed `chain-day`. refresh messages only when a reading changes side; attest-days and panel send nothing. Failures there show as red runs, plus GitHub and cron-job.org emails.
+- Telegram alerts only a failed `chain-day`. refresh messages only when a reading changes side; attest-days and panel send nothing.
 
 ## Next
 
-0. **Right after the Vercel deploy (the human asked to be reminded):** check the rolling panel on Follow the Fee and Concentration on the first view after a few idle minutes. On localhost the first GitHub connections after idle stall 15 to 20s, so that first view says Not Available (J26). If Vercel does the same, decide on keeping the last good panel in server memory for a short time (a change to the "one request" rule, the human's call).
-1. **Decide (user):** add Telegram failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
-2. **8 Nov, after 12:41 WIB:** check that chain-day froze 7 Nov and attest-days anchored it with its treasury hash in the record (`attest:check` on 2026-11-07). Check the 09:07 panel run.
-3. **T6g and T6h are on main** (`4796d56`, 8 Nov). Left: T-T6h.5, the next hourly refresh in Actions, and a Chrome check at 375 px.
-4. (T6h done in the same chat as T6g, at the human's request.)
-5. **T6i Easy and Pro: built, not committed** (see below). Needs the human's yes on the commit, then a pull of main, `npm test` and `verify` before it.
-6. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
-7. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
-8. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). Then README demo link, pitch outline, demo script, demo video, final report.
+1. **P7a test (next chat):**
+   - Full Chrome sweep of every page and state at 1440 and 375, **in both Easy and Pro**: normal, `?state=loading`, `?state=stale`, `?state=error` (Follow the Fee, Elasticity, Model, Method, Reproduce), `?state=few` (Elasticity), `?state=empty` (Follow the Fee), `?state=anchored|mismatch|error` (Reproduce); also once with `EXPLORER_PANEL=off` on a production build. Claude in Chrome only (AGENTS.md). 375 is checked in a same-origin iframe, because this Chrome window ignores resizing.
+   - Tick or fix the open rows in docs/TESTS.md: many earlier rows still read "⏭ not run" or "⚠ partial", some only because they were never ticked (T-T6g.9, T-T6h.5, T-T6i.8, T-T6i.10, the P-1 to P-7 previews, N-1 to N-3).
+   - `/code-review` and `spec-review` over the T6i and T6j changes (about 60 files on 8 Nov), then fix what fails.
+2. **G6:** the human clicks through on localhost and gives an explicit yes on the look. Layout changes need their yes (design references are exact; J14, J16 and J25 already changed Figma S5 and S6).
+3. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). **Right after the deploy (the human asked to be reminded):** open Follow the Fee and Concentration after a few idle minutes and see whether the rolling panel's first view says "Not Available" there too (J26). If it does, the human decides whether the server may keep the last good panel in memory for a short time (a change to the "one request" rule). Then README demo link, pitch outline, demo script, demo video, final report.
+4. **Waiting on the human:**
+   - **Codespaces run (T-T6j.29):** click "Open in Codespaces" on Reproduce, then `npm run verify` (expect ALL OK) and `npm run attest:check 2026-11-07` (expect match). Report what it prints.
+   - **Telegram:** add failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
+   - **Ticket 79934:** no answer recorded. If no, set `EXPLORER_PANEL=off` on Vercel and in the panel job's repo variable.
 
-Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
+## Unit on main: T6j Beautification and adjustment
 
-## Open unit: T6j Beautification and adjustment
+Spec: docs/PLAN.md §6h, tests T-T6j.1 to .35 in docs/TESTS.md. Status: **J1 to J26 on main** (`7449bc2` J1 to J23, `ddf9cd8` J24 and J25, `923a5ab` J26, `756ba40` panel tries and the Easy "switch to Pro" line; all 8 Nov, `test` green each time). Open: T-T6j.29, the real Codespaces run.
 
-Spec: docs/PLAN.md §6h. Items are added as the human clicks through; each needs the human's yes. Status: **J1 to J23 on main (8 Nov).** Checked before the commit: `npm test` 295/295 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, `tsc`, gitleaks on every changed file, wording scan clean, no panel figure in the diff. Open: T-T6j.29 (a real codespace run). J24 (proof card from /api/anchor, failures never cached) and J25 (77% card removed, its source could not be named) on main as ddf9cd8. J26 (panel read retries once, logs only a status or error type) on main.
+- **J26 (8 Nov):** the panel's GitHub calls get 6s and up to three tries; a failure logs only a status code or error type (`lib/panel_source.ts`). The idle stall on localhost outlasts the tries (Watch out).
+- **J25 (8 Nov):** the "77% Reported" card on Concentration is removed: its source could not be named. The panel now uses the full width. Changes Figma S6.
+- **J24 (8 Nov):** Reproduce is fully static; the proof card asks our own `/api/anchor`, which caches a good check for 5 minutes and never caches a failure. Try Again re-asks in place.
 
 - **J1 (8 Nov):** Easy only, Pro unchanged. Unexplained note in plain words (`easyBanner` in `lib/fee_view.ts`). Rolling panel in Easy: heading "Outside Count", the fixed sentence, the chart, marker "Private swaps begin (27 Oct 2026)" and one plain source line; the swaps and quote sentences are Pro only (`components/PanelNote.tsx`, labels in `EASY`). Banner titles and chart markers now take a node so they can swap words. `npm test` 289/289 (also with `EXPLORER_PANEL=off`), verify ALL OK, typecheck clean, wording scan clean, Chrome 1366 both modes (T-T6j.1, .2).
 - **J2 (8 Nov):** the same two notes in a human voice in Easy (why before what, short sentences, "we"): "What We Couldn’t Explain" with one total and each non-zero group (`easyLeftOut` in `lib/fee_view.ts`), and "Another Tracker’s Count" with the new sentence and source line (`EASY`). Pro unchanged. The human will come back to Home next to carry this voice across the site.
@@ -63,11 +71,11 @@ Spec: docs/PLAN.md §6h. Items are added as the human clicks through; each needs
 - **J16 (8 Nov), replaces J14 and J15:** Reproduce as numbered steps with small terminal frames and copy icons (install-guide pattern), Going Further in the same form; the proof card streams in on its own, so the page shows in under 0.1s instead of waiting about 5s.
 - **J15 (8 Nov, replaced by J16):** Reproduce as a recipe: proof card, then three numbered steps (get the code, verify, attest:check with the newest anchored day), then Going Further with what each extra needs.
 - **J14 (8 Nov, replaced by J15):** Reproduce reordered at the human's pick: proof card first at full width, then the commands two to a row with Copy inside each; phones stack them. Changes Figma S5.
-- **Done by J8 (was noted, not done):** the human said Easy only for now):** the quote line's app fee is the one the API adds to our own test quotes, not what real swaps paid, and the two read as a clash; the quote breakdown leaves the rest unnamed; the Unexplained counts have no denominator. (No panel figure written here: 4.1(e).)
+- **Done by J8 (was noted, not done in J1 because the human said Easy only for now):** the quote line's app fee is the one the API adds to our own test quotes, not what real swaps paid, and the two read as a clash; the quote breakdown leaves the rest unnamed; the Unexplained counts have no denominator. (No panel figure written here: 4.1(e).)
 
 ## Unit on main: T6i Easy and Pro
 
-Spec: docs/PLAN.md §6g (the human's five answers are recorded there, 8 Nov: switch inside the nav pill and first in the phone menu; hint as tooltip only; `?mode=easy|pro` share link that leaves the address bar; term notes in both modes; BEGINNER.md used, then deleted). Status: **not committed.** `npm test` 283/283 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, gitleaks on lib, components, app and docs, wording scan clean. `data/`, THESIS.md, `/api/*` and README unchanged.
+Spec: docs/PLAN.md §6g (the human's five answers are recorded there, 8 Nov: switch inside the nav pill and first in the phone menu; hint as tooltip only; `?mode=easy|pro` share link that leaves the address bar; term notes in both modes; BEGINNER.md used, then deleted). Status: **on main** (`2c025fa`, 8 Nov). At the time: `npm test` 283/283 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, gitleaks on lib, components, app and docs, wording scan clean. `data/`, THESIS.md, `/api/*` and README unchanged.
 
 - **How it works:** `lib/mode.ts` sets `html[data-mode]` before first paint (share link, then `localStorage` key `tideline-mode`, then Pro; every storage call in try/catch). `components/Say.tsx` renders both texts and CSS hides the other with display:none. `components/ModeSwitch.tsx` is two buttons with `aria-pressed`; its pressed look follows the html attribute, so nothing flashes. `components/Term.tsx` and `lib/glossary.ts` give the notes (24 words, no figures); Easy strings mark them as `[[word]]` or `[[words|key]]`.
 - **Easy words:** `lib/easy_text.ts` (Home, Elasticity, fixed text, the five questions) and `easy` fields beside the Pro ones in `lib/fee_view.ts` and `lib/thesis_view.ts`, each built from the same values. Numbers, charts, tables and headings are not swapped. The rolling panel gains one fixed Easy sentence with no figure.
@@ -80,7 +88,7 @@ Spec: docs/PLAN.md §6g (the human's five answers are recorded there, 8 Nov: swi
 - **Seen, not ours:** the Next dev overlay sometimes reports a head mismatch caused by a Chrome extension injecting `injection-topics.js` into the page.
 - **Commit note:** pull main right before committing (the hourly refresh moves the data), then `npm test` and `verify`.
 
-**Handoff to the next chat (8 Nov, 13:45 WIB).** Everything above is in the working tree, uncommitted. To continue:
+**Old handoff (8 Nov, 13:45 WIB), kept for history; done since:**
 1. Let the human click through on localhost:3112 in both modes. Any wording or layout change needs their yes (design references are exact).
 2. Optional before the commit: the full 375 sweep of every page in both modes (T-T6i.10), and a real blocked-storage page load (T-T6i.8, for example Chrome site settings blocking site data for localhost, changed only by the human). Otherwise both go into P7a.
 3. On the human's yes: `git pull` main, `npm test` (also `EXPLORER_PANEL=off`), `npm run verify`, gitleaks on the changed files, `.private/wording-scan.mjs`, then commit. Files: `lib/easy_text.ts`, `lib/easy_text.test.mjs`, `lib/glossary.ts`, `lib/mode.ts`, `components/Say.tsx`, `components/Term.tsx`, `components/ModeSwitch.tsx`, plus edits in `app/` (all eight pages, layout, globals.css), `components/` (Banner, ModelView, Nav, NumberSheet, Page, PanelNote, ReadingCell), `lib/` (data, elasticity_view, fee_view, thesis_view, typed_text.test), docs/PLAN.md, docs/TESTS.md and this file. BEGINNER.md is deleted on purpose (the human's answer 5).

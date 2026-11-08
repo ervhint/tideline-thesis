@@ -1,6 +1,6 @@
 # Tideline: build plan
 
-Status: T0 to T6i done; T6j (beautification and adjustment) open. Current state is in PROGRESS.md.
+Status: T0 to T6j done (T6j J1 to J26 on main, 8 Nov); next is P7a test, then G6 and P7b. Current state is in PROGRESS.md.
 
 ## 1. Why the stored record is public chain data only
 
@@ -96,7 +96,7 @@ Deadline 14 Nov 23:59 UTC.
 | T6g | **Words follow the numbers** (§6e). Five sentences built from data, and a guard test against typed figures on every page | 3h | §6e done list |
 | T6h | **THESIS.md follows the data** (§6f). Its figures from `thesis.json`, never typed | 3h | §6f done list |
 | T6i | **Easy and Pro** (§6g). An Easy / Pro switch on every page, Pro by default; Easy words built from the same data; tap-to-explain notes on hard words | 7h | §6g done list |
-| T6j | **Beautification and adjustment** (§6h). Small wording and look fixes the human finds while clicking through; first item: Easy words on Follow the Fee's last two notes | open | §6h done list |
+| T6j | **Beautification and adjustment** (§6h). Wording, look and speed fixes the human found while clicking through, J1 to J26 | done 8 Nov | §6h done list |
 | T7 | **P7.** Vercel, README, video | per workflow | G6 and G7 |
 
 About 32 hours of work plus Actions runtime, which is tight but fits if T1 passes by 6 Nov.
