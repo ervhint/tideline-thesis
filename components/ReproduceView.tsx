@@ -1,6 +1,5 @@
 'use client';
-import { useEffect, useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 import { Banner } from './Banner';
 import { ExtLink } from './ExtLink';
 
@@ -13,26 +12,36 @@ const DOT = { none: '/assets/dot-not-measured.svg', anchored: '/assets/dot-bulli
 const COLOR = { none: 'var(--text-muted)', anchored: 'var(--bullish)', mismatch: 'var(--bearish)' };
 type Example = { tag: string; text: string; archive: string; chain: string };
 
-// The proof card (docs/PLAN.md §6h J16). It loads on its own (a Suspense boundary on the page), because checking
-// every saved day against NEAR testnet takes seconds; the rest of the page does not wait for it.
+// The proof card (docs/PLAN.md §6h J16, J24). The page is static and fast; the card asks our own /api/anchor, which
+// caches a good check for 5 minutes and never caches a failure, so a testnet hiccup cannot stick in a built page.
 // `?state=anchored`, `?state=mismatch` and `?state=error` preview the designed states with example values.
-export function AnchorCard({ current, anchorStates }: { current: AnchorPanel; anchorStates: Record<AnchorState, Example> }) {
+const FAILED: AnchorPanel = { state: 'failed', tag: '', text: '' };
+export function AnchorCard({ anchorStates }: { anchorStates: Record<AnchorState, Example> }) {
   const [preview, setPreview] = useState<AnchorState | null>(null);
   const [previewFailed, setPreviewFailed] = useState(false);
-  const router = useRouter();
-  const [checking, startCheck] = useTransition();
+  const [current, setCurrent] = useState<AnchorPanel | null>(null);
+  const load = useCallback(async () => {
+    setCurrent(null);
+    try {
+      const r = await fetch('/api/anchor/', { cache: 'no-store' });
+      setCurrent(r.ok ? ((await r.json()) as AnchorPanel) : FAILED);
+    } catch {
+      setCurrent(FAILED);
+    }
+  }, []);
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get('state');
     if (q === 'anchored' || q === 'mismatch') setPreview(q);
     if (q === 'error') setPreviewFailed(true);
-  }, []);
+    load();
+  }, [load]);
 
-  if (checking) return <AnchorLoading />;
-  if (previewFailed || current.state === 'failed') {
-    // Try Again asks the server for the card again; the rest of the page stays as it is (J17).
+  if (!current && !previewFailed && !preview) return <AnchorLoading />;
+  if (previewFailed || current?.state === 'failed') {
+    // Try Again asks /api/anchor again; the rest of the page stays as it is (J17, J24).
     const retry = () => {
       setPreviewFailed(false);
-      startCheck(() => router.refresh());
+      load();
     };
     return (
       <div className="anchor">
@@ -46,8 +55,8 @@ export function AnchorCard({ current, anchorStates }: { current: AnchorPanel; an
       </div>
     );
   }
-  const a = preview ? { ...anchorStates[preview], day: '2026-11-10', contractUrl: 'https://testnet.nearblocks.io' } : current;
-  const state = (preview ?? current.state) as keyof typeof DOT;
+  const a = preview ? { ...anchorStates[preview], day: '2026-11-10', contractUrl: 'https://testnet.nearblocks.io' } : current!;
+  const state = (preview ?? current!.state) as keyof typeof DOT;
   return (
     <div className="glass anchor">
       <p className="a-title">Daily Hash on NEAR Testnet</p>

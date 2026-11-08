@@ -1,18 +1,11 @@
 import { Page } from '@/components/Page';
-import { Suspense } from 'react';
-import { AnchorCard, AnchorLoading, Steps } from '@/components/ReproduceView';
-import { commandsFor, reproduceLead } from '@/lib/mock';
+import { AnchorCard, Steps } from '@/components/ReproduceView';
+import { anchorStates, commandsFor, reproduceLead } from '@/lib/mock';
 import { EASY, QUESTIONS } from '@/lib/easy_text';
 import { Say } from '@/components/Say';
 import { ExtLink } from '@/components/ExtLink';
 import { ENTRIES, GROUPS, fileUrl } from '@/lib/reproduce_entries';
-import { getAnchorPanel, getLatestChainDay } from '@/lib/data';
-
-// The slow part: every saved day is fingerprinted and checked on NEAR testnet. Only the proof card waits for it.
-async function Anchor() {
-  const p = await getAnchorPanel();
-  return <AnchorCard current={p.current} anchorStates={p.anchorStates} />;
-}
+import { getLatestChainDay } from '@/lib/data';
 
 export const revalidate = 300;
 
@@ -25,7 +18,7 @@ export default async function Reproduce() {
   return (
     <Page title="Check It Yourself" ask={EASY.ask.reproduce} easyLead={EASY.reproduceLead} lead={reproduceLead(off)}>
       <div className="repro">
-        <Suspense fallback={<AnchorLoading />}><Anchor /></Suspense>
+        <AnchorCard anchorStates={anchorStates} />
         <Steps commands={commandsFor(off)} day={day} />
       </div>
       <div className="glass stack stack-top">

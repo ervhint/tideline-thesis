@@ -384,6 +384,10 @@ The full text sits under "Read the Full Explanation". The research-not-advice li
 
 **J23. The rolling panel no longer holds the page** (the human's report, 8 Nov: Concentration slow). Each load lists the GitHub artifacts and downloads the newest panel, about 1.2 to 3 seconds, and Concentration and Follow the Fee waited for it. Pages now use `PanelSlot`: nothing when EXPLORER_PANEL=off, otherwise the panel in a Suspense boundary with a fixed-words loading box. The main content arrives in about 0.05 to 0.15 seconds. The panel is still fetched per request and kept nowhere; a memory cache would change that rule, so it was not added.
 
+**J24. Reproduce's proof card never caches a failure** (the human's request, 8 Nov, before the Vercel deploy). The page is now fully static and the card asks our own `/api/anchor`: a good check is cached for 5 minutes (in memory and at the CDN), a failed one is never cached, so a testnet hiccup cannot stick in a built page and Try Again really asks again. The build no longer calls testnet for this page.
+
+**J25. The "77% Reported" card is removed from Concentration** (the human's choice, 8 Nov). Its source could not be named and the figure was typed into the code, so it could not be checked. Our own figure stays in the table and notes; the panel now uses the full width. Changes Figma S6.
+
 **Done when (each item):** its tests pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK with `data/` unchanged, gitleaks and the wording scan pass; Chrome in both modes; the human's yes on the commit.
 
 ## 7. Decisions for the human

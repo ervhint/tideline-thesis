@@ -245,6 +245,8 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6j.30 | J21 | unit + Chrome | Method in Easy and Pro at 1366 and 375 (frame); ?state=error; the guard over the new Easy lines | Easy: plain line per section, detail folds open; Pro: five treasury points, the visibility block, table folded; no horizontal scroll; the error banner still shows | ✅ pass | lib/easy_text.test.mjs (chain and coverage Easy lines in the guard); Chrome 8 Nov |
 | T-T6j.31 | J22 | Chrome | Concentration rolling panel; Method ?state=error | Banner as wide as the panel's inner width | ✅ pass | Chrome 8 Nov: 685 of 687px on Concentration; Method error banner full width |
 | T-T6j.32 | J23 | cli + Chrome | Time when the main content arrives on Concentration and Follow the Fee; panel switch off | Content in well under a second, the panel after; with the switch off no panel box at all | ✅ pass | 8 Nov: content 53 to 143ms, panel done 1.2 to 3.1s; EXPLORER_PANEL=off npm test 295/295 |
+| T-T6j.33 | J24 | cli + Chrome + build | /api/anchor/ twice; ?state=error then Try Again; next build | Good check cached (public, s-maxage=300); a failure would be no-store; Try Again refetches in place; /reproduce static, /api/anchor dynamic | ✅ pass | 8 Nov: second call 0.15s with the cache header; Try Again in place; build lists /reproduce static and /api/anchor dynamic |
+| T-T6j.34 | J25 | Chrome + unit | Concentration in Pro | No 77% card; panel 72 to 1279px; typed-figure allow-list without the card's entries | ✅ pass | Chrome 8 Nov; npm test 295/295 |
 
 ## Preview states (proposed)
 

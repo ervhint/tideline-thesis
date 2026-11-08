@@ -11,6 +11,7 @@ export default async function Concentration() {
   const c = await getConcentration();
   return (
     <Page title="Who Brings the Volume?" easyTitle={EASY.titles.concentration} ask={EASY.ask.concentration} easyLead={EASY.concentrationLead} lead={`Share from the largest integrator and the largest solvers, by swap size. ${c.solverDays ? "Both are read from our data." : "The integrator column is read from our data; the solver columns are not measured yet."}`}>
+      {/* J25: the "77% Reported" card is gone: its source could not be named, so it could not be checked. */}
       <div className="conc">
         <div className="glass stack">
           <p className="s-title">Concentration by Swap Size</p>
@@ -25,22 +26,6 @@ export default async function Concentration() {
           {c.solverNote && <p className="s-text"><Say pro={c.solverNote} easy={<Rich text={c.easySolverNote ?? c.solverNote} />} /></p>}
           <PanelSlot pick={['frontendText']} />
           <a className="s-query" href="/reproduce/#concentration">Open the Query</a>
-        </div>
-        <div className="numcard">
-          <div className="share" role="img" aria-label="77% reported, not confirmed by our data">
-            <p className="abs strong" style={{ top: 0 }}>77% Reported</p>
-            <p className="abs small" style={{ top: 26 }}>Not confirmed by our data</p>
-            <span className="abs trk" />
-            <span className="abs dash" style={{ width: '77%' }} />
-            {[[0, '0%'], [50, '50%'], [100, '100%']].map(([at, t]) => (
-              <span key={t}>
-                <span className="abs st" style={{ left: `calc(${at}% - ${at === 100 ? 1 : 0}px)` }} />
-                <span className="abs small sl" style={{ left: `${at}%`, transform: `translateX(-${at}%)` }}>{t}</span>
-              </span>
-            ))}
-          </div>
-          <p className="n-text"><Say pro={<>Largest Integrator, All Sizes. A public source reports this figure. {c.ours ? `Our data reads: ${c.ours}. The public figure may measure something else, so the two need not match.` : "Our data is not available."}</>} easy={`Biggest App, All Sizes. ${EASY.reported} ${c.ours ? `Our data reads: ${c.ours}.` : 'Our data is not available.'}`} /></p>
-          <a className="n-link" href="/reproduce/#concentration">Open the Query</a>
         </div>
       </div>
     </Page>

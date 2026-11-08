@@ -239,7 +239,7 @@ header.wrap{padding:0 54px}
 .src-text{font-size:14px;line-height:19px;letter-spacing:-.01em;color:var(--text-muted);margin-top:2px!important}
 .more-row{display:flex;gap:48px;flex-wrap:wrap}
 .more-row a{font-weight:500;font-size:14px;line-height:18px}
-.conc{display:grid;grid-template-columns:minmax(0,840px) 408px;gap:48px;margin-top:48px;align-items:start}
+.conc{display:grid;grid-template-columns:minmax(0,1fr);gap:48px;margin-top:48px;align-items:start}
 .conc .numcard{max-width:none}
 .share{position:relative;height:118px}
 .share .abs{position:absolute;white-space:nowrap;margin:0}
