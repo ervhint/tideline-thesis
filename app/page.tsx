@@ -1,14 +1,18 @@
 import { Gauge } from '@/components/Gauge';
+import { Glance } from '@/components/Glance';
 import { Hero } from '@/components/Hero';
 import { Banner } from '@/components/Banner';
 import { Footnote } from '@/components/Page';
 import { ReadingCell } from '@/components/ReadingCell';
+import { EasyOnly, Rich, Say } from '@/components/Say';
 import { getNumbers } from '@/lib/data';
+import { EASY } from '@/lib/easy_text';
 
 export const revalidate = 300; // re-read the published data every 5 minutes
 
 export default async function Headline() {
-  const { readings, figures, headline } = await getNumbers();
+  const { readings, figures, headline, easy } = await getNumbers();
+  const e = easy.home;
   if (!figures) {
     return (
       <main className="wrap page-lift">
@@ -20,11 +24,13 @@ export default async function Headline() {
   }
   return (
     <main className="home">
-      <Hero asOf={figures.asOf} multiple={figures.multiple} covered={figures.covered} today={figures.today} gapTo={figures.thresholds[0].at} gapCaption={figures.gapCaption} verdict={figures.verdict} />
+      <Hero asOf={figures.asOf} multiple={figures.multiple} covered={figures.covered} today={figures.today} gapTo={figures.thresholds[0].at} gapCaption={figures.gapCaption} verdict={figures.verdict} sides={figures.sides} hold={figures.hold} />
       <div className="wrap below" id="gauge">
-        <p className="lead">{headline.verdictText}</p>
+        <EasyOnly className="ask">{EASY.ask.home}</EasyOnly>
+        <p className="lead"><Say pro={headline.countLine ?? headline.verdictText} easy={e ? <Rich text={e.lead} /> : headline.verdictText} /></p>
+        {headline.countLine && <p className="hold-note"><Say pro={headline.verdictText} easy={e?.hold ? <Rich text={e.hold} /> : headline.verdictText} /></p>}
         <p className="body">
-          At {figures.price} a NEAR, with all revenue spent on buybacks. {headline.privateLine}
+          <Say pro={<>At {figures.price} a NEAR, with all revenue spent on buybacks. {headline.privateLine}</>} easy={e ? <Rich text={e.body} /> : null} />
         </p>
         <Gauge
           today={figures.today}
@@ -46,8 +52,23 @@ export default async function Headline() {
         {headline.text && (
           <section className="means" aria-labelledby="means-h">
             <h2 id="means-h" className="s-title">What This Means</h2>
-            {headline.text.live.map((t) => <p key={t} className="p-body">{t}</p>)}
-            {headline.text.fixed.map((t) => <p key={t} className="p-body means-fixed">{t}</p>)}
+            {headline.glance && (
+              <Glance {...headline.glance} pro={{ flowCap: headline.glance.flowCap, scoreCap: headline.glance.scoreCap }} easy={e ? e.glance : null} />
+            )}
+            <details className="means-more">
+              <summary>Read the Full Explanation</summary>
+              <Say
+                block
+                pro={<>{headline.text.live.map((t) => <p key={t} className="p-body">{t}</p>)}</>}
+                easy={e ? <>{e.means.map((t) => <p key={t} className="p-body"><Rich text={t} /></p>)}</> : null}
+              />
+            </details>
+            {/* Research, not advice: outside the fold, so it shows in both modes without a click (§6g E7). */}
+            <Say
+              block
+              pro={<>{headline.text.fixed.map((t) => <p key={t} className="p-body means-fixed">{t}</p>)}</>}
+              easy={e ? <>{e.fixed.map((t) => <p key={t} className="p-body means-fixed"><Rich text={t} /></p>)}</> : null}
+            />
           </section>
         )}
         <Footnote />

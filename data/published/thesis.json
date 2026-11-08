@@ -441,12 +441,11 @@
    "A Bullish reading means the evidence passed a line set in advance, not that the price will rise."
   ],
   "live": [
-   "As of 8 Nov, the verdict is held at Undecided because flow went private. The score is +3 of 7, but data lost to private flow may not move the verdict, so it stays Undecided until the treasury share falls back to 50% or less.",
-   "Pointing Bullish: NEAR's share of fees is 34% over the last 30 days and revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 75% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free.",
-   "Not measured because flow went private: Solver Competition (treasury 79% of USD). On the public swaps left, as side figures that set no reading: top 3 solvers hold 56%. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
-   "The Confidential Intents treasury, where funds move to a private chain and the swap settles out of public view, carried 79% of the USD counted over the last 7 frozen days and 25% over the last 30. Other accounts' funds going into it were 85% of the flow we can see over 7 of the last 7 days, a side measure that sets no reading.",
-   "A fall in these public numbers is not a fall in demand: swaps moving to the private chain leave the public record whether or not anyone stopped using them. What cannot be seen: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "Monthly volume would need to reach about 3.3x today's level under the 1.6% issuance plan, which passed its vote but is not in force yet, or 5.1x if issuance stays at 2.5%, with all revenue spent on buybacks."
+   "As of 8 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +3 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
+   "Pointing Bullish: NEAR's share of fees is 34% over the last 30 days and revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 75% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
+   "Not measured because flow went private: Solver Competition. The Confidential Intents treasury, a bridge to a private chain, carried 79% of the USD counted over the last 7 frozen days and 25% over the last 30. Side figures that set no reading: other accounts' funds going into it were 85% of the flow we can see (7 of 7 days read) and top 3 solvers hold 56% of public swaps.",
+   "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
+   "With all revenue spent on buybacks, monthly volume must reach about 3.3x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.1x if issuance stays at 2.5%."
   ]
  }
 }

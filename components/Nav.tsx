@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { ModeSwitch } from './ModeSwitch';
 
 const before = [
   ['/follow-the-fee/', 'Follow the Fee'],
@@ -75,6 +76,8 @@ export function Nav() {
             {[[1, 1], [11.6, 1], [1, 11.6], [11.6, 11.6]].map(([x, y]) => <rect key={`${x}${y}`} x={x} y={y} width="7.4" height="7.4" rx="1.7" stroke="#202940" strokeWidth="1.7" />)}
           </svg>
           {after.map(item)}
+          <hr className="n-div mode-div" />
+          <ModeSwitch />
         </nav>
         {path === '/' && (
           <a className="meet hd-meet" href="/model/" onClick={() => setOpen(false)}>

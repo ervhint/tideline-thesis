@@ -20,13 +20,15 @@ function axis(from: string, to: string) {
   return { start: from, end: to, labels: labels.map((d) => [short(d), d] as [string, string]) };
 }
 
+export const elasticitySpan = (doc: ElasticityDoc) => `${doc.daysRead} days of chain data, ${short(doc.from)} to ${short(doc.to)}`;
+
 // First line says "underpowered" when the interval spans zero or the effect is smaller than the smallest one it could see (AC-5.3).
 // Under 3 usable events it says the count and that the fee trace and threshold lead (AC-5.4).
 export function elasticityView(doc: ElasticityDoc | null) {
   if (!doc) return { live: false as const, head: 'Fee-Change List Did Not Load', empty: 'The fee-change list did not load. No result is shown, and no earlier result is reused.', checks: [] as { name: string; text: string }[], days: null as string[] | null, caption: null as string | null, mde: null as string | null, plot: null, axis: null as ReturnType<typeof axis> | null };
   const m = doc.main;
   const days = doc.census.events.map((e) => e.firstDayAfter);
-  const span = `${doc.daysRead} days of chain data, ${short(doc.from)} to ${short(doc.to)}`;
+  const span = elasticitySpan(doc);
   const ax = axis(doc.from, doc.to);
   if (m.usable < 3 || !m.e1) {
     const count = doc.frozenEvents === 0

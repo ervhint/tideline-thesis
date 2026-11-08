@@ -1,6 +1,6 @@
 # Tideline: build plan
 
-Status: T0 to T6f done; T6g and T6h ready for review. Current state is in PROGRESS.md.
+Status: T0 to T6h done; T6i ready for review. Current state is in PROGRESS.md.
 
 ## 1. Why the stored record is public chain data only
 
@@ -259,6 +259,8 @@ Terms first (AGENTS.md, "Terms rules"; docs/EXPLORER.md). A per-day total is sti
 4. **Term notes in both modes or Easy only.** Recommended: both, since V\* and Treasury are Tideline's own words.
 5. **`BEGINNER.md`**, the uncommitted draft guide from 8 Nov in the repo root. Recommended: use it as the source for Easy wording, then delete it; don't commit it (its figures are typed by hand and dated).
 
+**Answers (human, 8 Nov, after mockups on the live site):** 1. Inside the nav pill after a divider on desktop; first row of the burger menu on phones. 2. Hint as tooltip and accessible description only. 3. Yes: `?mode=easy` or `?mode=pro` sets the choice, then leaves the address bar. 4. Term notes in both modes. 5. Use `BEGINNER.md` as the wording source, then delete it, never committed.
+
 **E1. The switch.** Two options, Easy and Pro, Pro selected on a first visit. Built as a real control: two buttons with `aria-pressed`, or a radio group, reachable by keyboard, visible focus, labels in Title Case (DESIGN.md copy rule). It is on every page, including the error and stale states.
 
 **E2. Remembering the choice.** `localStorage` key `tideline-mode`, every read and write in try/catch; if storage fails the site is Pro and works. A small pre-paint script (beside `PRE_SCRIPT` in `components/Entrance.tsx`) sets `data-mode` on `<html>` before first paint, so no page flashes the other mode. No cookie, no server state, nothing sent anywhere.
@@ -283,9 +285,25 @@ Terms first (AGENTS.md, "Terms rules"; docs/EXPLORER.md). A per-day total is sti
 - Intents Technology only as a technology provider; no implied endorsement (3.5).
 - Easy never adds a reading, a side or a number that Pro does not have.
 
-**E8. Unchanged.** `/api/*`, `thesis.json`, THESIS.md, the README, `data/` and the verdict. `EXPLORER_PANEL=off` still passes every test.
+**E8. Unchanged.** `/api/*`, THESIS.md, the README, every figure in `data/` and the verdict rule. E9 and E11 change only how Home shows the verdict; E10 changes the five What This Means sentences that `thesis.json` stores, and no number. `EXPLORER_PANEL=off` still passes every test.
 
-**Done when:** the human's answers to the five questions above are recorded here; T-T6i.1 to T-T6i.12 pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK with `data/` unchanged, `npm run build`, gitleaks and `.private/wording-scan.mjs` (extended to Easy text) pass; Chrome at 1440 and 375 on all eight pages in both modes; unit report; the human's yes on the commit.
+**E9. The readings lead while the verdict is on hold** (the human's yes on the sketch, 8 Nov). Under A2 rule 5 the verdict stays Undecided, but Home stops leading with it. Only while a reading is held:
+- The Hero card's title is "N of 5 Answered" (readings not Not Measured). Under the bar, one dot per reading in its side's shape, then "On hold: X% went private", X the largest treasury share among the held readings' windows. The dots sit on that line because beside the title they meet the ring. Not held, the card shows the verdict as before.
+- Under the hero, the lead is the count per side: Pro "2 Bullish, 2 Neutral, 1 Not Measured.", Easy "Two signs look good, two are unclear, and one cannot be answered right now." The reason follows in smaller grey text: Pro "Verdict on hold (PREREG A2): the treasury carried X% of counted USD over the last N days, so … reads Not Measured. Score …; lost data may not move the verdict."; Easy "Overall answer on hold: about N of every 10 dollars now trade in private …".
+- Easy's What This Means opens "the overall answer is on hold (Undecided)". Pro's opening comes from `thesis.json` text and already says "held at Undecided because flow went private", so it is unchanged.
+- Every count, dot and share comes from `thesis.json`. When the shares fall to 50% or less, all of it goes back to the verdict by itself.
+
+**E10. What This Means, one point each** (the human's request, 8 Nov). Pro (`analysis/thesis_text.mjs`) and Easy (`easyHome`) say each point once: the verdict, what the readings say, what went private with its side figures, not less demand and what stays hidden, and the distance. Easy names each answer in plain words instead of quoting each question. Every number stays, so both modes still carry the same figures. The page builds Pro's text with the pipeline's own function from the published file (`thesisView` calls `thesisText`), so localhost, which reads GitHub, shows a wording change at once; the stored `text` is the fallback.
+
+**E11. What This Means at a glance** (the human's yes on the sketch, 8 Nov). Three cards, the same in both modes, with captions in each mode's words (`components/Glance.tsx`, `thesisView(...).glance`, `easyHome(...).glance`):
+- **Why It Is on Hold:** the largest held treasury share as a bar against the file's A2 line. Not held, the card shows the verdict and, once a share is read, says it is under the line.
+- **Score:** the score on a −7 to +7 scale. While held the fill is grey, so it does not read as a side.
+- **What Nobody Can See:** fees on private swaps, who filled them, money that stays private, and "fewer public swaps is not less demand". Shown once a treasury share is read.
+The full text sits under "Read the Full Explanation". The research-not-advice lines stay outside the fold.
+
+**E12. The hero in plain words** (the human's yes, 8 Nov). Easy swaps the hero's words, never its numbers or layout: "Swaps Must Grow / to 3.3× Today", "so fees can buy back the new NEAR coins.", "Swapped Last 30 Days" and "still missing each month" (`EASY.hero`). "to" sits on the second line so the first fits at 375. When volume already covers issuance: "Fees Already Buy Back / The New Coins". Pro is unchanged.
+
+**Done when:** the human's answers to the five questions above are recorded here; T-T6i.1 to T-T6i.19 pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK with `data/` unchanged, `npm run build`, gitleaks and `.private/wording-scan.mjs` (extended to Easy text) pass; Chrome at 1440 and 375 on all eight pages in both modes; unit report; the human's yes on the commit.
 
 ## 7. Decisions for the human
 

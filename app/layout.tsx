@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Overpass_Mono } from 'next/font/google';
 import { Entrance, PRE_SCRIPT } from '@/components/Entrance';
+import { MODE_SCRIPT } from '@/lib/mode';
 import { Nav } from '@/components/Nav';
 import { Plate } from '@/components/Plate';
 import './globals.css';
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: MODE_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: PRE_SCRIPT }} />
       </head>
       <body>

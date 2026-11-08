@@ -4,6 +4,8 @@ import { BarCharts } from './BarCharts';
 import { readPanel } from '@/lib/panel_source';
 import { panelView } from '@/lib/panel_view';
 import { CONFIDENTIAL_DAY, shortDay } from '@/lib/bar_charts';
+import { EASY } from '@/lib/easy_text';
+import { EasyOnly } from './Say';
 
 const NOT_AVAILABLE = 'The rolling panel is over 24 hours old or could not be read, so it is not shown. Nothing replaces it: no history of the panel is kept anywhere.';
 const CAPTION = 'From the Intents Explorer API, re-pulled daily, kept 24 hours, stored nowhere. It sets no reading.';
@@ -32,7 +34,11 @@ export async function PanelNote({ pick }: { pick: ('swapsText' | 'frontendText' 
   );
   return (
     <Banner tone="neutral" title={p.state === 'live' ? `Rolling Panel, ${p.age}` : 'Rolling Panel: Not Available'} extra={chart || undefined}>
-      {p.state === 'live' ? `${pick.map((k) => p[k]).join(' ')} From the Intents Explorer and 1Click APIs, re-pulled daily, kept 24 hours and stored nowhere. It sets no reading.` : NOT_AVAILABLE}
+      {p.state === 'live' ? <>
+        {/* Easy adds fixed words only: no panel figure reaches a sentence (AGENTS.md 4.1(e)). */}
+        <EasyOnly as="span">{`${EASY.panel} `}</EasyOnly>
+        {`${pick.map((k) => p[k]).join(' ')} From the Intents Explorer and 1Click APIs, re-pulled daily, kept 24 hours and stored nowhere. It sets no reading.`}
+      </> : NOT_AVAILABLE}
     </Banner>
   );
 }

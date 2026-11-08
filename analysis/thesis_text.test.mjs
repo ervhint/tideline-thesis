@@ -22,7 +22,7 @@ test('today: Bullish, only just, with both resting readings, the unknown one, an
   assert.match(t, /Not measured yet: Solver Competition \(solver Competition detail\)\./);
   assert.match(t, /In between: one integrator brings much of the fees but stays under the 80% line \(Largest Integrator detail\)\./);
   assert.match(t, /Pricing Power is not settled/);
-  assert.match(t, /about 3\.5x today's level under the 1\.6% issuance plan, which passed its vote but is not in force yet, or 5\.6x/);
+  assert.match(t, /must reach about 3\.5x today's level to cover the 1\.6% issuance plan \(passed its vote, not in force yet\), or 5\.6x/);
 });
 
 test('a score above the line drops "only just"', () => {
@@ -93,8 +93,8 @@ const heldDoc = (o = {}) => {
 
 test('A2 rule 5: a held verdict gives the reason and the score, and does not say the score fell short of a line', () => {
   const t = thesisText(heldDoc()).live.join('\n');
-  assert.match(t, /^As of 1 Nov, the verdict is held at Undecided because flow went private. The score is \+3 of 7/);
-  assert.match(t, /until the treasury share falls back to 50% or less/);
+  assert.match(t, /^As of 1 Nov, the verdict is on hold at Undecided \(PREREG A2\)\. The score is \+3 of 7/);
+  assert.match(t, /It returns when the treasury share falls back to 50% or less/);
   assert.doesNotMatch(t, /does not reach either line/);
   assert.doesNotMatch(t, /leans/);
 });
@@ -103,8 +103,8 @@ test('A2 rule 4: a reading gone private is named apart from a reading not measur
   const t = thesisText(heldDoc()).live.join('\n');
   assert.match(t, /Not measured yet: Pricing Power/);
   assert.doesNotMatch(t, /Not measured yet:[^.]*Solver Competition/);
-  assert.match(t, /Not measured because flow went private: Solver Competition \(treasury 64% of USD\)\./);
-  assert.match(t, /as side figures that set no reading: spread 10\.4 bps and top 3 solvers hold 65%\./);
+  assert.match(t, /Not measured because flow went private: Solver Competition\. The Confidential Intents treasury, a bridge to a private chain, carried 64%/);
+  assert.match(t, /Side figures that set no reading: spread 10\.4 bps and top 3 solvers hold 65% of public swaps\./);
 });
 
 test('A2 rule 4: Q4 gone private keeps its share as a side figure; a missing figure is not invented', () => {
@@ -112,7 +112,7 @@ test('A2 rule 4: Q4 gone private keeps its share as a side figure; a missing fig
   d.readings[3] = R('Q4', names[3], 'Not Measured', 'Flow went private: treasury 55% of USD', { privateFlow: true, sideFigures: { share: 0.75, name: 'SwapKit' } });
   d.readings[2].sideFigures = { spreadBps: null, top3: 0.647 };
   const t = thesisText(d).live.join('\n');
-  assert.match(t, /top 3 solvers hold 65% and SwapKit 75% of visible app fees\./);
+  assert.match(t, /top 3 solvers hold 65% of public swaps and SwapKit 75% of visible app fees\./);
   assert.doesNotMatch(t, /spread/);
 });
 
@@ -121,7 +121,7 @@ test('A2: the treasury share is stated, and the confidential share only once it 
   assert.doesNotMatch(thesisText(heldDoc()).live.join('\n'), /side measure/);
   const d = heldDoc();
   d.privateFlow.confidential = { last7: { days: 7, daysRead: 6, confidentialShare: 0.8 } };
-  assert.match(thesisText(d).live.join('\n'), /Other accounts' funds going into it were 80% of the flow we can see over 6 of the last 7 days, a side measure that sets no reading\./);
+  assert.match(thesisText(d).live.join('\n'), /Side figures that set no reading: other accounts' funds going into it were 80% of the flow we can see \(6 of 7 days read\), spread/);
 });
 
 test('with no private flow data the text stays as it was', () => {

@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). Next unit: T6i Easy and Pro (§6g). Next gate: G6 (user acceptance). Waiting for user: yes, on the Telegram question below.
+Phase: P7 Test + ship (workflow V12). T6i Easy and Pro built, waiting for the human's yes on the commit. Next: P7a test, then gate G6 (user acceptance). Waiting for user: yes, on the T6i commit and the Telegram question below.
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (7 Nov 2026, 19:30 WIB)
@@ -28,14 +28,35 @@ Passed in GitHub Actions on 7 Nov: `test` (tests, verify, build), gitleaks over 
 2. **8 Nov, after 12:41 WIB:** check that chain-day froze 7 Nov and attest-days anchored it with its treasury hash in the record (`attest:check` on 2026-11-07). Check the 09:07 panel run.
 3. **T6g and T6h are on main** (`4796d56`, 8 Nov). Left: T-T6h.5, the next hourly refresh in Actions, and a Chrome check at 375 px.
 4. (T6h done in the same chat as T6g, at the human's request.)
-5. **T6i Easy and Pro, next unit** (own chat, Opus 5.5 · high). Spec: docs/PLAN.md §6g. Tests: docs/TESTS.md T-T6i.1 to .12. Agreed with the human 8 Nov: an Easy / Pro switch on every page, Pro the default, Easy words built from the data, tap-to-explain notes. Start by asking the five §6g questions with mockups; build nothing before the answers. `BEGINNER.md` (repo root, uncommitted, written 8 Nov) is a draft for the Easy wording, and its fate is question 5. Do it before P7a, so the full test covers both modes.
+5. **T6i Easy and Pro: built, not committed** (see below). Needs the human's yes on the commit, then a pull of main, `npm test` and `verify` before it.
 6. **P7a test:** full Chrome test of every page and state at 1440 and 375 (docs/TESTS.md), `/code-review` and `spec-review`, fix what fails.
 7. **G6:** the user clicks through on localhost and reviews the look (the beautification pass). Layout changes need the user's yes (design references are exact).
 8. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). Then README demo link, pitch outline, demo script, demo video, final report.
 
 Ticket 79934: if the answer is no, set `EXPLORER_PANEL=off`.
 
-## Units ready for review: T6g Words follow the numbers, T6h THESIS.md follows the data
+## Unit ready for review: T6i Easy and Pro
+
+Spec: docs/PLAN.md §6g (the human's five answers are recorded there, 8 Nov: switch inside the nav pill and first in the phone menu; hint as tooltip only; `?mode=easy|pro` share link that leaves the address bar; term notes in both modes; BEGINNER.md used, then deleted). Status: **not committed.** `npm test` 283/283 (also with `EXPLORER_PANEL=off`), `verify` ALL OK, `next build`, gitleaks on lib, components, app and docs, wording scan clean. `data/`, THESIS.md, `/api/*` and README unchanged.
+
+- **How it works:** `lib/mode.ts` sets `html[data-mode]` before first paint (share link, then `localStorage` key `tideline-mode`, then Pro; every storage call in try/catch). `components/Say.tsx` renders both texts and CSS hides the other with display:none. `components/ModeSwitch.tsx` is two buttons with `aria-pressed`; its pressed look follows the html attribute, so nothing flashes. `components/Term.tsx` and `lib/glossary.ts` give the notes (24 words, no figures); Easy strings mark them as `[[word]]` or `[[words|key]]`.
+- **Easy words:** `lib/easy_text.ts` (Home, Elasticity, fixed text, the five questions) and `easy` fields beside the Pro ones in `lib/fee_view.ts` and `lib/thesis_view.ts`, each built from the same values. Numbers, charts, tables and headings are not swapped. The rolling panel gains one fixed Easy sentence with no figure.
+- **Tests:** `lib/easy_text.test.mjs` (T-T6i.1, .3, .4, .5 and the head script), T-T6i.2 in `lib/typed_text.test.mjs`. The allow-list gains three entries for `lib/easy_text.ts`: the pre-registered lines, the size buckets and $10,000, and the issuance presets. No live figure.
+- **Chrome (8 Nov):** the window gives a 1366 viewport. All eight pages in Easy with no horizontal scroll; error and stale previews; 375 checked in frames for the phone menu and a term note. Pro looks as before apart from the switch and dotted notes on side labels and three Method source names.
+- **E9, added 8 Nov at the human's request (sketch approved):** while A2 holds the verdict, Home leads with the readings. Card "4 of 5 Answered", five side dots and "On hold: 79% went private" under the bar (the dots sit there because beside the title they meet the ring). Under the hero: Pro "2 Bullish, 2 Neutral, 1 Not Measured." and Easy "Two signs look good, two are unclear, and one cannot be answered right now.", then the reason in smaller grey text. Easy What This Means opens "the overall answer is on hold (Undecided)"; Pro's comes from thesis.json and is unchanged. All from data; back to the verdict when the shares fall to 50% or less. The verdict rule, thesis.json and THESIS.md are unchanged. `npm test` 284/284 (also panel off), verify ALL OK, `next build`, gitleaks per folder clean, wording scan clean, Chrome 1366 and 375 (frames) both modes (T-T6i.13, .14).
+- **E10 and E11, added 8 Nov at the human's request:** What This Means says each point once in both modes (Pro in `analysis/thesis_text.mjs`, so the five stored sentences in `thesis.json` change, no number does), and the page builds it live from GitHub's file with the same function. Above it, three cards the same in both modes: private share against the 50% line, the score on −7 to +7 (grey while held), and what nobody can see; the full text sits in a fold, the advice lines stay visible. T-T6i.15 to .18.
+- **E12, added 8 Nov at the human's request:** the hero in plain words in Easy ("Swaps Must Grow / to 3.3× Today", "so fees can buy back the new NEAR coins.", "Swapped Last 30 Days", "still missing each month"); numbers and layout unchanged, Pro unchanged. T-T6i.19.
+- **Partial:** T-T6i.8 (blocked storage before load is unit-tested only) and T-T6i.10 (no full 375 sweep of every page in both modes). Both go into P7a.
+- **Seen, not ours:** the Next dev overlay sometimes reports a head mismatch caused by a Chrome extension injecting `injection-topics.js` into the page.
+- **Commit note:** pull main right before committing (the hourly refresh moves the data), then `npm test` and `verify`.
+
+**Handoff to the next chat (8 Nov, 13:45 WIB).** Everything above is in the working tree, uncommitted. To continue:
+1. Let the human click through on localhost:3112 in both modes. Any wording or layout change needs their yes (design references are exact).
+2. Optional before the commit: the full 375 sweep of every page in both modes (T-T6i.10), and a real blocked-storage page load (T-T6i.8, for example Chrome site settings blocking site data for localhost, changed only by the human). Otherwise both go into P7a.
+3. On the human's yes: `git pull` main, `npm test` (also `EXPLORER_PANEL=off`), `npm run verify`, gitleaks on the changed files, `.private/wording-scan.mjs`, then commit. Files: `lib/easy_text.ts`, `lib/easy_text.test.mjs`, `lib/glossary.ts`, `lib/mode.ts`, `components/Say.tsx`, `components/Term.tsx`, `components/ModeSwitch.tsx`, plus edits in `app/` (all eight pages, layout, globals.css), `components/` (Banner, ModelView, Nav, NumberSheet, Page, PanelNote, ReadingCell), `lib/` (data, elasticity_view, fee_view, thesis_view, typed_text.test), docs/PLAN.md, docs/TESTS.md and this file. BEGINNER.md is deleted on purpose (the human's answer 5).
+4. Watch-outs: Python on this machine writes CRLF; edit with Node or the Edit tool. The dev server needs a fresh load after moving code between files, or the overlay shows a stale mismatch.
+
+## Units on main: T6g Words follow the numbers, T6h THESIS.md follows the data
 
 Built in one chat on 8 Nov at the human's request (an exception to one unit per chat). Status: **on main** (`4796d56`, 8 Nov); `test` passed in Actions (tests, verify, build, gitleaks). After the push, localhost shows Method's Cumulative Volume ($29.5B, "matches the public part, within 1%") and the Buyback line from the data. `npm test` 276/276 (also with `EXPLORER_PANEL=off`), `npm run rebuild` then `verify` ALL OK, `next build`, gitleaks on every changed file, wording scan clean.
 

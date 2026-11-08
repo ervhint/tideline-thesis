@@ -8,7 +8,8 @@ import path from 'node:path';
 import { anchorPanel, dayState, FAILED_PANEL, type AttestRecord, type DayCheck } from './attest_view';
 import { listRepoDir, readRepoFile } from './github_data';
 import { callView, type RpcTarget } from './near_view';
-import { elasticityView, type ElasticityDoc } from './elasticity_view';
+import { easyElasticity, easyHome } from './easy_text';
+import { elasticitySpan, elasticityView, type ElasticityDoc } from './elasticity_view';
 import { feeView } from './fee_view';
 import { concentrationView, thesisView, type ConcentrationDoc, type ThesisDoc } from './thesis_view';
 import { type Market } from './model';
@@ -73,7 +74,12 @@ export async function getNumbers({ few = false, emptyFee = false } = {}) {
   const el = raw && few ? { ...raw, frozenEvents: Math.max(raw.frozenEvents, 4), main: { ...raw.main, usable: 2, e1: null } } : raw;
   const th = await readPublished<ThesisDoc>('thesis.json');
   const head = thesisView(th);
-  return { figures: head.figures, readings: head.readings, headline: head, fee: feeView(trace), elasticity: elasticityView(el) };
+  const elasticity = elasticityView(el);
+  // Easy mode's words, built from the same files (docs/PLAN.md §6g E4).
+  const easyEl = el && elasticity.live
+    ? easyElasticity(elasticity.plot ? { est: elasticity.plot.est, lo: elasticity.plot.lo, hi: elasticity.plot.hi } : null, { usable: el.main.usable, total: el.frozenEvents, span: elasticitySpan(el), pass: elasticity.plot && el.main.e2 ? { est: el.main.e2.estimate, lo: el.main.e2.lo, hi: el.main.e2.hi } : null })
+    : null;
+  return { figures: head.figures, readings: head.readings, headline: head, fee: feeView(trace), elasticity, easy: { home: easyHome(th), elasticity: easyEl } };
 }
 
 // S6: per-size integrator shares from thesis.json; Not Measured when the file is missing.

@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { Rich, Say } from './Say';
 
 type Card = { value: string; label: string; text: string; source: string };
 
 // The Number card whose value opens "About This Number" (Figma: Number sheet). Esc or Close shuts it.
-export function NumberSheet({ card, explain, href, query }: { card: Card; explain: string; href: string; query: string }) {
+export function NumberSheet({ card, explain, href, query, easyText, easyExplain }: { card: Card; explain: string; href: string; query: string; easyText?: string; easyExplain?: string }) {
   const [open, setOpen] = useState(false);
   const close = useRef<HTMLButtonElement>(null);
   const opener = useRef<HTMLButtonElement>(null);
@@ -27,7 +28,7 @@ export function NumberSheet({ card, explain, href, query }: { card: Card; explai
       <div className="numcard">
         <button ref={opener} className="n-value n-open num" onClick={() => setOpen(true)} aria-haspopup="dialog">{card.value}</button>
         <p className="n-label">{card.label}</p>
-        <p className="n-text">{card.text}</p>
+        <p className="n-text">{easyText ? <Say pro={card.text} easy={<Rich text={easyText} />} /> : card.text}</p>
         <a className="n-link" href={href}>{card.source}</a>
       </div>
       {open && (
@@ -43,7 +44,7 @@ export function NumberSheet({ card, explain, href, query }: { card: Card; explai
             </div>
             <p className="sheet-value num">{card.value}</p>
             <p className="n-label">{card.label}</p>
-            <p className="p-body">{explain}</p>
+            <p className="p-body">{easyExplain ? <Say pro={explain} easy={<Rich text={easyExplain} />} /> : explain}</p>
             <p className="n-text">{query}</p>
             <a className="n-link" href={href}>Open the Query</a>
           </aside>

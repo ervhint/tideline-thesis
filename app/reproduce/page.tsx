@@ -1,6 +1,7 @@
 import { Page } from '@/components/Page';
 import { ReproduceView } from '@/components/ReproduceView';
 import { reproduceLead } from '@/lib/mock';
+import { EASY } from '@/lib/easy_text';
 import { ENTRIES, fileUrl } from '@/lib/reproduce_entries';
 import { getAnchorPanel } from '@/lib/data';
 
@@ -9,7 +10,7 @@ export const revalidate = 300;
 export default async function Reproduce() {
   const panel = await getAnchorPanel();
   return (
-    <Page title="Check It Yourself" lead={reproduceLead(process.env.EXPLORER_PANEL === 'off')}>
+    <Page title="Check It Yourself" ask={EASY.ask.reproduce} easyLead={EASY.reproduceLead} lead={reproduceLead(process.env.EXPLORER_PANEL === 'off')}>
       <ReproduceView {...panel} />
       <div className="glass stack stack-top">
         <p className="s-title">Every Reading and Chart</p>

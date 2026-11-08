@@ -5,6 +5,12 @@ import { reconcileRows, type Row } from '@/lib/reconcile_view';
 import { Banner } from '@/components/Banner';
 import { BarCharts } from '@/components/BarCharts';
 import { activityCharts } from '@/lib/bar_charts';
+import { Term } from '@/components/Term';
+import { EASY } from '@/lib/easy_text';
+import type { TermKey } from '@/lib/glossary';
+
+// Sources with a term note, in both modes.
+const SOURCE_TERM: Record<string, TermKey> = { DefiLlama: 'defillama', BigQuery: 'bigquery', 'Confidential Intents': 'confidential' };
 
 const sources = [
   ['DefiLlama', 'Volume, fees and revenue for the last 30 days, and hourly token prices. No key.'],
@@ -38,13 +44,13 @@ export default async function Method({ searchParams }: { searchParams: Promise<{
   const charts = activityCharts(activity);
   const int = (n: number) => n.toLocaleString('en-US');
   return (
-    <Page title="How the Numbers Are Made" lead="Where each number comes from, what was decided before looking, and where public figures disagree.">
+    <Page title="How the Numbers Are Made" ask={EASY.ask.method} easyLead={EASY.methodLead} lead="Where each number comes from, what was decided before looking, and where public figures disagree.">
       <div className="panel-row two">
         <div className="glass stack">
           <p className="s-title">Where the Numbers Come From</p>
           {sources.map(([n, t]) => (
             <div key={n}>
-              <p className="src-name">{n}</p>
+              <p className="src-name">{SOURCE_TERM[n] ? <Term k={SOURCE_TERM[n]}>{n}</Term> : n}</p>
               <p className="src-text">{t}</p>
             </div>
           ))}

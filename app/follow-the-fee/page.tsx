@@ -3,7 +3,9 @@ import { ErrorSwap, RetryButton } from '@/components/ErrorSwap';
 import { NumberSheet } from '@/components/NumberSheet';
 import { Page } from '@/components/Page';
 import { PanelNote } from '@/components/PanelNote';
+import { Rich, Say } from '@/components/Say';
 import { getNumbers } from '@/lib/data';
+import { EASY } from '@/lib/easy_text';
 
 // Swatches: App Fee dark, Withdraw Fee blue, Unexplained muted (Figma, version B).
 const swatch: Record<string, string> = { app: 'var(--action)', spread: 'var(--accent)', withdraw: 'var(--accent)', protocol: 'var(--text-muted)', unexplained: 'var(--text-muted)' };
@@ -15,7 +17,7 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
   const { fee } = await getNumbers({ emptyFee: (await searchParams).state === 'empty' });
   if (fee.state === 'missing') {
     return (
-      <Page title="What a $10,000 Swap Costs" lead="No figures are shown, because the data did not load.">
+      <Page title="What a $10,000 Swap Costs" ask={EASY.ask.fee} lead="No figures are shown, because the data did not load.">
         <div className="err-body">
           <Banner tone="error" title="Swaps Did Not Load">The file of realised swaps did not load. Nothing is shown rather than a guess.</Banner>
           <div className="err-actions"><RetryButton>Try Again</RetryButton></div>
@@ -25,9 +27,9 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
   }
   if (fee.state === 'empty') {
     return (
-      <Page title="What a $10,000 Swap Costs" lead={fee.lead}>
+      <Page title="What a $10,000 Swap Costs" ask={EASY.ask.fee} lead={fee.lead} easyLead={fee.easyLead}>
         <div className="split-foot">
-          <Banner tone="neutral" title="No Public Swaps to Split">{fee.body}</Banner>
+          <Banner tone="neutral" title="No Public Swaps to Split"><Say pro={fee.body} easy={<Rich text={fee.easyBody} />} /></Banner>
         </div>
         <div className="split-foot">
           <PanelNote pick={['swapsText', 'quoteText']} />
@@ -39,7 +41,7 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const lastGood = fee.asOf ? `${Number(fee.asOf.slice(8, 10))} ${MONTHS[Number(fee.asOf.slice(5, 7)) - 1]} ${fee.asOf.slice(0, 4)}` : null;
   return (
-    <Page title="What a $10,000 Swap Costs" lead={<ErrorSwap normal={fee.lead} error="No figures are shown, because the data did not load." />}>
+    <Page title="What a $10,000 Swap Costs" ask={EASY.ask.fee} lead={<ErrorSwap normal={<Say pro={fee.lead} easy={<Rich text={fee.easyLead} />} />} error="No figures are shown, because the data did not load." />}>
       <ErrorSwap
         error={
           <div className="err-body">
@@ -77,7 +79,7 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
               <p className={`s-val${p.share ? '' : ' dim'}`}>{p.value}</p>
               <div>
                 <p className="s-name">{p.name}</p>
-                <p className="s-text">{p.text}</p>
+                <p className="s-text"><Say pro={p.text} easy={<Rich text={p.easy} />} /></p>
               </div>
             </div>
           ))}
@@ -87,11 +89,13 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
           card={fee.card}
           href="/reproduce/#fee-trace"
           explain={fee.explain}
+          easyText={fee.card.easy}
+          easyExplain={fee.easyExplain}
           query={fee.query}
         />
       </div>
       <div className="split-foot">
-        <Banner tone="neutral" title="Unexplained Part Is Shown, Never Hidden">{fee.bannerText}</Banner>
+        <Banner tone="neutral" title="Unexplained Part Is Shown, Never Hidden"><Say pro={fee.bannerText} easy={fee.easyBanner} /></Banner>
       </div>
       <div className="split-foot">
         <PanelNote pick={['swapsText', 'quoteText']} />

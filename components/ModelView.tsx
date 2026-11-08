@@ -6,6 +6,8 @@ import { Segmented, Slider } from '@/components/Slider';
 import { type Market, MAX_SEEN_FEE_BPS, atFee, firstReached, revenueMaxFeeBps, splitSentence, vStar, vStarPath, vStarRange } from '@/lib/model';
 import { bn } from '@/lib/mock';
 import type { RevenueSplit } from '@/lib/data';
+import { EASY } from '@/lib/easy_text';
+import { Rich, Say } from './Say';
 
 const SCHEDULES = ['1.6% (passed)', '2.5% (today)', 'Custom'] as const;
 const PATHS = ['Flat', '+50%', '2×'] as const;
@@ -96,7 +98,10 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
           <Slider label="Issuance (Custom)" display={`${issuance.toFixed(1)}% a year`} min={0} max={4} step={0.1} value={issuance} onChange={setIssuance} ticks={['0%', '1.33%', '2.67%', '4%']} />
           <Slider label="NEAR Price" display={`$${price.toFixed(2)}`} min={2} max={8} step={0.01} value={price} onChange={setPrice} ticks={['$2', '$4', '$6', '$8']} />
           <Slider label="Elasticity (Assumed Range)" display={`${minus(elast[0])} to ${minus(elast[1])}`} min={E_MIN} max={E_MAX} step={0.01} range={elast} onRange={setElast} ticks={['−2.0', '−0.7', '+0.7', '+2.0']} />
-          <p className="s-text">{elasticity ? `Starts at the measured 95% interval, ${minus(elasticity.lo)} to ${minus(elasticity.hi)}. It moves the revenue-maximizing fee, not V* at today's fee.` : 'The elasticity estimate did not load, so this starts at an assumed range.'}</p>
+          <p className="s-text"><Say
+            pro={elasticity ? `Starts at the measured 95% interval, ${minus(elasticity.lo)} to ${minus(elasticity.hi)}. It moves the revenue-maximizing fee, not V* at today's fee.` : 'The elasticity estimate did not load, so this starts at an assumed range.'}
+            easy={<Rich text={`${EASY.modelElasticity} ${elasticity ? `It starts at the measured likely range, ${minus(elasticity.lo)} to ${minus(elasticity.hi)}.` : 'The elasticity estimate did not load, so this starts at an assumed range.'}`} />}
+          /></p>
           <Slider label="Share of Revenue Spent on Buybacks" display={`${buyback}%`} min={0} max={100} step={1} value={buyback} onChange={(x) => setBuyback(Math.max(1, x))} ticks={['0%', '33%', '67%', '100%']} />
         </div>
 
@@ -104,13 +109,14 @@ export function ModelView({ market, asOf, elasticity, split }: { market: Market;
           <p className="s-title">Monthly Volume Needed</p>
           <p className="r-big" aria-live="polite">{bn(v)}</p>
           <p className="r-line">
+            {failed ? null : <Say pro={null} easy={<Rich text={`${(v / TODAY).toFixed(1)} times today’s ${bn(TODAY, 2)} a month. The likely range runs from ${bn(range.low)} to ${bn(range.high)}, because NEAR’s income per dollar swapped moves around. Inputs as of ${asOf.slice(0, 10)}. [[Elasticity]] does not move this number: at today’s fee, people keep swapping as they do now.`} />} />}
             {failed
               ? "Today's volume did not load, so the multiple of today is not shown."
-              : `${(v / TODAY).toFixed(1)}× today's ${bn(TODAY, 2)}. Interval ${bn(range.low)} to ${bn(range.high)}, from how far revenue per dollar of volume has moved. Inputs as of ${asOf.slice(0, 10)}. Elasticity does not move this number: at today's fee, volume stays where it is.`}
+              : <span className="m-pro">{`${(v / TODAY).toFixed(1)}× today's ${bn(TODAY, 2)}. Interval ${bn(range.low)} to ${bn(range.high)}, from how far revenue per dollar of volume has moved. Inputs as of ${asOf.slice(0, 10)}. Elasticity does not move this number: at today's fee, volume stays where it is.`}</span>}
           </p>
           <hr />
           <div><p className="s-name">When It Is Reached</p><p className="r-text">{when}</p></div>
-          <div><p className="s-name">Revenue-Maximizing Fee</p><p className="r-text">{maxFee}</p></div>
+          <div><p className="s-name">Revenue-Maximizing Fee</p><p className="r-text"><Say pro={null} easy="The fee at which NEAR would earn the most from swaps, if the elasticity range is right. " />{maxFee}</p></div>
           {splitText && <div><p className="s-name">Volume Needed Before and Since 27 Oct</p><p className="r-text">{splitText}</p></div>}
         </div>
       </div>

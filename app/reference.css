@@ -63,6 +63,10 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
 .hx-scale{left:calc(47*var(--u));top:calc(154*var(--u));width:calc(256*var(--u));display:flex;justify-content:space-between;font-size:calc(15*var(--u));font-weight:400;letter-spacing:-.03em;line-height:1;color:#586580}
 .hx-track{left:calc(46*var(--u));top:calc(186*var(--u));width:calc(256*var(--u));height:calc(8*var(--u));border-radius:999px;background:#dde4ee;overflow:hidden}
 .hx-track i{display:block;height:100%;border-radius:999px;background:#5f88b4;transform-origin:left center}
+.hx-panel.on-hold{height:calc(252*var(--u))}
+.p-dots{display:flex;align-items:center;gap:calc(4*var(--u))}
+.p-dots img{width:calc(10*var(--u));height:calc(10*var(--u));display:block}
+.p-hold{left:calc(46*var(--u));top:calc(210*var(--u));display:flex;align-items:center;gap:calc(10*var(--u));font-size:calc(14*var(--u));line-height:1.2;letter-spacing:-.01em;color:var(--muted2);margin:0;white-space:nowrap}
 
 /* stats row */
 .hx-num{font-size:calc(100*var(--u));font-weight:200;line-height:1;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -151,6 +155,10 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
     .p-sub{left:calc(31*var(--t));top:calc(66*var(--t));font-size:calc(17*var(--t));line-height:calc(21*var(--t))}
     .hx-scale{left:calc(31*var(--t));top:calc(108*var(--t));width:calc(100% - 62*var(--t));font-size:calc(14*var(--t))}
     .hx-track{left:calc(31*var(--t));top:calc(136*var(--t));width:calc(100% - 62*var(--t));height:calc(8*var(--t))}
+    .hx-panel.on-hold{height:calc(196*var(--t))}
+    .p-dots{gap:calc(4*var(--t))}
+    .p-dots img{width:calc(9*var(--t));height:calc(9*var(--t))}
+    .p-hold{left:calc(31*var(--t));top:calc(160*var(--t));gap:calc(8*var(--t));font-size:calc(13*var(--t))}
     .stats{gap:calc(18*var(--u));align-items:center;flex-wrap:nowrap}
     .stat{flex-direction:column;align-items:flex-start;gap:calc(6*var(--t))}
     .hx-num{font-size:calc(76*var(--u))}
@@ -206,6 +214,7 @@ main.wrap{padding-top:calc(130*var(--u))}
 .below{padding-top:64px;padding-bottom:1px}
 h1.title{font-weight:360;font-size:56px;line-height:60px;letter-spacing:-.035em;margin:0}
 .lead{font-weight:470;font-size:24px;line-height:30px;letter-spacing:-.03em;margin:0 0 12px;max-width:640px}
+.hold-note{font-size:15px;line-height:22px;color:var(--text-muted);margin:-2px 0 16px;max-width:640px}
 .body{color:var(--text-muted);margin:0;max-width:640px}
 @media (max-width:900px){h1.title{font-size:36px;line-height:40px}.lead{font-size:19px;line-height:25px}.wrap .gauge-m{padding:20px}.wrap .readings{margin:20px 0 0;padding:20px 8px 0}}
 .glass,.empty,.e-checks,.ci,.chart,.numcard,.banner{background:linear-gradient(135deg,rgba(255,255,255,.74),rgba(255,255,255,.52));-webkit-backdrop-filter:blur(40px) saturate(112%);backdrop-filter:blur(40px) saturate(112%);box-shadow:inset 1px 1px 0 rgba(255,255,255,.55),inset -1px -1px 0 rgba(255,255,255,.18),0 18px 40px rgba(28,52,92,.07)}
@@ -232,7 +241,7 @@ h1.title{font-weight:360;font-size:56px;line-height:60px;letter-spacing:-.035em;
 .lead-muted{font-weight:470}
 .gauge .slabel,.gauge .tnote,.note,.small-label,.t-head,.cscale,.alabel,.ci-lab,.ci-cap,.s-scale{font-weight:470;letter-spacing:-.015em}
 .gauge .tval,.e-head,.ci-title,.e-checks .s-title,.cbar .strong,.chart .strong,.callout .strong,.share .strong{font-weight:500;letter-spacing:-.02em}
-body[data-state=loading] .hx-h1,body[data-state=loading] .hx-tag,body[data-state=loading] .hx-num,body[data-state=loading] .hx-lbl,body[data-state=loading] .p-title,body[data-state=loading] .p-sub,body[data-state=loading] .lead,body[data-state=loading] .body{color:transparent;background:var(--track);border-radius:8px}
+body[data-state=loading] .hx-h1,body[data-state=loading] .hx-tag,body[data-state=loading] .hx-num,body[data-state=loading] .hx-lbl,body[data-state=loading] .p-title,body[data-state=loading] .p-sub,body[data-state=loading] .lead,body[data-state=loading] .hold-note,body[data-state=loading] .body{color:transparent;background:var(--track);border-radius:8px}
 body[data-state=loading] .hx-track i,body[data-state=loading] .dot{opacity:0}
 
 /* fee page: the banner spans the full row */
