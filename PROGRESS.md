@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Waiting for user: the Codespaces run (T-T6j.29), the Telegram question, ticket 79934.
+Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Codespaces run passed 9 Nov (T-0.2, T-T6j.29: verify ALL OK, attest:check 2026-11-07 MATCH). Next: Telegram failure alerts, on the human's command, before Vercel. Ticket 79934: no answer yet, panel stays on (human, 9 Nov).
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (8 Nov 2026, 20:40 WIB)
@@ -54,9 +54,9 @@ Spec points where the code and docs/PLAN.md disagree. **G6 (8 Nov): the human sa
 1. **G6: passed 8 Nov.** Any later layout change still needs the human's yes (design references are exact).
 2. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). **Right after the deploy (the human asked to be reminded):** open Follow the Fee and Concentration after a few idle minutes and see whether the rolling panel's first view says "Not Available" there too (J26). If it does, the human decides whether the server may keep the last good panel in memory for a short time (a change to the "one request" rule). Then README demo link, pitch outline, demo script, demo video, final report.
 3. **Waiting on the human:**
-   - **Codespaces run (T-T6j.29):** click "Open in Codespaces" on Reproduce, then `npm run verify` (expect ALL OK) and `npm run attest:check 2026-11-07` (expect match). Report what it prints.
-   - **Telegram:** add failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
-   - **Ticket 79934:** no answer recorded. If no, set `EXPLORER_PANEL=off` on Vercel and in the panel job's repo variable.
+   - **Codespaces run (T-T6j.29): passed 9 Nov.** verify ALL OK (8863 values), attest:check 2026-11-07 MATCH.
+   - **Telegram (yes, 9 Nov; do before Vercel, start on the human's command):** add failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
+   - **Ticket 79934:** still no answer on 9 Nov. The human's call: no answer is not a no, so the panel stays on for launch. Only if a no arrives later, set `EXPLORER_PANEL=off` on Vercel and in the panel job's repo variable.
 
 ## Unit on main: T6j Beautification and adjustment
 
