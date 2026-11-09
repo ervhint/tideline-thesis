@@ -17,7 +17,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 
 | ID | Covers | Type | Steps (short) | Expected | Result | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| T-0.1 | AC-0.1 | e2e | Open each planned route on the Preview after a push to `main` | Every route loads as a static page, no 404 | ⏭ not run | P7b: needs the Vercel Preview. 8 Nov, `next build` lists every route; all 8 pages answer 200 on localhost |
+| T-0.1 | AC-0.1 | e2e | Open each planned route on the Preview after a push to `main` | Every route loads as a static page, no 404 | ✅ pass | 9 Nov, P7b on https://tideline-near.vercel.app: all 8 pages and `/api/numbers`, `/api/anchor` answer 200; Chrome sweep 8 pages × 1440/375 × Pro/Easy, each under 0.65s, no horizontal scroll, no error text. Home's Easy loss after a Vercel re-render found and fixed (T-P7b.1) |
 | T-0.2 | AC-0.2 | cli | Fresh clone, `npm i && npm run verify` | Exits 0 and prints its number count | ✅ pass | 9 Nov: the human's fresh codespace (`npm ci` from the devcontainer) ran `npm run verify`: 8863 values compared, ALL OK |
 
 ## U1: Quote archive and attest contract
@@ -277,6 +277,8 @@ From `/code-review` (high) and the spec review over T6i and T6j (6310967 to ad16
 | T-P7a.4 | P7b | build | `next build` | No "whole project traced" warning; the server trace holds data/published, data/chain and contract/deployment.json only | ✅ pass | Home's trace: 47 data files, 1 contract file, node_modules and chunks |
 | T-P7a.5 | E3 | review | Model's "When It Is Reached" on the Flat path | Easy and Pro pick the same branch | ✅ pass | components/ModelView.tsx, same order as Pro |
 | T-P7a.6 | J8 | review | Follow the Fee figures that round to zero or are negative | "0.0 bps", never "−0.0"; Easy lead has a real minus | ✅ pass | lib/fee_view.ts `one()` |
+| T-P7b.1 | E2 | Chrome, Vercel | Home with ?mode=easy after Vercel re-renders it in the background (route seen as /index) | Easy stays on; the HTML has the Open Model button; no React #418 | ✅ pass | 9 Nov: failed on b70a0ef's parent (Pro words, #418); fixed in components/Nav.tsx, proven on a Preview and live at age 23s |
+| T-P7b.2 | J26 | Chrome, Vercel | First view of Follow the Fee and Concentration after about 6 idle minutes | The rolling panel shows, not Not Available | ✅ pass | 9 Nov on tideline-near.vercel.app: panel shown on both first views; server answered in 92 and 26 ms |
 
 ## Preview states (proposed)
 
