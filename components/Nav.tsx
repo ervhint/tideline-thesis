@@ -28,10 +28,13 @@ const Chevron =() => (
 );
 
 export function Nav() {
-  // When Vercel re-renders Home in the background (revalidate), the server sees "/index", the browser "/".
-  // Without this the two renders differ, React redraws the whole page and the Easy/Pro choice on <html> is lost.
-  const raw = usePathname();
-  const path = raw === '/index' || raw === '/index/' ? '/' : raw;
+  // When Vercel re-renders a page in the background (revalidate), the server sees "/index" for Home and
+  // "/model" without the trailing slash for the rest, while the browser sees "/" and "/model/".
+  // Without this the two renders differ: the menu loses its current-page underline (React keeps the
+  // server's attributes), and on Home React redraws the whole page and the Easy/Pro choice on <html> is lost.
+  const raw = usePathname() ?? '/';
+  const slashed = raw.endsWith('/') ? raw : `${raw}/`;
+  const path = slashed === '/index/' ? '/' : slashed;
   const [open, setOpen] = useState(false);
   const button = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
