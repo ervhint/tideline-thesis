@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Codespaces run passed 9 Nov (T-0.2, T-T6j.29: verify ALL OK, attest:check 2026-11-07 MATCH). Next: Telegram failure alerts, on the human's command, before Vercel. Ticket 79934: no answer yet, panel stays on (human, 9 Nov).
+Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Codespaces run passed 9 Nov (T-0.2, T-T6j.29: verify ALL OK, attest:check 2026-11-07 MATCH). **T6k Telegram done and on main (9 Nov, `356e283` to `aaa78b2`):** public channel `@tideline_thesis` on, first post sent by the cron-job.org test run. **Next: P7b, Vercel** (then remind the human to set `TIDELINE_URL`). Ticket 79934: no answer yet, panel stays on (human, 9 Nov).
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: localhost:3112 (AGENTS.md) until G6, then Vercel.
 
 ## State (8 Nov 2026, 20:40 WIB)
@@ -25,7 +25,7 @@ Checked on 8 Nov before the last push: `npm test` 296/296 (also with `EXPLORER_P
 - **Full-page screenshots** from the human sometimes show doubled rows or headings: stitching marks, not page bugs (seen twice on 8 Nov). Check the live DOM before fixing.
 - **OneDrive** can touch `.git` mid-fetch ("cannot lock ref"); the pull still lands. Compare `git rev-parse HEAD origin/main` before committing.
 - Gitleaks in Actions fails on a repo's first push (no parent for the root commit); a hand-started `test` run scans the full history.
-- Telegram (T6k, built 9 Nov, not yet run in Actions): failures of every job go to the human's private chat by name and run link; refresh tells the human every side change at once. The channel `@tideline_thesis` gets a change only after it held 72 hours, plus a Monday note, and only while the repo variable `TELEGRAM_PUBLIC` is `on` (set 9 Nov on the human's yes). Until `TIDELINE_URL` is set, public messages link to the GitHub repo.
+- Telegram (T6k, on main 9 Nov; the channel post is proven in Actions, a failure alert not yet seen for real): failures of every job go to the human's private chat by name and run link; refresh tells the human every side change at once. The channel `@tideline_thesis` gets a change only after it held 72 hours, plus a Monday note, and only while the repo variable `TELEGRAM_PUBLIC` is `on` (set 9 Nov on the human's yes). Until `TIDELINE_URL` is set, public messages link to the GitHub repo.
 
 ## P7a: test (8 Nov, done, not committed)
 
