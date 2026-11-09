@@ -28,7 +28,10 @@ const Chevron =() => (
 );
 
 export function Nav() {
-  const path = usePathname();
+  // When Vercel re-renders Home in the background (revalidate), the server sees "/index", the browser "/".
+  // Without this the two renders differ, React redraws the whole page and the Easy/Pro choice on <html> is lost.
+  const raw = usePathname();
+  const path = raw === '/index' || raw === '/index/' ? '/' : raw;
   const [open, setOpen] = useState(false);
   const button = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
