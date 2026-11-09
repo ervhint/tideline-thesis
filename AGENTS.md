@@ -2,7 +2,7 @@
 
 A re-runnable investment thesis for NEAR on NEAR Intents fee data. Hackathon track: Investment Thesis.
 
-- **Start here:** PROGRESS.md, then docs/PLAN.md. Docs: docs/SRS.md (requirements), docs/DESIGN.md, docs/TESTS.md, docs/EXPLORER.md (the rolling panel), docs/CRON.md. Where the SRS and the plan differ, the plan wins.
+- **Start here:** PROGRESS.md, then docs/PLAN.md. Docs: docs/SRS.md (requirements), docs/DESIGN.md, docs/TESTS.md, docs/EXPLORER.md (the rolling panel), docs/CRON.md. Where the SRS and the plan differ, the plan wins. Hackathon site, rules and track brief links: `.private/hackathon-links.md` (gitignored, local only).
 - Repo: `ervhint/tideline-thesis`. The folder lives in OneDrive, so no git worktrees and only one writer at a time.
 - Contract: `tideline-thesis.testnet` (`contract/deployment.json`). `contract/` is byte-identical to the deployed code; if it must change, stop and ask, because a change needs a new deployment. Repo secrets `NEAR_ATTEST_ACCOUNT` and `NEAR_ATTEST_PRIVATE_KEY` sign the daily attest. The key never appears in chat or files.
 - Dev server: `npx next dev -p 3112`. Besides the website, only `npm test`, `npm run verify` and gitleaks run locally. Claude in Chrome for all browser work, never the built-in browser pane or Playwright.
