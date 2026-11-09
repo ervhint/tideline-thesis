@@ -44,7 +44,7 @@ Readings on both tiles are sample values from the draft, not results. Colours ar
 
 **G, Bowl glow.** From the revised DESIGN-REFERENCE-4.md: white page, a cyan bowl glow from the top edge, a white pill nav, navy text, a button with a glowing dot, and three scroll scenes (headline, flooded statement, dark split). The partner-logo grid holds the verdict, thresholds and readings. The photo is replaced by a threshold drawing. Inter stands in for Inter Tight in Figma; the accent darkens to #3558D6 so it stays readable on the glow. Motion is not shown in the tile.
 
-E, F and G use our content only: no name, logo, partners, stats, photos or video from the references.
+E, F and G use our content only: no name, logo, partners, stats or photos from the references. One exception, decided later: since 2 Nov 2026 the site uses F's glass sphere video and its still image (`public/media/`), taken from the reference's free motionsites.ai template (see "Decided by the human, 2 Nov 2026" below and the README's Libraries section).
 
 ## Chosen direction (G3, 31 Oct 2026): F, Glass sphere
 

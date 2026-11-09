@@ -13,7 +13,8 @@ Rules: https://nearhackathon.com/HACKATHON.md (read 9 Nov; re-read before submit
 - [x] `TIDELINE_URL` set, Telegram links to the live site
 - [x] README in a plainer voice (9 Nov, approved by the human)
 - [x] README to HACKATHON.md (9 Nov, `4c0590b`): "do X - see Y" try-it steps for a judge, no marketing, built at NEAR HACKATHON, libraries, the motionsites.ai free template (style and the glass sphere video and image), AI use (Claude Code), team Laras Ervintyana solo. No live figures in the README on purpose (THESIS.md carries them).
-- [ ] Optional: the human checks that the motionsites.ai free tier allows public use and whether it asks for a credit line; DESIGN.md line 47 still says no video came from the references, which is no longer true (fix if the human says so)
+- [x] DESIGN.md line 47 now says the sphere video and still image came from the motionsites.ai template (9 Nov)
+- [x] motionsites.ai: the human's call (9 Nov): the template came from the free tier, which they understand allows this use, so the video and still image stay as they are. Terms read 9 Nov (Terms of Use, updated 30 Sep 2026): no credit line required; "Websites and apps you build with our prompts are yours"; but video backgrounds are listed as their content, and the terms forbid redistributing the prompt text or source code or republishing their content. No free tier is listed on the site now (only paid plans). Our public repo carries `public/media/sphere.mp4` and `sphere-poster.png`; kept on the human's call. If motionsites ever objects, swap the media
 - [x] Nothing existed before 19 Oct 2026 (the human, 9 Nov), so no baseline to disclose (Q-001 to Q-004)
 - [x] Q-015: Laras enters only Tideline (the human, 9 Nov); nothing to disclose
 - [ ] Pitch outline mapped to the judging line ("judged on the evidence, not the conviction")
