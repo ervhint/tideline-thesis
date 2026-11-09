@@ -261,7 +261,7 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6k.6 | K1 | unit | Failure message for `attest-days`, `refresh` and `panel` | Job name and run link only; goes to the private chat only | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs (also weekly-note); workflow check in T-T6k.8 |
 | T-T6k.7 | K5 | unit | Panel guard over the new files | No public-message file reaches panel or API code | ✅ pass | 9 Nov, pipeline/panel.test.mjs: public_alarm.mjs and weekly_note.mjs added to the entries |
 | T-T6k.8 | K6 | unit | No `TELEGRAM_CHANNEL_ID` | Public text printed, nothing posted; private sends unchanged | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs: only two channel steps, both need `TELEGRAM_PUBLIC` on; the sender prints without the id |
-| T-T6k.9 | K1, K4 | Actions | Real failure test to the private chat; first channel post after the human's yes | Each arrives in the right chat only | ⏳ | |
+| T-T6k.9 | K1, K4 | Actions | Real failure test to the private chat; first channel post after the human's yes | Each arrives in the right chat only | ◐ partial | 9 Nov: `TELEGRAM_PUBLIC` set on (human's yes); weekly-note print-only run 42557785683 passed in Actions and printed the note, nothing posted. First real channel post: the Monday note once the cronjob exists. First real failure alert: the next failed run |
 
 ## P7a review fixes (8 Nov 2026)
 
