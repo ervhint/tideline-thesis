@@ -6,7 +6,7 @@ Tideline asks one question about NEAR: **how much NEAR Intents volume would it t
 
 It answers with a number you can check yourself, five readings on whether that number is getting closer, and a verdict that updates every day from public data. Every figure on the site can be recomputed from this repo with one command, without a key or an account.
 
-Built for the Investment Thesis track. The full argument, with today's figures, is in [THESIS.md](THESIS.md). The rules we wrote down before seeing the results are in [PREREG.md](PREREG.md).
+Built at NEAR HACKATHON (November 2026) for the Investment Thesis track. All code and data were made during the hackathon window. The full argument, with today's figures, is in [THESIS.md](THESIS.md). The rules we wrote down before seeing the results are in [PREREG.md](PREREG.md).
 
 ## Why we built it
 
@@ -14,17 +14,24 @@ NEAR takes a share of the fees on every Intents swap and spends it buying NEAR o
 
 When we went looking for that figure, we found one undated number with no method behind it. Nobody had published how volume reacts when fees change, which decides whether NEAR can raise revenue by pricing or only by growing. And public sources disagreed with each other.
 
-So we built the version we wanted to read: a threshold with a date and an interval, readings with rules fixed in advance, and a way for anyone to re-run all of it.
+So we built a threshold with a date and an interval, readings with rules fixed in advance, and a way for anyone to re-run all of it.
 
-## What you'll see on the site
+## Try it in five minutes
 
-- **Home:** how many times today's volume NEAR needs, the five readings, and the verdict.
-- **Follow the Fee:** where the cost of a swap goes: the solver's spread, the app's fee, NEAR's share.
-- **Elasticity:** what happened to volume around each fee change, and whether the data can tell yet.
-- **Model:** move price, issuance and elasticity, and watch the threshold and its date move.
-- **Reproduce:** the commands to check every number, and each day's record on NEAR testnet.
+On the site:
 
-Every page has an **Easy** and a **Pro** mode. Pro shows the full detail. Easy says the same thing in everyday words, with the same numbers. We added Easy because the site has to make sense to someone new to crypto, not just to analysts.
+1. **Open [Home](https://tideline-near.vercel.app/).** You see how many times today's monthly volume NEAR Intents would need, the five readings with their sides, and the verdict.
+2. **Click Easy in the top bar.** The same page and numbers, in everyday words. Click Pro to go back.
+3. **Open [Follow the Fee](https://tideline-near.vercel.app/follow-the-fee/).** You see where the cost of a swap goes: the solver's spread, the app's fee, NEAR's share. Click **Open the Query** to see the SQL or source behind the figures, on the Reproduce page.
+4. **Open [Model](https://tideline-near.vercel.app/model/)** and move **NEAR Price** or **HSP-029 Issuance Schedule.** The threshold and the date it might be reached change as you move them.
+5. **Open [Reproduce](https://tideline-near.vercel.app/reproduce/).** You see the commands below and the latest day anchored on NEAR testnet.
+
+In a terminal (Node 24, no key, about a minute):
+
+6. **Run `npm ci`, then `npm run verify`.** It recomputes every published number from the stored data and ends in `ALL OK`.
+7. **Run `npm run attest:check -- 2026-11-03`.** It reads that day's hash from `tideline-thesis.testnet` and prints `MATCH` against the file in `data/chain/`.
+
+Every page has an **Easy** and a **Pro** mode. Pro shows the full detail. Easy says the same thing in everyday words, with the same numbers, for readers new to crypto. Elasticity and Method are in the top bar; Concentration and What Would Move are linked from Home and from Method.
 
 ## How it works
 
@@ -177,9 +184,13 @@ Some things are fixed on purpose: the year of fee-change history before 3 Oct 20
 - **NEAR RPC and FastNEAR:** chain reads for the treasury flow and for checking the hashes.
 - **Intents Explorer and 1Click APIs:** the rolling panel only, as above.
 
-## Stack
+## Stack, libraries and AI use
 
-Next.js 16 (App Router) and TypeScript, hosted on Vercel. Analysis runs in plain Node, with data stored as gzip CSV and JSON, so checking it needs nothing beyond `npm ci`. GitHub Actions and cron-job.org for the schedule, Rust for the contract, Telegram for alerts and the public channel.
+- **Site:** Next.js 16 (App Router), React 19 and TypeScript, hosted on Vercel. Fonts: Inter and Overpass Mono through `next/font`. The visual style (pale blue glass look) and the glass sphere, both the video and its still image in `public/media/`, come from a free template on [motionsites.ai](https://motionsites.ai/). The pages, charts, data and text are our own. No UI kit.
+- **Analysis:** plain Node 24 with no npm packages beyond the site's own; data is stored as gzip CSV and JSON, so checking it needs nothing beyond `npm ci`.
+- **Contract:** Rust with `near-sdk` 5.30, built with `cargo-near`; tests use `near-workspaces`, `tokio`, `anyhow` and `serde_json`.
+- **Schedule and alerts:** GitHub Actions started by cron-job.org; Telegram for alerts and the public channel.
+- **AI use:** the code, queries and docs were written with Claude Code (Anthropic), working with the team, who set the question, chose the data and the rules in PREREG.md, and reviewed every claim.
 
 ## For machines
 
@@ -193,8 +204,6 @@ No route serves the panel. Published files are in `data/published/`, each with i
 
 ## Limits
 
-We'd rather say these plainly than have you find them:
-
 - **The test isn't blind.** PREREG.md says what we already knew when each rule was written.
 - **Elasticity is underpowered.** The interval is too wide to call a side yet.
 - **DefiLlama can't be re-run for free,** so its figures are stored as evidence, not recomputed. How it counts private volume isn't known.
@@ -204,6 +213,6 @@ We'd rather say these plainly than have you find them:
 
 ## Team
 
-Built by **Laras Ervintyana** ([@ervhint](https://github.com/ervhint)) and **Youvandra Febrial** ([@youvandra](https://github.com/youvandra)).
+Built by **Laras Ervintyana** ([@ervhint](https://github.com/ervhint)).
 
 MIT licence.

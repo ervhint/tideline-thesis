@@ -5,20 +5,25 @@ Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` 
 
 ## Submission checklist (P7b step 3 onward)
 
-From nearhackathon.com (read 9 Nov): submit one form with a public repo and a public **X post** of the demo (video or screenshots) tagging @NEARProtocol and #NEARHackathon. Judging and results 16–18 Nov 2026. Submission deadline: not seen on the page, the human to confirm. Team: Laras Ervintyana and Youvandra Febrial (form: team size "2 - 4 people").
+Rules: https://nearhackathon.com/HACKATHON.md (read 9 Nov; re-read before submitting, it may change). **Deadline: 14 Nov 2026, 23:59 UTC** (15 Nov, 06:59 WIB); submissions only open until then. Judging 16 Nov, results by 18 Nov. One submission per project, no second try: mistakes go through https://nearhackathon.com/request-changes. Team: Laras Ervintyana, solo (size `1`, track id `thesis`). Youvandra Febrial taken off the team 9 Nov (the human).
 
-- [x] Live site: https://tideline-near.vercel.app
-- [x] Repo public: `ervhint/tideline-thesis`
+- [x] Live site: https://tideline-near.vercel.app (Q-012: keep it up to 18 Nov, ideally 25 Nov)
+- [x] Repo public: `ervhint/tideline-thesis`, LICENSE file present (Q-014)
 - [x] Track brief covered: BigQuery queries (active accounts, transactions, contract usage), Explorer pull (rolling panel), one command to recompute every chart, a dashboard with each chart's query and a plain sentence, THESIS.md
 - [x] `TIDELINE_URL` set, Telegram links to the live site
 - [x] README in a plainer voice (9 Nov, approved by the human; team names and GitHub links in)
+- [ ] README to HACKATHON.md: "do X - see Y" try-it steps for a judge, no marketing, written for an AI screener too (§1)
+- [ ] README: try-it steps, libraries, the motionsites.ai free template (style and sphere video), AI use, built at NEAR HACKATHON (drafted 9 Nov, not committed)
+- [x] Nothing existed before 19 Oct 2026 (the human, 9 Nov), so no baseline to disclose (Q-001 to Q-004)
+- [x] Q-015: Laras enters only Tideline (the human, 9 Nov); nothing to disclose
 - [ ] Pitch outline mapped to the judging line ("judged on the evidence, not the conviction")
 - [ ] Demo script following the golden path
 - [ ] Demo video or screenshots (step 4; check X's video length limit)
 - [ ] X account for Tideline (the human creates it; kept live at least until results; not linked from the README)
-- [ ] X demo post tagging @NEARProtocol and #NEARHackathon (the human posts)
-- [ ] "What did you build?" text for the form, 20 to 2,000 characters (Claude drafts from the README)
-- [ ] Form: project name, team lead, email, team size, track Investment Thesis, NEAR wallet address for the prize, repo link, X post link, website (the human fills in and submits)
+- [ ] X demo post (the human posts; Claude may draft): says it was built at NEAR HACKATHON, tags @NEARProtocol and #NEARHackathon (optional @NearLegion, @NearBuilders), video attached (screenshots alone are not enough when judges can't open the demo, Q-012). Lead with the user problem, show one complete moment, say concretely what NEAR does, link site and repo.
+- [ ] "What did you build?" text, 20 to 2,000 characters (Claude drafts from the README)
+- [ ] Mainnet NEAR account for the prize (the team creates it; never invented by Claude)
+- [ ] Submit via the form or the API, once: project name, team lead, email, size, tracks, NEAR account, repo link, X post link, idea, consent read verbatim. Via the API, never send `website` (spam trap). Claude prints the full payload first and waits for a yes.
 - [ ] Final PROGRESS note: scope complete or what isn't, live URLs, known limits (step 5)
 - [ ] G7: the human's "shipped" yes
 
