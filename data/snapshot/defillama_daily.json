@@ -1,5 +1,5 @@
 {
- "pulledAt": "2026-11-08T14:23:17.413Z",
+ "pulledAt": "2026-11-09T02:23:19.179Z",
  "source": "DefiLlama fees/near-intents (dailyFees, dailyRevenue) and dexs/near-intents (dailyVolume), all Intents",
  "days": [
   {
@@ -3283,6 +3283,12 @@
    "fees": 187484,
    "revenue": 43013,
    "volume": 114752674
+  },
+  {
+   "day": "2026-11-08",
+   "fees": 6284,
+   "revenue": 31426,
+   "volume": null
   }
  ]
 }
