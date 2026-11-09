@@ -7,8 +7,15 @@ import { ReadingCell } from '@/components/ReadingCell';
 import { EasyOnly, Rich, Say } from '@/components/Say';
 import { getNumbers } from '@/lib/data';
 import { EASY } from '@/lib/easy_text';
+import { TELEGRAM } from '@/lib/links';
+import { ExtLink } from '@/components/ExtLink';
 
 export const revalidate = 300; // re-read the published data every 5 minutes
+
+const FOLLOW = {
+  pro: 'Get a message when a reading changes side and holds for three days, plus a short note every Monday.',
+  easy: 'Get a message when one of the answers changes and stays changed for three days, plus a short note every Monday.',
+};
 
 export default async function Headline() {
   const { readings, figures, headline, easy } = await getNumbers();
@@ -70,6 +77,14 @@ export default async function Headline() {
               pro={<>{headline.text.fixed.map((t) => <p key={t} className="p-body means-fixed">{t}</p>)}</>}
               easy={e ? <>{e.fixed.map((t) => <p key={t} className="p-body means-fixed"><Rich text={t} /></p>)}</> : null}
             />
+            {/* The public channel (docs/PLAN.md §6i K7): fixed words, no figure. */}
+            <div className="cs-row follow">
+              <p className="p-body"><Say pro={FOLLOW.pro} easy={FOLLOW.easy} /></p>
+              <ExtLink className="btn" href={TELEGRAM}>
+                <span>Follow on Telegram</span>
+                <span className="knob"><img src="/assets/chevron.svg" alt="" width={14} height={14} /></span>
+              </ExtLink>
+            </div>
           </section>
         )}
         <Footnote />

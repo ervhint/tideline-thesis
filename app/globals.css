@@ -108,6 +108,10 @@ header.wrap{padding:0 54px}
 .cs-row p{margin:0}
 .cs-row .s-text{margin-top:4px;text-wrap:pretty}
 .cs-btn{flex:none}
+/* T6k K7: the Telegram row at the end of What This Means on Home, in the Codespaces row style. */
+.follow{margin-top:24px}
+.means .follow .p-body{margin:0;max-width:560px}
+.follow .btn{flex:none}
 .btn.ext::after{content:none}
 @media (max-width:700px){.cs-row{flex-direction:column;align-items:flex-start}}
 /* J18: Every Reading and Chart, grouped. */
@@ -440,7 +444,7 @@ html:not([data-mode=easy]) .mode-sw [data-v=pro],html[data-mode=easy] .mode-sw [
 .mode-float{position:fixed;right:24px;bottom:24px;z-index:8;padding:5px;border-radius:999px;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.85);-webkit-backdrop-filter:blur(40px);backdrop-filter:blur(40px);box-shadow:0 0 0 1.3px rgba(120,145,180,.2),0 4px 16px rgba(28,52,92,.1);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s,transform .2s,visibility 0s .2s}
 .mode-float[data-show]{opacity:1;visibility:visible;transform:none;transition:opacity .2s,transform .2s}
 .mode-float .mode-sw button{font-size:15px;padding:10px 16px}
-@media (max-width:700px){.mode-float{right:16px;bottom:16px}}
+@media (max-width:700px){.mode-float{right:16px;bottom:16px}.footnote{padding-bottom:64px}} /* the floating switch no longer covers the last line on phones */
 /* J16 on phones: number, words, then the frame, one under the other. */
 @media (max-width:700px){.step{grid-template-columns:minmax(0,1fr);gap:10px}}
 @media (prefers-reduced-motion:reduce){.mode-float,.mode-float[data-show]{transition:none;transform:none}}

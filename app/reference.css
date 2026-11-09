@@ -43,6 +43,9 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
 .hx-knob{position:absolute;border-radius:50%;background:var(--cta-knob);display:flex;align-items:center;justify-content:center}
 .hx-knob svg{width:calc(17*var(--u));height:calc(17*var(--u))}
 .cta .hx-knob{left:calc(156*var(--u));top:calc(10.5*var(--u));width:calc(49*var(--u));height:calc(49*var(--u))}
+/* Telegram (docs/PLAN.md §6i K7): a row in the phone menu only; the wide bar has no room, so Home and the footer carry the link */
+.tg{display:none}
+.tg-icon,.tg-icon svg{display:block;width:calc(24*var(--u));height:calc(24*var(--u));flex:none}
 
 /* hero type */
 .eyebrow{font-size:calc(16*var(--u));font-weight:470;letter-spacing:-.015em;line-height:1;color:var(--muted);white-space:nowrap;margin:0}
@@ -111,8 +114,7 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
   .brand{position:relative;left:auto;top:auto}
   .nav{position:relative;left:auto;top:auto;transform:none;flex:none}
   .cta{position:relative;right:auto;top:auto;flex:none}
-  .hd-meet{position:relative;right:auto;top:auto;margin-left:auto;margin-right:calc(16*var(--u));flex:none}
-  .menu{display:flex;align-items:center;justify-content:space-between;flex:1;margin-left:calc(24*var(--u))}
+  .hd-meet{position:relative;right:auto;top:auto;margin-left:auto;margin-right:calc(16*var(--u));flex:none}  .menu{display:flex;align-items:center;justify-content:space-between;flex:1;margin-left:calc(24*var(--u))}
 
   @media (min-aspect-ratio:1/1){
     :root{--u:min(100vw / 1240,100vh / 820);--pad:46}
@@ -181,6 +183,8 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
   .menu .nv-text{font-size:calc(19*var(--u))}
   .menu .n-icon{display:none}
   .menu .n-div{width:100%;height:calc(1.2*var(--u));margin:calc(2*var(--u)) 0}
+  .menu .tg{display:flex;align-items:center;width:100%;height:calc(64*var(--u));margin:calc(14*var(--u)) 0 0;gap:calc(14*var(--u));padding:0 calc(24*var(--u));border-radius:999px;text-decoration:none;background:rgba(255,255,255,.6);border:calc(1*var(--u)) solid rgba(255,255,255,.62);box-shadow:0 0 0 calc(1.2*var(--u)) rgba(120,145,180,.1)}
+  .menu .tg-text{display:block;font-size:calc(19*var(--u));font-weight:425;letter-spacing:-.04em;line-height:1;color:#1b2a44;white-space:nowrap}
   .menu .cta{position:relative;right:auto;top:auto;width:100%;height:calc(64*var(--u));margin-top:calc(14*var(--u))}
   .menu .cta-text{left:calc(28*var(--u));top:calc(23*var(--u));font-size:calc(19*var(--u))}
   .menu .cta .hx-knob{left:auto;right:calc(9*var(--u));top:calc(7*var(--u));width:calc(50*var(--u));height:calc(50*var(--u))}
@@ -192,6 +196,9 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
     .menu{width:auto;left:calc(var(--pad)*var(--u));right:calc(var(--pad)*var(--u));top:calc(var(--pad)*var(--u) + 68*var(--t));padding:calc(14*var(--t));border-radius:calc(28*var(--t))}
     .menu .nav{row-gap:calc(15*var(--t));padding:calc(6*var(--t)) calc(8*var(--t))}
     .menu .nv-text{font-size:calc(18*var(--t))}
+    .menu .tg{height:calc(60*var(--t));margin-top:calc(12*var(--t));padding:0 calc(22*var(--t));gap:calc(12*var(--t))}
+    .menu .tg-icon,.menu .tg-icon svg{width:calc(22*var(--t));height:calc(22*var(--t))}
+    .menu .tg-text{font-size:calc(18*var(--t))}
     .menu .cta{height:calc(60*var(--t));margin-top:calc(12*var(--t))}
     .menu .cta-text{left:calc(26*var(--t));top:calc(21*var(--t));font-size:calc(18*var(--t))}
     .menu .cta .hx-knob{right:calc(7*var(--t));top:calc(6*var(--t));width:calc(48*var(--t));height:calc(48*var(--t))}

@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { EasyOnly, Rich, Say } from './Say';
 import { Stale } from './Stale';
+import { ExtLink } from './ExtLink';
+import { TELEGRAM } from '@/lib/links';
 
 // `ask` is Easy's one-line "What this page answers" (docs/PLAN.md §6g E5); `easyLead` is the lead in Easy words, marked [[term]].
 export function Page({ title, easyTitle, lead, easyLead, ask, children }: { title: string; easyTitle?: string; lead?: ReactNode; easyLead?: string; ask?: string; children?: ReactNode }) {
@@ -20,6 +22,10 @@ export function Page({ title, easyTitle, lead, easyLead, ask, children }: { titl
 
 export function Footnote() {
   return (
-    <p className="footnote">Tideline is research, not financial advice.</p>
+    <p className="footnote">
+      Tideline is research, not financial advice.
+      <span className="foot-sep" aria-hidden="true"> · </span>
+      <ExtLink href={TELEGRAM}>Follow on Telegram</ExtLink>
+    </p>
   );
 }
