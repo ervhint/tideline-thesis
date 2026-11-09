@@ -1,6 +1,6 @@
 # Tideline progress
 
-Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Codespaces run passed 9 Nov (T-0.2, T-T6j.29: verify ALL OK, attest:check 2026-11-07 MATCH). **T6k Telegram done and on main (9 Nov, `356e283` to `aaa78b2`):** public channel `@tideline_thesis` on, first post sent by the cron-job.org test run. **P7b deploy done (9 Nov): live at https://tideline-near.vercel.app** (Vercel project `tideline`, team ervhint; `b70a0ef` on main). G7 (the human's "shipped" yes) not yet asked. **Next: README demo link, pitch outline, demo script, demo video, final report.** Ticket 79934: no answer yet, panel stays on (human, 9 Nov).
+Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Codespaces run passed 9 Nov (T-0.2, T-T6j.29: verify ALL OK, attest:check 2026-11-07 MATCH). **T6k Telegram done and on main (9 Nov, `356e283` to `aaa78b2`):** public channel `@tideline_thesis` on, first post sent by the cron-job.org test run. **P7b deploy done (9 Nov): live at https://tideline-near.vercel.app** (Vercel project `tideline`, team ervhint; `b70a0ef` on main). README brought to the hackathon rules and pushed (9 Nov, `4c0590b`). G7 (the human's "shipped" yes) not yet asked. **Next chat: work the Submission checklist below, one item at a time, starting with the pitch outline.** The human wants to go item by item and see what's done and what isn't, so tick items here as they finish. Ticket 79934: no answer yet, panel stays on (human, 9 Nov).
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: https://tideline-near.vercel.app (dev: localhost:3112).
 
 ## Submission checklist (P7b step 3 onward)
@@ -11,15 +11,15 @@ Rules: https://nearhackathon.com/HACKATHON.md (read 9 Nov; re-read before submit
 - [x] Repo public: `ervhint/tideline-thesis`, LICENSE file present (Q-014)
 - [x] Track brief covered: BigQuery queries (active accounts, transactions, contract usage), Explorer pull (rolling panel), one command to recompute every chart, a dashboard with each chart's query and a plain sentence, THESIS.md
 - [x] `TIDELINE_URL` set, Telegram links to the live site
-- [x] README in a plainer voice (9 Nov, approved by the human; team names and GitHub links in)
-- [ ] README to HACKATHON.md: "do X - see Y" try-it steps for a judge, no marketing, written for an AI screener too (§1)
-- [ ] README: try-it steps, libraries, the motionsites.ai free template (style and sphere video), AI use, built at NEAR HACKATHON (drafted 9 Nov, not committed)
+- [x] README in a plainer voice (9 Nov, approved by the human)
+- [x] README to HACKATHON.md (9 Nov, `4c0590b`): "do X - see Y" try-it steps for a judge, no marketing, built at NEAR HACKATHON, libraries, the motionsites.ai free template (style and the glass sphere video and image), AI use (Claude Code), team Laras Ervintyana solo. No live figures in the README on purpose (THESIS.md carries them).
+- [ ] Optional: the human checks that the motionsites.ai free tier allows public use and whether it asks for a credit line; DESIGN.md line 47 still says no video came from the references, which is no longer true (fix if the human says so)
 - [x] Nothing existed before 19 Oct 2026 (the human, 9 Nov), so no baseline to disclose (Q-001 to Q-004)
 - [x] Q-015: Laras enters only Tideline (the human, 9 Nov); nothing to disclose
 - [ ] Pitch outline mapped to the judging line ("judged on the evidence, not the conviction")
 - [ ] Demo script following the golden path
 - [ ] Demo video or screenshots (step 4; check X's video length limit)
-- [ ] X account for Tideline (the human creates it; kept live at least until results; not linked from the README)
+- [ ] X account for Tideline (the human creates it, e.g. `@tideline_near`, Tideline mark from `brand/`; kept live only until the announcement, so never linked from the README)
 - [ ] X demo post (the human posts; Claude may draft): says it was built at NEAR HACKATHON, tags @NEARProtocol and #NEARHackathon (optional @NearLegion, @NearBuilders), video attached (screenshots alone are not enough when judges can't open the demo, Q-012). Lead with the user problem, show one complete moment, say concretely what NEAR does, link site and repo.
 - [ ] "What did you build?" text, 20 to 2,000 characters (Claude drafts from the README)
 - [ ] Mainnet NEAR account for the prize (the team creates it; never invented by Claude)
