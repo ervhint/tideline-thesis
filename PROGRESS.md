@@ -3,6 +3,25 @@
 Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Codespaces run passed 9 Nov (T-0.2, T-T6j.29: verify ALL OK, attest:check 2026-11-07 MATCH). **T6k Telegram done and on main (9 Nov, `356e283` to `aaa78b2`):** public channel `@tideline_thesis` on, first post sent by the cron-job.org test run. **P7b deploy done (9 Nov): live at https://tideline-near.vercel.app** (Vercel project `tideline`, team ervhint; `b70a0ef` on main). G7 (the human's "shipped" yes) not yet asked. **Next: README demo link, pitch outline, demo script, demo video, final report.** Ticket 79934: no answer yet, panel stays on (human, 9 Nov).
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: https://tideline-near.vercel.app (dev: localhost:3112).
 
+## Submission checklist (P7b step 3 onward)
+
+From nearhackathon.com (read 9 Nov): submit one form with a public repo and a public **X post** of the demo (video or screenshots) tagging @NEARProtocol and #NEARHackathon. Judging and results 16–18 Nov 2026. Submission deadline: not seen on the page, the human to confirm. Team: Laras Ervintyana and Youvandra Febrial (form: team size "2 - 4 people").
+
+- [x] Live site: https://tideline-near.vercel.app
+- [x] Repo public: `ervhint/tideline-thesis`
+- [x] Track brief covered: BigQuery queries (active accounts, transactions, contract usage), Explorer pull (rolling panel), one command to recompute every chart, a dashboard with each chart's query and a plain sentence, THESIS.md
+- [x] `TIDELINE_URL` set, Telegram links to the live site
+- [x] README in a plainer voice (9 Nov, approved by the human; team names and GitHub links in)
+- [ ] Pitch outline mapped to the judging line ("judged on the evidence, not the conviction")
+- [ ] Demo script following the golden path
+- [ ] Demo video or screenshots (step 4; check X's video length limit)
+- [ ] X account for Tideline (the human creates it; kept live at least until results; not linked from the README)
+- [ ] X demo post tagging @NEARProtocol and #NEARHackathon (the human posts)
+- [ ] "What did you build?" text for the form, 20 to 2,000 characters (Claude drafts from the README)
+- [ ] Form: project name, team lead, email, team size, track Investment Thesis, NEAR wallet address for the prize, repo link, X post link, website (the human fills in and submits)
+- [ ] Final PROGRESS note: scope complete or what isn't, live URLs, known limits (step 5)
+- [ ] G7: the human's "shipped" yes
+
 ## P7b: Vercel (9 Nov)
 
 - **Project:** `tideline` in Vercel team ervhint (human's yes), Git-connected to this repo: a push to `main` deploys Production in about 15s, any other branch builds a Preview. Next.js preset, Node 24.x (as in Actions). Env: `GITHUB_DATA_TOKEN` (Preview + Production, set by the human); `EXPLORER_PANEL` unset, so the panel is on.

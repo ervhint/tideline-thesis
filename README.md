@@ -1,61 +1,104 @@
 # Tideline
 
-A re-runnable investment thesis for NEAR, built on NEAR Intents fee data. Research, not financial advice.
+**Live site: [tideline-near.vercel.app](https://tideline-near.vercel.app)** · Research, not financial advice.
 
-> **Why the Explorer data is only in the rolling panel.** The track asks for swap volume from the NEAR Intents Explorer API. Its terms ([1ClickSwap API Terms of Use](https://partners.near-intents.org/legal/terms-of-service), Section 4.1(e)) do not allow storing API data for more than 24 hours, so Tideline shows it only in a panel that is rebuilt each day and kept for one day. The thesis and the verdict use stored public data (BigQuery, chain reads, DefiLlama) that anyone can re-run.
+Tideline asks one question about NEAR: **how much NEAR Intents volume would it take for fee buybacks to cover the new NEAR being issued?**
 
-**Read the argument in [THESIS.md](THESIS.md).** It is written from the published files by `pipeline/build_thesis_md.mjs`, so its figures always match the site. The rules, written down before the results they govern, are in [PREREG.md](PREREG.md).
+It answers with a number you can check yourself, five readings on whether that number is getting closer, and a verdict that updates every day from public data. Every figure on the site can be recomputed from this repo with one command, without a key or an account.
 
-## The problem
+Built for the Investment Thesis track. The full argument, with today's figures, is in [THESIS.md](THESIS.md). The rules we wrote down before seeing the results are in [PREREG.md](PREREG.md).
 
-NEAR spends its share of Intents fees buying NEAR on the open market. Whether that can ever cover new issuance depends on numbers that are hard to check: public sources disagree, the best per-swap data can't legally be kept, and since 27 Oct 2026 swaps have been moving to a private chain that public indexers cannot see.
+## Why we built it
 
-So a thesis built on public data is losing the data it reads. Tideline says so instead of reading what is left as if it were the whole market. A fall in public numbers is never described as a fall in demand.
+NEAR takes a share of the fees on every Intents swap and spends it buying NEAR on the open market. If those buybacks ever match the NEAR created each year, the supply stops growing. That's the bull case, and people quote a "volume needed" figure for it all the time.
 
-## The confidential shift
+When we went looking for that figure, we found one undated number with no method behind it. Nobody had published how volume reacts when fees change, which decides whether NEAR can raise revenue by pricing or only by growing. And public sources disagreed with each other.
 
-Account `51e8f94d…7cbe` looks like the largest solver. It is the Confidential Intents treasury: funds sent to it move to `intents.far`, the swap settles there out of public view, and funds come back. It is a bridge, so it is never counted as a solver.
+So we built the version we wanted to read: a threshold with a date and an interval, readings with rules fixed in advance, and a way for anyone to re-run all of it.
 
-- Solver Competition reads Not Measured while the Treasury holds over 50% of counted USD.
-- While it does, the verdict is held at Undecided whatever the score, so a loss of data can't move it.
-- Follow the Fee splits public swaps only. The confidential path has its own line, with the all-in cost.
+## What you'll see on the site
 
-What cannot be seen: fees on confidential swaps, solver identity, and any flow that stays shielded.
+- **Home:** how many times today's volume NEAR needs, the five readings, and the verdict.
+- **Follow the Fee:** where the cost of a swap goes: the solver's spread, the app's fee, NEAR's share.
+- **Elasticity:** what happened to volume around each fee change, and whether the data can tell yet.
+- **Model:** move price, issuance and elasticity, and watch the threshold and its date move.
+- **Reproduce:** the commands to check every number, and each day's record on NEAR testnet.
 
-## Data sources
+Every page has an **Easy** and a **Pro** mode. Pro shows the full detail. Easy says the same thing in everyday words, with the same numbers. We added Easy because the site has to make sense to someone new to crypto, not just to analysts.
 
-| Piece | Source | Stored here? |
-| --- | --- | --- |
-| Frontends, fees, solvers: a year of history for elasticity | BigQuery `crypto_near_mainnet_us` and chain data | Yes, `data/bigquery/`, `data/chain/` |
-| Treasury flow and confidential share | `intents.near` dip4 logs (FastNEAR, NEAR RPC) | Yes, `data/treasury/` |
-| V*, revenue, volume, prices | DefiLlama | Yes, `data/snapshot/`, `data/published/` |
-| Active accounts, transactions, contract use | BigQuery | Yes, `data/bigquery/` |
-| Frontends and fees since 27 Oct | Intents Explorer API | **No. Rolling panel only** |
-| Current quote breakdown | 1Click dry quotes | **No. Rolling panel only** |
+## How it works
 
-## What updates on its own
+```mermaid
+flowchart LR
+  subgraph Sources["Public sources"]
+    BQ["BigQuery<br/>NEAR mainnet tables"]
+    CH["NEAR chain<br/>intents.near logs"]
+    DL["DefiLlama<br/>volume, fees, revenue"]
+  end
+  subgraph Actions["GitHub Actions (started by cron-job.org)"]
+    FZ["chain-day<br/>freeze yesterday"]
+    RF["refresh<br/>hourly"]
+    AT["attest-days<br/>hash to testnet"]
+    PN["panel<br/>daily, kept 24h"]
+  end
+  REPO[("This repo<br/>data/ + published files")]
+  NEAR[["tideline-thesis.testnet<br/>one hash per day"]]
+  EX["Intents Explorer +<br/>1Click APIs"]
+  ART[("Actions artifact<br/>deleted after 1 day")]
+  SITE["Next.js site on Vercel<br/>pages + own API routes"]
+  U(("You"))
 
-Every job runs in GitHub Actions, started by cron-job.org ([docs/CRON.md](docs/CRON.md)), and commits only after `npm run verify` passes.
+  BQ --> REPO
+  CH --> FZ --> REPO
+  DL --> RF --> REPO
+  REPO --> AT --> NEAR
+  EX --> PN --> ART
+  REPO --> SITE
+  ART --> SITE
+  NEAR --> SITE
+  SITE --> U
+```
 
-| Job | When (WIB) | What it updates |
-| --- | --- | --- |
-| `refresh` | every hour | DefiLlama volume, fees and revenue, NEAR price and supply, the intents.near protocol fee, token names, then every published file and THESIS.md |
-| `chain-day` | daily, 10:17 | Freezes yesterday's chain day and treasury file |
-| `attest-days` | daily, 12:41 | Records each frozen day's hash on NEAR testnet |
-| `panel` | daily, 09:07 | The rolling panel (a one-day artifact, never committed) |
-| `activity` | weekly, Saturday 11:41 | Re-runs the two BigQuery activity queries for the last 90 days |
+1. **Every day, a job freezes yesterday's chain data** from the `intents.near` contract into a file in `data/chain/`, and only commits it after `npm run verify` passes.
+2. **A second job writes that file's hash to a small NEAR testnet contract.** A record can be written once and never changed, so anyone can check later that a day wasn't edited.
+3. **Every hour, a job pulls DefiLlama's volume, fees and revenue**, recomputes the readings and the threshold, and regenerates THESIS.md.
+4. **The site reads the published files** through its own API routes. Your browser only ever talks to the site, never to GitHub or any data provider directly.
 
-Fixed on purpose: the year of fee-change history before 3 Oct 2026 (one BigQuery read, frozen by PREREG.md amendment A4) and the pre-registered lines.
+### The five readings
 
-## What is kept, what is not, and why
+Each reading has a Bullish, Neutral and Bearish line, written into PREREG.md before the results came in.
 
-A re-runnable thesis has to keep its inputs, so everything stored here is public chain data or a keyless public source that anyone may store.
+| Reading | The question it asks |
+| --- | --- |
+| Pricing Power | When fees go up, does volume stay? |
+| NEAR's Share of Fees | How much of each fee does NEAR actually keep? |
+| Solver Competition | Are many solvers competing, or a few? |
+| Largest Integrator | How much depends on one app? |
+| Path to Deflation | Is revenue growing toward the threshold? |
 
-The Explorer and 1Click APIs are different. Their terms (1ClickSwap API Terms, updated 7 Oct 2026) bar keeping their data past 24 hours, so nothing from them is in git, `data/`, `thesis.json`, a log or a message: not raw, not summed, and not typed into a document. Instead a rolling panel is re-pulled once a day, kept as a one-day artifact, shown beside the readings, and never used to set one. Past 24 hours it reads "Not Available". See [docs/EXPLORER.md](docs/EXPLORER.md). Intents Technology is the technology provider of these APIs; nothing here is endorsed by it.
+The verdict is the sum of the five. One rule overrides it, explained next.
 
-The panel is optional. `EXPLORER_PANEL=off` removes it and its job, and the site still passes every test.
+## The part we can't see
 
-## Re-run it
+Since 27 Oct 2026, a growing share of Intents swaps settles privately. Funds go to the Confidential Intents treasury, the swap happens out of public view, and funds come back. On chain, that treasury looks like the biggest solver by far. It isn't one: it's a bridge, so we never count it as a solver.
+
+This changes what public data can say, so we wrote rules for it:
+
+- **Solver Competition reads Not Measured** while the treasury carries more than half of the USD we can count.
+- **While it does, the verdict is held at Undecided**, whatever the score. A loss of data shouldn't be able to move the answer.
+- **A drop in public numbers is never read as a drop in demand.** It may just be volume moving out of sight.
+
+What we can't see at all: fees on private swaps, which solver filled them, and any flow that stays shielded.
+
+## The rolling panel, and why it's separate
+
+The track asks for swap data from the NEAR Intents Explorer API. Its terms ([1ClickSwap API Terms of Use](https://partners.near-intents.org/legal/terms-of-service), section 4.1(e)) don't allow keeping that data for more than 24 hours. A re-runnable thesis has to keep its inputs, so the two can't mix.
+
+So the Explorer and 1Click data appear only in a **rolling panel** on Follow the Fee and Concentration. One job pulls the last 30 days once a day and saves only totals, as a GitHub Actions artifact that's deleted after a day. Nothing from these APIs is in git, `data/`, the published files, a log or a message, and the panel never sets a reading. If it's over 24 hours old, the site says "Not Available". Intents Technology provides these APIs as a technology provider; nothing here is endorsed by it.
+
+`EXPLORER_PANEL=off` removes the panel and its job, and the site still passes every test. More in [docs/EXPLORER.md](docs/EXPLORER.md).
+
+## Check it yourself
 
 You need Node 24. No key, no account, about a minute.
 
@@ -67,7 +110,13 @@ npm ci
 npm run verify
 ```
 
-`verify` recomputes every published number from the stored data and diffs it against the committed file. It ends in `ALL OK`.
+`verify` recomputes every published number from the stored data and compares it with the committed files. It ends in `ALL OK`.
+
+```bash
+npm run attest:check -- 2026-11-03
+```
+
+This compares one frozen day with the hash written for it on NEAR testnet.
 
 ```bash
 npm run rebuild
@@ -79,48 +128,82 @@ This recomputes every chart from stored public data.
 npm run rebuild -- --bigquery
 ```
 
-This re-runs the SQL in [queries/](queries/) with your own Google project: set `GOOGLE_PROJECT` and `GOOGLE_ACCESS_TOKEN`. It dry-runs each query and refuses anything over 30 GB. The log read is about 818 GB of the free tier's 1 TB a month, so it runs only with `--read --max-gb 900`. Read [queries/README.md](queries/README.md) first.
+This re-runs the SQL in [queries/](queries/) with your own Google project (set `GOOGLE_PROJECT` and `GOOGLE_ACCESS_TOKEN`). It dry-runs each query first and refuses anything over 30 GB. The log read is about 818 GB of the free tier's 1 TB a month, so it only runs with `--read --max-gb 900`. Read [queries/README.md](queries/README.md) first.
 
 ```bash
 npm run panel
 ```
 
-This prints the rolling panel with your own `INTENTS_EXPLORER_JWT`, and writes nothing to the repo.
-
-```bash
-npm run attest:check -- 2026-11-03
-```
-
-This compares a frozen day with its hash on NEAR testnet.
+This prints the rolling panel using your own `INTENTS_EXPLORER_JWT`, and writes nothing to the repo.
 
 ```bash
 npx next dev -p 3112
 ```
 
-This runs the site.
+This runs the site locally.
 
-## The contract
+Prefer not to install anything? The Reproduce page has an "Open in Codespaces" button. It opens this repo in your browser with everything installed, so you only type `npm run verify`. It runs on your own GitHub account, free within GitHub's monthly Codespaces hours.
 
-`contract/` is a small NEAR contract, deployed on testnet as `tideline-thesis.testnet`. It records one write-once hash per day. A day's record also carries the hash of that day's treasury file, for records written from 8 Nov 2026; earlier records can't gain it, because a record is never changed. Testnet only: no mainnet, no funds. Details in `contract/deployment.json`.
+## Data sources
+
+| What | Where it comes from | Kept in the repo? |
+| --- | --- | --- |
+| A year of frontends, fees and solvers, for elasticity | BigQuery `crypto_near_mainnet_us` and chain data | Yes, `data/bigquery/`, `data/chain/` |
+| Treasury flow and the private share | `intents.near` dip4 logs (FastNEAR, NEAR RPC) | Yes, `data/treasury/` |
+| Volume, fees, revenue, prices | DefiLlama | Yes, `data/snapshot/`, `data/published/` |
+| Active accounts, transactions, contract use | BigQuery | Yes, `data/bigquery/` |
+| Frontends and fees since 27 Oct | Intents Explorer API | **No. Rolling panel only** |
+| Current quote breakdown | 1Click dry quotes | **No. Rolling panel only** |
+
+## What updates on its own
+
+Every job runs in GitHub Actions, started by cron-job.org ([docs/CRON.md](docs/CRON.md)), and only commits after `npm run verify` passes.
+
+| Job | When (WIB, UTC+7) | What it does |
+| --- | --- | --- |
+| `refresh` | every hour | DefiLlama volume, fees and revenue, NEAR price and supply, the protocol fee, then every published file and THESIS.md |
+| `chain-day` | daily, 10:17 | Freezes yesterday's chain day and treasury file |
+| `attest-days` | daily, 12:41 | Writes each frozen day's hash to NEAR testnet |
+| `panel` | daily, 09:07 | The rolling panel (a one-day artifact, never committed) |
+| `activity` | Saturdays, 11:41 | Re-runs the two BigQuery activity queries for the last 90 days |
+| `weekly-note` | Mondays, 08:00 | A short note to the [@tideline_thesis](https://t.me/tideline_thesis) Telegram channel |
+
+Some things are fixed on purpose: the year of fee-change history before 3 Oct 2026 (one BigQuery read, frozen by PREREG.md amendment A4) and the pre-registered lines.
+
+## NEAR tech used
+
+- **NEAR Intents:** the whole thesis is about it. Swaps, fees and solvers are read from the `intents.near` contract's logs.
+- **NEAR testnet contract:** `contract/` is a small Rust contract (cargo-near), deployed as `tideline-thesis.testnet`. It stores one write-once hash per frozen day. Records written from 8 Nov 2026 also carry the hash of that day's treasury file; earlier ones can't gain it, because a record is never changed. Testnet only, no funds. Details in `contract/deployment.json`.
+- **NEAR RPC and FastNEAR:** chain reads for the treasury flow and for checking the hashes.
+- **Intents Explorer and 1Click APIs:** the rolling panel only, as above.
+
+## Stack
+
+Next.js 16 (App Router) and TypeScript, hosted on Vercel. Analysis runs in plain Node, with data stored as gzip CSV and JSON, so checking it needs nothing beyond `npm ci`. GitHub Actions and cron-job.org for the schedule, Rust for the contract, Telegram for alerts and the public channel.
 
 ## For machines
 
-- `GET /api/thesis.json`: the verdict, readings, V* and text, as published.
+- `GET /api/thesis.json`: the verdict, readings, threshold and text, as published.
 - `GET /api/days`: every frozen chain day with its size and SHA-256.
 - `GET /api/days/<YYYY-MM-DD>`: one frozen day, byte for byte.
 - `GET /api/attest/<YYYY-MM-DD>`: that day's hash on testnet against the file.
 - `GET /api/status`: last frozen day, freshness, and the hash of the published numbers.
 
-No route serves the panel. Published files are in `data/published/`, each with its `source` and `query`. Rules for agents are in [AGENTS.md](AGENTS.md).
+No route serves the panel. Published files are in `data/published/`, each with its `source` and `query`. Rules for coding agents are in [AGENTS.md](AGENTS.md).
 
 ## Limits
 
-- It is not blind, and `PREREG.md` says what was known when each rule was written.
-- Elasticity is underpowered: the interval is too wide to read a side.
-- DefiLlama's figures come from a dataset nobody can re-run for free, so they are stored as evidence, not recomputed.
-- How DefiLlama counts private volume is not known.
-- A re-run from scratch matches a frozen day's counts, not always its hash, because DefiLlama can serve slightly different hourly prices later.
-- History starts on 1 Oct 2025, set by the free BigQuery tier.
-- "Active accounts" counts transaction signers, mostly relayers and solvers, not users.
+We'd rather say these plainly than have you find them:
+
+- **The test isn't blind.** PREREG.md says what we already knew when each rule was written.
+- **Elasticity is underpowered.** The interval is too wide to call a side yet.
+- **DefiLlama can't be re-run for free,** so its figures are stored as evidence, not recomputed. How it counts private volume isn't known.
+- **A re-run from scratch matches a frozen day's counts, not always its hash,** because DefiLlama can serve slightly different hourly prices later.
+- **History starts on 1 Oct 2025,** set by the free BigQuery tier.
+- **"Active accounts" counts transaction signers,** mostly relayers and solvers, not people.
+
+## Team
+
+Built by **Laras Ervintyana** ([@ervhint](https://github.com/ervhint)) and **Youvandra Febrial** ([@youvandra](https://github.com/youvandra)).
 
 MIT licence.
