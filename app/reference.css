@@ -34,6 +34,9 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
 .menu{display:contents}
 /* The reference pill is 293 wide for 2 items; Tideline has 5, so the width follows the content. */
 .nav{position:absolute;left:50%;transform:translateX(calc(-50% - 3*var(--u)));top:calc(46*var(--u));height:calc(67*var(--u));padding:0 calc(36*var(--u));display:flex;align-items:center;gap:calc(20*var(--u));border-radius:999px;background:rgba(255,255,255,.78);border:calc(1*var(--u)) solid rgba(255,255,255,.85);-webkit-backdrop-filter:blur(calc(40*var(--u)));backdrop-filter:blur(calc(40*var(--u)));box-shadow:0 0 0 calc(1.3*var(--u)) rgba(120,145,180,.2),0 calc(2*var(--u)) calc(10*var(--u)) rgba(28,52,92,.05)}
+/* Boxier wide screens (up to 137:100, e.g. 1024x768) have about 1280 units across, so the centred pill ran under GitHub Repo
+   by about 22px (measured 9 Nov 2026); there it sits about 50 units left of centre. The compact and phone layouts override this. */
+@media (max-aspect-ratio:137/100){.nav{transform:translateX(calc(-50% - 52*var(--u)))}}
 .nv-text{font-size:calc(15*var(--u));font-weight:570;letter-spacing:-.04em;line-height:1;color:#202940;white-space:nowrap;text-decoration:none}
 .nv-text[aria-current=page],.nv-text:hover{text-decoration:underline;text-underline-offset:calc(6*var(--u))}
 .n-icon,.n-icon svg{display:block;width:calc(21*var(--u));height:calc(21*var(--u));flex:none}
@@ -82,9 +85,10 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .meet b{left:calc(89.8*var(--u));top:calc(34.55*var(--u));font-size:calc(17.5*var(--u));font-weight:425;letter-spacing:-.0681em;line-height:1;color:#1b2a44;white-space:nowrap}
 .meet .hx-knob{left:calc(206*var(--u));top:calc(17*var(--u));width:calc(50*var(--u));height:calc(50*var(--u));background:var(--meet-knob)}
-/* wide desktop (16:9 and wider): Open Model moves into the header beside GitHub Repo; elsewhere it keeps the reference spot in the hero */
+/* wide desktop (39:20 and wider): Open Model moves into the header beside GitHub Repo; elsewhere it keeps the reference spot in the hero.
+   Below 39:20 the bar has no room for it: from 16:9 it covered the Easy/Pro switch (measured 9 Nov 2026). */
 .hd-meet{display:none}
-@media (min-aspect-ratio:16/9) and (min-width:900px){
+@media (min-aspect-ratio:39/20) and (min-width:900px){
   .hx-row .meet{display:none}
   .hd-meet{display:block;position:absolute;right:calc(310*var(--u));top:calc(45*var(--u));width:calc(230*var(--u));height:calc(70*var(--u))}
   .hd-meet .thumb{left:calc(9*var(--u));top:calc(9*var(--u));width:calc(52*var(--u));height:calc(52*var(--u))}

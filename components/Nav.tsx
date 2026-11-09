@@ -93,7 +93,7 @@ export function Nav() {
         {/* Phone menu only: the wide bar has no room (measured 9 Nov 2026); Home and the footer carry the link there. */}
         <a className="tg" href={TELEGRAM} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
           <span className="tg-icon"><Plane /></span>
-          <span className="tg-text">Follow on Telegram</span>
+          <span className="tg-text">Follow Us on Telegram</span>
           <span className="sr-only"> (opens in a new tab)</span>
         </a>
         <a className="cta" href={REPO} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>

@@ -81,7 +81,7 @@ export default async function Headline() {
             <div className="cs-row follow">
               <p className="p-body"><Say pro={FOLLOW.pro} easy={FOLLOW.easy} /></p>
               <ExtLink className="btn" href={TELEGRAM}>
-                <span>Follow on Telegram</span>
+                <span>Follow Us on Telegram</span>
                 <span className="knob"><img src="/assets/chevron.svg" alt="" width={14} height={14} /></span>
               </ExtLink>
             </div>

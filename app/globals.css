@@ -110,7 +110,7 @@ header.wrap{padding:0 54px}
 .cs-btn{flex:none}
 /* T6k K7: the Telegram row at the end of What This Means on Home, in the Codespaces row style. */
 .follow{margin-top:24px}
-.means .follow .p-body{margin:0;max-width:560px}
+.means .follow .p-body{margin:0}
 .follow .btn{flex:none}
 .btn.ext::after{content:none}
 @media (max-width:700px){.cs-row{flex-direction:column;align-items:flex-start}}

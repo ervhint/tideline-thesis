@@ -25,7 +25,7 @@ export function Footnote() {
     <p className="footnote">
       Tideline is research, not financial advice.
       <span className="foot-sep" aria-hidden="true"> · </span>
-      <ExtLink href={TELEGRAM}>Follow on Telegram</ExtLink>
+      <ExtLink href={TELEGRAM}>Follow Us on Telegram</ExtLink>
     </p>
   );
 }
