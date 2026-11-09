@@ -2241,9 +2241,73 @@
     "readShare": 1,
     "digest": "5581c2b3cdcaafe74b7cad1baae4fd50c12d357d1d205e0f17678913496309c7"
    }
+  },
+  {
+   "day": "2026-11-08",
+   "swaps": 14511,
+   "tokenDiffSwaps": 723,
+   "transferSwaps": 13788,
+   "usd": 24359690.31,
+   "tokenDiffUsd": 12098.71,
+   "tokenDiffShareOfSwaps": 0.049824271242505686,
+   "tokenDiffShareOfUsd": 0.0004966692862689367,
+   "unpricedSwaps": 426,
+   "byBucket": {
+    "0-1k": {
+     "swaps": 12267,
+     "usd": 1445359.98
+    },
+    "1k-10k": {
+     "swaps": 1466,
+     "usd": 4556718.1
+    },
+    "10k-100k": {
+     "swaps": 308,
+     "usd": 9507147.55
+    },
+    "100k+": {
+     "swaps": 44,
+     "usd": 8850464.68
+    },
+    "unpriced": {
+     "swaps": 426,
+     "usd": 0
+    }
+   },
+   "namedShareOfTokenDiffUsd": 0.8995380499243283,
+   "topReferrals": [
+    {
+     "referral": "1click-layerzero-vt",
+     "usd": 4979.42
+    },
+    {
+     "referral": "1click-e1a72603-64b3-4be1-8265-8bae5970d396",
+     "usd": 1977.16
+    },
+    {
+     "referral": "1click-aurora-widget-cmpzffi5j00c60bjo87zaqlvh",
+     "usd": 1927.37
+    },
+    {
+     "referral": "1click-unknown",
+     "usd": 1215.46
+    },
+    {
+     "referral": "1click-lifi",
+     "usd": 1006.44
+    }
+   ],
+   "solvers": 37,
+   "fillers": 19,
+   "census": {
+    "listed": 52844,
+    "read": 52844,
+    "readShare": 1,
+    "digest": "f9553c6e1b0ba3cacf2ccc833968a9326d9b496f70a9b468bdce196af2f48161"
+   }
   }
  ],
  "firstDay": "2026-10-04",
- "lastDay": "2026-11-07",
+ "lastDay": "2026-11-08",
  "gaps": []
 }
