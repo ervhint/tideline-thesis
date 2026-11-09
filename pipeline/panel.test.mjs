@@ -93,7 +93,7 @@ const API_CODE = ['pipeline/explorer.mjs', 'pipeline/quotes_sampler.mjs', 'pipel
 const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)]));
 
 test('nothing that writes a published file, sets a reading or sends a message can reach panel code', () => {
-  const entries = [...readdirSync('pipeline').filter((f) => /^build_.*\.mjs$/.test(f)).map((f) => `pipeline/${f}`), 'pipeline/refresh.mjs', 'pipeline/verify.mjs', 'pipeline/telegram.mjs', 'pipeline/attest_send.mjs', 'pipeline/chain_day.mjs', 'analysis/readings.mjs', 'analysis/thesis_text.mjs', 'analysis/alarm.mjs', 'lib/data.ts'];
+  const entries = [...readdirSync('pipeline').filter((f) => /^build_.*\.mjs$/.test(f)).map((f) => `pipeline/${f}`), 'pipeline/refresh.mjs', 'pipeline/verify.mjs', 'pipeline/telegram.mjs', 'pipeline/attest_send.mjs', 'pipeline/chain_day.mjs', 'analysis/readings.mjs', 'analysis/thesis_text.mjs', 'analysis/alarm.mjs', 'analysis/public_alarm.mjs', 'pipeline/weekly_note.mjs', 'lib/data.ts'];
   for (const e of entries) for (const f of reach(e)) assert.ok(!API_CODE.includes(f), `${e} reaches ${f}`);
 });
 

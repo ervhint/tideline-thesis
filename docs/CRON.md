@@ -58,8 +58,23 @@ It needs a Google login, kept as a repo secret. The human makes it; the key neve
 
 If Google says key creation is disabled for the project, stop and tell the agent: the fallback is GitHub's keyless sign-in to Google (Workload Identity Federation), which takes more steps.
 
+## 2c. The Monday note for the Telegram channel (T6k)
+
+A sixth cronjob, set up like the four above:
+
+| Title | Crontab (WIB) | Times WIB (UTC) | Workflow file | Body |
+| --- | --- | --- | --- | --- |
+| tideline weekly-note | `0 8 * * 1` | Monday 08:00 (01:00) | `weekly-note.yml` | `{"ref":"main","inputs":{"dry_run":"false"}}` |
+
+Two repo **variables** (Settings → Secrets and variables → Actions → Variables), not secrets:
+
+- `TELEGRAM_PUBLIC`: set to `on` only after the human's yes to the first public post. While it is missing or anything else, the channel gets nothing and the jobs print the public text in their log instead. Turning it off stops every public post at once.
+- `TIDELINE_URL`: the site link at the end of each public message. Until it is set (after the Vercel deploy), the link is the GitHub repo.
+
+The channel itself is the secret `TELEGRAM_CHANNEL_ID` (`@tideline_thesis`). Failures of every job go only to `TELEGRAM_CHAT_ID`, the human's private chat.
+
 ## 3. Check it works
 
 1. Press **Test run** on `tideline refresh`. Within a minute `gh run list --workflow refresh.yml` shows a `workflow_dispatch` run.
 2. The first `tideline chain-day` run (or its Test run) freezes the newest finished day. That run is also the first real day for `npm run rebuild`.
-3. Telegram still reports a failed freeze (the step runs when `commit` is on). A run that never starts shows as a failed cron-job.org job, which emails the human.
+3. Telegram still reports a failed freeze (the step runs when `commit` is on), and since T6k a failed attest-days, refresh, panel or weekly-note run too, by name and run link only. A run that never starts shows as a failed cron-job.org job, which emails the human.

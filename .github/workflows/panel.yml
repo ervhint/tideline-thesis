@@ -45,3 +45,20 @@ jobs:
       - name: Remove the temp folder
         if: always()
         run: rm -rf "$RUNNER_TEMP/panel"
+
+  # Fixed words, the job name and the run link only: no panel figure reaches Telegram (4.1(e)). Skipped while EXPLORER_PANEL is off.
+  tell:
+    needs: panel
+    if: ${{ always() && (needs.panel.result == 'failure' || needs.panel.result == 'cancelled') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Tell the human
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node pipeline/telegram.mjs --failed panel

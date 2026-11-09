@@ -97,6 +97,7 @@ Deadline 14 Nov 23:59 UTC.
 | T6h | **THESIS.md follows the data** (§6f). Its figures from `thesis.json`, never typed | 3h | §6f done list |
 | T6i | **Easy and Pro** (§6g). An Easy / Pro switch on every page, Pro by default; Easy words built from the same data; tap-to-explain notes on hard words | 7h | §6g done list |
 | T6j | **Beautification and adjustment** (§6h). Wording, look and speed fixes the human found while clicking through, J1 to J26 | done 8 Nov | §6h done list |
+| T6k | **Telegram for users** (§6i). One bot, two chats: job failures and raw changes to the human only; Easy-worded changes after a 3-day hold and a Monday note to a public channel. Before Vercel | 5h | §6i done list |
 | T7 | **P7.** Vercel, README, video | per workflow | G6 and G7 |
 
 About 32 hours of work plus Actions runtime, which is tight but fits if T1 passes by 6 Nov.
@@ -391,6 +392,24 @@ The full text sits under "Read the Full Explanation". The research-not-advice li
 **J26. The rolling panel survives a slow GitHub download** (the human's report, 8 Nov: "Not Available" on Follow the Fee while a valid panel existed). The artifact zip comes from GitHub storage that is sometimes slow (seen 8.5s against a usual 0.7s), and one slow or failed call made the box say Not Available, with no reason logged. Each GitHub call now gets 6s and up to three tries; a failure logs only a status code or an error type, never a message or body (API data stays out of logs). **Found later the same day:** on this machine the dev server's first GitHub connections after about three idle minutes stall for 15 to 20 seconds, longer than all three tries, so the first page view after a pause can still say Not Available; the next view works (Chrome, 8 Nov: 18s Not Available, then 9s, then 1.5s each). Not yet known whether Vercel shows the same stall; a short in-memory copy of the last good panel would hide it but changes the "one request" rule, so it waits for the human.
 
 **Done when (each item):** its tests pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK with `data/` unchanged, gitleaks and the wording scan pass; Chrome in both modes; the human's yes on the commit.
+
+## 6i. T6k plan: Telegram for users (written 9 Nov 2026)
+
+**Why.** The human wants Telegram to bring people to NEAR the way Easy mode does (9 Nov). Today one chat, the human's own, gets raw side changes and a failed `chain-day`. The 3 and 4 Nov messages showed two limits for a public audience: the verdict went Bullish → Undecided → Bullish within about 28 hours, and the words (bps, top 3 share, score) are Pro words. Not a hackathon requirement (SRS §1.6 lists the alarm as a Should); built before Vercel at the human's call. Decided 9 Nov: 3-day hold, Monday 08:00 WIB note, all three public kinds in Easy words.
+
+**One bot, two chats.** The same bot token sends to `TELEGRAM_CHAT_ID` (the human, private, already set) and to a new secret `TELEGRAM_CHANNEL_ID` (the public channel `@tideline_thesis`, created by the human on 9 Nov with the bot, Tideline Alerts, as admin). The bot only sends: it reads nothing and answers nobody, so only the two stored IDs ever get a message.
+
+- **K1. Private chat (the human only).** As now: every side change at once with its Pro figures, and a failed `chain-day`. New: a failed `attest-days`, `refresh` or `panel` run, with the job name and run link only, no figures (the panel's failure text is fixed, so no API value reaches it, 4.1(e)). Also a note when a change is dropped from public because it flipped back.
+- **K2. The 3-day hold.** A change goes public only once the new side has held for 72 hours in a row, checked at each hourly refresh. One that flips back first never goes public. The sides last told to the public, pending changes and the public log live in `alarm/public.json` (stored public data only). The first run only records the current sides.
+- **K3. Public messages, Easy words.** Three kinds: (a) the verdict changed; (b) a reading changed side, as its Easy question plus one plain sentence; (c) a blind spot opened or closed (a reading moved to or from Not Measured, such as Q3 under the A2 hold). A pure module builds them from `thesis.json` with the Easy rules of `lib/easy_text.ts`: no typed live figure, a fall in public numbers is never a fall in demand, the Treasury is never a solver, Intents Technology only as a technology provider, no buy or sell wording. Each ends with the site link and "Research, not financial advice."
+- **K4. Weekly note.** Monday 08:00 WIB (Monday 01:00 UTC), started by cron-job.org. The verdict and each reading in Easy words, what changed this week or "Quiet week: no reading changed side", what can't be seen, the link and the advice line. Stored public data only.
+- **K5. Never public:** job failures, Pro figures and score lines, anything from the Explorer or 1Click APIs or the rolling panel. The panel guard (`API_CODE`) covers the new files.
+- **K6. Switch.** The workflows pass `TELEGRAM_CHANNEL_ID` only while the repo variable `TELEGRAM_PUBLIC` is `on` (set by the human after the yes). Otherwise public messages print to the log and nothing is posted; every test passes either way. The site link is the repo variable `TIDELINE_URL`, the GitHub repo until Vercel.
+- **K7. Site link** ("Follow on Telegram"): a layout change, so its place is asked first; not built without the human's yes.
+- **The human's part:** create the channel, add the bot as admin, add `TELEGRAM_CHANNEL_ID` (all done 9 Nov); add the Monday cronjob (docs/CRON.md 2c); give an explicit yes before the first public post, then set `TELEGRAM_PUBLIC` to `on`.
+- **Built 9 Nov:** `analysis/public_alarm.mjs` (hold, public text, Monday note, failure text), `pipeline/refresh.mjs` writes `alarm/public.json` and the public file, `pipeline/weekly_note.mjs`, `pipeline/telegram.mjs --channel` and `--failed <job>`, `weekly-note.yml`, and a `tell` job in refresh, attest-days, panel and weekly-note.
+
+**Done when:** T-T6k.1 to T-T6k.9 pass; `npm test` (also with `EXPLORER_PANEL=off`), `verify` ALL OK, gitleaks and the wording scan pass; one real private failure message, and one real channel post after the human's yes.
 
 ## 7. Decisions for the human
 

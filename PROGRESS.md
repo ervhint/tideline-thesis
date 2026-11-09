@@ -25,7 +25,7 @@ Checked on 8 Nov before the last push: `npm test` 296/296 (also with `EXPLORER_P
 - **Full-page screenshots** from the human sometimes show doubled rows or headings: stitching marks, not page bugs (seen twice on 8 Nov). Check the live DOM before fixing.
 - **OneDrive** can touch `.git` mid-fetch ("cannot lock ref"); the pull still lands. Compare `git rev-parse HEAD origin/main` before committing.
 - Gitleaks in Actions fails on a repo's first push (no parent for the root commit); a hand-started `test` run scans the full history.
-- Telegram alerts only a failed `chain-day`. refresh messages only when a reading changes side; attest-days and panel send nothing.
+- Telegram (T6k, built 9 Nov, not yet run in Actions): failures of every job go to the human's private chat by name and run link; refresh tells the human every side change at once. The channel `@tideline_thesis` gets a change only after it held 72 hours, plus a Monday note, and only while the repo variable `TELEGRAM_PUBLIC` is `on` (set 9 Nov on the human's yes). Until `TIDELINE_URL` is set, public messages link to the GitHub repo.
 
 ## P7a: test (8 Nov, done, not committed)
 
@@ -52,10 +52,10 @@ Spec points where the code and docs/PLAN.md disagree. **G6 (8 Nov): the human sa
 ## Next
 
 1. **G6: passed 8 Nov.** Any later layout change still needs the human's yes (design references are exact).
-2. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). **Right after the deploy (the human asked to be reminded):** open Follow the Fee and Concentration after a few idle minutes and see whether the rolling panel's first view says "Not Available" there too (J26). If it does, the human decides whether the server may keep the last good panel in memory for a short time (a change to the "one request" rule). Then README demo link, pitch outline, demo script, demo video, final report.
+2. **P7b ship (G7):** Vercel Preview, then Production, with `GITHUB_DATA_TOKEN` set on Vercel (and `EXPLORER_PANEL=off` if ticket 79934 says no). **Right after the deploy (the human asked to be reminded):** open Follow the Fee and Concentration after a few idle minutes and see whether the rolling panel's first view says "Not Available" there too (J26). If it does, the human decides whether the server may keep the last good panel in memory for a short time (a change to the "one request" rule). **Also remind the human right after the deploy:** set the repo variable `TIDELINE_URL` to the live site, so the Telegram channel's "See why" link stops pointing at the GitHub repo (docs/CRON.md 2c). Then README demo link, pitch outline, demo script, demo video, final report.
 3. **Waiting on the human:**
    - **Codespaces run (T-T6j.29): passed 9 Nov.** verify ALL OK (8863 values), attest:check 2026-11-07 MATCH.
-   - **Telegram (yes, 9 Nov; do before Vercel, start on the human's command):** add failure alerts to attest-days, refresh and panel (job name and run link only, no figures)?
+   - **Telegram (T6k, docs/PLAN.md §6i; built and pushed 9 Nov; the human said yes to public on 9 Nov, `TELEGRAM_PUBLIC=on`). Left for the human: the sixth cronjob, Monday note (docs/CRON.md 2c).** One bot, two chats. Failures (attest-days, refresh, panel, weekly-note) and raw changes to the human only; Easy-worded changes after a 3-day hold plus a Monday 08:00 WIB note to `@tideline_thesis`. A "Follow on Telegram" link on the site only with the human's yes on placement.
    - **Ticket 79934:** still no answer on 9 Nov. The human's call: no answer is not a no, so the panel stays on for launch. Only if a no arrives later, set `EXPLORER_PANEL=off` on Vercel and in the panel job's repo variable.
 
 ## Unit on main: T6j Beautification and adjustment

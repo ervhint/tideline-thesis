@@ -1,19 +1,23 @@
 // The refresh job (U8, FR-16): pulls DefiLlama and model inputs, recomputes every published file, and records side changes.
 // Freezing a chain day is chain-day.yml's job (T2). Token names for the coverage board come from ft_metadata here (T6).
 // A file whose numbers did not change (only its timestamp did) is put back byte for byte, so git sees no change and no commit is made.
-// Usage: node pipeline/refresh.mjs [--dry-run] [--message-file <path>]
+// Usage: node pipeline/refresh.mjs [--dry-run] [--message-file <path>] [--public-file <path>]
 //   --dry-run        runs everything, prints what would change, then restores all files (nothing is written)
-//   --message-file   where to write the alarm text; pipeline/telegram.mjs sends it after the commit has been pushed
+//   --message-file   where to write the private alarm text; pipeline/telegram.mjs sends it after the commit has been pushed
+//   --public-file    where to write the public channel text: changes that held 72 hours, in Easy words (T6k, docs/PLAN.md §6i)
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { dirname } from 'node:path';
 import { parseArgs } from 'node:util';
 import { sideChanges, alarmMessage } from '../analysis/alarm.mjs';
+import { advance, publicMessage } from '../analysis/public_alarm.mjs';
 import { STEPS, THESIS_MD } from './recompute.mjs';
 
-const { values: args } = parseArgs({ options: { 'dry-run': { type: 'boolean' }, 'message-file': { type: 'string' } } });
+const { values: args } = parseArgs({ options: { 'dry-run': { type: 'boolean' }, 'message-file': { type: 'string' }, 'public-file': { type: 'string' } } });
 const dry = args['dry-run'];
 const HISTORY = 'alarm/history.json';
+const PUBLIC = 'alarm/public.json';
+const LINK = process.env.TIDELINE_URL || 'https://github.com/ervhint/tideline-thesis';
 const LLAMA = 'data/snapshot/defillama_daily.json';
 const COW = 'data/snapshot/cow_daily.json';
 const PROTOCOL = 'data/snapshot/protocol_fee.json';
@@ -22,7 +26,7 @@ const VENUES = 'data/snapshot/control_venues.json';
 const TOKENS = 'data/labels/tokens.json';
 const DERIVED = STEPS;
 const THESIS = 'THESIS.md';
-const FILES = [LLAMA, COW, VENUES, TOKENS, PROTOCOL, `${P}/model_inputs.json`, ...DERIVED.map((f) => `${P}/${f}.json`), THESIS, HISTORY];
+const FILES = [LLAMA, COW, VENUES, TOKENS, PROTOCOL, `${P}/model_inputs.json`, ...DERIVED.map((f) => `${P}/${f}.json`), THESIS, HISTORY, PUBLIC];
 
 const read = (f) => (existsSync(f) ? readFileSync(f, 'utf8') : null);
 const backup = new Map(FILES.map((f) => [f, read(f)]));
@@ -70,13 +74,26 @@ try {
   const after = JSON.parse(readFileSync(`${P}/thesis.json`, 'utf8'));
   const changes = sideChanges(before, after, new Date().toISOString());
 
+  // The public channel: a change is told only once it has held 72 hours; one that flips back first is told to the human only.
+  const pub = advance(backup.get(PUBLIC) && JSON.parse(backup.get(PUBLIC)), after, new Date().toISOString());
+  const pubText = JSON.stringify(pub.state, null, 1) + '\n';
+  if (pubText !== backup.get(PUBLIC)) { mkdirSync(dirname(PUBLIC), { recursive: true }); writeFileSync(PUBLIC, pubText); kept.push(PUBLIC); }
+  if (pub.publish.length) {
+    const text = publicMessage(pub.publish, after, LINK);
+    console.log(`\nPUBLIC: ${pub.publish.length} change${pub.publish.length === 1 ? '' : 's'} held 72 hours\n${text}`);
+    if (args['public-file'] && !dry) writeFileSync(args['public-file'], text + '\n');
+  }
+  const dropped = pub.dropped.map((d) => `Tideline: not told to the channel,${d.id} ${d.from} -> ${d.to} did not hold 72 hours.`);
+
   if (changes.length) {
-    const message = alarmMessage(changes);
-    console.log(`\nALARM: ${changes.length} side change${changes.length === 1 ? '' : 's'}\n${message}`);
     const history = JSON.parse(backup.get(HISTORY) ?? '[]');
     mkdirSync(dirname(HISTORY), { recursive: true });
     writeFileSync(HISTORY, JSON.stringify([...history, ...changes], null, 1) + '\n');
     kept.push(HISTORY);
+  }
+  if (changes.length || dropped.length) {
+    const message = [...(changes.length ? [alarmMessage(changes)] : []), ...dropped].join('\n\n');
+    console.log(`\nALARM: ${changes.length} side change${changes.length === 1 ? '' : 's'}\n${message}`);
     if (args['message-file'] && !dry) writeFileSync(args['message-file'], message + '\n');
   } else console.log('\nNo side changed, no alarm.');
 

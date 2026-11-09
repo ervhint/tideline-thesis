@@ -1,0 +1,53 @@
+name: weekly-note
+
+# The Monday note for the public Telegram channel (T6k, docs/PLAN.md §6i K4). Started by cron-job.org through the API, Monday 01:00 UTC
+# (08:00 WIB). Reads only thesis.json and alarm/public.json, commits nothing. It posts only while the repo variable TELEGRAM_PUBLIC
+# is on; otherwise, and on a dry run, it prints the note.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Print the note, post nothing'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency: weekly-note
+
+jobs:
+  note:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Write the note
+        env:
+          TIDELINE_URL: ${{ vars.TIDELINE_URL }}
+        run: node pipeline/weekly_note.mjs --out "$RUNNER_TEMP/weekly.txt"
+      - name: Post to the channel
+        if: ${{ !inputs.dry_run }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ vars.TELEGRAM_PUBLIC == 'on' && secrets.TELEGRAM_CHANNEL_ID || '' }}
+        run: node pipeline/telegram.mjs --channel "$RUNNER_TEMP/weekly.txt"
+
+  tell:
+    needs: note
+    if: ${{ always() && !inputs.dry_run && (needs.note.result == 'failure' || needs.note.result == 'cancelled') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Tell the human
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node pipeline/telegram.mjs --failed weekly-note

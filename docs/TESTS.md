@@ -249,6 +249,20 @@ Tests written for the Explorer API or a quote archive (T-1.1, T-2.1, T-3.x quote
 | T-T6j.34 | J25 | Chrome + unit | Concentration in Pro | No 77% card; panel 72 to 1279px; typed-figure allow-list without the card's entries | ✅ pass | Chrome 8 Nov; npm test 295/295 |
 | T-T6j.35 | J26 | unit + Chrome | A first failed download, then a good one; Follow the Fee | The panel loads on the second try; the log has only the type and try number, no body text | ✅ pass | pipeline/panel.test.mjs; Chrome 8 Nov: Rolling Panel, 11 hours old |
 
+## T6k Telegram for users (docs/PLAN.md §6i)
+
+| ID | Covers | Type | Check | Expected | Status | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| T-T6k.1 | K2 | unit | A reading changes side; refresh at 71h, then at 72h | No public message at 71h; one at 72h; the private message went out at 0h | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs: posts 0/0/0/1/0 at 0, 1, 72, 73, 74h (72h after the change); skipped hours still count |
+| T-T6k.2 | K2 | unit | Replay 3 and 4 Nov: verdict Bullish → Undecided → Bullish within 28h | No public message; one private note that it flipped back | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs: nothing posted, Q5 and Verdict dropped; a third side restarts the clock |
+| T-T6k.3 | K3 | unit | Build each public kind (verdict, reading, blind spot) | Easy words; ends with the site link and "Research, not financial advice."; no "bps", "score", "top 3" or buy/sell words | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs: reading, verdict, blind spot closed and reopened |
+| T-T6k.4 | K3 | unit | A reading turns Bearish because public numbers fell; Q3 under the A2 hold | Never says demand fell; the Treasury is never called a solver; the hold is said plainly | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs |
+| T-T6k.5 | K4 | unit | Weekly note for a quiet week and for a week with a held change | "Quiet week" line, or the change listed; same footer | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs; `node pipeline/weekly_note.mjs` on today's thesis.json printed the note |
+| T-T6k.6 | K1 | unit | Failure message for `attest-days`, `refresh` and `panel` | Job name and run link only; goes to the private chat only | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs (also weekly-note); workflow check in T-T6k.8 |
+| T-T6k.7 | K5 | unit | Panel guard over the new files | No public-message file reaches panel or API code | ✅ pass | 9 Nov, pipeline/panel.test.mjs: public_alarm.mjs and weekly_note.mjs added to the entries |
+| T-T6k.8 | K6 | unit | No `TELEGRAM_CHANNEL_ID` | Public text printed, nothing posted; private sends unchanged | ✅ pass | 9 Nov, analysis/public_alarm.test.mjs: only two channel steps, both need `TELEGRAM_PUBLIC` on; the sender prints without the id |
+| T-T6k.9 | K1, K4 | Actions | Real failure test to the private chat; first channel post after the human's yes | Each arrives in the right chat only | ⏳ | |
+
 ## P7a review fixes (8 Nov 2026)
 
 From `/code-review` (high) and the spec review over T6i and T6j (6310967 to ad16287). No layout, figure, `data/`, thesis.json or THESIS.md changed.

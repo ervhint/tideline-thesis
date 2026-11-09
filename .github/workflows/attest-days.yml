@@ -41,3 +41,19 @@ jobs:
         env:
           NEAR_ATTEST_PRIVATE_KEY: ${{ secrets.NEAR_ATTEST_PRIVATE_KEY }}
         run: npm run attest:send
+
+  tell:
+    needs: attest
+    if: ${{ always() && (github.event_name == 'schedule' || !inputs.dry_run) && (needs.attest.result == 'failure' || needs.attest.result == 'cancelled') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Tell the human
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node pipeline/telegram.mjs --failed attest-days

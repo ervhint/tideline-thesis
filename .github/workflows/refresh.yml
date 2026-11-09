@@ -31,7 +31,9 @@ jobs:
         run: node pipeline/refresh.mjs --dry-run
       - name: Refresh
         if: github.event_name == 'schedule' || !inputs.dry_run
-        run: node pipeline/refresh.mjs --message-file "$RUNNER_TEMP/alarm.txt"
+        env:
+          TIDELINE_URL: ${{ vars.TIDELINE_URL }}
+        run: node pipeline/refresh.mjs --message-file "$RUNNER_TEMP/alarm.txt" --public-file "$RUNNER_TEMP/public.txt"
       - name: Verify
         if: github.event_name == 'schedule' || !inputs.dry_run
         run: npm run verify
@@ -51,3 +53,26 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node pipeline/telegram.mjs "$RUNNER_TEMP/alarm.txt"
+      # Changes that held 72 hours, in Easy words (T6k). Posted only while the repo variable TELEGRAM_PUBLIC is on; otherwise printed.
+      - name: Telegram channel
+        if: github.event_name == 'schedule' || !inputs.dry_run
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ vars.TELEGRAM_PUBLIC == 'on' && secrets.TELEGRAM_CHANNEL_ID || '' }}
+        run: node pipeline/telegram.mjs --channel "$RUNNER_TEMP/public.txt"
+
+  tell:
+    needs: refresh
+    if: ${{ always() && (github.event_name == 'schedule' || !inputs.dry_run) && (needs.refresh.result == 'failure' || needs.refresh.result == 'cancelled') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Tell the human
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node pipeline/telegram.mjs --failed refresh
