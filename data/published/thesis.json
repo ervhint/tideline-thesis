@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-10T04:23:25.567Z",
+ "asOf": "2026-11-10T05:23:24.214Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-09",
  "readings": [
@@ -409,20 +409,20 @@
   "query": "analysis/realised_cost.mjs solverConcentrationChain → data/published/fee_trace.json"
  },
  "vstar": {
-  "todayUsd": 3714703671,
-  "priceUsd": 3.62,
+  "todayUsd": 3727751510,
+  "priceUsd": 3.61,
   "at16": {
-   "low": 11089998599.013208,
-   "mid": 12365717249.532537,
-   "high": 47077337596.63259
+   "low": 11061004004.332052,
+   "mid": 12555375252.650988,
+   "high": 46954254774.74623
   },
   "at25": {
-   "low": 17473989476.367023,
-   "mid": 19484079385.302036,
-   "high": 74177547850.37874
+   "low": 17427359414.675335,
+   "mid": 19781842319.953316,
+   "high": 73979602004.23528
   },
-  "multiple16": 3.3288569815324407,
-  "multiple25": 5.245123463658923
+  "multiple16": 3.3680826683243668,
+  "multiple25": 5.3066418903961
  },
  "notes": {
   "llamaLastDay": "2026-11-09",
@@ -445,7 +445,7 @@
    "Pointing Bullish: NEAR's share of fees is 33% over the last 30 days and revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 76% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "Not measured because flow went private: Solver Competition. The Confidential Intents treasury, a bridge to a private chain, carried 93% of the USD counted over the last 7 frozen days and 33% over the last 30. Side figures that set no reading: other accounts' funds going into it were 95% of the flow we can see (7 of 7 days read) and top 3 solvers hold 50% of public swaps.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "With all revenue spent on buybacks, monthly volume must reach about 3.3x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.2x if issuance stays at 2.5%."
+   "With all revenue spent on buybacks, monthly volume must reach about 3.4x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.3x if issuance stays at 2.5%."
   ]
  }
 }
