@@ -2305,9 +2305,73 @@
     "readShare": 1,
     "digest": "f9553c6e1b0ba3cacf2ccc833968a9326d9b496f70a9b468bdce196af2f48161"
    }
+  },
+  {
+   "day": "2026-11-09",
+   "swaps": 19435,
+   "tokenDiffSwaps": 1494,
+   "transferSwaps": 17941,
+   "usd": 38724661.94,
+   "tokenDiffUsd": 410995.14,
+   "tokenDiffShareOfSwaps": 0.07687162335991768,
+   "tokenDiffShareOfUsd": 0.010613266053472506,
+   "unpricedSwaps": 573,
+   "byBucket": {
+    "0-1k": {
+     "swaps": 16042,
+     "usd": 2093797.77
+    },
+    "1k-10k": {
+     "swaps": 2234,
+     "usd": 7988705.25
+    },
+    "10k-100k": {
+     "swaps": 521,
+     "usd": 14952732.3
+    },
+    "100k+": {
+     "swaps": 65,
+     "usd": 13689426.62
+    },
+    "unpriced": {
+     "swaps": 573,
+     "usd": 0
+    }
+   },
+   "namedShareOfTokenDiffUsd": 0.7686175315844356,
+   "topReferrals": [
+    {
+     "referral": "1click-swapkit",
+     "usd": 152202.28
+    },
+    {
+     "referral": "1click-unknown",
+     "usd": 95097.07
+    },
+    {
+     "referral": "1click-near-intents.intents-referral.near",
+     "usd": 37013.77
+    },
+    {
+     "referral": "1click-zodl",
+     "usd": 27371.57
+    },
+    {
+     "referral": "1click-layerzero-vt",
+     "usd": 26176.13
+    }
+   ],
+   "solvers": 54,
+   "fillers": 19,
+   "census": {
+    "listed": 67659,
+    "read": 67659,
+    "readShare": 1,
+    "digest": "1d9a590f78c95177350223f5004dbf963f9e91ab96d7f18642384cd19459d476"
+   }
   }
  ],
  "firstDay": "2026-10-04",
- "lastDay": "2026-11-08",
+ "lastDay": "2026-11-09",
  "gaps": []
 }
