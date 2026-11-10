@@ -6,7 +6,7 @@ Research, not financial advice. This file is written by `pipeline/build_thesis_m
 
 NEAR uses its share of NEAR Intents fees to buy NEAR on the open market. The question is whether those buybacks could ever cover the new NEAR being issued.
 
-**At today's revenue rate, Intents volume would have to reach about 3.3 times today's level to cover issuance under the 1.6% plan, or 5.2 times if issuance stays at 2.5%. The evidence does not yet say whether it can get there, and most of the public data needed to answer that has moved out of public view.**
+**At today's revenue rate, Intents volume would have to reach about 3.3 times today's level to cover issuance under the 1.6% plan, or 5.3 times if issuance stays at 2.5%. The evidence does not yet say whether it can get there, and most of the public data needed to answer that has moved out of public view.**
 
 The verdict is **Undecided**. The score is +3 of 7, which would normally read Bullish. It is held at Undecided on purpose: Solver Competition can no longer be measured, and a rule written in advance (PREREG.md, amendment A2) says a loss of data may not move the verdict.
 
@@ -16,7 +16,7 @@ The verdict is **Undecided**. The score is +3 of 7, which would normally read Bu
 
 - **NEAR keeps a real share of the fees.** DefiLlama books 32% of Intents fees as NEAR revenue over the last 30 days, above the 30% line for Bullish.
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $3.71B. The level needed under the 1.6% plan is about $12.4B, with an interval of $11.1B to $47.1B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $3.71B. The level needed under the 1.6% plan is about $12.4B, with an interval of $11.1B to $47.2B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
