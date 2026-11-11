@@ -16,7 +16,7 @@ The verdict is **Undecided**. The score is +3 of 7, which would normally read Bu
 
 - **NEAR keeps a real share of the fees.** DefiLlama books 30% of Intents fees as NEAR revenue over the last 30 days, above the 30% line for Bullish.
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $3.76B. The level needed under the 1.6% plan is about $13.0B, with an interval of $11.3B to $48.0B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $3.76B. The level needed under the 1.6% plan is about $13.1B, with an interval of $11.3B to $48.2B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
