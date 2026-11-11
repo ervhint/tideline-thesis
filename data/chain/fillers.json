@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03",
+ "updated": "2026-11-10",
  "fillers": [
   {
    "account": "0x4f77780141b0770a33d270ee255beb25c9568c7b",
@@ -60,6 +60,11 @@
    "account": "defuse-relay.near",
    "kind": "solver",
    "since": "2026-11-03"
+  },
+  {
+   "account": "intentfolio-vault.near",
+   "kind": "solver",
+   "since": "2026-11-10"
   },
   {
    "account": "kipseli.near",
