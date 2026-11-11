@@ -6,7 +6,7 @@ Research, not financial advice. This file is written by `pipeline/build_thesis_m
 
 NEAR uses its share of NEAR Intents fees to buy NEAR on the open market. The question is whether those buybacks could ever cover the new NEAR being issued.
 
-**At today's revenue rate, Intents volume would have to reach about 3.4 times today's level to cover issuance under the 1.6% plan, or 5.4 times if issuance stays at 2.5%. The evidence does not yet say whether it can get there, and most of the public data needed to answer that has moved out of public view.**
+**At today's revenue rate, Intents volume would have to reach about 3.5 times today's level to cover issuance under the 1.6% plan, or 5.6 times if issuance stays at 2.5%. The evidence does not yet say whether it can get there, and most of the public data needed to answer that has moved out of public view.**
 
 The verdict is **Undecided**. The score is +3 of 7, which would normally read Bullish. It is held at Undecided on purpose: Solver Competition can no longer be measured, and a rule written in advance (PREREG.md, amendment A2) says a loss of data may not move the verdict.
 
@@ -16,11 +16,11 @@ The verdict is **Undecided**. The score is +3 of 7, which would normally read Bu
 
 - **NEAR keeps a real share of the fees.** DefiLlama books 33% of Intents fees as NEAR revenue over the last 30 days, above the 30% line for Bullish.
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $3.76B. The level needed under the 1.6% plan is about $12.9B, with an interval of $11.2B to $47.5B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $3.76B. The level needed under the 1.6% plan is about $13.3B, with an interval of $11.5B to $49.0B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
-- **The gap is large.** A 3.4 times rise is not a rounding error, and the top of the interval is far higher.
+- **The gap is large.** A 3.5 times rise is not a rounding error, and the top of the interval is far higher.
 - **Revenue per dollar of volume looks lower lately.** It was 5.3 bps over the 30 days before 27 Oct and 4.3 bps over the 15 days since. So few days cannot show that the rate really changed, and DefiLlama may not see all private volume, so this is a warning and not a finding. If the 30-day capture falls under 30%, NEAR's Share of Fees moves from Bullish to Neutral.
 - **One frontend brings much of the visible fees.** SwapKit pays 77% of visible app fees over the last 30 frozen days, just under the 80% line for Bearish. Visible app fees are a shrinking part of the flow: the Treasury carried 96% of counted USD over the last 7 days against 37% over 30.
 - **Pricing power is unproven.** The best estimate says volume barely moves when a fee changes, but the data cannot tell that apart from a large effect in either direction (below).
