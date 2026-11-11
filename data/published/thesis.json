@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-10T23:23:23.484Z",
+ "asOf": "2026-11-11T00:23:17.418Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-09",
  "readings": [
@@ -410,19 +410,19 @@
  },
  "vstar": {
   "todayUsd": 3727751510,
-  "priceUsd": 3.56,
+  "priceUsd": 3.6,
   "at16": {
-   "low": 10919944132.738686,
-   "mid": 12350533766.644735,
-   "high": 46355451886.08496
+   "low": 11043396223.588453,
+   "mid": 12490158951.358988,
+   "high": 46879509279.425095
   },
   "at25": {
-   "low": 17198489713.3685,
-   "mid": 19451613063.05859,
-   "high": 73008044064.18098
+   "low": 17392487107.267563,
+   "mid": 19671025482.652218,
+   "high": 73831568136.24585
   },
-  "multiple16": 3.3131322550640547,
-  "multiple25": 5.2180551763919985
+  "multiple16": 3.350587859156682,
+  "multiple25": 5.276914362420101
  },
  "notes": {
   "llamaLastDay": "2026-11-09",
@@ -435,17 +435,17 @@
   "namesThatChange": []
  },
  "text": {
-  "asOf": "2026-11-10",
+  "asOf": "2026-11-11",
   "fixed": [
    "Tideline asks whether NEAR Intents fees could ever cover the new NEAR being issued. This is research, not financial advice.",
    "A Bullish reading means the evidence passed a line set in advance, not that the price will rise."
   ],
   "live": [
-   "As of 10 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +3 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
+   "As of 11 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +3 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
    "Pointing Bullish: NEAR's share of fees is 33% over the last 30 days and revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 76% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "Not measured because flow went private: Solver Competition. The Confidential Intents treasury, a bridge to a private chain, carried 93% of the USD counted over the last 7 frozen days and 33% over the last 30. Side figures that set no reading: other accounts' funds going into it were 95% of the flow we can see (7 of 7 days read) and top 3 solvers hold 50% of public swaps.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "With all revenue spent on buybacks, monthly volume must reach about 3.3x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.2x if issuance stays at 2.5%."
+   "With all revenue spent on buybacks, monthly volume must reach about 3.4x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.3x if issuance stays at 2.5%."
   ]
  }
 }
