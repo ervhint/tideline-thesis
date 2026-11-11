@@ -1,5 +1,5 @@
 {
- "pulledAt": "2026-11-11T01:23:17.174Z",
+ "pulledAt": "2026-11-11T03:23:16.429Z",
  "source": "DefiLlama aggregators/cowswap dailyVolume",
  "days": [
   {
@@ -4248,7 +4248,7 @@
   },
   {
    "day": "2026-11-10",
-   "volume": 199774601
+   "volume": 200583674
   }
  ]
 }
