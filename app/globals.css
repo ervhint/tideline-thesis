@@ -298,12 +298,7 @@ header.wrap{padding:0 54px}
   .e-top{grid-template-columns:1fr;margin-top:24px;gap:24px}
   .empty{padding:24px 20px 28px}
   .e-text{max-width:none}
-  .chart{margin:24px 0 32px;height:330px}
-  .chart .abs{left:20px!important;right:20px;white-space:normal!important}
   .lab-skip{display:none}
-  .chart .axis{left:20px;right:20px}
-  .mde{left:20px!important;right:20px!important;top:250px!important;height:50px;padding:10px 12px}
-  .atick{top:132px!important;height:44px}.atrack{top:160px!important}.amark{top:174px!important}.alabel{top:186px!important}
   .repro{gap:24px;margin-top:24px}
   .steps{padding:24px 20px 8px}
   .cmd code{font-size:16px;overflow-wrap:anywhere}
@@ -338,13 +333,25 @@ header.wrap{padding:0 54px}
 .ctrack span{display:block;height:14px}
 .ctrack span:first-child{border-radius:7px 0 0 7px}
 .cscale{position:absolute;left:0;right:0;top:96px;display:flex;justify-content:space-between;font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;color:var(--text-muted)}
-.chart .axis{position:absolute;left:40px;right:40px;top:0;height:270px}
-.atrack{position:absolute;left:0;right:0;top:130px;height:14px;border-radius:7px;background:var(--track)}
-.atick{position:absolute;top:92px;width:2px;height:52px;background:var(--text)}
-.amark{position:absolute;top:144px;width:1px;height:8px;background:var(--text-muted)}
-.alabel{position:absolute;top:156px;transform:translateX(-50%);font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;color:var(--text-muted);white-space:nowrap}
+/* 12 Nov 2026: the title and caption flow and wrap, and the axis and the dashed box follow them, so a long data-built
+   caption grows the chart instead of running out of it (it reached past the card once the freeze listed more reasons).
+   Same spacing as the fixed layout before: title 24px from the top, ticks 20px under the caption, box 24px under the labels. */
+.chart{height:auto;padding:24px 40px 28px}
+.chart .abs{position:static;white-space:normal;max-width:none}
+.chart .abs.small{margin-top:4px}
+.chart .axis{position:relative;left:auto;right:auto;top:auto;height:80px;margin-top:20px}
+.atrack{position:absolute;left:0;right:0;top:38px;height:14px;border-radius:7px;background:var(--track)}
+.atick{position:absolute;top:0;width:2px;height:52px;background:var(--text)}
+.amark{position:absolute;top:52px;width:1px;height:8px;background:var(--text-muted)}
+.alabel{position:absolute;top:64px;transform:translateX(-50%);font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;color:var(--text-muted);white-space:nowrap}
 .alabel:first-of-type{transform:none}
-.mde{position:absolute;left:40px;right:40px;top:196px;height:44px;border:1px dashed var(--text-muted);border-radius:8px;padding:14px 16px;font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;color:var(--text-muted)}
+.mde{position:static;margin-top:24px;border:1px dashed var(--text-muted);border-radius:8px;padding:14px 16px;font-family:var(--font-label);font-weight:600;font-size:13px;line-height:16px;color:var(--text-muted)}
+@media (max-width:900px){
+  .chart{margin:24px 0 32px;padding:20px 20px 24px}
+  .chart .axis{height:70px}
+  .mde{margin-top:20px;padding:10px 12px}
+  .atick{height:44px}.atrack{top:28px}.amark{top:42px}.alabel{top:54px}
+}
 .banner.error{border-color:var(--bearish)}
 .banner.error .bar{background:var(--bearish)}
 .err-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:24px}

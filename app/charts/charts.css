@@ -24,7 +24,7 @@
 .ac-card .gauge,.ac-card .gauge-inset{margin:-56px 0 -24px}
 .ac-card .gauge-m,.ac-card .ci,.ac-card .chart{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0}
 .ac-card .ci{padding:0}
-.ac-card .chart{margin:0}
+.ac-card .chart{margin:0;padding:0}
 .ac-card .gauge-m{margin:0;padding:0}
 
 /* The five readings, one column each */
@@ -44,16 +44,8 @@
   .ac-card .cscale{position:static!important;order:5}
   .ac-card .s-row{grid-template-columns:14px 1fr;column-gap:12px;row-gap:4px;align-items:center}
   .ac-card .s-row>div{grid-column:1/-1}
-  .ac-card .chart{height:330px}
-  .ac-card .chart .abs{left:0!important;right:0;white-space:normal!important}
   .ac-card .lab-skip{display:none}
-  .ac-card .chart .axis{left:0;right:0}
-  .ac-card .chart{height:auto}
-  .ac-card .mde{position:relative!important;left:auto!important;right:auto!important;top:auto!important;height:auto;margin-top:250px;padding:10px 12px}
-  .ac-card .atick{top:132px!important;height:44px}
-  .ac-card .atrack{top:160px!important}
-  .ac-card .amark{top:174px!important}
-  .ac-card .alabel{top:186px!important}
+  .ac-card .mde{padding:10px 12px}
 }
 
 @media (max-width:900px){
