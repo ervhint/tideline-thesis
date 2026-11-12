@@ -1,6 +1,6 @@
 # Tideline progress
 
-**SUBMITTED 12 Nov 2026. Results by 18 Nov. Only G7 (the human's "shipped" yes) is open; see "Final note (12 Nov 2026)".**
+**SHIPPED AND SUBMITTED 12 Nov 2026 (G7 passed). Results by 18 Nov. See "Final note (12 Nov 2026)".**
 
 Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Codespaces run passed 9 Nov (T-0.2, T-T6j.29: verify ALL OK, attest:check 2026-11-07 MATCH). **T6k Telegram done and on main (9 Nov, `356e283` to `aaa78b2`):** public channel `@tideline_thesis` on, first post sent by the cron-job.org test run. **P7b deploy done (9 Nov): live at https://tideline-near.vercel.app** (Vercel project `tideline`, team ervhint; `b70a0ef` on main). README brought to the hackathon rules and pushed (9 Nov, `4c0590b`). G7 (the human's "shipped" yes) not yet asked. **Next chat: work the Submission checklist below, one item at a time, starting with the pitch outline.** The human wants to go item by item and see what's done and what isn't, so tick items here as they finish. Ticket 79934: no answer yet, panel stays on (human, 9 Nov).
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: https://tideline-near.vercel.app (dev: localhost:3112).
@@ -29,13 +29,13 @@ Rules: https://nearhackathon.com/HACKATHON.md (read 9 Nov; re-read before submit
 - [x] Mainnet NEAR account for the prize: `ervhint.near` (created by the human 12 Nov; on mainnet RPC with one full-access key, checked 12 Nov). The form draft has it in field 6
 - [x] **Submitted 12 Nov 2026 through the form (the human).** The site answered "Submission received. You're on the radar!": keep the repo public and the demo post up; results by 18 Nov 2026, 23:59 UTC; mistakes only through Request changes. Screenshot: `internal/submission-received-2026-11-12.png` (gitignored). Fields as in `internal/submission-form.md`. Original note: Submit via the form or the API, once: project name, team lead, email, size, tracks, NEAR account, repo link, X post link, idea, consent read verbatim. Via the API, never send `website` (spam trap). Claude prints the full payload first and waits for a yes.
 - [x] Final PROGRESS note: see "Final note (12 Nov 2026)" below
-- [ ] G7: the human's "shipped" yes
+- [x] G7: the human said "everything is shipped" (12 Nov 2026)
 
 ## Final note (12 Nov 2026)
 
 **Submitted 12 Nov 2026** (form, Investment Thesis track, solo, prize account `ervhint.near`). Results by 18 Nov 2026, 23:59 UTC. Until then: repo public, site up, X post up; changes only through https://nearhackathon.com/request-changes.
 
-**Scope: complete.** Every item in the submission checklist above is done except G7.
+**Scope: complete.** Every item in the submission checklist above is done, G7 included.
 
 **Live links**
 - Site: https://tideline-near.vercel.app (updates on its own: hourly refresh, daily chain day and attest, daily panel)
