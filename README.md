@@ -132,6 +132,18 @@ npm run rebuild
 This recomputes every chart from stored public data.
 
 ```bash
+npx next dev -p 3112
+```
+
+This runs the site locally.
+
+Prefer not to install anything? The Reproduce page has an "Open in Codespaces" button. It opens this repo in your browser with everything installed, so you only type `npm run verify`. It runs on your own GitHub account, free within GitHub's monthly Codespaces hours.
+
+### Optional: needs your own keys
+
+Everything above works without a key. These two go further and need your own access. Without it they stop with a message naming what's missing, and nothing in the thesis depends on them.
+
+```bash
 npm run rebuild -- --bigquery
 ```
 
@@ -142,14 +154,6 @@ npm run panel
 ```
 
 This prints the rolling panel using your own `INTENTS_EXPLORER_JWT` (from the NEAR Intents partner dashboard), and writes nothing to the repo. Without one it stops with "INTENTS_EXPLORER_JWT is missing". That is expected: the panel only sits beside the thesis and sets no reading, and every reading re-runs without a key through `npm run verify`.
-
-```bash
-npx next dev -p 3112
-```
-
-This runs the site locally.
-
-Prefer not to install anything? The Reproduce page has an "Open in Codespaces" button. It opens this repo in your browser with everything installed, so you only type `npm run verify`. It runs on your own GitHub account, free within GitHub's monthly Codespaces hours.
 
 ## Data sources
 
