@@ -58,6 +58,18 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
 /* hero type */
 .eyebrow{font-size:calc(16*var(--u));font-weight:470;letter-spacing:-.015em;line-height:1;color:var(--muted);white-space:nowrap;margin:0}
 .hx-h1{font-size:calc(98*var(--u));font-weight:360;letter-spacing:-.035em;line-height:calc(90*var(--u));color:var(--ink);white-space:nowrap;margin:0}
+/* 12 Nov 2026: on boxy screens (3:2 or narrower, the main layout) the bar is about 1280 units wide, and Pro's
+   "Volume Must Reach" ran up to 43px under the verdict panel (1024x768 to 1280x1024). The headline is set 12% smaller
+   there; wider shapes keep the reference size, and the compact and phone layouts keep their own. */
+@media (max-aspect-ratio:3/2) and (min-aspect-ratio:87/80) and (min-width:900px) and (min-height:640px){.hx-h1{font-size:calc(86*var(--u));line-height:calc(79*var(--u))}}
+/* Same screens: Open Model in the hero ran up to 17px over the label under the second figure. It takes the compact size
+   its top-bar copy uses (230 by 70 units, not 269 by 86), so it ends further right. */
+@media (max-aspect-ratio:3/2) and (min-aspect-ratio:87/80) and (min-width:900px) and (min-height:640px){
+  .hx-row .meet{width:calc(230*var(--u));height:calc(70*var(--u))}
+  .hx-row .meet .thumb{left:calc(9*var(--u));top:calc(9*var(--u));width:calc(52*var(--u));height:calc(52*var(--u))}
+  .hx-row .meet b{left:calc(72*var(--u));top:calc(26.5*var(--u))}
+  .hx-row .meet .hx-knob{left:calc(172*var(--u));top:calc(10.5*var(--u));width:calc(49*var(--u));height:calc(49*var(--u))}
+}
 .play{width:calc(50.5*var(--u));height:calc(50.5*var(--u));border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 calc(6*var(--u)) calc(18*var(--u)) rgba(28,52,92,.1)}
 .play svg{width:calc(13*var(--u));height:calc(14*var(--u))}
 .hx-tag{font-size:calc(24*var(--u));font-weight:470;letter-spacing:-.03em;line-height:1;color:var(--ink-soft);white-space:nowrap}
@@ -142,6 +154,10 @@ a:focus-visible,button:focus-visible{outline:calc(2*var(--u)) solid #2f5f9e;outl
     .hx-h1{grid-column:1;grid-row:2}
     .tagrow{grid-column:1;grid-row:3}
     .hx-panel{grid-column:2;grid-row:1 / span 3;align-self:center;margin-top:0}
+    /* 12 Nov 2026: the headline fits its column (the block minus the 350-unit panel and the 46-unit gap), up to the
+       reference 98 units. Pro's "Volume Must Reach" is about 8.3 ems wide; it ran 20 to 100px under the panel here. */
+    .hero-blk{container-type:inline-size}
+    .hx-h1{font-size:min(calc(98*var(--u)),calc((100cqw - 396*var(--u)) / 8.6));line-height:.92}
     .hx-row{flex-wrap:nowrap}
   }
 
