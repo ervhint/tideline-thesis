@@ -141,7 +141,7 @@ This re-runs the SQL in [queries/](queries/) with your own Google project (set `
 npm run panel
 ```
 
-This prints the rolling panel using your own `INTENTS_EXPLORER_JWT`, and writes nothing to the repo.
+This prints the rolling panel using your own `INTENTS_EXPLORER_JWT` (from the NEAR Intents partner dashboard), and writes nothing to the repo. Without one it stops with "INTENTS_EXPLORER_JWT is missing". That is expected: the panel only sits beside the thesis and sets no reading, and every reading re-runs without a key through `npm run verify`.
 
 ```bash
 npx next dev -p 3112

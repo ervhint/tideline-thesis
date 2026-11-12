@@ -10,7 +10,7 @@ let lastRequest = 0;
 export function explorerJwt() {
   const fromFile = existsSync('.env') ? readFileSync('.env', 'utf8').match(/^INTENTS_EXPLORER_JWT=(.+)$/m)?.[1]?.trim() : null;
   const jwt = process.env.INTENTS_EXPLORER_JWT || fromFile;
-  if (!jwt) throw new Error('INTENTS_EXPLORER_JWT is missing');
+  if (!jwt) throw new Error('INTENTS_EXPLORER_JWT is missing. The rolling panel needs your own Explorer API key and sets no reading; every reading re-runs without one: npm run verify');
   return jwt;
 }
 
