@@ -11,6 +11,7 @@ const before = [
   ['/model/', 'Model'],
 ] as const;
 const after = [
+  ['/charts/', 'All Charts'],
   ['/reproduce/', 'Reproduce'],
   ['/method/', 'Method'],
 ] as const;

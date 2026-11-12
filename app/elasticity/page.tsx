@@ -1,6 +1,7 @@
 import { Button } from '@/components/Button';
 import { Banner } from '@/components/Banner';
 import { ErrorSwap, RetryButton } from '@/components/ErrorSwap';
+import { FeeChangeAxis } from '@/components/FeeChangeAxis';
 import { IntervalPlot } from '@/components/IntervalPlot';
 import { Page } from '@/components/Page';
 import { EasyOnly, Rich, Say } from '@/components/Say';
@@ -22,11 +23,6 @@ export default async function Elasticity({ searchParams }: { searchParams: Promi
       </Page>
     );
   }
-  const days = elasticity.days ?? [];
-  const ax = elasticity.axis; // from the first day read to the last
-  const start = Date.parse(ax.start), end = Date.parse(ax.end);
-  const pos = (d: string) => ((Date.parse(d) - start) / (end - start)) * 100;
-  const labels = ax.labels;
   const rows = elasticity.checks.map((c, i) => (
     <div key={i}>
       <p className="s-name">{c.name}</p>
@@ -68,23 +64,7 @@ export default async function Elasticity({ searchParams }: { searchParams: Promi
           </>}
         </div>
 
-      <figure className="chart" aria-label={`${days.length} fee changes on a date axis`}>
-        <p className="abs strong" style={{ left: 40, top: 24 }}><Say pro={`${days.length} Frozen Fee Changes`} easy={elasticity.easy?.title ?? `${days.length} Frozen Fee Changes`} /></p>
-        <p className="abs small" style={{ left: 40, top: 52 }}>
-          <Say pro={elasticity.caption} easy={elasticity.easy?.caption ?? elasticity.caption} />
-        </p>
-        <div className="axis">
-          <span className="atrack" />
-          {days.map((d, i) => <span key={i} className="atick" style={{ left: `${pos(d)}%` }} />)}
-          {labels.map(([t, d], i) => (
-            <span key={t} className={i % 2 ? 'lab-skip' : undefined}>
-              <span className="amark" style={{ left: `${pos(d)}%` }} />
-              <span className={i === 0 ? 'alabel first' : 'alabel'} style={{ left: `${pos(d)}%` }}>{t}</span>
-            </span>
-          ))}
-        </div>
-        <div className="mde"><Say pro={elasticity.mde} easy={elasticity.easy?.mde ?? elasticity.mde} /></div>
-      </figure>
+      <FeeChangeAxis elasticity={elasticity} />
 
       <a className="s-query q-own" href="/reproduce/#elasticity">Open the Query</a>
       <Button href="/model/" variant="secondary">Use the Full Range in the Model</Button>

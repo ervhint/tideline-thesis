@@ -1,4 +1,5 @@
 import { Banner } from '@/components/Banner';
+import { FeeSplit } from '@/components/FeeSplit';
 import { ErrorSwap, RetryButton } from '@/components/ErrorSwap';
 import { NumberSheet } from '@/components/NumberSheet';
 import { Page } from '@/components/Page';
@@ -6,9 +7,6 @@ import { PanelSlot } from '@/components/PanelNote';
 import { Rich, Say } from '@/components/Say';
 import { getNumbers } from '@/lib/data';
 import { EASY } from '@/lib/easy_text';
-
-// Swatches: App Fee dark, Withdraw Fee blue, Unexplained muted (Figma, version B).
-const swatch: Record<string, string> = { app: 'var(--action)', spread: 'var(--accent)', withdraw: 'var(--accent)', protocol: 'var(--text-muted)', unexplained: 'var(--text-muted)' };
 
 export const revalidate = 300; // re-read the published data every 5 minutes
 
@@ -37,7 +35,6 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
       </Page>
     );
   }
-  const bar = fee.parts.filter((p) => p.share);
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const lastGood = fee.asOf ? `${Number(fee.asOf.slice(8, 10))} ${MONTHS[Number(fee.asOf.slice(5, 7)) - 1]} ${fee.asOf.slice(0, 4)}` : null;
   return (
@@ -58,31 +55,7 @@ export default async function FollowTheFee({ searchParams }: { searchParams: Pro
       <div className="s2-grid">
         <div className="glass split num">
           <p className="s-title"><Say pro={`Of the ${fee.total}, Where It Goes`} easy={fee.easyTitle} /></p>
-          <div className="cbar" role="img" aria-label={bar.map((p) => `${p.value} ${p.name}`).join(', ')}>
-            <p className="abs strong" style={{ left: 0, top: 0 }}><Say pro={`All-In ${fee.total}`} easy={`Total ${fee.total}`} /></p>
-            <p className="abs small" style={{ left: 0, top: 26 }}><Say pro={`${fee.card.value} below the outside price`} easy={fee.easyBelow} /></p>
-            <div className="callout">
-              <p className="strong"><Say pro={fee.spreadNote} easy={fee.easySpreadNote} /></p>
-              <p className="small"><Say pro={fee.spreadSub} easy={fee.easySpreadSub} /></p>
-              <span className="ctick" />
-            </div>
-            <div className="ctrack">
-              {bar.map((p) => (
-                <span key={p.key} style={{ flexGrow: p.share, minWidth: p.minPx, background: swatch[p.key] }} />
-              ))}
-            </div>
-            <div className="cscale">{['0%', '25%', '50%', '75%', '100%'].map((t) => <span key={t}>{t}</span>)}</div>
-          </div>
-          {fee.parts.map((p) => (
-            <div className="s-row" key={p.key}>
-              {p.share ? <span className="sw" style={{ background: swatch[p.key] }} /> : <img src="/assets/ring.svg" alt="" width={14} height={14} />}
-              <p className={`s-val${p.share ? '' : ' dim'}`}>{p.value}</p>
-              <div>
-                <p className="s-name"><Say pro={p.name} easy={p.easyName ?? p.name} /></p>
-                <p className="s-text"><Say pro={p.text} easy={<Rich text={p.easy} />} /></p>
-              </div>
-            </div>
-          ))}
+          <FeeSplit fee={fee} />
           <a className="s-query" href="/reproduce/#fee-trace">Open the Query</a>
         </div>
         <NumberSheet

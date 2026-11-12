@@ -56,6 +56,7 @@ export default async function Headline() {
           <a className="link" href="/reproduce/#q1"><Say pro="Open the Query for Each Reading" easy={EASY.titles.queries} /></a>
           <a className="link" href="/what-would-move/"><Say pro="What Would Move Each Reading" easy={EASY.titles.move} /></a>
           <a className="link" href="/concentration/"><Say pro="Who Brings the Volume?" easy={EASY.titles.concentration} /></a>
+          <a className="link" href="/charts/">See Every Chart in One Place</a>
         </div>
         {headline.text && (
           <section className="means" aria-labelledby="means-h">

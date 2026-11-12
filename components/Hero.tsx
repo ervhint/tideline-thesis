@@ -19,7 +19,16 @@ type Props = { asOf: string; multiple: string; covered: boolean; today: number; 
 
 const H = EASY.hero;
 
+// The hero's headline words, shared with All Charts (docs/PLAN.md §6j L4): two lines and the tag, Pro and Easy.
+export function heroLines(multiple: string, covered: boolean) {
+  return {
+    pro: [covered ? 'Volume Already Covers' : 'Volume Must Reach', covered ? '1.6% Issuance' : `${multiple} Today`, covered ? "at today's fees and NEAR price." : 'before buybacks cover 1.6% issuance.'],
+    easy: [covered ? H.coveredLine1 : H.line1, covered ? H.coveredLine2 : `${H.before} ${multiple} ${H.after}`, covered ? H.coveredTag : H.tag],
+  };
+}
+
 export function Hero({ asOf, multiple, covered, today, gapTo, gapCaption, verdict, sides = [], hold = null }: Props) {
+  const L = heroLines(multiple, covered);
   return (
     <section className="card" aria-label="Headline">
       <div className="hx-stack">
@@ -28,14 +37,14 @@ export function Hero({ asOf, multiple, covered, today, gapTo, gapCaption, verdic
           <p className="eyebrow l c sx" style={at(65.7, -209.2, 0.9293)}>{`Data as of ${asOf}`}</p>
           <h1 className="hx-h1 l c num" style={at(62.6, -167.3)}>
             {/* Easy swaps the words, never the numbers (§6g E12). */}
-            <span className="sx" style={{ '--sx': 0.9431 } as CSSProperties}><Say pro={covered ? 'Volume Already Covers' : 'Volume Must Reach'} easy={covered ? H.coveredLine1 : H.line1} /></span><br />
-            <span className="sx" style={{ '--sx': 0.9792 } as CSSProperties}><Say pro={covered ? '1.6% Issuance' : `${multiple} Today`} easy={covered ? H.coveredLine2 : `${H.before} ${multiple} ${H.after}`} /></span>
+            <span className="sx" style={{ '--sx': 0.9431 } as CSSProperties}><Say pro={L.pro[0]} easy={L.easy[0]} /></span><br />
+            <span className="sx" style={{ '--sx': 0.9792 } as CSSProperties}><Say pro={L.pro[1]} easy={L.easy[1]} /></span>
           </h1>
           <div className="tagrow">
             <a className="play l c" style={at(66, 34)} href="#gauge" aria-label="Go to the gauge">
               <svg viewBox="0 0 13 14" fill="none" aria-hidden="true"><path d="M1.4 1.3 11.6 7 1.4 12.7z" fill="#0b1526" /></svg>
             </a>
-            <span className="hx-tag l c sx" style={at(131, 48.7, 0.8973)}><Say pro={covered ? "at today's fees and NEAR price." : 'before buybacks cover 1.6% issuance.'} easy={covered ? H.coveredTag : H.tag} /></span>
+            <span className="hx-tag l c sx" style={at(131, 48.7, 0.8973)}><Say pro={L.pro[2]} easy={L.easy[2]} /></span>
           </div>
           <aside className={`hx-panel l c r${hold ? ' on-hold' : ''}`} style={at(58, -165)}>
             {hold ? (

@@ -95,6 +95,10 @@ export async function getConcentration() {
   return concentrationView(th, th?.readings.find((r) => r.id === 'Q4')?.detail ?? null);
 }
 
+// Concentration's lead, shared with All Charts (docs/PLAN.md §6j L4).
+export const concentrationLead = (c: { solverDays?: unknown[] | null }) =>
+  `Share from the largest integrator and the largest solvers, by swap size. ${c.solverDays ? "Both are read from our data." : "The integrator column is read from our data; the solver columns are not measured yet."}`;
+
 // U4: the model's inputs from the published file; `market` is null when it cannot be read, and the page says so.
 // The elasticity interval from U5 sets the Model page's elasticity slider (FR-10, FR-11); null when the file is missing.
 export type ElasticityRange = { estimate: number; lo: number; hi: number } | null;

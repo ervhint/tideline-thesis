@@ -1,0 +1,81 @@
+/* All Charts (docs/PLAN.md §6j L6). Every rule is scoped to .ac-*, so no other page changes. */
+.ac-group{margin-top:56px}
+.ac-gtitle{font-weight:400;font-size:28px;line-height:34px;letter-spacing:-.03em;margin:0 0 20px}
+.ac-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
+.ac-card{display:flex;flex-direction:column;gap:18px;min-width:0;container-type:inline-size}
+.ac-card p{margin:0}
+.ac-wide{grid-column:1/-1}
+.ac-name{margin:0;font-weight:500;font-size:15px;line-height:19px;letter-spacing:-.02em;color:var(--text-muted)}
+.ac-take,.ac-take .p-body{font-weight:400;font-size:20px;line-height:28px;letter-spacing:-.02em;color:var(--text)}
+.ac-take .p-body{margin:0}
+.ac-take .m-wrap{display:contents}
+.ac-vis{min-width:0;display:flex;flex-direction:column;gap:24px}
+.ac-sentence{font-size:15px;line-height:22px;letter-spacing:-.01em;color:var(--text)}
+.ac-source{font-size:13px;line-height:18px;color:var(--text-muted)}
+.ac-card .q-fold{margin:0}
+.ac-links{display:flex;align-items:center;gap:12px 28px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.ac-links .s-query{min-height:24px;display:inline-flex;align-items:center}
+.ac-btn{width:fit-content}
+.ac-figure{font-weight:200;font-size:64px;line-height:64px;letter-spacing:-.04em}
+.ac-split{display:flex;flex-direction:column;gap:16px}
+
+/* No glass inside glass: charts that draw their own panel lose it inside a card. */
+.ac-card .gauge::before{display:none}
+.ac-card .gauge,.ac-card .gauge-inset{margin:-56px 0 -24px}
+.ac-card .gauge-m,.ac-card .ci,.ac-card .chart{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0}
+.ac-card .ci{padding:0}
+.ac-card .chart{margin:0}
+.ac-card .gauge-m{margin:0;padding:0}
+
+/* The five readings, one column each */
+.ac-readings{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:auto auto auto;column-gap:24px;border-top:1px solid var(--track);padding-top:20px}
+.ac-rcol{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:14px;min-width:0}
+.ac-rcol .reading{width:auto;padding:0}
+.ac-rcol .s-query{margin-top:auto}
+
+/* Narrow cards draw the cost bar and the date axis the way phones do (same rules as globals.css at 900px). */
+@container (max-width:620px){
+  .ac-card .cbar{height:auto!important;display:flex!important;flex-direction:column;gap:6px}
+  .ac-card .cbar .abs{position:static!important}
+  .ac-card .callout{position:static!important;text-align:left!important;order:3;margin:10px 0 6px}
+  .ac-card .callout .strong{font-size:17px;line-height:22px;white-space:normal}
+  .ac-card .ctick{display:none}
+  .ac-card .ctrack{position:relative!important;top:auto!important;order:4;margin-top:6px}
+  .ac-card .cscale{position:static!important;order:5}
+  .ac-card .s-row{grid-template-columns:14px 1fr;column-gap:12px;row-gap:4px;align-items:center}
+  .ac-card .s-row>div{grid-column:1/-1}
+  .ac-card .chart{height:330px}
+  .ac-card .chart .abs{left:0!important;right:0;white-space:normal!important}
+  .ac-card .lab-skip{display:none}
+  .ac-card .chart .axis{left:0;right:0}
+  .ac-card .chart{height:auto}
+  .ac-card .mde{position:relative!important;left:auto!important;right:auto!important;top:auto!important;height:auto;margin-top:250px;padding:10px 12px}
+  .ac-card .atick{top:132px!important;height:44px}
+  .ac-card .atrack{top:160px!important}
+  .ac-card .amark{top:174px!important}
+  .ac-card .alabel{top:186px!important}
+}
+
+@media (max-width:900px){
+  .ac-group{margin-top:40px}
+  .ac-gtitle{font-size:24px;line-height:30px;margin-bottom:16px}
+  .ac-grid{grid-template-columns:1fr;gap:16px}
+  .ac-readings{grid-template-columns:1fr;grid-template-rows:none;row-gap:28px}
+  .ac-rcol{grid-row:auto;grid-template-rows:none;row-gap:10px}
+  .ac-rcol .reading{padding:0}
+  .ac-rcol .reading .detail{max-width:none}
+  .ac-take,.ac-take .p-body{font-size:18px;line-height:25px}
+  .ac-figure{font-size:52px;line-height:54px}
+  .ac-links .s-query,.ac-rcol .s-query{min-height:44px;display:inline-flex;align-items:center}
+  .ac-card .gauge-m{margin-top:0}
+}
+
+/* Fee rows in a card: swatch, value and name on one line; each row's long note stays on Follow the Fee. */
+.ac-split .s-row{display:grid;grid-template-columns:14px 96px minmax(0,1fr)!important;column-gap:14px!important;align-items:center!important}
+.ac-split .s-row>div{grid-column:auto!important}
+.ac-split .s-text{display:none}
+.ac-split .s-val{font-size:20px;line-height:26px;font-weight:400;letter-spacing:-.02em}
+.ac-split .s-name{font-weight:400}
+.ac-take.ac-long,.ac-take.ac-long .p-body{font-size:17px;line-height:25px;letter-spacing:-.015em}
+.ac-take .ac-figure{margin-bottom:12px}
+@media (max-width:900px){.ac-split .s-row{grid-template-columns:14px 78px minmax(0,1fr)!important;column-gap:12px!important}.ac-split .s-val{font-size:18px}}

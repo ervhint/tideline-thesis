@@ -2,7 +2,7 @@ import { Page } from '@/components/Page';
 import { PanelSlot } from '@/components/PanelNote';
 import { Table } from '@/components/Table';
 import { Rich, Say } from '@/components/Say';
-import { getConcentration } from '@/lib/data';
+import { concentrationLead, getConcentration } from '@/lib/data';
 import { EASY } from '@/lib/easy_text';
 
 export const revalidate = 300; // re-read the published data every 5 minutes
@@ -10,7 +10,7 @@ export const revalidate = 300; // re-read the published data every 5 minutes
 export default async function Concentration() {
   const c = await getConcentration();
   return (
-    <Page title="Who Brings the Volume?" easyTitle={EASY.titles.concentration} ask={EASY.ask.concentration} easyLead={EASY.concentrationLead} lead={`Share from the largest integrator and the largest solvers, by swap size. ${c.solverDays ? "Both are read from our data." : "The integrator column is read from our data; the solver columns are not measured yet."}`}>
+    <Page title="Who Brings the Volume?" easyTitle={EASY.titles.concentration} ask={EASY.ask.concentration} easyLead={EASY.concentrationLead} lead={concentrationLead(c)}>
       {/* J25: the "77% Reported" card is gone: its source could not be named, so it could not be checked. */}
       <div className="conc">
         <div className="glass stack">

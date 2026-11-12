@@ -6,6 +6,7 @@ import { reconcileRows, type Row } from '@/lib/reconcile_view';
 import { Banner } from '@/components/Banner';
 import { BarCharts } from '@/components/BarCharts';
 import { activityCharts } from '@/lib/bar_charts';
+import { ActivityIntro, hasVisibility, VisibilityText } from '@/components/MethodText';
 import { Term } from '@/components/Term';
 import { EASY } from '@/lib/easy_text';
 import { Rich, Say } from '@/components/Say';
@@ -93,13 +94,10 @@ export default async function Method({ searchParams }: { searchParams: Promise<{
           <p className="p-body">Amendment A3 sets out {process.env.EXPLORER_PANEL === 'off' ? '' : 'the rolling panel and '}the visibility check, and A4 the year of chain history for fee changes. Each was added on 7 Nov 2026 before the data it governs was read, and each says what was already known.</p>
           </Fold>
           {/* Pro (J21): the visibility check as its own small block, not mid-paragraph. Easy says it plainly. */}
-          {vis?.ratio != null && vis.rangeBefore && (
+          {hasVisibility(vis) && (
             <div className="vis-block">
               <p className="src-name"><Say pro="How Much the Public Chain Still Sees" easy="How Much Is Still in Public View" /></p>
-              <Say
-                pro={<p className="p-body"><b className="num">{vis.ratio.toFixed(2)}</b>: DefiLlama volume divided by chain-counted USD over 7 days, on {vis.lastDay} (${((vis.llama7dUsd ?? 0) / 1e6).toFixed(0)}M against ${((vis.chain7dUsd ?? 0) / 1e6).toFixed(0)}M). Before 27 Oct it ran from {vis.rangeBefore.low.toFixed(2)} to {vis.rangeBefore.high.toFixed(2)}. A higher ratio means the chain sees less, which is lost sight, not lost demand. It carries no line and no state: chain days reach only {vis.history.chainDaysBefore} of the {vis.history.wantedDays} days before 27 Oct, too few to set one (amendment A3).</p>}
-                easy={<p className="p-body">{vis.ratio > vis.rangeBefore.high ? `DefiLlama now counts about ${vis.ratio.toFixed(1)} times the swapping we can see on the public record; before 27 Oct it was ${vis.rangeBefore.low.toFixed(1)} to ${vis.rangeBefore.high.toFixed(1)} times. So more swaps are out of view. It does not mean fewer people are swapping.` : `DefiLlama counts about ${vis.ratio.toFixed(1)} times the swapping we can see on the public record, in the range it had before 27 Oct (${vis.rangeBefore.low.toFixed(1)} to ${vis.rangeBefore.high.toFixed(1)} times).`}</p>}
-              />
+              <VisibilityText vis={vis} />
             </div>
           )}
           <Say block pro={<p className="p-body">Every number worked out from our saved data re-runs with npm run verify. Source data such as price and supply is used as given.</p>} easy={null} />
@@ -152,7 +150,7 @@ export default async function Method({ searchParams }: { searchParams: Promise<{
         <p className="s-title">Public Activity on intents.near</p>
         {activity?.weeks.length ? (
           <>
-            <Say block pro={<p className="p-body">Each week of transactions, signing accounts, receipts and NEAR burnt as gas, from the BigQuery public dataset. Treasury traffic is in these counts, so more activity is not more swaps, and signers are mostly relayers and solvers, not users.</p>} easy={<p className="p-body">Weekly counts of activity on NEAR Intents. They include the private system’s traffic, so more activity does not mean more swaps.</p>} />
+            <ActivityIntro />
             {charts && <BarCharts {...charts} />}
             {/* J21: the charts above carry the same weeks, so the table sits in a fold in both modes. */}
             <details className="means-more m-fold">

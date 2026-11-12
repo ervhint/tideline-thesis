@@ -70,6 +70,7 @@ export const EASY = {
     move: 'What this page answers: what would have to change for each of the five answers to turn good or bad?',
     method: 'What this page answers: where every number comes from, and how you can tell it was not bent to fit.',
     reproduce: 'What this page answers: how you can check every number yourself, without trusting Tideline.',
+    charts: 'What this page answers: what every chart on this site says, all in one place.',
   },
   fixed: [
     'Tideline asks whether NEAR’s swap fees could ever buy back as many NEAR coins as the network creates each year. This is research, not financial advice.',
@@ -108,6 +109,8 @@ export const EASY = {
     queries: 'Open the Query for Each Answer',
   },
   panelNoFigures: 'Another site that tracks these swaps also counts which apps bring them. Its rules don’t let us keep its data, so we only show today’s list, and only in the detailed view: switch to Pro to see it. It’s here for context only and doesn’t change any answer on this site.',
+  // All Charts (docs/PLAN.md §6j L1): fixed words, no figure.
+  chartsLead: 'Every chart from the other pages, side by side. Each one says what it shows today, what it measures in one plain sentence, and where to check the numbers yourself.',
   concentrationLead: 'If most swaps come through one app, or are filled by a few traders ([[solvers|solver]]), NEAR’s fee income depends on them staying.',
   concentrationKey: 'Biggest App is the biggest app’s share of the app fees. Top 3 Traders is how much of the swapping the three biggest traders ([[solvers|solver]]) filled. [[HHI]] is one score for how bunched up it is: higher means fewer players hold more.',
   moveLead: 'For each of the five questions, the line that would turn the answer [[Bullish]] or [[Bearish]]. The lines were written down before the results, so they cannot be moved to fit.',

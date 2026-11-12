@@ -97,6 +97,12 @@ test('nothing that writes a published file, sets a reading or sends a message ca
   for (const e of entries) for (const f of reach(e)) assert.ok(!API_CODE.includes(f), `${e} reaches ${f}`);
 });
 
+// T6l L8 (docs/PLAN.md §6j): All Charts reaches no panel code, not even the panel box.
+test('All Charts reaches no panel code', () => {
+  const seen = reach('app/charts/page.tsx');
+  for (const f of [...API_CODE, resolve('components/PanelNote.tsx')]) assert.ok(!seen.has(f), `app/charts reaches ${f}`);
+});
+
 test('no route serves the panel or passes an API response through (4.1(a))', () => {
   const routes = walk('app/api');
   assert.ok(routes.length > 0);
