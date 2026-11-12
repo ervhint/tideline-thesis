@@ -7,6 +7,11 @@
   "Q5": "Bullish",
   "Verdict": "Undecided"
  },
- "pending": {},
+ "pending": {
+  "Q2": {
+   "side": "Neutral",
+   "since": "2026-11-12T14:23:37.180Z"
+  }
+ },
  "log": []
 }

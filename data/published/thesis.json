@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-12T13:23:30.075Z",
+ "asOf": "2026-11-12T14:23:33.178Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-11",
  "readings": [
@@ -15,9 +15,9 @@
   {
    "id": "Q2",
    "name": "NEAR's Share of Fees",
-   "side": "Bullish",
-   "capture": 0.3118344641321254,
-   "detail": "31% last 30 days",
+   "side": "Neutral",
+   "capture": 0.299962396797736,
+   "detail": "30% last 30 days",
    "plain": "The part of Intents fees that DefiLlama books as revenue. Bullish above 30%; Bearish only if it was under 20% on each of the last 14 days.",
    "source": "DefiLlama, all Intents",
    "query": "analysis/readings.mjs q2 → data/snapshot/defillama_daily.json"
@@ -58,7 +58,7 @@
  ],
  "verdict": {
   "verdict": "Undecided",
-  "score": 3,
+  "score": 2,
   "missing": 1,
   "held": [
    "Q3"
@@ -410,23 +410,23 @@
  },
  "vstar": {
   "todayUsd": 3731354987,
-  "priceUsd": 3.38,
+  "priceUsd": 3.35,
   "at16": {
-   "low": 10368801721.9147,
-   "mid": 11966790993.518972,
-   "high": 44015837763.81704
+   "low": 10274136724.607512,
+   "mid": 11895592110.336843,
+   "high": 43613982344.537605
   },
   "at25": {
-   "low": 16330478093.123787,
-   "mid": 18847251920.308277,
-   "high": 69323311760.6353
+   "low": 16183014774.296968,
+   "mid": 18737004191.264122,
+   "high": 68697326068.97365
   },
-  "multiple16": 3.2070899271742146,
-  "multiple25": 5.051047671950778
+  "multiple16": 3.188008686330021,
+  "multiple25": 5.021501373239383
  },
  "notes": {
   "llamaLastDay": "2026-11-11",
-  "llamaLastDayCapture": 2.0296099738859406
+  "llamaLastDayCapture": 0.1933043556307779
  },
  "labelCheck": {
   "rule": "Labels with confidence 'secondary' dropped; the readings use referral names, so sides and shares stay the same",
@@ -441,11 +441,11 @@
    "A Bullish reading means the evidence passed a line set in advance, not that the price will rise."
   ],
   "live": [
-   "As of 12 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +3 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
-   "Pointing Bullish: NEAR's share of fees is 31% over the last 30 days and revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 76% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
+   "As of 12 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +2 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
+   "One reading points Bullish: revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 76% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "Not measured because flow went private: Solver Competition. The Confidential Intents treasury, a bridge to a private chain, carried 96% of the USD counted over the last 7 frozen days and 40% over the last 30. Side figures that set no reading: other accounts' funds going into it were 97% of the flow we can see (7 of 7 days read) and top 3 solvers hold 83% of public swaps.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "With all revenue spent on buybacks, monthly volume must reach about 3.2x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.1x if issuance stays at 2.5%."
+   "With all revenue spent on buybacks, monthly volume must reach about 3.2x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.0x if issuance stays at 2.5%."
   ]
  }
 }
