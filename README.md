@@ -4,7 +4,7 @@
 
 Tideline asks one question about NEAR: **how much NEAR Intents volume would it take for fee buybacks to cover the new NEAR being issued?**
 
-It answers with a number you can check yourself, five readings on whether that number is getting closer, and a verdict that updates every day from public data. Every figure on the site can be recomputed from this repo with one command, without a key or an account.
+It answers with a number you can check yourself, five readings on whether that number is getting closer, and a verdict that updates every day from public data. Every figure behind the readings and the verdict can be recomputed from this repo with one command, without a key or an account. The one exception is the live rolling panel, which needs your own key and sets no reading.
 
 Built at NEAR HACKATHON (November 2026) for the Investment Thesis track. All code and data were made during the hackathon window. The full argument, with today's figures, is in [THESIS.md](THESIS.md). The rules we wrote down before seeing the results are in [PREREG.md](PREREG.md).
 
@@ -18,20 +18,23 @@ So we built a threshold with a date and an interval, readings with rules fixed i
 
 ## Try it in five minutes
 
-On the site:
+On the site, in the order of the top bar:
 
 1. **Open [Home](https://tideline-near.vercel.app/).** You see how many times today's monthly volume NEAR Intents would need, the five readings with their sides, and the verdict.
-2. **Click Easy in the top bar.** The same page and numbers, in everyday words. Click Pro to go back.
+2. **Click Easy.** The same page and numbers, in everyday words. Click Pro to go back.
 3. **Open [Follow the Fee](https://tideline-near.vercel.app/follow-the-fee/).** You see where the cost of a swap goes: the solver's spread, the app's fee, NEAR's share. Click **Open the Query** to see the SQL or source behind the figures, on the Reproduce page.
-4. **Open [Model](https://tideline-near.vercel.app/model/)** and move **NEAR Price** or **HSP-029 Issuance Schedule.** The threshold and the date it might be reached change as you move them.
-5. **Open [Reproduce](https://tideline-near.vercel.app/reproduce/).** You see the commands below and the latest day anchored on NEAR testnet.
+4. **Open [Elasticity](https://tideline-near.vercel.app/elasticity/).** It asks whether volume leaves when fees rise, using past fee changes.
+5. **Open [Model](https://tideline-near.vercel.app/model/)** and move **NEAR Price** or **HSP-029 Issuance Schedule.** The threshold and the date it might be reached change as you move them.
+6. **Open [Method](https://tideline-near.vercel.app/method/).** Where each number comes from, what was decided before looking, and where public figures disagree.
+7. **Open [Reproduce](https://tideline-near.vercel.app/reproduce/).** You see the commands below and the latest day anchored on NEAR testnet.
+8. **Open [All Charts](https://tideline-near.vercel.app/charts/).** This is the track's dashboard page: every chart from the other pages on one page, each with what it shows today, one plain sentence and the query behind it.
 
 In a terminal (Node 24, no key, about a minute):
 
-6. **Run `npm ci`, then `npm run verify`.** It recomputes every published number from the stored data and ends in `ALL OK`.
-7. **Run `npm run attest:check -- 2026-11-03`.** It reads that day's hash from `tideline-thesis.testnet` and prints `MATCH` against the file in `data/chain/`.
+9. **Run `npm ci`, then `npm run verify`.** It recomputes every published number from the stored data and ends in `ALL OK`.
+10. **Run `npm run attest:check -- 2026-11-03`.** It reads that day's hash from `tideline-thesis.testnet` and prints `MATCH` against the file in `data/chain/`.
 
-Every page has an **Easy** and a **Pro** mode. Pro shows the full detail. Easy says the same thing in everyday words, with the same numbers, for readers new to crypto. Elasticity and Method are in the top bar; Concentration and What Would Move are linked from Home and from Method.
+Every page has an **Easy** and a **Pro** mode. Pro shows the full detail. Easy says the same thing in everyday words, with the same numbers, for readers new to crypto. Concentration and What Would Move aren't in the top bar; they're linked from Home and from Method.
 
 ## How it works
 
@@ -153,7 +156,7 @@ This re-runs the SQL in [queries/](queries/) with your own Google project (set `
 npm run panel
 ```
 
-This prints the rolling panel using your own `INTENTS_EXPLORER_JWT` (from the NEAR Intents partner dashboard), and writes nothing to the repo. Without one it stops with "INTENTS_EXPLORER_JWT is missing". That is expected: the panel only sits beside the thesis and sets no reading, and every reading re-runs without a key through `npm run verify`.
+This prints the rolling panel using your own `INTENTS_EXPLORER_JWT` (from the NEAR Intents partner dashboard, [partners.near-intents.org](https://partners.near-intents.org)), and writes nothing to the repo. Without one it stops with "INTENTS_EXPLORER_JWT is missing". That is expected: the panel only sits beside the thesis and sets no reading, and every reading re-runs without a key through `npm run verify`.
 
 ## Data sources
 
