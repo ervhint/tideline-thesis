@@ -1,2 +1,4 @@
 # Archives are hashed and anchored on-chain, so git must never rewrite their line endings.
 data/** -text
+# verify compares THESIS.md byte for byte with what the generator writes, so it must check out with LF on Windows too.
+THESIS.md text eol=lf
