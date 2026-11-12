@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { execSync, spawnSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import { deflateRawSync } from 'node:zlib';
 import { assertOutsideRepo, buildPanel, lastFinishedDays, SWAPS_ONLY } from './panel.mjs';
 import { foldRows, frontendName, isRealSwap, newTotals } from '../analysis/panel.mjs';
@@ -63,7 +63,7 @@ test('a canary pushed through the panel leaves every tracked file as it was', as
 });
 
 test('the panel can only be written outside the repo', () => {
-  for (const f of ['data/published/panel.json', 'panel.json', '.panel/x.json', '../tideline-thesis/data/x.json']) assert.throws(() => assertOutsideRepo(f), /outside this repo/, f);
+  for (const f of ['data/published/panel.json', 'panel.json', '.panel/x.json', `../${basename(process.cwd())}/data/x.json`]) assert.throws(() => assertOutsideRepo(f), /outside this repo/, f);
   assert.doesNotThrow(() => assertOutsideRepo(join(tmpdir(), 'panel.json')));
 });
 

@@ -1,3 +1,5 @@
+# Text files check out with LF on every OS: tests read the workflow files and match them line by line.
+* text=auto eol=lf
 # Archives are hashed and anchored on-chain, so git must never rewrite their line endings.
 data/** -text
 # verify compares THESIS.md byte for byte with what the generator writes, so it must check out with LF on Windows too.

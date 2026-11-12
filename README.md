@@ -123,6 +123,12 @@ npm run verify
 `verify` recomputes every published number from the stored data and compares it with the committed files. It ends in `ALL OK`.
 
 ```bash
+npm test
+```
+
+This runs the unit tests. No key needed.
+
+```bash
 npm run attest:check -- 2026-11-03
 ```
 
@@ -202,12 +208,12 @@ Some things are fixed on purpose: the year of fee-change history before 3 Oct 20
 ## For machines
 
 - `GET /api/thesis.json`: the verdict, readings, threshold and text, as published.
-- `GET /api/days`: every frozen chain day with its size and SHA-256.
-- `GET /api/days/<YYYY-MM-DD>`: one frozen day, byte for byte.
-- `GET /api/attest/<YYYY-MM-DD>`: that day's hash on testnet against the file.
-- `GET /api/status`: last frozen day, freshness, and the hash of the published numbers.
+- `GET /api/days/`: every frozen chain day with its size and SHA-256.
+- `GET /api/days/<YYYY-MM-DD>/`: one frozen day, byte for byte.
+- `GET /api/attest/<YYYY-MM-DD>/`: that day's hash on testnet against the file.
+- `GET /api/status/`: last frozen day, freshness, and the hash of the published numbers.
 
-No route serves the panel. Published files are in `data/published/`, each with its `source` and `query`. Rules for coding agents are in [AGENTS.md](AGENTS.md).
+Routes end in a slash; without it the site answers with a redirect, so use `curl -L`. No route serves the panel. Published files are in `data/published/`, each with its `source` and `query`. Rules for coding agents are in [AGENTS.md](AGENTS.md).
 
 ## Limits
 
