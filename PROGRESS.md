@@ -24,7 +24,7 @@ Rules: https://nearhackathon.com/HACKATHON.md (read 9 Nov; re-read before submit
 - [ ] X account for Tideline (the human creates it, e.g. `@tideline_near`, Tideline mark from `brand/`; kept live only until the announcement, so never linked from the README)
 - [ ] X demo post (the human posts; Claude may draft): says it was built at NEAR HACKATHON, tags @NEARProtocol and #NEARHackathon (optional @NearLegion, @NearBuilders), video attached (screenshots alone are not enough when judges can't open the demo, Q-012). Lead with the user problem, show one complete moment, say concretely what NEAR does, link site and repo.
 - [x] "What did you build?" text, 20 to 2,000 characters: approved by the human 11 Nov, 1,882 characters, in `internal/submission-form.md` (gitignored, with every form field and a list of six strengths to reuse in the pitch and X post). Angle: a dashboard for experts and for people new to NEAR (Easy and Pro), then the evidence
-- [ ] Mainnet NEAR account for the prize (the team creates it; never invented by Claude)
+- [x] Mainnet NEAR account for the prize: `ervhint.near` (created by the human 12 Nov; on mainnet RPC with one full-access key, checked 12 Nov). The form draft has it in field 6
 - [ ] Submit via the form or the API, once: project name, team lead, email, size, tracks, NEAR account, repo link, X post link, idea, consent read verbatim. Via the API, never send `website` (spam trap). Claude prints the full payload first and waits for a yes.
 - [ ] Final PROGRESS note: scope complete or what isn't, live URLs, known limits (step 5)
 - [ ] G7: the human's "shipped" yes
