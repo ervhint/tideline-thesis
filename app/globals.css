@@ -456,7 +456,7 @@ html:not([data-mode=easy]) .mode-sw [data-v=pro],html[data-mode=easy] .mode-sw [
 @media (max-width:700px){.step{grid-template-columns:minmax(0,1fr);gap:10px}}
 @media (prefers-reduced-motion:reduce){.mode-float,.mode-float[data-show]{transition:none;transform:none}}
 @media print{.mode-float{display:none}}
-@media (max-aspect-ratio:1/1),(max-height:520px) and (max-width:1023px){
+@media (max-aspect-ratio:1/1),(max-height:520px) and (max-width:1099px){
   .menu .mode-div{display:none}
   .menu .mode-sw{order:-1;gap:4px;padding:4px;margin:0 0 4px}
   .menu .mode-sw button{flex:1;font-size:17px;padding:12px 0}
