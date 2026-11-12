@@ -1,5 +1,7 @@
 # Tideline progress
 
+**SUBMITTED 12 Nov 2026. Results by 18 Nov. Only G7 (the human's "shipped" yes) is open; see "Final note (12 Nov 2026)".**
+
 Phase: P7 Test + ship (workflow V12). **P7a done and on main (`49e0d5b`, 8 Nov). G6 passed (8 Nov, 23:00 WIB):** the human clicked through and said everything is to their liking; the seven P7a points stay as they are. **Next chat starts P7b.** Codespaces run passed 9 Nov (T-0.2, T-T6j.29: verify ALL OK, attest:check 2026-11-07 MATCH). **T6k Telegram done and on main (9 Nov, `356e283` to `aaa78b2`):** public channel `@tideline_thesis` on, first post sent by the cron-job.org test run. **P7b deploy done (9 Nov): live at https://tideline-near.vercel.app** (Vercel project `tideline`, team ervhint; `b70a0ef` on main). README brought to the hackathon rules and pushed (9 Nov, `4c0590b`). G7 (the human's "shipped" yes) not yet asked. **Next chat: work the Submission checklist below, one item at a time, starting with the pitch outline.** The human wants to go item by item and see what's done and what isn't, so tick items here as they finish. Ticket 79934: no answer yet, panel stays on (human, 9 Nov).
 Repo: `ervhint/tideline-thesis` (public) · Contract: `tideline-thesis.testnet` · App: https://tideline-near.vercel.app (dev: localhost:3112).
 
@@ -17,17 +19,42 @@ Rules: https://nearhackathon.com/HACKATHON.md (read 9 Nov; re-read before submit
 - [x] motionsites.ai: the human's call (9 Nov): the template came from the free tier, which they understand allows this use, so the video and still image stay as they are. Terms read 9 Nov (Terms of Use, updated 30 Sep 2026): no credit line required; "Websites and apps you build with our prompts are yours"; but video backgrounds are listed as their content, and the terms forbid redistributing the prompt text or source code or republishing their content. No free tier is listed on the site now (only paid plans). Our public repo carries `public/media/sphere.mp4` and `sphere-poster.png`; kept on the human's call. If motionsites ever objects, swap the media
 - [x] Nothing existed before 19 Oct 2026 (the human, 9 Nov), so no baseline to disclose (Q-001 to Q-004)
 - [x] Q-015: Laras enters only Tideline (the human, 9 Nov); nothing to disclose
-- [ ] **T6l All Charts page** (docs/PLAN.md §6j, tests T-T6l.1 to .10 in docs/TESTS.md). Written 12 Nov on Opus · high at the human's request; **build next, on medium**. Every chart on one page (`/charts/`), each with its page's own takeaway, the Reproduce sentence and its query, Easy and Pro, reusing each page's chart and words. A rough local sketch is in `app/charts/` (uncommitted, not in the menu); the build replaces it. L9 decided 12 Nov: a nav link "All Charts" too, with the K7 overlap check re-run. **Built 12 Nov (uncommitted):** `/charts/` plus shared FeeSplit, FeeChangeAxis, MethodText, heroLines and concentrationLead; links from Home and Reproduce. npm test 312/312 (also panel off), verify ALL OK, tsc, next build, gitleaks clean. **Nav link in (the human, 12 Nov):** "All Charts" in the pill and phone menu; up to 3:2 the pill spacing tightens so nothing overlaps at 23 sizes (PLAN §6j L9). Not committed or pushed. If it ships, the demo video and README try-it steps may want a mention of it
-- [ ] Pitch outline mapped to the judging line ("judged on the evidence, not the conviction")
-- [ ] Demo script following the golden path
-- [ ] Demo video or screenshots (step 4; check X's video length limit). In progress 11 Nov in `internal/video/` (gitignored): a page-by-page tour, about 2:05, 4K, Jessica voice as a stand-in for Laras's own recording. **Decision by the human, 11 Nov:** the demo video shows the rolling panel with its numbers readable, after Claude explained twice that a recording keeps Explorer figures past 24 hours (terms 4.1(e)) and that docs/PLAN.md A7 and the T6e note said to record with the panel off or blurred. Those notes are overridden for this video by the human's choice.
-- [ ] X account for Tideline (the human creates it, e.g. `@tideline_near`, Tideline mark from `brand/`; kept live only until the announcement, so never linked from the README)
-- [ ] X demo post (the human posts; Claude may draft): says it was built at NEAR HACKATHON, tags @NEARProtocol and #NEARHackathon (optional @NearLegion, @NearBuilders), video attached (screenshots alone are not enough when judges can't open the demo, Q-012). Lead with the user problem, show one complete moment, say concretely what NEAR does, link site and repo.
+- [x] **T6l All Charts page: shipped 12 Nov** (on main from `78a8612`, live, in the nav and the README tour; the "Not committed or pushed" line below was written before the commit) (docs/PLAN.md §6j, tests T-T6l.1 to .10 in docs/TESTS.md). Written 12 Nov on Opus · high at the human's request; **build next, on medium**. Every chart on one page (`/charts/`), each with its page's own takeaway, the Reproduce sentence and its query, Easy and Pro, reusing each page's chart and words. A rough local sketch is in `app/charts/` (uncommitted, not in the menu); the build replaces it. L9 decided 12 Nov: a nav link "All Charts" too, with the K7 overlap check re-run. **Built 12 Nov (uncommitted):** `/charts/` plus shared FeeSplit, FeeChangeAxis, MethodText, heroLines and concentrationLead; links from Home and Reproduce. npm test 312/312 (also panel off), verify ALL OK, tsc, next build, gitleaks clean. **Nav link in (the human, 12 Nov):** "All Charts" in the pill and phone menu; up to 3:2 the pill spacing tightens so nothing overlaps at 23 sizes (PLAN §6j L9). Not committed or pushed. If it ships, the demo video and README try-it steps may want a mention of it
+- [x] Pitch outline mapped to the judging line ("judged on the evidence, not the conviction"): covered by the video scripts in `internal/video/` (SCRIPT-v05 versions) and the "What sets Tideline apart" list in `internal/submission-form.md`; no separate pitch was needed (closed 12 Nov)
+- [x] Demo script following the golden path: Laras's own recording follows it page by page (Home, Follow the Fee, Elasticity, Model, Method, Reproduce, All Charts, Telegram); closed 12 Nov
+- [x] Demo video (the human, 12 Nov: done). For X: `internal/video/tideline-demo-v07x/renders/tideline-v07-x-1080p.mp4`, 1920×1080 H.264/AAC, 2:14.7, 98 MB (X free limit 2:20); a 4K copy sits beside it. Earlier notes: in progress 11 Nov in `internal/video/` (gitignored): a page-by-page tour, about 2:05, 4K, Jessica voice as a stand-in for Laras's own recording. **Decision by the human, 11 Nov:** the demo video shows the rolling panel with its numbers readable, after Claude explained twice that a recording keeps Explorer figures past 24 hours (terms 4.1(e)) and that docs/PLAN.md A7 and the T6e note said to record with the panel off or blurred. Those notes are overridden for this video by the human's choice.
+- [x] ~~X account for Tideline~~ Dropped (the human, 12 Nov): the demo goes out from Laras's personal X, which X is less likely to lock or hide than a new account; pin it until 18 Nov. `brand/tideline-x-header.png` (1500×500 cover) was made and kept in case. Old note: (the human creates it, e.g. `@tideline_near`, Tideline mark from `brand/`; kept live only until the announcement, so never linked from the README)
+- [x] X demo post from Laras's personal account: https://x.com/ervhint_ervhint/status/2120893777116324254 (posted 12 Nov 14:57 UTC; public with the 2:14 video, both links and the tags, checked logged out through X's public embed). Check again 13 Nov and before judging on 16 Nov. Text in `internal/x-post.md` (gitignored). Full 2:50 version on YouTube (public, 12 Nov): https://youtu.be/pdM_gENFFDY, linked in a reply under the X post; title, description and thumbnail in `internal/youtube.md`. Original note: says it was built at NEAR HACKATHON, tags @NEARProtocol and #NEARHackathon (optional @NearLegion, @NearBuilders), video attached (screenshots alone are not enough when judges can't open the demo, Q-012). Lead with the user problem, show one complete moment, say concretely what NEAR does, link site and repo.
 - [x] "What did you build?" text, 20 to 2,000 characters: approved by the human 11 Nov, 1,882 characters, in `internal/submission-form.md` (gitignored, with every form field and a list of six strengths to reuse in the pitch and X post). Angle: a dashboard for experts and for people new to NEAR (Easy and Pro), then the evidence
 - [x] Mainnet NEAR account for the prize: `ervhint.near` (created by the human 12 Nov; on mainnet RPC with one full-access key, checked 12 Nov). The form draft has it in field 6
-- [ ] Submit via the form or the API, once: project name, team lead, email, size, tracks, NEAR account, repo link, X post link, idea, consent read verbatim. Via the API, never send `website` (spam trap). Claude prints the full payload first and waits for a yes.
-- [ ] Final PROGRESS note: scope complete or what isn't, live URLs, known limits (step 5)
+- [x] **Submitted 12 Nov 2026 through the form (the human).** The site answered "Submission received. You're on the radar!": keep the repo public and the demo post up; results by 18 Nov 2026, 23:59 UTC; mistakes only through Request changes. Screenshot: `internal/submission-received-2026-11-12.png` (gitignored). Fields as in `internal/submission-form.md`. Original note: Submit via the form or the API, once: project name, team lead, email, size, tracks, NEAR account, repo link, X post link, idea, consent read verbatim. Via the API, never send `website` (spam trap). Claude prints the full payload first and waits for a yes.
+- [x] Final PROGRESS note: see "Final note (12 Nov 2026)" below
 - [ ] G7: the human's "shipped" yes
+
+## Final note (12 Nov 2026)
+
+**Submitted 12 Nov 2026** (form, Investment Thesis track, solo, prize account `ervhint.near`). Results by 18 Nov 2026, 23:59 UTC. Until then: repo public, site up, X post up; changes only through https://nearhackathon.com/request-changes.
+
+**Scope: complete.** Every item in the submission checklist above is done except G7.
+
+**Live links**
+- Site: https://tideline-near.vercel.app (updates on its own: hourly refresh, daily chain day and attest, daily panel)
+- Repo: https://github.com/ervhint/tideline-thesis
+- Contract: `tideline-thesis.testnet` (daily hash of each frozen chain day)
+- Demo post on X: https://x.com/ervhint_ervhint/status/2120893777116324254
+- Full video on YouTube: https://youtu.be/pdM_gENFFDY
+- Telegram channel: `@tideline_thesis`
+
+**State at submission** (thesis.json 12 Nov 13:23 UTC): verdict Undecided, score +3, Q3 held under PREREG A2 because the Confidential Intents treasury carries most counted USD.
+
+**Known limits**
+- Most swap value now settles privately, so Q3 stays Not Measured and the verdict is on hold; fees on confidential swaps and solver identity cannot be seen.
+- The anchor contract is on testnet: it proves a day file was not edited, and holds no funds. Mainnet was never needed (rules Q-010, Q-011).
+- Elasticity rests on thin data; the site says so.
+- The rolling panel needs an Explorer key, keeps no history, and sets no reading (terms 4.1(e)). The demo video shows its numbers readable, by the human's choice on 11 Nov.
+- Explorer ticket 79934: no answer yet; the panel stays on.
+- The motionsites.ai sphere video and still image stay in `public/media/` on the human's call (9 Nov); swap them if motionsites objects.
+- On localhost the panel can say "Not Available" on the first view after idle (J26); this does not happen on Vercel.
 
 ## P7b: Vercel (9 Nov)
 
