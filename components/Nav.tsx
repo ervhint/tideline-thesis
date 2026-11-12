@@ -11,9 +11,9 @@ const before = [
   ['/model/', 'Model'],
 ] as const;
 const after = [
-  ['/charts/', 'All Charts'],
-  ['/reproduce/', 'Reproduce'],
   ['/method/', 'Method'],
+  ['/reproduce/', 'Reproduce'],
+  ['/charts/', 'All Charts'],
 ] as const;
 
 // S6 and S7 sit under Method.

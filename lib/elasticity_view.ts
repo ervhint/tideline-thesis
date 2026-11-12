@@ -20,11 +20,15 @@ function axis(from: string, to: string) {
   return { start: from, end: to, labels: labels.map((d) => [short(d), d] as [string, string]) };
 }
 
-// Why fee changes were not usable, grouped by reason ("6 had under $50,000 in the 7 days before").
-function droppedWhy(m: Run) {
+// Why fee changes were not usable, grouped by reason: "Left out: 6 with under $50,000 in the 7 days before; 1 because a window has …".
+// The reasons are stored in elasticity.json (analysis/elasticity.mjs), so only the joining words live here (12 Nov 2026):
+// a reason that is a clause ("a window has …") takes "because", one that already says it ("left out by this check") stands
+// alone, and the rest ("under $50,000 …", "no volume after the change") take "with". Groups are split by ";" because a reason can hold commas.
+const joinReason = (k: string) => (/^(a|an|the) /.test(k) ? `because ${k}` : /^left out/.test(k) ? k : `with ${k}`);
+export function droppedWhy(m: Pick<Run, 'dropped'>) {
   const by = new Map<string, number>();
   for (const d of m.dropped) { const k = d.reason.replace(/ \(.*\)$/, ''); by.set(k, (by.get(k) ?? 0) + 1); }
-  return [...by].map(([k, c]) => `${c} had ${k}`).join(', ');
+  return by.size ? `Left out: ${[...by].map(([k, c]) => `${c} ${joinReason(k)}`).join('; ')}` : '';
 }
 
 export const elasticitySpan = (doc: ElasticityDoc) => `${doc.daysRead} days of chain data, ${short(doc.from)} to ${short(doc.to)}`;
@@ -91,7 +95,7 @@ export function elasticityView(doc: ElasticityDoc | null) {
     empty: [`Elasticity **${n(e.estimate)}**, 95% interval ${range(e)}, from ${m.usable} of ${doc.frozenEvents} fee changes in the ${span}. Fee-tagged (token_diff) swaps only.`, 'At −1, a higher fee leaves revenue flat. Below −1 it lowers revenue; above −1 it raises it.', pass].filter(Boolean).join(String.fromCharCode(10)),
     checks,
     days,
-    caption: `Each tick is one of the ${doc.frozenEvents} fee changes that pass the rules in PREREG.md (${m.usable} usable${droppedWhy(m) ? `; ${droppedWhy(m)}` : ''}).`,
+    caption: `Each tick is one of the ${doc.frozenEvents} fee changes that pass the rules in PREREG.md (${m.usable} usable${droppedWhy(m) ? `. ${droppedWhy(m)}` : ''}).`,
     plot: { est: e.estimate, lo: e.lo, hi: e.hi, mde: e.mde },
     mde: `Minimum detectable effect: ${n(e.mde)} either way (2.8 × the placebo spread, for 80% power at p = 0.05)`,
     axis: ax,
