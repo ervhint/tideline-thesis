@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-13T13:23:26.106Z",
+ "asOf": "2026-11-13T14:23:31.450Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-12",
  "readings": [
@@ -16,8 +16,8 @@
    "id": "Q2",
    "name": "NEAR's Share of Fees",
    "side": "Bullish",
-   "capture": 0.316210787906172,
-   "detail": "32% last 30 days",
+   "capture": 0.30466020756234036,
+   "detail": "30% last 30 days",
    "plain": "The part of Intents fees that DefiLlama books as revenue. Bullish above 30%; Bearish only if it was under 20% on each of the last 14 days.",
    "source": "DefiLlama, all Intents",
    "query": "analysis/readings.mjs q2 → data/snapshot/defillama_daily.json"
@@ -410,23 +410,23 @@
  },
  "vstar": {
   "todayUsd": 3774153452,
-  "priceUsd": 3.54,
+  "priceUsd": 3.57,
   "at16": {
-   "low": 10874439207.839912,
-   "mid": 12463669685.447021,
-   "high": 46162282275.40894
+   "low": 10967328529.946339,
+   "mid": 12527238858.875647,
+   "high": 46556599906.46037
   },
   "at25": {
-   "low": 17118808509.313251,
-   "mid": 19620614046.439854,
-   "high": 72669795243.86563
+   "low": 17264615954.89073,
+   "mid": 19720205087.603943,
+   "high": 73288751709.75414
   },
-  "multiple16": 3.3023749150534067,
-  "multiple25": 5.198679464408766
+  "multiple16": 3.3192182083209176,
+  "multiple25": 5.225067114627734
  },
  "notes": {
   "llamaLastDay": "2026-11-12",
-  "llamaLastDayCapture": 5.760780534810889
+  "llamaLastDayCapture": 0.38583334627871935
  },
  "labelCheck": {
   "rule": "Labels with confidence 'secondary' dropped; the readings use referral names, so sides and shares stay the same",
@@ -442,7 +442,7 @@
   ],
   "live": [
    "As of 13 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +3 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
-   "Pointing Bullish: NEAR's share of fees is 32% over the last 30 days and revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 76% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
+   "Pointing Bullish: NEAR's share of fees is 30% over the last 30 days and revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 76% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "Not measured because flow went private: Solver Competition. The Confidential Intents treasury, a bridge to a private chain, carried 96% of the USD counted over the last 7 frozen days and 44% over the last 30. Side figures that set no reading: other accounts' funds going into it were 97% of the flow we can see (7 of 7 days read) and top 3 solvers hold 85% of public swaps.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
    "With all revenue spent on buybacks, monthly volume must reach about 3.3x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.2x if issuance stays at 2.5%."
