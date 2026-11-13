@@ -6,5 +6,13 @@
   "from": "Bullish",
   "to": "Neutral",
   "detail": "30% last 30 days"
+ },
+ {
+  "at": "2026-11-13T02:23:36.543Z",
+  "id": "Q2",
+  "name": "NEAR's Share of Fees",
+  "from": "Neutral",
+  "to": "Bullish",
+  "detail": "32% last 30 days"
  }
 ]
