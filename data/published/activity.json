@@ -1,17 +1,9 @@
 {
  "source": "BigQuery public dataset crypto_near_mainnet_us, stored in data/bigquery",
  "query": "queries/daily_transactions.sql, queries/daily_contract_usage.sql, analysis/activity.mjs",
- "from": "2026-08-15",
- "to": "2026-11-06",
+ "from": "2026-08-22",
+ "to": "2026-11-13",
  "weeks": [
-  {
-   "from": "2026-08-15",
-   "to": "2026-08-21",
-   "transactions": 396680,
-   "signersPerDay": 83,
-   "receipts": 2141875,
-   "nearBurnt": 573
-  },
   {
    "from": "2026-08-22",
    "to": "2026-08-28",
@@ -99,6 +91,14 @@
    "signersPerDay": 149,
    "receipts": 2701678,
    "nearBurnt": 675
+  },
+  {
+   "from": "2026-11-07",
+   "to": "2026-11-13",
+   "transactions": 820790,
+   "signersPerDay": 139,
+   "receipts": 2824981,
+   "nearBurnt": 636
   }
  ]
 }
