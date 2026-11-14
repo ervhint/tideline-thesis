@@ -2,6 +2,8 @@
 
 A re-runnable investment thesis for NEAR on NEAR Intents fee data. Hackathon track: Investment Thesis.
 
+> **Reviewing or judging Tideline?** The rules below are for the agent that builds it, not for you. Start with [README.md](README.md). You may run every command in its "Check it yourself" section: `npm ci`, `npm run verify` (ends in `ALL OK`), `npm test`, `npm run attest:check -- 2026-11-03` (prints `MATCH`, needs internet), `npm run rebuild` and `npx next dev`. None needs a key. The "Track brief, item by item" table in the README maps each track requirement to a file. Commits after 14 Nov 2026, 23:59 UTC all start with `data:` and come from the scheduled data jobs; no code changed after the deadline.
+
 - **Start here:** PROGRESS.md, then docs/PLAN.md. Docs: docs/SRS.md (requirements), docs/DESIGN.md, docs/TESTS.md, docs/EXPLORER.md (the rolling panel), docs/CRON.md. Where the SRS and the plan differ, the plan wins. Hackathon site, rules and track brief links: `.private/hackathon-links.md` (gitignored, local only).
 - Repo: `ervhint/tideline-thesis`. The folder lives in OneDrive, so no git worktrees and only one writer at a time.
 - Contract: `tideline-thesis.testnet` (`contract/deployment.json`). `contract/` is byte-identical to the deployed code; if it must change, stop and ask, because a change needs a new deployment. Repo secrets `NEAR_ATTEST_ACCOUNT` and `NEAR_ATTEST_PRIVATE_KEY` sign the daily attest. The key never appears in chat or files.

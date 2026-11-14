@@ -8,6 +8,16 @@ It answers with a number you can check yourself, five readings on whether that n
 
 Built at NEAR HACKATHON (November 2026) for the Investment Thesis track. All code and data were made during the hackathon window. The full argument, with today's figures, is in [THESIS.md](THESIS.md). The rules we wrote down before seeing the results are in [PREREG.md](PREREG.md).
 
+## Track brief, item by item
+
+| The Investment Thesis track asks for | Where it is |
+| --- | --- |
+| SQL on `bigquery-public-data.crypto_near_mainnet_us`, each query filtered on `block_date` | [queries/](queries/): `daily_transactions.sql` (daily transactions and active accounts), `daily_contract_usage.sql` (contract usage), and two elasticity queries. Results are in `data/bigquery/` |
+| A NEAR Intents Explorer API pull for swap volume, with the JWT in `.env` | `pipeline/panel.mjs` (`npm run panel`), run daily by `.github/workflows/panel.yml`. It feeds only the rolling panel, because the API terms don't allow storing the data ([why](#the-rolling-panel-and-why-its-separate)) |
+| One command that regenerates every chart | `npm run rebuild` |
+| A dashboard page showing each chart, its query and one plain sentence | [All Charts](https://tideline-near.vercel.app/charts/) (`app/charts/`) |
+| THESIS.md with the claim, evidence for and against, what would change our mind, and what can't be computed | [THESIS.md](THESIS.md), one section each |
+
 ## Why we built it
 
 NEAR takes a share of the fees on every Intents swap and spends it buying NEAR on the open market. If those buybacks ever match the NEAR created each year, the supply stops growing. That's the bull case, and people quote a "volume needed" figure for it all the time.
@@ -110,7 +120,7 @@ So the Explorer and 1Click data appear only in a **rolling panel** on Follow the
 
 ## Check it yourself
 
-You need Node 24. No key, no account, about a minute.
+You need Node 24 (see `.nvmrc`). Node 20 won't work, because the scripts import the site's TypeScript files directly. No key, no account, about a minute.
 
 ```bash
 npm ci
@@ -120,31 +130,31 @@ npm ci
 npm run verify
 ```
 
-`verify` recomputes every published number from the stored data and compares it with the committed files. It ends in `ALL OK`.
+`verify` recomputes every published number from the stored data and compares it with the committed files. It ends in `ALL OK`. It works offline.
 
 ```bash
 npm test
 ```
 
-This runs the unit tests. No key needed.
+This runs the unit tests. No key needed. It ends with `fail 0`.
 
 ```bash
 npm run attest:check -- 2026-11-03
 ```
 
-This compares one frozen day with the hash written for it on NEAR testnet.
+This compares one frozen day with the hash written for it on NEAR testnet, and prints `MATCH`. It needs internet to reach NEAR's RPC. Any day in `data/chain/` works. Days before 8 Nov also print "treasury no hash in this record", which is expected (see NEAR tech used).
 
 ```bash
 npm run rebuild
 ```
 
-This recomputes every chart from stored public data.
+This recomputes every chart from stored public data and rewrites `data/published/` and THESIS.md. On a fresh clone, `git status` shows no change afterwards.
 
 ```bash
 npx next dev -p 3112
 ```
 
-This runs the site locally.
+This runs the site locally from the files in `data/`. Without a key, the rolling panel says "Not Available". That is expected: the panel lives only in a one-day GitHub artifact that needs a token to read.
 
 Prefer not to install anything? The Reproduce page has an "Open in Codespaces" button. It opens this repo in your browser with everything installed, so you only type `npm run verify`. It runs on your own GitHub account, free within GitHub's monthly Codespaces hours.
 
@@ -189,6 +199,8 @@ Every job runs in GitHub Actions, started by cron-job.org ([docs/CRON.md](docs/C
 | `weekly-note` | Mondays, 08:00 | A short note to the [@tideline_thesis](https://t.me/tideline_thesis) Telegram channel |
 
 Some things are fixed on purpose: the year of fee-change history before 3 Oct 2026 (one BigQuery read, frozen by PREREG.md amendment A4) and the pre-registered lines.
+
+Development stopped at the deadline, 14 Nov 2026, 23:59 UTC. The jobs above keep committing data after it, so the site stays current through judging. Each of those commits starts with `data:` (`data: refresh`, `data: freeze chain day`, `data: activity`), and no code changed after the deadline.
 
 ## NEAR tech used
 
