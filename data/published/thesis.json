@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-15T01:23:20.588Z",
+ "asOf": "2026-11-15T02:23:25.141Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-13",
  "readings": [
@@ -16,8 +16,8 @@
    "id": "Q2",
    "name": "NEAR's Share of Fees",
    "side": "Neutral",
-   "capture": 0.28757233665857895,
-   "detail": "29% last 30 days",
+   "capture": 0.2787381113638769,
+   "detail": "28% last 30 days",
    "plain": "The part of Intents fees that DefiLlama books as revenue. Bullish above 30%; Bearish only if it was under 20% on each of the last 14 days.",
    "source": "DefiLlama, all Intents",
    "query": "analysis/readings.mjs q2 → data/snapshot/defillama_daily.json"
@@ -410,23 +410,23 @@
  },
  "vstar": {
   "todayUsd": 3797462047,
-  "priceUsd": 3,
+  "priceUsd": 3.13,
   "at16": {
-   "low": 9233170620.743237,
-   "mid": 10850138376.201899,
-   "high": 39195053680.05334
+   "low": 9634307000.501728,
+   "mid": 11321524144.632326,
+   "high": 40897888229.90278
   },
   "at25": {
-   "low": 14525521018.494083,
-   "mid": 17069316653.048418,
-   "high": 61661221202.992325
+   "low": 15155992353.890453,
+   "mid": 17810199878.569138,
+   "high": 64337588709.84626
   },
-  "multiple16": 2.8572078514315957,
-  "multiple25": 4.494927517849244
+  "multiple16": 2.981339643295802,
+  "multiple25": 4.690027091288304
  },
  "notes": {
-  "llamaLastDay": "2026-11-13",
-  "llamaLastDayCapture": 0.10232121503369505
+  "llamaLastDay": "2026-11-14",
+  "llamaLastDayCapture": 3.5564326042865755
  },
  "labelCheck": {
   "rule": "Labels with confidence 'secondary' dropped; the readings use referral names, so sides and shares stay the same",
@@ -445,7 +445,7 @@
    "One reading points Bullish: revenue has risen over each of the last three months. In between: one integrator brings much of the fees but stays under the 80% line (SwapKit 76% of visible app fees). The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "Not measured because flow went private: Solver Competition. The Confidential Intents treasury, a bridge to a private chain, carried 96% of the USD counted over the last 7 frozen days and 48% over the last 30. Side figures that set no reading: other accounts' funds going into it were 97% of the flow we can see (7 of 7 days read) and top 3 solvers hold 85% of public swaps.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "With all revenue spent on buybacks, monthly volume must reach about 2.9x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 4.5x if issuance stays at 2.5%."
+   "With all revenue spent on buybacks, monthly volume must reach about 3.0x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 4.7x if issuance stays at 2.5%."
   ]
  }
 }
