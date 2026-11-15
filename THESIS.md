@@ -15,7 +15,7 @@ The verdict is **Undecided**. The score is +2 of 7, which would not reach either
 ## The evidence for
 
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $3.85B. The level needed under the 1.6% plan is about $12.3B, with an interval of $9.8B to $41.4B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $3.85B. The level needed under the 1.6% plan is about $12.3B, with an interval of $9.8B to $41.5B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
@@ -29,7 +29,7 @@ The verdict is **Undecided**. The score is +2 of 7, which would not reach either
 
 Across 410 days of chain data, 1 Oct 2025 to 14 Nov 2026, 28 fee changes passed the rules and 21 were usable. Elasticity is −0.06, with a 95% interval of −1.64 to 1.52, and random dates with no fee change gave results this large or larger 91% of the time. The smallest effect this test could see is 2.02, so it is underpowered.
 
-At −1 a higher fee leaves revenue flat. The interval runs from below that to above it, so **Pricing Power reads Neutral: not settled**. It is not evidence that volume ignores fees. Every check gives an estimate near zero: dropping the largest frontend, changing the fee shift, leaving out the days of the move to the Treasury and using five outside venues as the control. 6 of 9 keep −1 inside their interval. CoW Swap on DefiLlama as the control gives −0.94 to 1.07, above −1. 0x on DefiLlama as the control gives −1.00 to 1.06, just above −1. KyberSwap on DefiLlama as the control gives −0.99 to 1.04, just above −1. They are a check on the reading, not the reading.
+At −1 a higher fee leaves revenue flat. The interval runs from below that to above it, so **Pricing Power reads Neutral: not settled**. It is not evidence that volume ignores fees. Every check gives an estimate near zero: dropping the largest frontend, changing the fee shift, leaving out the days of the move to the Treasury and using five outside venues as the control. 6 of 9 keep −1 inside their interval. CoW Swap on DefiLlama as the control gives −0.94 to 1.07, above −1. 0x on DefiLlama as the control gives −0.98 to 1.05, just above −1. KyberSwap on DefiLlama as the control gives −0.99 to 1.04, just above −1. They are a check on the reading, not the reading.
 
 Pass-through, how much of a fee change reaches users, is 0.33 with an interval of −0.43 to 1.09, on 16 fee changes. It is underpowered as well.
 
