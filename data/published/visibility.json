@@ -29,11 +29,11 @@
   },
   "since": {
    "from": "2026-10-27",
-   "to": "2026-11-14",
-   "days": 19,
-   "volumeUsd": 2585296897,
-   "revenueUsd": 1103919,
-   "revenueRate": 0.0004269989266149651
+   "to": "2026-11-15",
+   "days": 20,
+   "volumeUsd": 2730655000,
+   "revenueUsd": 1140184,
+   "revenueRate": 0.00041754963552700724
   }
  },
  "recent": [
