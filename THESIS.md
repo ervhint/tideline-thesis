@@ -1,6 +1,6 @@
 # Tideline: the thesis
 
-Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days and DefiLlama data run to 14 Nov 2026.
+Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days run to 14 Nov 2026 and DefiLlama data to 15 Nov 2026.
 
 ## The claim
 
@@ -15,7 +15,7 @@ The verdict is **Undecided**. The score is +2 of 7, which would not reach either
 ## The evidence for
 
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $3.85B. The level needed under the 1.6% plan is about $12.1B, with an interval of $9.7B to $41.0B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $3.85B. The level needed under the 1.6% plan is about $12.3B, with an interval of $9.8B to $41.5B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 

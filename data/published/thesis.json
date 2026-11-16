@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-16T01:23:21.973Z",
+ "asOf": "2026-11-16T02:23:33.159Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-14",
  "readings": [
@@ -16,7 +16,7 @@
    "id": "Q2",
    "name": "NEAR's Share of Fees",
    "side": "Neutral",
-   "capture": 0.26190551698621384,
+   "capture": 0.26439022614545915,
    "detail": "26% last 30 days",
    "plain": "The part of Intents fees that DefiLlama books as revenue. Bullish above 30%; Bearish only if it was under 20% on each of the last 14 days.",
    "source": "DefiLlama, all Intents",
@@ -417,23 +417,23 @@
  },
  "vstar": {
   "todayUsd": 3850998590,
-  "priceUsd": 3.14,
+  "priceUsd": 3.18,
   "at16": {
-   "low": 9661718868.934187,
-   "mid": 12137610248.18967,
-   "high": 41014252336.96986
+   "low": 9786006287.94819,
+   "mid": 12293747294.941875,
+   "high": 41541855720.47768
   },
   "at25": {
-   "low": 15201473653.207626,
-   "mid": 19096970725.780594,
-   "high": 64530658029.30304
+   "low": 15396331076.54647,
+   "mid": 19341761894.985283,
+   "high": 65357832949.1041
   },
-  "multiple16": 3.151808541220388,
-  "multiple25": 4.9589659096137435
+  "multiple16": 3.192353102092898,
+  "multiple25": 5.0225315442105325
  },
  "notes": {
-  "llamaLastDay": "2026-11-14",
-  "llamaLastDayCapture": 0.15894696592238972
+  "llamaLastDay": "2026-11-15",
+  "llamaLastDayCapture": 0.8147607279263087
  },
  "labelCheck": {
   "rule": "Labels with confidence 'secondary' dropped; the readings use referral names, so sides and shares stay the same",
