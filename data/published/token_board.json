@@ -1,27 +1,27 @@
 {
- "from": "2026-10-17",
- "to": "2026-11-15",
+ "from": "2026-10-18",
+ "to": "2026-11-16",
  "days": 30,
- "routes": 5121,
- "swaps": 556395,
- "usd": 1041022640.1599966,
+ "routes": 5180,
+ "swaps": 565173,
+ "usd": 1043361545.0099976,
  "byStatus": {
   "both": {
-   "swaps": 317985,
-   "usd": 535032501.1499958,
-   "swapShare": 0.5715094492222252,
-   "usdShare": 0.5139489579859337
+   "swaps": 316666,
+   "usd": 522098831.489996,
+   "swapShare": 0.5602992358092124,
+   "usdShare": 0.5004006846782849
   },
   "one": {
-   "swaps": 217217,
-   "usd": 505990139.0100008,
-   "swapShare": 0.39040070453544695,
-   "usdShare": 0.4860510420140664
+   "swaps": 224567,
+   "usd": 521262713.52000153,
+   "swapShare": 0.3973420527873766,
+   "usdShare": 0.499599315321715
   },
   "none": {
-   "swaps": 21193,
+   "swaps": 23940,
    "usd": 0,
-   "swapShare": 0.03808984624232784,
+   "swapShare": 0.04235871140341099,
    "usdShare": 0
   }
  },
@@ -29,246 +29,246 @@
   {
    "route": "USDT (Tron) to USDT (Ethereum)",
    "status": "one",
-   "swaps": 6647,
-   "usd": 86765776.97,
-   "share": 0.08334667626120486,
-   "swapShare": 0.011946548764816363
+   "swaps": 6653,
+   "usd": 87217298.85,
+   "share": 0.0835925947885728,
+   "swapShare": 0.011771616832368142
   },
   {
    "route": "USDT (Ethereum) to USDT (Tron)",
    "status": "one",
-   "swaps": 13226,
-   "usd": 66405951.470000006,
-   "share": 0.06378915203976156,
-   "swapShare": 0.023770882197000333
+   "swaps": 13501,
+   "usd": 67889000.06,
+   "share": 0.0650675697074397,
+   "swapShare": 0.023888260762633742
   },
   {
    "route": "USDT (Ethereum) to NBTC (NEAR)",
    "status": "both",
-   "swaps": 3521,
-   "usd": 60420700.44,
-   "share": 0.058039756398298725,
-   "swapShare": 0.006328238032333145
+   "swaps": 3629,
+   "usd": 63807438.2,
+   "share": 0.061155635364526104,
+   "swapShare": 0.006421042760358333
   },
   {
    "route": "USDT (Tron) to NBTC (NEAR)",
    "status": "one",
-   "swaps": 2173,
-   "usd": 51723647.16,
-   "share": 0.04968542005200818,
-   "swapShare": 0.003905498791326306
+   "swaps": 2252,
+   "usd": 54378433.39000001,
+   "share": 0.05211849492639577,
+   "swapShare": 0.003984620638282438
   },
   {
    "route": "USDC (Ethereum) to NBTC (NEAR)",
    "status": "both",
-   "swaps": 5010,
-   "usd": 49073783.05,
-   "share": 0.047139976746766774,
-   "swapShare": 0.009004394360121857
+   "swaps": 5195,
+   "usd": 52512189.54,
+   "share": 0.0503298111677068,
+   "swapShare": 0.009191875761934842
   },
   {
    "route": "USDC (Ethereum) to USDT (Tron)",
    "status": "one",
-   "swaps": 6374,
-   "usd": 42799580.67000001,
-   "share": 0.041113016200514205,
-   "swapShare": 0.011455890149983375
-  },
-  {
-   "route": "ZEC (Zcash) to NBTC (NEAR)",
-   "status": "both",
-   "swaps": 1285,
-   "usd": 42751143.31999999,
-   "share": 0.041066487577474296,
-   "swapShare": 0.002309510329891534
+   "swaps": 6592,
+   "usd": 44990252.95000001,
+   "share": 0.04312048221939108,
+   "swapShare": 0.011663685278666886
   },
   {
    "route": "NBTC (NEAR) to USDT (Tron)",
    "status": "one",
-   "swaps": 11119,
-   "usd": 37531823.37,
-   "share": 0.036052840660825265,
-   "swapShare": 0.019984004169699584
+   "swaps": 11220,
+   "usd": 36625095.769999996,
+   "share": 0.035102976475569696,
+   "swapShare": 0.019852328402099887
+  },
+  {
+   "route": "ZEC (Zcash) to NBTC (NEAR)",
+   "status": "both",
+   "swaps": 1244,
+   "usd": 25563368.400000002,
+   "share": 0.024500968549454303,
+   "swapShare": 0.0022010959476125008
   },
   {
    "route": "NBTC (NEAR) to USDT (Ethereum)",
    "status": "both",
-   "swaps": 3581,
-   "usd": 22923928.340000004,
-   "share": 0.022020585773693438,
-   "swapShare": 0.006436075090538197
+   "swaps": 3467,
+   "usd": 22968255.31,
+   "share": 0.022013706964616866,
+   "swapShare": 0.006134404863643522
   },
   {
    "route": "NBTC (NEAR) to ZEC (Zcash)",
    "status": "both",
-   "swaps": 2062,
-   "usd": 21803237.240000006,
-   "share": 0.020944056736987994,
-   "swapShare": 0.0037060002336469595
+   "swaps": 2051,
+   "usd": 21646766.360000003,
+   "share": 0.02074713838508643,
+   "swapShare": 0.0036289773219881348
   }
  ],
  "largestOneSide": [
   {
    "route": "USDT (Tron) to USDT (Ethereum)",
    "status": "one",
-   "swaps": 6647,
-   "usd": 86765776.97,
-   "share": 0.08334667626120486,
-   "swapShare": 0.011946548764816363
+   "swaps": 6653,
+   "usd": 87217298.85,
+   "share": 0.0835925947885728,
+   "swapShare": 0.011771616832368142
   },
   {
    "route": "USDT (Ethereum) to USDT (Tron)",
    "status": "one",
-   "swaps": 13226,
-   "usd": 66405951.470000006,
-   "share": 0.06378915203976156,
-   "swapShare": 0.023770882197000333
+   "swaps": 13501,
+   "usd": 67889000.06,
+   "share": 0.0650675697074397,
+   "swapShare": 0.023888260762633742
   },
   {
    "route": "USDT (Tron) to NBTC (NEAR)",
    "status": "one",
-   "swaps": 2173,
-   "usd": 51723647.16,
-   "share": 0.04968542005200818,
-   "swapShare": 0.003905498791326306
+   "swaps": 2252,
+   "usd": 54378433.39000001,
+   "share": 0.05211849492639577,
+   "swapShare": 0.003984620638282438
   },
   {
    "route": "USDC (Ethereum) to USDT (Tron)",
    "status": "one",
-   "swaps": 6374,
-   "usd": 42799580.67000001,
-   "share": 0.041113016200514205,
-   "swapShare": 0.011455890149983375
+   "swaps": 6592,
+   "usd": 44990252.95000001,
+   "share": 0.04312048221939108,
+   "swapShare": 0.011663685278666886
   },
   {
    "route": "NBTC (NEAR) to USDT (Tron)",
    "status": "one",
-   "swaps": 11119,
-   "usd": 37531823.37,
-   "share": 0.036052840660825265,
-   "swapShare": 0.019984004169699584
+   "swaps": 11220,
+   "usd": 36625095.769999996,
+   "share": 0.035102976475569696,
+   "swapShare": 0.019852328402099887
   },
   {
    "route": "USDT (Tron) to USDC (Ethereum)",
    "status": "one",
-   "swaps": 3176,
-   "usd": 19879911.619999997,
-   "share": 0.019096521874821682,
-   "swapShare": 0.005708174947654095
+   "swaps": 3153,
+   "usd": 20653145.099999998,
+   "share": 0.01979481149058651,
+   "swapShare": 0.005578822767541974
   },
   {
    "route": "ZEC (Zcash) to USDT (Tron)",
    "status": "one",
-   "swaps": 2136,
-   "usd": 16773224.32,
-   "share": 0.01611225699896603,
-   "swapShare": 0.003838999272099857
+   "swaps": 2162,
+   "usd": 17041939.76,
+   "share": 0.016333685903515548,
+   "swapShare": 0.0038253773623297643
   },
   {
    "route": "2CMMyVTG…ir6g (BNB Chain) to USDT (Tron)",
    "status": "one",
    "swaps": 655,
    "usd": 10861621.229999999,
-   "share": 0.01043360711956337,
-   "swapShare": 0.001177221218738486
+   "share": 0.010410218089737936,
+   "swapShare": 0.0011589371749888971
   },
   {
    "route": "USDT (Tron) to ETH (Ethereum)",
    "status": "one",
-   "swaps": 1244,
-   "usd": 8964573.26,
-   "share": 0.008611314407746424,
-   "swapShare": 0.002235821673451415
+   "swaps": 1257,
+   "usd": 9076258.88,
+   "share": 0.008699054439382306,
+   "swapShare": 0.002224097754138998
   },
   {
    "route": "USDT (Tron) to ZEC (Zcash)",
    "status": "one",
-   "swaps": 784,
-   "usd": 8486566.18,
-   "share": 0.008152143721577163,
-   "swapShare": 0.0014090708938793483
+   "swaps": 780,
+   "usd": 8472789.729999999,
+   "share": 0.008120665142895228,
+   "swapShare": 0.0013801083915898319
   }
  ],
  "largestUnpriced": [
   {
    "route": "3tsdfyzi…4ouR (TON) to  (TON)",
    "status": "none",
-   "swaps": 1909,
+   "swaps": 1945,
    "usd": 0,
    "share": 0,
-   "swapShare": 0.0034310157352240764
+   "swapShare": 0.003441424130310542
   },
   {
    "route": "USDC (Solana) to USDT (Tron)",
    "status": "none",
-   "swaps": 1740,
+   "swaps": 1755,
    "usd": 0,
    "share": 0,
-   "swapShare": 0.003127274687946513
+   "swapShare": 0.0031052438810771216
   },
   {
    "route": "BNB (NEAR) to USDT (NEAR)",
    "status": "none",
-   "swaps": 1331,
+   "swaps": 1601,
    "usd": 0,
    "share": 0,
-   "swapShare": 0.0023921854078487407
-  },
-  {
-   "route": "USDT (Solana) to USDT (Tron)",
-   "status": "none",
-   "swaps": 1038,
-   "usd": 0,
-   "share": 0,
-   "swapShare": 0.0018655811069474024
+   "swapShare": 0.00283276094222477
   },
   {
    "route": "USDT (NEAR) to USDT (Tron)",
    "status": "none",
-   "swaps": 883,
+   "swaps": 1553,
    "usd": 0,
    "share": 0,
-   "swapShare": 0.0015870020399176843
+   "swapShare": 0.0027478311950500114
   },
   {
-   "route": "USDT (Tron) to USDT (Solana)",
+   "route": "USDT (Solana) to USDT (Tron)",
    "status": "none",
-   "swaps": 746,
+   "swaps": 1056,
    "usd": 0,
    "share": 0,
-   "swapShare": 0.0013407740903494819
-  },
-  {
-   "route": "USDT (Tron) to USDC (Solana)",
-   "status": "none",
-   "swaps": 728,
-   "usd": 0,
-   "share": 0,
-   "swapShare": 0.0013084229728879662
+   "swapShare": 0.0018684544378446953
   },
   {
    "route": "USDT (NEAR) to USDT (Solana)",
    "status": "none",
-   "swaps": 644,
+   "swaps": 857,
    "usd": 0,
    "share": 0,
-   "swapShare": 0.0011574510914008932
-  },
-  {
-   "route": "USDT (Tron) to  (TON)",
-   "status": "none",
-   "swaps": 624,
-   "usd": 0,
-   "share": 0,
-   "swapShare": 0.0011215054053325426
+   "swapShare": 0.0015163498610160076
   },
   {
    "route": "USDT (NEAR) to USDC (Solana)",
    "status": "none",
-   "swaps": 587,
+   "swaps": 747,
    "usd": 0,
    "share": 0,
-   "swapShare": 0.0010550058861060938
+   "swapShare": 0.001321719190407185
+  },
+  {
+   "route": "USDT (Tron) to USDT (Solana)",
+   "status": "none",
+   "swaps": 743,
+   "usd": 0,
+   "share": 0,
+   "swapShare": 0.001314641711475955
+  },
+  {
+   "route": "USDT (Tron) to USDC (Solana)",
+   "status": "none",
+   "swaps": 726,
+   "usd": 0,
+   "share": 0,
+   "swapShare": 0.001284562426018228
+  },
+  {
+   "route": "USDT (Tron) to  (TON)",
+   "status": "none",
+   "swaps": 644,
+   "usd": 0,
+   "share": 0,
+   "swapShare": 0.001139474107928015
   }
  ],
  "source": "intents.near route rows of the frozen chain days; prices and decimals stored in each day file; token names from ft_metadata (data/labels/tokens.json)",
