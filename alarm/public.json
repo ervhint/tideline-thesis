@@ -1,21 +1,24 @@
 {
  "announced": {
   "Q1": "Neutral",
-  "Q2": "Bullish",
+  "Q2": "Neutral",
   "Q3": "Not Measured",
   "Q4": "Neutral",
   "Q5": "Bullish",
   "Verdict": "Undecided"
  },
  "pending": {
-  "Q2": {
-   "side": "Neutral",
-   "since": "2026-11-14T14:23:20.276Z"
-  },
   "Q4": {
    "side": "Not Measured",
    "since": "2026-11-15T04:23:30.512Z"
   }
  },
- "log": []
+ "log": [
+  {
+   "at": "2026-11-17T14:23:33.045Z",
+   "id": "Q2",
+   "from": "Bullish",
+   "to": "Neutral"
+  }
+ ]
 }
