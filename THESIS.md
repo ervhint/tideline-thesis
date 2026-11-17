@@ -1,6 +1,6 @@
 # Tideline: the thesis
 
-Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days and DefiLlama data run to 15 Nov 2026.
+Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days run to 15 Nov 2026 and DefiLlama data to 16 Nov 2026.
 
 ## The claim
 
@@ -15,11 +15,11 @@ The verdict is **Undecided**. The score is +2 of 7, which would not reach either
 ## The evidence for
 
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $3.91B. The level needed under the 1.6% plan is about $12.4B, with an interval of $9.6B to $40.9B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $3.91B. The level needed under the 1.6% plan is about $12.5B, with an interval of $9.8B to $41.4B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
-- **NEAR's share of fees sits between the lines.** DefiLlama books 25% of Intents fees as NEAR revenue over the last 30 days, not above the 30% line for Bullish.
+- **NEAR's share of fees sits between the lines.** DefiLlama books 26% of Intents fees as NEAR revenue over the last 30 days, not above the 30% line for Bullish.
 - **The gap is large.** A 3.2 times rise is not a rounding error, and the top of the interval is far higher.
 - **Revenue per dollar of volume looks lower lately.** It was 5.3 bps over the 30 days before 27 Oct and 4.2 bps over the 20 days since. So few days cannot show that the rate really changed, and DefiLlama may not see all private volume, so this is a warning and not a finding.
 - **Largest Integrator cannot be read.** The Treasury carried over half of those days, so it reads Not Measured. On the public swaps left, SwapKit pays 76% of visible app fees over the last 30 frozen days, just under the 80% line for Bearish, a side figure that sets no reading. Visible app fees are a shrinking part of the flow: the Treasury carried 95% of counted USD over the last 7 days against 54% over 30.
