@@ -1,12 +1,12 @@
 # Tideline: the thesis
 
-Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days and DefiLlama data run to 16 Nov 2026.
+Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days run to 16 Nov 2026 and DefiLlama data to 17 Nov 2026.
 
 ## The claim
 
 NEAR uses its share of NEAR Intents fees to buy NEAR on the open market. The question is whether those buybacks could ever cover the new NEAR being issued.
 
-**At today's revenue rate, Intents volume would have to reach about 3.4 times today's level to cover issuance under the 1.6% plan, or 5.4 times if issuance stays at 2.5%. The evidence does not yet say whether it can get there, and most of the public data needed to answer that has moved out of public view.**
+**At today's revenue rate, Intents volume would have to reach about 3.4 times today's level to cover issuance under the 1.6% plan, or 5.3 times if issuance stays at 2.5%. The evidence does not yet say whether it can get there, and most of the public data needed to answer that has moved out of public view.**
 
 The verdict is **Undecided**. The score is +2 of 7, which would not reach either line anyway. It is held at Undecided on purpose: Solver Competition and Largest Integrator can no longer be measured, and a rule written in advance (PREREG.md, amendment A2) says a loss of data may not move the verdict.
 
@@ -15,11 +15,11 @@ The verdict is **Undecided**. The score is +2 of 7, which would not reach either
 ## The evidence for
 
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $3.90B. The level needed under the 1.6% plan is about $13.3B, with an interval of $10.4B to $44.1B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $3.90B. The level needed under the 1.6% plan is about $13.2B, with an interval of $10.4B to $44.0B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
-- **NEAR's share of fees sits between the lines.** DefiLlama books 25% of Intents fees as NEAR revenue over the last 30 days, not above the 30% line for Bullish.
+- **NEAR's share of fees sits between the lines.** DefiLlama books 26% of Intents fees as NEAR revenue over the last 30 days, not above the 30% line for Bullish.
 - **The gap is large.** A 3.4 times rise is not a rounding error, and the top of the interval is far higher.
 - **Revenue per dollar of volume looks lower lately.** It was 5.3 bps over the 30 days before 27 Oct and 4.1 bps over the 21 days since. So few days cannot show that the rate really changed, and DefiLlama may not see all private volume, so this is a warning and not a finding.
 - **Largest Integrator cannot be read.** The Treasury carried over half of those days, so it reads Not Measured. On the public swaps left, SwapKit pays 75% of visible app fees over the last 30 frozen days, under the 80% line for Bearish, a side figure that sets no reading. Visible app fees are a shrinking part of the flow: the Treasury carried 94% of counted USD over the last 7 days against 57% over 30.

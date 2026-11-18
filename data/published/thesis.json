@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-18T01:23:31.635Z",
+ "asOf": "2026-11-18T02:23:36.403Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-16",
  "readings": [
@@ -16,8 +16,8 @@
    "id": "Q2",
    "name": "NEAR's Share of Fees",
    "side": "Neutral",
-   "capture": 0.24998612254512229,
-   "detail": "25% last 30 days",
+   "capture": 0.25821518889227796,
+   "detail": "26% last 30 days",
    "plain": "The part of Intents fees that DefiLlama books as revenue. Bullish above 30%; Bearish only if it was under 20% on each of the last 14 days.",
    "source": "DefiLlama, all Intents",
    "query": "analysis/readings.mjs q2 → data/snapshot/defillama_daily.json"
@@ -417,23 +417,23 @@
  },
  "vstar": {
   "todayUsd": 3899881345,
-  "priceUsd": 3.38,
+  "priceUsd": 3.37,
   "at16": {
-   "low": 10393085334.656616,
-   "mid": 13278081595.92686,
-   "high": 44118922342.67522
+   "low": 10362965825.95429,
+   "mid": 13239601271.624596,
+   "high": 43991064230.99338
   },
   "at25": {
-   "low": 16357083981.730312,
-   "mid": 20897614980.279503,
-   "high": 69436254462.00761
+   "low": 16309319385.873753,
+   "mid": 20836591503.539154,
+   "high": 69233492488.30403
   },
-  "multiple16": 3.4047398936766524,
-  "multiple25": 5.35852584517017
+  "multiple16": 3.394872843656887,
+  "multiple25": 5.342878323786324
  },
  "notes": {
-  "llamaLastDay": "2026-11-16",
-  "llamaLastDayCapture": 0.14030981422959923
+  "llamaLastDay": "2026-11-17",
+  "llamaLastDayCapture": 4.226415094339623
  },
  "labelCheck": {
   "rule": "Labels with confidence 'secondary' dropped; the readings use referral names, so sides and shares stay the same",
@@ -452,7 +452,7 @@
    "One reading points Bullish: revenue has risen over each of the last three months. The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "Not measured because flow went private: Solver Competition and Largest Integrator. The Confidential Intents treasury, a bridge to a private chain, carried 94% of the USD counted over the last 7 frozen days and 57% over the last 30. Side figures that set no reading: other accounts' funds going into it were 95% of the flow we can see (7 of 7 days read), spread 4.4 bps, top 3 solvers hold 90% of public swaps and SwapKit 75% of visible app fees.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "With all revenue spent on buybacks, monthly volume must reach about 3.4x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.4x if issuance stays at 2.5%."
+   "With all revenue spent on buybacks, monthly volume must reach about 3.4x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 5.3x if issuance stays at 2.5%."
   ]
  }
 }
