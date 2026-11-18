@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10",
+ "updated": "2026-11-17",
  "fillers": [
   {
    "account": "0x4f77780141b0770a33d270ee255beb25c9568c7b",
@@ -30,6 +30,11 @@
    "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
    "kind": "solver",
    "since": "2026-11-03"
+  },
+  {
+   "account": "atlas.mp-solver.near",
+   "kind": "solver",
+   "since": "2026-11-17"
   },
   {
    "account": "bestswap.near",
