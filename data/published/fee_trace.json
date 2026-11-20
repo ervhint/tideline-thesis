@@ -788,7 +788,7 @@
   "to": "2026-11-18",
   "source": "DefiLlama revenue ÷ volume, all Intents (data/published/model_inputs.json)",
   "buyback": {
-   "share": 1,
+   "share": 0.9538914757027893,
    "burned": false,
    "since": "2026-02-23"
   }
