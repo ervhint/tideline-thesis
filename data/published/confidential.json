@@ -708,26 +708,41 @@
    "fillerOut": 20984880.75,
    "unpricedTransfers": 24590,
    "confidentialShare": 0.8609346040858638
+  },
+  {
+   "day": "2026-11-20",
+   "usd": 68620822.08,
+   "treasuryUsd": 60951692.51,
+   "publicUsd": 7669129.57,
+   "treasuryShare": 0.8882390309888865,
+   "pairedFlows": 24242,
+   "read": true,
+   "otherIn": 84874135.12,
+   "fillerIn": 66241336.71,
+   "otherOut": 88815169.53,
+   "fillerOut": 64485276.07,
+   "unpricedTransfers": 29955,
+   "confidentialShare": 0.9171292519699848
   }
  ],
  "missingDays": [],
  "chainGaps": [],
  "last7": {
-  "from": "2026-11-13",
-  "to": "2026-11-19",
+  "from": "2026-11-14",
+  "to": "2026-11-20",
   "days": 7,
   "daysRead": 7,
-  "treasuryShare": 0.8910664250937622,
-  "pairedFlows": 144533,
-  "confidentialShare": 0.9059761274082786
+  "treasuryShare": 0.8766600489756577,
+  "pairedFlows": 144269,
+  "confidentialShare": 0.8980566044846843
  },
  "last30": {
-  "from": "2026-10-21",
-  "to": "2026-11-19",
+  "from": "2026-10-22",
+  "to": "2026-11-20",
   "days": 30,
   "daysRead": 30,
-  "treasuryShare": 0.6499715142662499,
-  "pairedFlows": 354565,
-  "confidentialShare": 0.7349645532848595
+  "treasuryShare": 0.6813924055289423,
+  "pairedFlows": 378605,
+  "confidentialShare": 0.760852160287604
  }
 }
