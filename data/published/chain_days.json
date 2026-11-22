@@ -3073,9 +3073,73 @@
     "readShare": 1,
     "digest": "aa661727a3322c81fd8ed4e5a31cc2c7c369ae00756f699fe4750ac1a22d3e5d"
    }
+  },
+  {
+   "day": "2026-11-21",
+   "swaps": 29610,
+   "tokenDiffSwaps": 3335,
+   "transferSwaps": 26275,
+   "usd": 57681784.56,
+   "tokenDiffUsd": 4606558,
+   "tokenDiffShareOfSwaps": 0.11263086795001688,
+   "tokenDiffShareOfUsd": 0.07986157216076262,
+   "unpricedSwaps": 3569,
+   "byBucket": {
+    "0-1k": {
+     "swaps": 22240,
+     "usd": 2328727.26
+    },
+    "1k-10k": {
+     "swaps": 2775,
+     "usd": 10172822.62
+    },
+    "10k-100k": {
+     "swaps": 950,
+     "usd": 30055339.36
+    },
+    "100k+": {
+     "swaps": 76,
+     "usd": 15124895.32
+    },
+    "unpriced": {
+     "swaps": 3569,
+     "usd": 0
+    }
+   },
+   "namedShareOfTokenDiffUsd": 0.8145344810593934,
+   "topReferrals": [
+    {
+     "referral": "1click-swapkit",
+     "usd": 2289980.58
+    },
+    {
+     "referral": "1click-unknown",
+     "usd": 854357.67
+    },
+    {
+     "referral": "1click-rango",
+     "usd": 694915.44
+    },
+    {
+     "referral": "1click-1click",
+     "usd": 291006.87
+    },
+    {
+     "referral": "1click-lifi",
+     "usd": 226162.58
+    }
+   ],
+   "solvers": 56,
+   "fillers": 21,
+   "census": {
+    "listed": 101860,
+    "read": 101860,
+    "readShare": 1,
+    "digest": "08771ad39626d5f8dcb31ea51703b1d5a60432b398a7964a8be999a59780685e"
+   }
   }
  ],
  "firstDay": "2026-10-04",
- "lastDay": "2026-11-20",
+ "lastDay": "2026-11-21",
  "gaps": []
 }

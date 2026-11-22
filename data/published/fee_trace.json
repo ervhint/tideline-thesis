@@ -1,7 +1,7 @@
 {
  "prereg": "PREREG.md sections 5, 7 and 8, amendment A2",
- "from": "2026-11-14",
- "to": "2026-11-20",
+ "from": "2026-11-15",
+ "to": "2026-11-21",
  "days": 7,
  "gapsInWindow": 0,
  "priceBand": [
@@ -18,77 +18,77 @@
  },
  "trace": {
   "days": [
-   "2026-11-14",
    "2026-11-15",
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
    "2026-11-19",
-   "2026-11-20"
+   "2026-11-20",
+   "2026-11-21"
   ],
   "bySize": {
    "0-1k": {
     "all": {
-     "groups": 2273,
-     "swaps": 6873,
-     "grossUsd": 780595.17,
-     "outUsd": 773815.41,
-     "allInBps": 86.85369099667439,
-     "appFeeBps": 71.67296672527321,
-     "protocolBps": 0.009540430154964316,
-     "spreadBps": 15.171183841246211,
+     "groups": 2357,
+     "swaps": 7151,
+     "grossUsd": 806247.52,
+     "outUsd": 799345.92,
+     "allInBps": 85.60156056354683,
+     "appFeeBps": 71.03122125567127,
+     "protocolBps": 0.009531018343066407,
+     "spreadBps": 14.56080828953249,
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 12741
+       "swaps": 13484
       },
       "feeUnreadable": {
-       "groups": 334,
-       "swaps": 1456,
-       "usd": 161440.36
+       "groups": 346,
+       "swaps": 1504,
+       "usd": 164164.43
       },
       "priceCheck": {
-       "groups": 25,
-       "swaps": 43,
+       "groups": 26,
+       "swaps": 44,
        "usd": 0
       }
      }
     },
     "tokenDiff": {
-     "groups": 2270,
-     "swaps": 6836,
-     "grossUsd": 744721.37,
-     "outUsd": 737937.96,
-     "allInBps": 91.0865115912697,
-     "appFeeBps": 75.12550855790028,
+     "groups": 2353,
+     "swaps": 7112,
+     "grossUsd": 768435.99,
+     "outUsd": 761529.85,
+     "allInBps": 89.87273734107941,
+     "appFeeBps": 74.52637136863665,
      "protocolBps": 0.01,
-     "spreadBps": 15.951003033369423,
-     "partsGapBps": 0,
+     "spreadBps": 15.336365972442769,
+     "partsGapBps": -0.01,
      "left": {
       "notBothPriced": {
-       "swaps": 12591
+       "swaps": 13334
       },
       "feeUnreadable": {
-       "groups": 334,
-       "swaps": 1456,
-       "usd": 161440.36
+       "groups": 346,
+       "swaps": 1504,
+       "usd": 164164.43
       },
       "priceCheck": {
-       "groups": 25,
-       "swaps": 43,
+       "groups": 26,
+       "swaps": 44,
        "usd": 0
       }
      }
     },
     "transfer": {
-     "groups": 3,
-     "swaps": 37,
-     "grossUsd": 35873.8,
-     "outUsd": 35877.45,
-     "allInBps": -1.01745563614712,
+     "groups": 4,
+     "swaps": 39,
+     "grossUsd": 37811.53,
+     "outUsd": 37816.07,
+     "allInBps": -1.2006919582468294,
      "appFeeBps": 0,
      "protocolBps": 0,
-     "spreadBps": -1.01745563614712,
+     "spreadBps": -1.2006919582468294,
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
@@ -108,13 +108,13 @@
     },
     "confidential": {
      "groups": 7,
-     "swaps": 46675,
-     "inUsd": 5893783.53,
-     "outUsd": 5841986.13,
-     "allInBps": 87.88480224349259,
+     "swaps": 44763,
+     "inUsd": 5498903.06,
+     "outUsd": 5450993.68,
+     "allInBps": 87.12534023104021,
      "left": {
       "notBothPriced": {
-       "swaps": 59955
+       "swaps": 62626
       },
       "feeUnreadable": {
        "groups": 0,
@@ -131,23 +131,23 @@
    },
    "1k-10k": {
     "all": {
-     "groups": 312,
-     "swaps": 900,
-     "grossUsd": 3320004.6,
-     "outUsd": 3288566.78,
-     "allInBps": 94.69208600675447,
-     "appFeeBps": 85.19767143960121,
-     "protocolBps": 0.009109463823184175,
-     "spreadBps": 9.485305103330072,
-     "partsGapBps": -0.01,
+     "groups": 326,
+     "swaps": 932,
+     "grossUsd": 3490702,
+     "outUsd": 3458218.34,
+     "allInBps": 93.05766534195372,
+     "appFeeBps": 84.30807857718813,
+     "protocolBps": 0.009153011571358415,
+     "spreadBps": 8.740433753194237,
+     "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 1263
+       "swaps": 1302
       },
       "feeUnreadable": {
-       "groups": 62,
-       "swaps": 107,
-       "usd": 381366.39
+       "groups": 64,
+       "swaps": 105,
+       "usd": 381701.69
       },
       "priceCheck": {
        "groups": 0,
@@ -157,23 +157,23 @@
      }
     },
     "tokenDiff": {
-     "groups": 309,
-     "swaps": 853,
-     "grossUsd": 3024346.18,
-     "outUsd": 2992899.05,
-     "allInBps": 103.97991580529852,
-     "appFeeBps": 93.52654897511138,
+     "groups": 323,
+     "swaps": 885,
+     "grossUsd": 3195043.58,
+     "outUsd": 3162550.61,
+     "allInBps": 101.69804273631341,
+     "appFeeBps": 92.10966021391488,
      "protocolBps": 0.01,
-     "spreadBps": 10.443366830187136,
+     "spreadBps": 9.578382522398533,
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 1218
+       "swaps": 1268
       },
       "feeUnreadable": {
-       "groups": 62,
-       "swaps": 107,
-       "usd": 381366.39
+       "groups": 64,
+       "swaps": 105,
+       "usd": 381701.69
       },
       "priceCheck": {
        "groups": 0,
@@ -194,7 +194,7 @@
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 45
+       "swaps": 34
       },
       "feeUnreadable": {
        "groups": 0,
@@ -210,13 +210,13 @@
     },
     "confidential": {
      "groups": 7,
-     "swaps": 6993,
-     "inUsd": 25720319.35,
-     "outUsd": 25469029.62,
-     "allInBps": 97.70085922358518,
+     "swaps": 6717,
+     "inUsd": 24864784.44,
+     "outUsd": 24622066.37,
+     "allInBps": 97.61519171247653,
      "left": {
       "notBothPriced": {
-       "swaps": 7644
+       "swaps": 7554
       },
       "feeUnreadable": {
        "groups": 0,
@@ -233,23 +233,23 @@
    },
    "10k-100k": {
     "all": {
-     "groups": 113,
-     "swaps": 238,
-     "grossUsd": 7620544.99,
-     "outUsd": 7549540.49,
-     "allInBps": 93.17509938496647,
-     "appFeeBps": 82.78571121584288,
-     "protocolBps": 0.009643762329040942,
-     "spreadBps": 10.37974440679455,
+     "groups": 120,
+     "swaps": 258,
+     "grossUsd": 7988953.94,
+     "outUsd": 7916921.31,
+     "allInBps": 90.16528657709833,
+     "appFeeBps": 80.45919732419136,
+     "protocolBps": 0.009660190155100027,
+     "spreadBps": 9.696429062751863,
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 364
+       "swaps": 391
       },
       "feeUnreadable": {
-       "groups": 30,
-       "swaps": 39,
-       "usd": 1092301.6
+       "groups": 28,
+       "swaps": 38,
+       "usd": 1040651.11
       },
       "priceCheck": {
        "groups": 0,
@@ -259,23 +259,23 @@
      }
     },
     "tokenDiff": {
-     "groups": 111,
-     "swaps": 224,
-     "grossUsd": 7349072.47,
-     "outUsd": 7278050.08,
-     "allInBps": 96.64130265380072,
-     "appFeeBps": 85.84379041211378,
+     "groups": 118,
+     "swaps": 244,
+     "grossUsd": 7717481.42,
+     "outUsd": 7645430.9,
+     "allInBps": 93.36014979928773,
+     "appFeeBps": 83.2894550028226,
      "protocolBps": 0.01,
-     "spreadBps": 10.787512241686946,
+     "spreadBps": 10.06069479646512,
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 351
+       "swaps": 375
       },
       "feeUnreadable": {
-       "groups": 30,
-       "swaps": 39,
-       "usd": 1092301.6
+       "groups": 28,
+       "swaps": 38,
+       "usd": 1040651.11
       },
       "priceCheck": {
        "groups": 0,
@@ -296,7 +296,7 @@
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 13
+       "swaps": 16
       },
       "feeUnreadable": {
        "groups": 0,
@@ -312,13 +312,13 @@
     },
     "confidential": {
      "groups": 7,
-     "swaps": 1788,
-     "inUsd": 55187408.77,
-     "outUsd": 54651993.54,
-     "allInBps": 97.01764259877055,
+     "swaps": 1775,
+     "inUsd": 54410200.22,
+     "outUsd": 53894915.76,
+     "allInBps": 94.70365077072186,
      "left": {
       "notBothPriced": {
-       "swaps": 2200
+       "swaps": 2405
       },
       "feeUnreadable": {
        "groups": 0,
@@ -337,16 +337,16 @@
     "all": {
      "groups": 19,
      "swaps": 22,
-     "grossUsd": 4678498.71,
-     "outUsd": 4629368.42,
-     "allInBps": 105.0129400458179,
-     "appFeeBps": 92.52098405374821,
+     "grossUsd": 4658081.4,
+     "outUsd": 4609792.17,
+     "allInBps": 103.66764323745208,
+     "appFeeBps": 92.25942697569346,
      "protocolBps": 0.01,
-     "spreadBps": 12.481955992069691,
+     "spreadBps": 11.398216261758625,
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 21
+       "swaps": 26
       },
       "feeUnreadable": {
        "groups": 4,
@@ -363,16 +363,16 @@
     "tokenDiff": {
      "groups": 19,
      "swaps": 22,
-     "grossUsd": 4678498.71,
-     "outUsd": 4629368.42,
-     "allInBps": 105.0129400458179,
-     "appFeeBps": 92.52098405374821,
+     "grossUsd": 4658081.4,
+     "outUsd": 4609792.17,
+     "allInBps": 103.66764323745208,
+     "appFeeBps": 92.25942697569346,
      "protocolBps": 0.01,
-     "spreadBps": 12.481955992069691,
+     "spreadBps": 11.398216261758625,
      "partsGapBps": 0,
      "left": {
       "notBothPriced": {
-       "swaps": 21
+       "swaps": 26
       },
       "feeUnreadable": {
        "groups": 4,
@@ -414,13 +414,13 @@
     },
     "confidential": {
      "groups": 7,
-     "swaps": 193,
-     "inUsd": 48546921.37,
-     "outUsd": 48209462.17,
-     "allInBps": 69.51196707779786,
+     "swaps": 185,
+     "inUsd": 45782405.45,
+     "outUsd": 45461901.56,
+     "allInBps": 70.00590878738836,
      "left": {
       "notBothPriced": {
-       "swaps": 204
+       "swaps": 219
       },
       "feeUnreadable": {
        "groups": 0,
@@ -438,70 +438,70 @@
   },
   "allSizes": {
    "all": {
-    "groups": 2717,
-    "swaps": 8033,
-    "grossUsd": 16399643.47,
-    "outUsd": 16241291.1,
-    "allInBps": 96.55842074167343,
-    "appFeeBps": 85.52233325844142,
-    "protocolBps": 0.009632306189339484,
-    "spreadBps": 11.02645517704267,
+    "groups": 2822,
+    "swaps": 8363,
+    "grossUsd": 16943984.87,
+    "outUsd": 16784277.74,
+    "allInBps": 94.25594273152382,
+    "appFeeBps": 84.04751765557914,
+    "protocolBps": 0.009642975088352428,
+    "spreadBps": 10.198782100856322,
     "partsGapBps": 0,
     "left": {
      "notBothPriced": {
-      "swaps": 14389
+      "swaps": 15203
      },
      "feeUnreadable": {
-      "groups": 430,
-      "swaps": 1606,
-      "usd": 2454665.22
+      "groups": 442,
+      "swaps": 1651,
+      "usd": 2406074.1
      },
      "priceCheck": {
-      "groups": 25,
-      "swaps": 43,
+      "groups": 26,
+      "swaps": 44,
       "usd": 0
      }
     }
    },
    "tokenDiff": {
-    "groups": 2709,
-    "swaps": 7935,
-    "grossUsd": 15796638.73,
-    "outUsd": 15638255.51,
-    "allInBps": 100.26387266751772,
-    "appFeeBps": 88.78697539027425,
+    "groups": 2813,
+    "swaps": 8263,
+    "grossUsd": 16339042.4,
+    "outUsd": 16179303.53,
+    "allInBps": 97.76513387112837,
+    "appFeeBps": 87.15932260065527,
     "protocolBps": 0.01,
-    "spreadBps": 11.466897277243467,
-    "partsGapBps": -0.01,
+    "spreadBps": 10.595811270473098,
+    "partsGapBps": 0,
     "left": {
      "notBothPriced": {
-      "swaps": 14181
+      "swaps": 15003
      },
      "feeUnreadable": {
-      "groups": 430,
-      "swaps": 1606,
-      "usd": 2454665.22
+      "groups": 442,
+      "swaps": 1651,
+      "usd": 2406074.1
      },
      "priceCheck": {
-      "groups": 25,
-      "swaps": 43,
+      "groups": 26,
+      "swaps": 44,
       "usd": 0
      }
     }
    },
    "transfer": {
-    "groups": 8,
-    "swaps": 98,
-    "grossUsd": 603004.74,
-    "outUsd": 603035.59,
-    "allInBps": -0.5116046019800229,
+    "groups": 9,
+    "swaps": 100,
+    "grossUsd": 604942.47,
+    "outUsd": 604974.21,
+    "allInBps": -0.5246779912805707,
     "appFeeBps": 0,
     "protocolBps": 0,
-    "spreadBps": -0.5116046019800229,
+    "spreadBps": -0.5246779912805707,
     "partsGapBps": 0,
     "left": {
      "notBothPriced": {
-      "swaps": 208
+      "swaps": 200
      },
      "feeUnreadable": {
       "groups": 0,
@@ -517,13 +517,13 @@
    },
    "confidential": {
     "groups": 28,
-    "swaps": 55649,
-    "inUsd": 135348433.02,
-    "outUsd": 134172471.46,
-    "allInBps": 86.88401732927483,
+    "swaps": 53440,
+    "inUsd": 130556293.17,
+    "outUsd": 129429877.37,
+    "allInBps": 86.27816956577253,
     "left": {
      "notBothPriced": {
-      "swaps": 70003
+      "swaps": 72804
      },
      "feeUnreadable": {
       "groups": 0,
@@ -542,14 +542,6 @@
  "q3": {
   "bucket": "1k-10k",
   "perDay": [
-   {
-    "day": "2026-11-14",
-    "swaps": 82,
-    "spreadBps": 4.439872176232333,
-    "allInBps": 114.94453010602673,
-    "appFeeBps": 110.4946579297944,
-    "usable": true
-   },
    {
     "day": "2026-11-15",
     "swaps": 96,
@@ -597,6 +589,14 @@
     "allInBps": 126.44367722379579,
     "appFeeBps": 104.44038695163978,
     "usable": true
+   },
+   {
+    "day": "2026-11-21",
+    "swaps": 114,
+    "spreadBps": 0.48733931344773906,
+    "allInBps": 94.11829845633494,
+    "appFeeBps": 93.6209591428872,
+    "usable": true
    }
   ],
   "usableDays": 7,
@@ -604,146 +604,142 @@
  },
  "solvers": {
   "days": [
-   "2026-11-14",
    "2026-11-15",
    "2026-11-16",
    "2026-11-17",
    "2026-11-18",
    "2026-11-19",
-   "2026-11-20"
+   "2026-11-20",
+   "2026-11-21"
   ],
   "bySize": {
    "0-1k": {
-    "usd": 2280640.07,
+    "usd": 2353424.1,
     "solvers": 23,
-    "hhi": 3028.1530906060157,
-    "top3": 0.8578795348886414,
+    "hhi": 2992.0390644824365,
+    "top3": 0.8553388078955537,
     "top": [
      {
       "account": "solver-priv-liq.near",
-      "share": 0.4568902707943151
+      "share": 0.45137693308231136
      },
      {
       "account": "solver-multichain-asset.near",
-      "share": 0.2273300885951135
+      "share": 0.2277978743822671
      },
      {
       "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-      "share": 0.17365917549921286
+      "share": 0.17616400043097524
      }
     ],
-    "sampled": 21113
+    "sampled": 22183
    },
    "1k-10k": {
-    "usd": 8155332.82,
+    "usd": 8396528.92,
     "solvers": 15,
-    "hhi": 3098.640853280059,
-    "top3": 0.8305134856123096,
+    "hhi": 3171.9644463775026,
+    "top3": 0.8347029306327534,
     "top": [
      {
       "account": "solver-priv-liq.near",
-      "share": 0.4798915976879368
+      "share": 0.4921119305412537
      },
      {
       "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-      "share": 0.20400710043206624
+      "share": 0.19580610956398228
      },
      {
       "account": "solver-multichain-asset.near",
-      "share": 0.14661478749230664
+      "share": 0.14678489052751745
      }
     ],
-    "sampled": 2270
+    "sampled": 2339
    },
    "10k-100k": {
-    "usd": 19027043.6,
-    "solvers": 10,
-    "hhi": 3492.1687887227304,
-    "top3": 0.9188744089754437,
+    "usd": 20317219.28,
+    "solvers": 9,
+    "hhi": 3513.5873760779746,
+    "top3": 0.919721758342578,
     "top": [
      {
       "account": "solver-priv-liq.near",
-      "share": 0.4978308129890797
+      "share": 0.4991684926334071
      },
      {
       "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-      "share": 0.28269099300149114
+      "share": 0.2868260722848945
      },
      {
       "account": "solver-multichain-asset.near",
-      "share": 0.13835260298487284
+      "share": 0.13372719342427644
      }
     ],
-    "sampled": 641
+    "sampled": 687
    },
    "100k+": {
-    "usd": 9940498.06,
+    "usd": 10772970.16,
     "solvers": 4,
-    "hhi": 4587.902368838724,
-    "top3": 0.9802765607098765,
+    "hhi": 4367.034174976935,
+    "top3": 0.9735065628053932,
     "top": [
      {
       "account": "solver-priv-liq.near",
-      "share": 0.578409065651988
+      "share": 0.5524375289831861
      },
      {
       "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-      "share": 0.3477251536227351
+      "share": 0.35573218602510265
      },
      {
       "account": "solver-multichain-asset-escrow.near",
-      "share": 0.054142341435153396
+      "share": 0.06533684779710433
      }
     ],
-    "sampled": 47
+    "sampled": 52
    }
   },
   "allSizes": {
-   "usd": 39403514.55,
+   "usd": 41840142.46,
    "solvers": 25,
-   "hhi": 3554.4431053368435,
-   "top3": 0.9038632314504208,
+   "hhi": 3535.679841892736,
+   "top3": 0.9028857678033826,
    "top": [
     {
      "account": "solver-priv-liq.near",
-     "share": 0.5120761679620273
+     "share": 0.5087798677315176
     },
     {
      "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-     "share": 0.2765016030784495
+     "share": 0.2800774569032546
     },
     {
      "account": "solver-multichain-asset.near",
-     "share": 0.11528546040994407
+     "share": 0.11402844316861041
     }
    ]
   },
   "tokenDiffOnly": {
-   "usd": 38049345.67,
+   "usd": 40551927.87,
    "solvers": 25,
-   "hhi": 3620.7982151786873,
-   "top3": 0.90044174238402,
+   "hhi": 3590.378053203223,
+   "top3": 0.8998007364033123,
    "top": [
     {
      "account": "solver-priv-liq.near",
-     "share": 0.530300860098864
+     "share": 0.5249422965761122
     },
     {
      "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-     "share": 0.250752434555598
+     "share": 0.2572076508940258
     },
     {
      "account": "solver-multichain-asset.near",
-     "share": 0.11938844772955805
+     "share": 0.11765078893317418
     }
    ]
   },
   "stability": {
    "perDayTop3": [
-    {
-     "day": "2026-11-14",
-     "top3": 0.9123268658917432
-    },
     {
      "day": "2026-11-15",
      "top3": 0.9537070256077853
@@ -767,20 +763,24 @@
     {
      "day": "2026-11-20",
      "top3": 0.8808544731193879
+    },
+    {
+     "day": "2026-11-21",
+     "top3": 0.8992578605588011
     }
    ],
    "leaveOneDayOut": {
-    "min": 0.8978608486639357,
-    "max": 0.9161047376194871
+    "min": 0.8971016844491779,
+    "max": 0.9140283144252468
    }
   }
  },
  "treasury": {
   "account": "51e8f94d77b5e90dc9852ca6113771e11e8382ce69473a75e313e41665de7cbe",
   "days": 7,
-  "usd": 280067299.43,
-  "allUsd": 319470813.98,
-  "share": 0.8766600489756613
+  "usd": 284450067.89,
+  "allUsd": 326290210.35,
+  "share": 0.8717701569559265
  },
  "nearRevenue": {
   "bps": 4.240758313860043,
