@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-23T09:23:26.169Z",
+ "asOf": "2026-11-23T10:23:33.952Z",
  "lastFinishedDay": "2026-11-22",
  "window": {
   "from": "2026-10-24",
@@ -7,20 +7,20 @@
   "days": 30
  },
  "supply": {
-  "now": 1312473985.533381,
-  "then": 1309847762.597195,
-  "blockNow": 225835229,
-  "blockThen": 221428829,
+  "now": 1312473952.737973,
+  "then": 1309847738.67269,
+  "blockNow": 225841554,
+  "blockThen": 221435154,
   "daysBetween": 29.602,
   "netGrowthPctYear": 2.472,
   "source": "FastNEAR archival RPC, block header total_supply"
  },
  "issuance": {
   "nominalPctYear": 2.5,
-  "gasBurnNearPerYear": 430335,
+  "gasBurnNearPerYear": 430252,
   "note": "Gas burn = nominal issuance minus measured supply growth. It rests on the 2.5% nominal rate, which comes from secondary sources."
  },
- "priceUsd": 3.01,
+ "priceUsd": 3,
  "volume30dUsd": 4037255871,
  "revenue30dUsd": 1682310,
  "feeBpsOfVolume": 18.03,
