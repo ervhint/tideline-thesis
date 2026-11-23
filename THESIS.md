@@ -1,6 +1,6 @@
 # Tideline: the thesis
 
-Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days run to 21 Nov 2026 and DefiLlama data to 22 Nov 2026.
+Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days and DefiLlama data run to 22 Nov 2026.
 
 ## The claim
 
@@ -10,7 +10,7 @@ NEAR uses its share of NEAR Intents fees to buy NEAR on the open market. The que
 
 The verdict is **Undecided**. The score is +2 of 7, which would not reach either line anyway. It is held at Undecided on purpose: Solver Competition and Largest Integrator can no longer be measured, and a rule written in advance (PREREG.md, amendment A2) says a loss of data may not move the verdict.
 
-**How much went private.** Over the last 7 frozen days, 15 Nov to 21 Nov 2026, the Confidential Intents Treasury carried 87% of the USD counted on chain, well over the 50% line in A2. Other accounts' funds going into it were 89% of the flow we can see. That share is a side measure and sets no reading. It shows where the public record went, not that demand fell.
+**How much went private.** Over the last 7 frozen days, 16 Nov to 22 Nov 2026, the Confidential Intents Treasury carried 86% of the USD counted on chain, well over the 50% line in A2. Other accounts' funds going into it were 88% of the flow we can see. That share is a side measure and sets no reading. It shows where the public record went, not that demand fell.
 
 ## The evidence for
 
@@ -22,16 +22,16 @@ The verdict is **Undecided**. The score is +2 of 7, which would not reach either
 - **NEAR's share of fees sits between the lines.** DefiLlama books 23% of Intents fees as NEAR revenue over the last 30 days, not above the 30% line for Bullish.
 - **The gap is large.** A 3.1 times rise is not a rounding error, and the top of the interval is far higher.
 - **Revenue per dollar of volume looks lower lately.** It was 5.3 bps over the 30 days before 27 Oct and 4.0 bps over the 26 days since. So few days cannot show that the rate really changed, and DefiLlama may not see all private volume, so this is a warning and not a finding.
-- **Largest Integrator cannot be read.** The Treasury carried over half of those days, so it reads Not Measured. On the public swaps left, SwapKit pays 75% of visible app fees over the last 30 frozen days, just under the 80% line for Bearish, a side figure that sets no reading. Visible app fees are a shrinking part of the flow: the Treasury carried 87% of counted USD over the last 7 days against 71% over 30.
+- **Largest Integrator cannot be read.** The Treasury carried over half of those days, so it reads Not Measured. On the public swaps left, SwapKit pays 75% of visible app fees over the last 30 frozen days, under the 80% line for Bearish, a side figure that sets no reading. Visible app fees are a shrinking part of the flow: the Treasury carried 86% of counted USD over the last 7 days against 73% over 30.
 - **Pricing power is unproven.** The best estimate says volume barely moves when a fee changes, but the data cannot tell that apart from a large effect in either direction (below).
 
 ## What the fee changes showed
 
-Across 417 days of chain data, 1 Oct 2025 to 21 Nov 2026, 28 fee changes passed the rules and 21 were usable. Elasticity is −0.06, with a 95% interval of −1.63 to 1.50, and random dates with no fee change gave results this large or larger 92% of the time. The smallest effect this test could see is 2.01, so it is underpowered.
+Across 418 days of chain data, 1 Oct 2025 to 22 Nov 2026, 28 fee changes passed the rules and 21 were usable. Elasticity is −0.06, with a 95% interval of −1.64 to 1.51, and random dates with no fee change gave results this large or larger 91% of the time. The smallest effect this test could see is 2.01, so it is underpowered.
 
-At −1 a higher fee leaves revenue flat. The interval runs from below that to above it, so **Pricing Power reads Neutral: not settled**. It is not evidence that volume ignores fees. Every check gives an estimate near zero: dropping the largest frontend, changing the fee shift, leaving out the days of the move to the Treasury and using five outside venues as the control. 8 of 9 keep −1 inside their interval. CoW Swap on DefiLlama as the control gives −0.97 to 1.10, just above −1. It is a check on the reading, not the reading.
+At −1 a higher fee leaves revenue flat. The interval runs from below that to above it, so **Pricing Power reads Neutral: not settled**. It is not evidence that volume ignores fees. Every check gives an estimate near zero: dropping the largest frontend, changing the fee shift, leaving out the days of the move to the Treasury and using five outside venues as the control. 8 of 9 keep −1 inside their interval. CoW Swap on DefiLlama as the control gives −0.98 to 1.11, just above −1. It is a check on the reading, not the reading.
 
-Pass-through, how much of a fee change reaches users, is 0.33 with an interval of −0.42 to 1.08, on 16 fee changes. It is underpowered as well.
+Pass-through, how much of a fee change reaches users, is 0.33 with an interval of −0.43 to 1.08, on 16 fee changes. It is underpowered as well.
 
 ## What would change my mind
 
