@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-23T01:23:21.968Z",
+ "asOf": "2026-11-23T02:23:22.351Z",
  "lastFinishedDay": "2026-11-22",
  "window": {
   "from": "2026-10-23",
@@ -7,23 +7,23 @@
   "days": 30
  },
  "supply": {
-  "now": 1312448139.617711,
-  "then": 1309822182.33995,
-  "blockNow": 225785465,
-  "blockThen": 221379065,
+  "now": 1312448118.349433,
+  "then": 1309822159.135661,
+  "blockNow": 225791761,
+  "blockThen": 221385361,
   "daysBetween": 29.601,
   "netGrowthPctYear": 2.472,
   "source": "FastNEAR archival RPC, block header total_supply"
  },
  "issuance": {
   "nominalPctYear": 2.5,
-  "gasBurnNearPerYear": 431307,
+  "gasBurnNearPerYear": 431120,
   "note": "Gas burn = nominal issuance minus measured supply growth. It rests on the 2.5% nominal rate, which comes from secondary sources."
  },
  "priceUsd": 2.97,
  "volume30dUsd": 4053551599,
  "revenue30dUsd": 1694802,
- "feeBpsOfVolume": 18.37,
+ "feeBpsOfVolume": 18.4,
  "revenueRate": 0.00041810297922890706,
  "revenueRateRange": {
   "min": 0.0001313702204502572,
@@ -33,7 +33,7 @@
   "to": "2026-11-21"
  },
  "buyback": {
-  "shareOfRevenue": 1,
+  "shareOfRevenue": 0.9844636244211827,
   "burned": false,
   "note": "DefiLlama: since 2026-02-23 revenue buys NEAR on the open market. The bought NEAR is not burned."
  },

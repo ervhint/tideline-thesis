@@ -1,6 +1,6 @@
 # Tideline: the thesis
 
-Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days and DefiLlama data run to 21 Nov 2026.
+Research, not financial advice. This file is written by `pipeline/build_thesis_md.mjs` from the published files in `data/published/`, so its figures match the site; `npm run verify` fails if it is edited by hand. Frozen chain days run to 21 Nov 2026 and DefiLlama data to 22 Nov 2026.
 
 ## The claim
 
