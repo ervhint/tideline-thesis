@@ -15,13 +15,13 @@ The verdict is **Undecided**. The score is +2 of 7, which would not reach either
 ## The evidence for
 
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $4.05B. The level needed under the 1.6% plan is about $12.4B, with an interval of $9.3B to $39.4B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $4.04B. The level needed under the 1.6% plan is about $12.4B, with an interval of $9.3B to $39.3B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
 - **NEAR's share of fees sits between the lines.** DefiLlama books 23% of Intents fees as NEAR revenue over the last 30 days, not above the 30% line for Bullish.
 - **The gap is large.** A 3.1 times rise is not a rounding error, and the top of the interval is far higher.
-- **Revenue per dollar of volume looks lower lately.** It was 5.3 bps over the 30 days before 27 Oct and 4.0 bps over the 26 days since. So few days cannot show that the rate really changed, and DefiLlama may not see all private volume, so this is a warning and not a finding.
+- **Revenue per dollar of volume looks lower lately.** It was 5.3 bps over the 30 days before 27 Oct and 4.0 bps over the 27 days since. So few days cannot show that the rate really changed, and DefiLlama may not see all private volume, so this is a warning and not a finding.
 - **Largest Integrator cannot be read.** The Treasury carried over half of those days, so it reads Not Measured. On the public swaps left, SwapKit pays 75% of visible app fees over the last 30 frozen days, under the 80% line for Bearish, a side figure that sets no reading. Visible app fees are a shrinking part of the flow: the Treasury carried 86% of counted USD over the last 7 days against 73% over 30.
 - **Pricing power is unproven.** The best estimate says volume barely moves when a fee changes, but the data cannot tell that apart from a large effect in either direction (below).
 
