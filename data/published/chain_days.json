@@ -3201,9 +3201,73 @@
     "readShare": 1,
     "digest": "698b87839eeebb171d33c8b5490292bd600248d8fdea942714373334951bfb3d"
    }
+  },
+  {
+   "day": "2026-11-23",
+   "swaps": 23947,
+   "tokenDiffSwaps": 4729,
+   "transferSwaps": 19218,
+   "usd": 57996596.6,
+   "tokenDiffUsd": 7774193.9,
+   "tokenDiffShareOfSwaps": 0.19747776339416212,
+   "tokenDiffShareOfUsd": 0.13404569157080506,
+   "unpricedSwaps": 3450,
+   "byBucket": {
+    "0-1k": {
+     "swaps": 17264,
+     "usd": 2165764.99
+    },
+    "1k-10k": {
+     "swaps": 2352,
+     "usd": 8764615.18
+    },
+    "10k-100k": {
+     "swaps": 794,
+     "usd": 23192002.99
+    },
+    "100k+": {
+     "swaps": 87,
+     "usd": 23874213.44
+    },
+    "unpriced": {
+     "swaps": 3450,
+     "usd": 0
+    }
+   },
+   "namedShareOfTokenDiffUsd": 0.9027103723255473,
+   "topReferrals": [
+    {
+     "referral": "1click-swapkit",
+     "usd": 3299543.11
+    },
+    {
+     "referral": "1click-lifi",
+     "usd": 1115036.2
+    },
+    {
+     "referral": "1click-unknown",
+     "usd": 756348.43
+    },
+    {
+     "referral": "1click-near-mobile",
+     "usd": 604940.24
+    },
+    {
+     "referral": "1click-zodl",
+     "usd": 476604.91
+    }
+   ],
+   "solvers": 62,
+   "fillers": 21,
+   "census": {
+    "listed": 81889,
+    "read": 81889,
+    "readShare": 1,
+    "digest": "3ea3f3d9f4985d39e748d3b53074384b38db0e0964ae007a992f059490205540"
+   }
   }
  ],
  "firstDay": "2026-10-04",
- "lastDay": "2026-11-22",
+ "lastDay": "2026-11-23",
  "gaps": []
 }
