@@ -783,7 +783,7 @@
   "share": 0.869045260886951
  },
  "nearRevenue": {
-  "bps": 3.98466683642641,
+  "bps": 3.9907323121906755,
   "from": "2026-10-26",
   "to": "2026-11-24",
   "source": "DefiLlama revenue ÷ volume, all Intents (data/published/model_inputs.json)",
