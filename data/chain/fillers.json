@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17",
+ "updated": "2026-11-24",
  "fillers": [
   {
    "account": "0x4f77780141b0770a33d270ee255beb25c9568c7b",
@@ -82,6 +82,11 @@
    "since": "2026-11-03"
   },
   {
+   "account": "solver-multichain-asset-3.near",
+   "kind": "solver",
+   "since": "2026-11-24"
+  },
+  {
    "account": "solver-multichain-asset-escrow.near",
    "kind": "solver",
    "since": "2026-11-03"
@@ -90,6 +95,11 @@
    "account": "solver-multichain-asset.near",
    "kind": "solver",
    "since": "2026-11-03"
+  },
+  {
+   "account": "solver-priv-liq-2.near",
+   "kind": "solver",
+   "since": "2026-11-24"
   },
   {
    "account": "solver-priv-liq.near",
