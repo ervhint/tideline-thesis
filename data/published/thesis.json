@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T03:23:21.878Z",
+ "asOf": "2026-11-26T04:23:31.073Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-25",
  "readings": [
@@ -416,20 +416,20 @@
   "query": "analysis/realised_cost.mjs solverConcentrationChain → data/published/fee_trace.json"
  },
  "vstar": {
-  "todayUsd": 4276663696,
-  "priceUsd": 3.08,
+  "todayUsd": 4305242131,
+  "priceUsd": 3.06,
   "at16": {
-   "low": 9467604876.925055,
-   "mid": 13230152753.701628,
-   "high": 40190233302.84148
+   "low": 9405083910.208683,
+   "mid": 13279060086.705595,
+   "high": 39924830144.24808
   },
   "at25": {
-   "low": 14905130089.23637,
-   "mid": 20828620380.53688,
-   "high": 63272671756.256485
+   "low": 14807406227.826082,
+   "mid": 20906611669.26243,
+   "high": 62857831377.893585
   },
-  "multiple16": 3.093568654013151,
-  "multiple25": 4.870296535128087
+  "multiple16": 3.084393323917696,
+  "multiple25": 4.8560826622790545
  },
  "notes": {
   "llamaLastDay": "2026-11-25",
