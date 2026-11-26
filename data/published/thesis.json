@@ -1,13 +1,13 @@
 {
  "asOf": "2026-11-26T03:23:21.878Z",
  "prereg": "PREREG.md",
- "snapshotLastDay": "2026-11-24",
+ "snapshotLastDay": "2026-11-25",
  "readings": [
   {
    "id": "Q1",
    "name": "Pricing Power",
    "side": "Neutral",
-   "detail": "Elasticity -0.06 (-1.63 to 1.50), token_diff swaps only",
+   "detail": "Elasticity -0.06 (-1.61 to 1.49), token_diff swaps only",
    "plain": "Whether raising a fee brings in more revenue. It is Bullish only if the whole interval is above -1.",
    "source": "intents.near token_diff swaps: BigQuery history to 3 Oct 2026, then frozen chain days (PREREG.md A4)",
    "query": "analysis/elasticity.mjs → data/published/elasticity.json"
@@ -26,30 +26,30 @@
    "id": "Q3",
    "name": "Solver Competition",
    "side": "Not Measured",
-   "detail": "Flow went private: treasury 87% of USD",
+   "detail": "Flow went private: treasury 89% of USD",
    "privateFlow": true,
-   "treasuryShare": 0.869045260886951,
+   "treasuryShare": 0.8945411513620395,
    "sideFigures": {
-    "spreadBps": 5.522209838569955,
-    "top3": 0.8852534667150531
+    "spreadBps": 4.700406450060795,
+    "top3": 0.8913465733601342
    },
    "plain": "Two numbers: what solvers keep on $1k to $10k public swaps, and how much of the public volume the top 3 solvers fill. Bullish under 5 bps and 60%; Bearish over 10 bps or 80%. Not Measured when the Confidential Intents treasury carries over 50% of the last 7 days.",
-   "source": "intents.near chain days 2026-11-18 to 2026-11-24, DefiLlama hourly prices",
+   "source": "intents.near chain days 2026-11-19 to 2026-11-25, DefiLlama hourly prices",
    "query": "analysis/realised_cost.mjs q3Spread, solverConcentrationChain → data/published/fee_trace.json"
   },
   {
    "id": "Q4",
    "name": "Largest Integrator",
    "side": "Not Measured",
-   "detail": "Flow went private: treasury 77% of USD",
+   "detail": "Flow went private: treasury 80% of USD",
    "privateFlow": true,
-   "treasuryShare": 0.7689235601472328,
+   "treasuryShare": 0.8001149409109019,
    "sideFigures": {
-    "share": 0.7499840119021975,
+    "share": 0.7578548269930746,
     "name": "SwapKit"
    },
    "plain": "The largest frontend's share of the app fees paid on token_diff swaps over the last 30 frozen days. Bullish under 50%; Bearish over 80%. Not Measured when the Confidential Intents treasury carries over 50% of those days.",
-   "source": "intents.near token_diff swaps, chain days 2026-10-26 to 2026-11-24",
+   "source": "intents.near token_diff swaps, chain days 2026-10-27 to 2026-11-25",
    "query": "analysis/integrator.mjs integratorShares → data/chain/*.jsonl"
   },
   {
@@ -75,91 +75,87 @@
   "line": 0.5,
   "q3": {
    "days": 7,
-   "share": 0.869045260886951
+   "share": 0.8945411513620395
   },
   "q4": {
    "days": 30,
-   "share": 0.7689235601472328
+   "share": 0.8001149409109019
   },
   "confidential": {
    "last7": {
-    "from": "2026-11-18",
-    "to": "2026-11-24",
+    "from": "2026-11-19",
+    "to": "2026-11-25",
     "days": 7,
     "daysRead": 7,
-    "treasuryShare": 0.869045260886951,
-    "pairedFlows": 146249,
-    "confidentialShare": 0.8896213426399795
+    "treasuryShare": 0.8945411513620394,
+    "pairedFlows": 151537,
+    "confidentialShare": 0.9106207924738949
    },
    "last30": {
-    "from": "2026-10-26",
-    "to": "2026-11-24",
+    "from": "2026-10-27",
+    "to": "2026-11-25",
     "days": 30,
     "daysRead": 30,
-    "treasuryShare": 0.7689235601472024,
-    "pairedFlows": 464501,
-    "confidentialShare": 0.8213416449601847
+    "treasuryShare": 0.8001149409108748,
+    "pairedFlows": 487479,
+    "confidentialShare": 0.8443195753808814
    }
   }
  },
  "concentration": {
-  "window": "30 chain days, 2026-10-26 to 2026-11-24",
+  "window": "30 chain days, 2026-10-27 to 2026-11-25",
   "days": 30,
   "gapsInWindow": 0,
   "source": "intents.near token_diff swaps, app fee paid per referral",
   "query": "analysis/integrator.mjs integratorShares → data/chain/*.jsonl",
-  "tokenDiffShareOfUsd": 0.22613538962710725,
+  "tokenDiffShareOfUsd": 0.19498943338017677,
   "feeUnreadable": {
-   "groups": 7750,
-   "swaps": 39070,
-   "usd": 79489527.74999939
+   "groups": 7052,
+   "swaps": 34164,
+   "usd": 67103835.329999745
   },
   "largest": {
    "referral": "1click-swapkit",
    "name": "SwapKit",
-   "share": 0.7499840119021975,
-   "shareOfNamed": 0.7857953656451399,
-   "feeUsd": 745224.3914643883,
-   "totalFeeUsd": 993653.7041293223
+   "share": 0.7578548269930746,
+   "shareOfNamed": 0.795419562489926,
+   "feeUsd": 678658.1729483529,
+   "totalFeeUsd": 895498.9118972182
   },
   "bySize": {
    "0-1k": {
     "referral": "1click-swapkit",
     "name": "SwapKit",
-    "share": 0.7375574235472039
+    "share": 0.73960476384784
    },
    "1k-10k": {
     "referral": "1click-swapkit",
     "name": "SwapKit",
-    "share": 0.8228953121059003
+    "share": 0.826534753947072
    },
    "10k-100k": {
     "referral": "1click-swapkit",
     "name": "SwapKit",
-    "share": 0.7333716946520226
+    "share": 0.7456990120552306
    },
    "100k+": {
     "referral": "1click-swapkit",
     "name": "SwapKit",
-    "share": 0.7230139808785498
+    "share": 0.7272180485231892
    }
   },
   "solvers": {
    "days": [
-    "2026-11-18",
     "2026-11-19",
     "2026-11-20",
     "2026-11-21",
     "2026-11-22",
     "2026-11-23",
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
    ],
    "stability": {
     "perDayTop3": [
-     {
-      "day": "2026-11-18",
-      "top3": 0.8540974856765197
-     },
      {
       "day": "2026-11-19",
       "top3": 0.9209970708120578
@@ -183,203 +179,203 @@
      {
       "day": "2026-11-24",
       "top3": 0.8493151400960015
+     },
+     {
+      "day": "2026-11-25",
+      "top3": 0.9804353709245707
      }
     ],
     "leaveOneDayOut": {
-     "min": 0.8787104816438164,
-     "max": 0.8920672413461435
+     "min": 0.8848656503752427,
+     "max": 0.8986933659972874
     }
    },
    "bySize": {
     "0-1k": {
-     "top3": 0.8562083627692454,
-     "hhi": 2786.5981906790794,
-     "sampled": 22284
+     "top3": 0.8601273645831856,
+     "hhi": 2770.502808093731,
+     "sampled": 18352
     },
     "1k-10k": {
-     "top3": 0.8181158345733284,
-     "hhi": 3079.633998117542,
-     "sampled": 2407
+     "top3": 0.8154674345908893,
+     "hhi": 3107.468131363812,
+     "sampled": 1982
     },
     "10k-100k": {
-     "top3": 0.9050500829153914,
-     "hhi": 3340.3041990224206,
-     "sampled": 737
+     "top3": 0.8970344407652527,
+     "hhi": 3411.874850734003,
+     "sampled": 594
     },
     "100k+": {
-     "top3": 0.9113835511706024,
-     "hhi": 3887.237119909647,
-     "sampled": 49
+     "top3": 0.9568797941825242,
+     "hhi": 4042.789426051204,
+     "sampled": 41
     }
    },
    "allSizes": {
-    "usd": 43348828.85,
-    "solvers": 23,
-    "hhi": 3309.8496330067596,
-    "top3": 0.8852534667150531,
+    "usd": 35662574.84,
+    "solvers": 22,
+    "hhi": 3390.9786496017045,
+    "top3": 0.8913465733601342,
     "top": [
      {
       "account": "solver-priv-liq.near",
-      "share": 0.4904797581784422
+      "share": 0.4978256863481896
      },
      {
       "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-      "share": 0.2616705388993069
+      "share": 0.26689733000314464
      },
      {
       "account": "solver-multichain-asset.near",
-      "share": 0.13310316963730398
+      "share": 0.12662355700879996
      }
     ]
    },
    "tokenDiffOnly": {
-    "top3": 0.8804869869788462
+    "top3": 0.8866235034854147
    }
   }
  },
  "solvers": {
   "recent": {
    "days": [
-    "2026-11-18",
     "2026-11-19",
     "2026-11-20",
     "2026-11-21",
     "2026-11-22",
     "2026-11-23",
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
    ],
    "bySize": {
     "0-1k": {
-     "usd": 2654707.95,
+     "usd": 2221646.13,
      "solvers": 21,
-     "hhi": 2786.5981906790794,
-     "top3": 0.8562083627692454,
+     "hhi": 2770.502808093731,
+     "top3": 0.8601273645831856,
      "top": [
       {
        "account": "solver-priv-liq.near",
-       "share": 0.40279758017575185
+       "share": 0.3872144645586133
       },
       {
        "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-       "share": 0.2544234325913957
+       "share": 0.28177191935003065
       },
       {
        "account": "solver-multichain-asset.near",
-       "share": 0.19898735000209775
+       "share": 0.1911409806745417
       }
      ],
-     "sampled": 22284
+     "sampled": 18352
     },
     "1k-10k": {
-     "usd": 8897974.33,
-     "solvers": 15,
-     "hhi": 3079.633998117542,
-     "top3": 0.8181158345733284,
+     "usd": 7308193.31,
+     "solvers": 14,
+     "hhi": 3107.468131363812,
+     "top3": 0.8154674345908893,
      "top": [
       {
        "account": "solver-priv-liq.near",
-       "share": 0.4803638215635688
+       "share": 0.4865425736346139
       },
       {
        "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-       "share": 0.19535191668731183
+       "share": 0.1886016442824498
       },
       {
        "account": "solver-multichain-asset.near",
-       "share": 0.14240009632244766
+       "share": 0.14032321667382563
       }
      ],
-     "sampled": 2407
+     "sampled": 1982
     },
     "10k-100k": {
-     "usd": 22047036.56,
+     "usd": 18191301.56,
      "solvers": 11,
-     "hhi": 3340.3041990224206,
-     "top3": 0.9050500829153914,
+     "hhi": 3411.874850734003,
+     "top3": 0.8970344407652527,
      "top": [
       {
        "account": "solver-priv-liq.near",
-       "share": 0.48144010130856296
+       "share": 0.4937652327244106
       },
       {
        "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-       "share": 0.28252030265906497
+       "share": 0.2822424772483772
       },
       {
        "account": "solver-multichain-asset.near",
-       "share": 0.14108967894776334
+       "share": 0.12102673079246498
       }
      ],
-     "sampled": 737
+     "sampled": 594
     },
     "100k+": {
-     "usd": 9749110.01,
+     "usd": 7941433.84,
      "solvers": 4,
-     "hhi": 3887.237119909647,
-     "top3": 0.9113835511706024,
+     "hhi": 4042.789426051204,
+     "top3": 0.9568797941825242,
      "top": [
       {
        "account": "solver-priv-liq.near",
-       "share": 0.5440312684501137
+       "share": 0.5484542134018459
       },
       {
        "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-       "share": 0.2770221807149348
+       "share": 0.29963773141501104
       },
       {
-       "account": "solver-multichain-asset-escrow.near",
-       "share": 0.0903301020055539
+       "account": "solver-multichain-asset.near",
+       "share": 0.10878784936566738
       }
      ],
-     "sampled": 49
+     "sampled": 41
     }
    },
    "allSizes": {
-    "usd": 43348828.85,
-    "solvers": 23,
-    "hhi": 3309.8496330067596,
-    "top3": 0.8852534667150531,
+    "usd": 35662574.84,
+    "solvers": 22,
+    "hhi": 3390.9786496017045,
+    "top3": 0.8913465733601342,
     "top": [
      {
       "account": "solver-priv-liq.near",
-      "share": 0.4904797581784422
+      "share": 0.4978256863481896
      },
      {
       "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-      "share": 0.2616705388993069
+      "share": 0.26689733000314464
      },
      {
       "account": "solver-multichain-asset.near",
-      "share": 0.13310316963730398
+      "share": 0.12662355700879996
      }
     ]
    },
    "tokenDiffOnly": {
-    "usd": 41619968.46,
-    "solvers": 23,
-    "hhi": 3381.3708941941954,
-    "top3": 0.8804869869788462,
+    "usd": 34176933.3,
+    "solvers": 22,
+    "hhi": 3468.9652669837087,
+    "top3": 0.8866235034854147,
     "top": [
      {
       "account": "solver-priv-liq.near",
-      "share": 0.5108538972608986
+      "share": 0.5194657355833231
      },
      {
       "account": "6247d9c671ca6a80cf2c75e26edb8cd75ebf00fcd3c56c39107d6ca20c9cfb29",
-      "share": 0.23100092026915786
+      "share": 0.2350299950941863
      },
      {
       "account": "solver-multichain-asset.near",
-      "share": 0.13863216944878978
+      "share": 0.13212777280790533
      }
     ]
    },
    "stability": {
     "perDayTop3": [
-     {
-      "day": "2026-11-18",
-      "top3": 0.8540974856765197
-     },
      {
       "day": "2026-11-19",
       "top3": 0.9209970708120578
@@ -403,16 +399,20 @@
      {
       "day": "2026-11-24",
       "top3": 0.8493151400960015
+     },
+     {
+      "day": "2026-11-25",
+      "top3": 0.9804353709245707
      }
     ],
     "leaveOneDayOut": {
-     "min": 0.8787104816438164,
-     "max": 0.8920672413461435
+     "min": 0.8848656503752427,
+     "max": 0.8986933659972874
     }
    }
   },
   "beforeSwitch": null,
-  "source": "intents.near chain days 2026-11-18 to 2026-11-24: USD per filler account on public swaps, the Confidential Intents treasury left out (PREREG A2)",
+  "source": "intents.near chain days 2026-11-19 to 2026-11-25: USD per filler account on public swaps, the Confidential Intents treasury left out (PREREG A2)",
   "query": "analysis/realised_cost.mjs solverConcentrationChain → data/published/fee_trace.json"
  },
  "vstar": {
@@ -450,7 +450,7 @@
   "live": [
    "As of 26 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +2 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
    "One reading points Bullish: revenue has risen over each of the last three months. The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
-   "Not measured because flow went private: Solver Competition and Largest Integrator. The Confidential Intents treasury, a bridge to a private chain, carried 87% of the USD counted over the last 7 frozen days and 77% over the last 30. Side figures that set no reading: other accounts' funds going into it were 89% of the flow we can see (7 of 7 days read), spread 5.5 bps, top 3 solvers hold 89% of public swaps and SwapKit 75% of visible app fees.",
+   "Not measured because flow went private: Solver Competition and Largest Integrator. The Confidential Intents treasury, a bridge to a private chain, carried 89% of the USD counted over the last 7 frozen days and 80% over the last 30. Side figures that set no reading: other accounts' funds going into it were 91% of the flow we can see (7 of 7 days read), spread 4.7 bps, top 3 solvers hold 89% of public swaps and SwapKit 76% of visible app fees.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
    "With all revenue spent on buybacks, monthly volume must reach about 3.1x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 4.9x if issuance stays at 2.5%."
   ]
