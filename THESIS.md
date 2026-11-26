@@ -15,7 +15,7 @@ The verdict is **Undecided**. The score is +2 of 7, which would not reach either
 ## The evidence for
 
 - **Revenue has been growing.** The 90-day revenue total rose at each of the last three month-ends, so Path to Deflation reads Bullish.
-- **The threshold is reachable in principle.** Monthly volume is about $4.31B. The level needed under the 1.6% plan is about $13.3B, with an interval of $9.4B to $40.0B from how far revenue per dollar of volume has moved.
+- **The threshold is reachable in principle.** Monthly volume is about $4.31B. The level needed under the 1.6% plan is about $13.4B, with an interval of $9.5B to $40.3B from how far revenue per dollar of volume has moved.
 
 ## The evidence against
 
