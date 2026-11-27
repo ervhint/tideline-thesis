@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-26T23:23:26.542Z",
+ "asOf": "2026-11-27T00:23:28.476Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-25",
  "readings": [
@@ -417,19 +417,19 @@
  },
  "vstar": {
   "todayUsd": 4305242131,
-  "priceUsd": 3.04,
+  "priceUsd": 3.06,
   "at16": {
-   "low": 9342026002.40507,
-   "mid": 13180053190.062366,
-   "high": 39657147656.52691
+   "low": 9403765462.102747,
+   "mid": 13267157353.819952,
+   "high": 39919233297.14006
   },
   "at25": {
-   "low": 14709249065.940992,
-   "mid": 20752317005.440437,
-   "high": 62441151627.54602
+   "low": 14806299110.28314,
+   "mid": 20889238562.52004,
+   "high": 62853131634.61924
   },
-  "multiple16": 3.0613964996670164,
-  "multiple25": 4.820243873396313
+  "multiple16": 3.0816286169573286,
+  "multiple25": 4.852047324378476
  },
  "notes": {
   "llamaLastDay": "2026-11-25",
@@ -442,17 +442,17 @@
   "namesThatChange": []
  },
  "text": {
-  "asOf": "2026-11-26",
+  "asOf": "2026-11-27",
   "fixed": [
    "Tideline asks whether NEAR Intents fees could ever cover the new NEAR being issued. This is research, not financial advice.",
    "A Bullish reading means the evidence passed a line set in advance, not that the price will rise."
   ],
   "live": [
-   "As of 26 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +2 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
+   "As of 27 Nov, the verdict is on hold at Undecided (PREREG A2). The score is +2 of 7, but data lost to private flow may not move it. It returns when the treasury share falls back to 50% or less.",
    "One reading points Bullish: revenue has risen over each of the last three months. The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "Not measured because flow went private: Solver Competition and Largest Integrator. The Confidential Intents treasury, a bridge to a private chain, carried 89% of the USD counted over the last 7 frozen days and 80% over the last 30. Side figures that set no reading: other accounts' funds going into it were 91% of the flow we can see (7 of 7 days read), spread 4.7 bps, top 3 solvers hold 89% of public swaps and SwapKit 76% of visible app fees.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "With all revenue spent on buybacks, monthly volume must reach about 3.1x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 4.8x if issuance stays at 2.5%."
+   "With all revenue spent on buybacks, monthly volume must reach about 3.1x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 4.9x if issuance stays at 2.5%."
   ]
  }
 }
