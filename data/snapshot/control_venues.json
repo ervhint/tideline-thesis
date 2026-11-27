@@ -1,5 +1,5 @@
 {
- "pulledAt": "2026-11-27T03:23:21.800Z",
+ "pulledAt": "2026-11-27T05:23:18.797Z",
  "source": "DefiLlama aggregators/<slug> dailyVolume, from 2025-08-01",
  "venues": {
   "1inch-swap": {
@@ -5802,6 +5802,10 @@
     {
      "day": "2026-11-25",
      "volume": 151575673
+    },
+    {
+     "day": "2026-11-26",
+     "volume": 146134736
     }
    ]
   },
