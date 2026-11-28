@@ -1,5 +1,5 @@
 {
- "asOf": "2026-11-28T16:23:26.271Z",
+ "asOf": "2026-11-28T17:23:18.712Z",
  "prereg": "PREREG.md",
  "snapshotLastDay": "2026-11-27",
  "readings": [
@@ -417,19 +417,19 @@
  },
  "vstar": {
   "todayUsd": 4305032844,
-  "priceUsd": 2.95,
+  "priceUsd": 2.94,
   "at16": {
-   "low": 9067216969.723532,
-   "mid": 13271415080.875446,
-   "high": 38490576038.80787
+   "low": 9036779591.857124,
+   "mid": 13226864798.579634,
+   "high": 38361368564.11074
   },
   "at25": {
-   "low": 14276149205.680607,
-   "mid": 20895573856.646618,
-   "high": 60602631256.917046
+   "low": 14228054300.222687,
+   "mid": 20825178777.788483,
+   "high": 60398467110.21263
   },
-  "multiple16": 3.0827674402930634,
-  "multiple25": 4.853754806021781
+  "multiple16": 3.0724190216142366,
+  "multiple25": 4.8374029960800184
  },
  "notes": {
   "llamaLastDay": "2026-11-27",
@@ -452,7 +452,7 @@
    "One reading points Bullish: revenue has risen over each of the last three months. The DefiLlama figures come from a dataset nobody can re-run for free. Pricing Power is not settled: the data cannot yet say whether raising a fee helps or hurts revenue.",
    "Not measured because flow went private: Solver Competition and Largest Integrator. The Confidential Intents treasury, a bridge to a private chain, carried 93% of the USD counted over the last 7 frozen days and 85% over the last 30. Side figures that set no reading: other accounts' funds going into it were 93% of the flow we can see (7 of 7 days read), top 3 solvers hold 89% of public swaps and SwapKit 78% of visible app fees.",
    "Fewer public swaps is not less demand: swaps that move to the private chain leave the public record either way. Hidden: fees on confidential swaps, which solver filled them, and any flow that stays shielded.",
-   "With all revenue spent on buybacks, monthly volume must reach about 3.1x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 4.9x if issuance stays at 2.5%."
+   "With all revenue spent on buybacks, monthly volume must reach about 3.1x today's level to cover the 1.6% issuance plan (passed its vote, not in force yet), or 4.8x if issuance stays at 2.5%."
   ]
  }
 }
